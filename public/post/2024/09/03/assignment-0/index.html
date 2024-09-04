@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=4321&amp;path=livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Assignment 0 | A minimal Hugo website</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/">Home</a></li>
+      
+      <li><a href="/about/">About</a></li>
+      
+      <li><a href="/categories/">Categories</a></li>
+      
+      <li><a href="/tags/">Tags</a></li>
+      
+      <li><a href="/index.xml">Subscribe</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+<div class="article-meta">
+<h1><span class="title">Assignment 0</span></h1>
+<h2 class="author">Package Build</h2>
+<h2 class="date">2024/09/03</h2>
+</div>
+
+<main>
+<p><strong>Overview:</strong>
+In this assignment, we will work with historical national popular vote and state-level popular vote data from presidential elections. We will restructure the two data sets and eventually merge them, before running basic linear models to predict the national popular vote from the vote in certain states.</p>
+<p><strong>Data Details:</strong></p>
+<ul>
+<li>
+<p>File Name: <code>state_2pv_1948_2020.csv</code></p>
+</li>
+<li>
+<p>These data contain the state-level popular vote from presidential elections from 1948 through 2020.</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Variable Name</th>
+<th>Variable Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>year </code></td>
+<td>election year</td>
+</tr>
+<tr>
+<td><code>state</code></td>
+<td>state</td>
+</tr>
+<tr>
+<td><code>candidate</code></td>
+<td>candidate</td>
+</tr>
+<tr>
+<td><code>party</code></td>
+<td>candidate&rsquo;s party</td>
+</tr>
+<tr>
+<td><code>candidatevotes</code></td>
+<td>votes received by the candidate in the state</td>
+</tr>
+<tr>
+<td><code>totalvotes</code></td>
+<td>total votes cast in the state</td>
+</tr>
+<tr>
+<td><code>vote_share</code></td>
+<td>proportion of total votes received by the candidate</td>
+</tr>
+<tr>
+<td><code>two_party_votes</code></td>
+<td>total votes cast for Republicans and Democrats in the state</td>
+</tr>
+<tr>
+<td><code>two_party_vote_share</code></td>
+<td>proportion of Democratic and Republican votes received by the candidate</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+<p>File Name: <code>nat_pv_1860_2020.csv</code></p>
+</li>
+<li>
+<p>These data contain the national-level popular vote from presidential elections from 1860 through 2020.</p>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Variable Name</th>
+<th>Variable Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>year</code></td>
+<td>election year</td>
+</tr>
+<tr>
+<td><code>npv_democrat</code></td>
+<td>proportion of popular vote received by the Democratic presidential candidate</td>
+</tr>
+<tr>
+<td><code>npv_republican</code></td>
+<td>proportion of popular vote received by the Republican presidential candidate</td>
+</tr>
+</tbody>
+</table>
+<h1 id="question-1-loading-packages-and-data">Question 1: Loading Packages and Data</h1>
+<p><strong>Loading packages:</strong></p>
+<p>Once you install R and R Studio, you can open R Studio, which uses R in the background. The first thing to do within RStudio is to install and load the packages you will be using. You can read about packages and how to install them on <a href="https://moderndive.netlify.app/1-getting-started.html#packages">Modern Dive Section 1.3</a>. You will need two packages for this problem set: \texttt{tidyverse} and \texttt{ggplot2}.  \footnote{One of the reasons R is such a widely used language is that there is a whole community that develops packages, which add functionality to the language. You can think of a package as just a collection of useful functions that aren&rsquo;t available in base R.}</p>
+<p>The instructions at that link are primarily for the point-and-click method of installing packages, but it&rsquo;s also important to know how to do it via the command line. Some may find it easier as well. To install packages via the command line, simply run <code>install.packages(&quot;package_name&quot;)</code> in RStudio, making sure the package name is in quotes. Note that there are multiple ways to run a command within RStudio: one way is to type the command in the &ldquo;Console&rdquo; pane of RStudio and press Return/Enter on your keyboard. Another is to open a .Rmd file, create a code chunk, and press the green play button in its top-right corner.</p>
+<p>Once you install the packages, you can run <code>library(package_name)</code> to load it into RStudio. Note that the package doesn&rsquo;t need to be in quotes inside the <code>library()</code> function, but it can be if you like.</p>
+<p>Load the packages <code>ggplot2</code> and <code>tidyverse</code> in the code below.</p>
+<pre><code class="language-r">library(&quot;ggplot2&quot;)
+library(&quot;tidyverse&quot;)
+</code></pre>
+<pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+## ✔ dplyr     1.1.4     ✔ readr     2.1.5
+## ✔ forcats   1.0.0     ✔ stringr   1.5.1
+## ✔ lubridate 1.9.3     ✔ tibble    3.2.1
+## ✔ purrr     1.0.2     ✔ tidyr     1.3.1
+## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()
+## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors
+</code></pre>
+<p><strong>Loading data:</strong></p>
+<p>After loading the packages we need, it&rsquo;s time to read the data into R. But there&rsquo;s one last step! Before you try to read data, it is a good idea to tell R where on your computer you&rsquo;re working. To do that, you need to set your working directory. Remember, &ldquo;directory&rdquo; is just a computer science term for a folder on your computer. By setting your working directory, you&rsquo;re telling R the folder in which to look for files. Usually it&rsquo;s best practice to set your working directory to the directory that your code is in. To do that, just go to the toolbar at the top of your screen, select &ldquo;Session&rdquo;, hover over &ldquo;Set Working Directory&rdquo;, and select &ldquo;To Source File Location&rdquo;.</p>
+<p>You can check your current working directory by running <code>getwd()</code> with nothing in the parentheses. Try running <code>getwd()</code> in the console to make sure your current working directory is the one where you have this file saved. Make sure that you have downloaded the data for this assignment into that same directory for the code below to work. This works because by setting the working directory you told R the folder where it will find the data.</p>
+<p>Note: If you set the correct working directory but still get an error running the code below, you may also need to click the downward arrow next to the &ldquo;Knit&rdquo; button on the top of the &ldquo;Source&rdquo; pane and set <code>Knit Directory</code> to either <code>Document Directory</code> or <code>Current Working Directory</code>.</p>
+<p>Load the data in the code chunk below:</p>
+<pre><code class="language-r">nat &lt;- read_csv(&quot;/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Week1/nat_pv_1860_2020.csv&quot;)
+</code></pre>
+<pre><code>## Rows: 41 Columns: 3
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## dbl (3): year, npv_democrat, npv_republican
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+</code></pre>
+<pre><code class="language-r">state &lt;- read_csv(&quot;/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Week1/state_2pv_1948_2020.csv&quot;)
+</code></pre>
+<pre><code>## Rows: 1918 Columns: 10
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (3): state, candidate, party
+## dbl (7): year, state_fips, candidatevotes, totalvotes, vote_share, two_party...
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+</code></pre>
+<h1 id="question-2-transforming-data-in-the-tidyverse">Question 2: Transforming Data in the Tidyverse</h1>
+<p>In this question, we will walk through a number of useful functions for wrangling data in tidyverse: <code>select</code>, <code>arrange</code>, <code>mutate</code>, <code>filter</code>, and <code>group_by</code>/<code>summarize</code>. You are not by any means required to use tidyverse in this course — feel free to use base R if you are more comfortable with it. But tidyverse has several data-wrangling tools that are often more efficient and intuitive than base R.</p>
+<h2 id="a-select">(a) Select</h2>
+<p>The <code>select</code> function is used when we want to focus on only certain variables (i.e., columns) in our data set. There may be many substantive reasons why we might want to remove certain columns, though sometimes we may just want to remove columns to reduce clutter in the data set. For the analysis we are conducting in this assignment, we do not need the vote totals — only two party vote share. Use the select function to limit the state-level data set to only the variables <code>year</code>, <code>state</code>, <code>party</code> and <code>two_party_vote_share</code>. Call this smaller dataframe <code>state_select</code>. Check the dimensions of the dataframe using the <code>dim</code> function: it should have four columns and 1918 rows.</p>
+<pre><code class="language-r">state_select &lt;- state |&gt;
+  select(year, state, party, two_party_vote_share)
+dim(state_select)
+</code></pre>
+<pre><code>## [1] 1918    4
+</code></pre>
+<h2 id="b-arrange">(b) Arrange</h2>
+<p>The <code>arrange</code> function can be used to order the data set according to a given variable. Right now, the <code>state_select</code> dataframe is in alphabetical order by state. Suppose that we want to display the data set in order from most to least recent election. Use the <code>arrange</code> function to order the data set by year. Use the <code>head</code> function to ensure that elections from 2020 are indeed at the top of the data set.</p>
+<p><em>Hint: Consider wrapping the <code>year</code> variable in the <code>desc()</code> function</em></p>
+<pre><code class="language-r">state_select &lt;- state_select |&gt;
+  arrange(desc(year))
+head(state_select)
+</code></pre>
+<pre><code>## # A tibble: 6 × 4
+##    year state   party      two_party_vote_share
+##   &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;                     &lt;dbl&gt;
+## 1  2020 Alabama Democrat                   37.1
+## 2  2020 Alabama Republican                 62.9
+## 3  2020 Alaska  Democrat                   44.7
+## 4  2020 Alaska  Republican                 55.3
+## 5  2020 Arizona Democrat                   50.2
+## 6  2020 Arizona Republican                 49.8
+</code></pre>
+<h2 id="c-mutate">(c) Mutate</h2>
+<p>The <code>mutate</code> function allows you to define new variables or redefine existing variables. Currently, the national data set only includes the overall vote share of the parties (e.g., Democratic votes divided by total votes). To be consistent with the state-level data, define new variables <code>dem_tpv</code> and <code>rep_tpv</code> as the two party vote share (as percentages) received by the Democratic and Republican candidates, respectively. Then select only the <code>year</code>, <code>dem_tpv</code>, and <code>rep_tpv</code> columns and save this dataframe as object <code>national_mutate</code>.</p>
+<p><em>Hint: the Democratic two party vote share is equal to Democratic two party vote share divided by the Democratic two party vote share plus the Republican two party vote share. You should multiply by 100 to get vote shares as percentages.</em></p>
+<pre><code class="language-r">national_mutate &lt;- nat |&gt;
+  mutate(
+    dem_tpv = 100*npv_democrat/(npv_democrat + npv_republican),
+    rep_tpv = 100*npv_republican/(npv_democrat + npv_republican)
+  ) |&gt;
+  select(year, dem_tpv, rep_tpv)
+head(national_mutate)
+</code></pre>
+<pre><code>## # A tibble: 6 × 3
+##    year dem_tpv rep_tpv
+##   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+## 1  2020    52.2    47.8
+## 2  2016    51.1    48.9
+## 3  2012    52.0    48.0
+## 4  2008    53.7    46.3
+## 5  2004    48.8    51.2
+## 6  2000    50.3    49.7
+</code></pre>
+<h2 id="d-filter">(d) Filter</h2>
+<p>While the <code>select</code> function allows you to focus on certain columns in a dataframe, the <code>filter</code> function allows you to focus on certain rows. The state-level data set only includes data going back to 1948, whereas the national data dates to 1860. Since we plan to merge these data sets, use the <code>filter</code> function to subset your mutated national data to only elections after 1948 (including 1948 itself). Save this dataframe as <code>national_mutate_filter</code>.</p>
+<pre><code class="language-r">national_mutate_filter &lt;- national_mutate |&gt;
+  filter(year &gt;= 1948)
+</code></pre>
+<h2 id="e-group_by-and-summarize">(e) Group_by and Summarize</h2>
+<p>The <code>group_by</code> and <code>summarize</code> functions are great for quickly producing key summary information about your dataset. Suppose we want to compare the average Democratic two party vote share in 21st century elections between California and Massachusetts (note: consider the 2000 election as part of the 21st century). Which state, in recent years, has been more Democratic? Use the <code>filter</code> function to subset the data set to 21st century elections <em>and</em> subset the data to only consider the Democratic vote share. Then, use <code>group_by</code> and <code>summarize</code> to get the average two party vote share by state. Finally, use the <code>filter</code> function again to subset the summarized data set to only California and Massachusetts.</p>
+<pre><code class="language-r">state_select |&gt;
+  filter(year &gt;= 2000) |&gt;
+  filter(party == &quot;Democrat&quot;) |&gt;
+  group_by(state) |&gt;
+  summarize(
+    avg_dem_share = mean(two_party_vote_share, na.rm = T)
+  ) |&gt;
+  filter(state == &quot;California&quot; | state == &quot;Massachusetts&quot;)
+</code></pre>
+<pre><code>## # A tibble: 2 × 2
+##   state         avg_dem_share
+##   &lt;chr&gt;                 &lt;dbl&gt;
+## 1 California             61.1
+## 2 Massachusetts          64.0
+</code></pre>
+<p>Massachusetts has been more Democratic, on average, in 21st-century presidential elections.</p>
+<h1 id="question-3-pivoting-data-wide-to-long">Question 3: Pivoting Data: Wide to Long</h1>
+<p>We&rsquo;re nearly ready to merge the national- and state-level data into a single data frame. However, you may notice that the two data-frames treat party differently. In the national data set, there are two separate columns for two party vote (<code>dem_tpv</code> and <code>rep_tpv</code>). This data structure is known as &lsquo;&lsquo;wide&rsquo;&rsquo; because there are relatively more columns and fewer rows. The state-level data, on the other hand, has a single column for two party vote and a separate column (<code>party</code>) indicating whether the candidate is a Republican or Democrat. This data structure is &lsquo;&rsquo;long&rsquo;&rsquo; because there are relatively more rows and fewer columns. Use the <code>pivot_longer</code> function to convert the wide national data into the long format, and call this new dataframe <code>national_mutate_filter_long</code>.</p>
+<p><em>Hint: After pivoting, this new dataframe should have three columns: the year, the party, and the national two party vote share (call this column <code>national_two_party_vote_share</code> or similar). To make things consistent with the state-level data, use the <code>mutate</code> function to make the <code>party</code> variable contain entries of either &lsquo;&lsquo;Democrat&rsquo;&rsquo; or &lsquo;&lsquo;Republican.&rsquo;&rsquo;</em></p>
+<pre><code class="language-r">national_mutate_filter_long &lt;- national_mutate_filter |&gt;
+  pivot_longer(
+    cols = c(dem_tpv, rep_tpv),
+    names_to = &quot;party&quot;,
+    values_to = &quot;national_two_party_vote_share&quot;
+  ) |&gt;
+  mutate(
+    party = ifelse(party == &quot;dem_tpv&quot;, &quot;Democrat&quot;, &quot;Republican&quot;)
+  )
+head(national_mutate_filter_long)
+</code></pre>
+<pre><code>## # A tibble: 6 × 3
+##    year party      national_two_party_vote_share
+##   &lt;dbl&gt; &lt;chr&gt;                              &lt;dbl&gt;
+## 1  2020 Democrat                            52.2
+## 2  2020 Republican                          47.8
+## 3  2016 Democrat                            51.1
+## 4  2016 Republican                          48.9
+## 5  2012 Democrat                            52.0
+## 6  2012 Republican                          48.0
+</code></pre>
+<h1 id="question-4-merging-data-sets-full_join">Question 4: Merging Data Sets: Full_Join</h1>
+<p>Finally, we&rsquo;re ready to merge the <code>national_mutate_filter_long</code> and <code>state_select</code> dataframes. Use the <code>full_join</code> function to merge the two dataframes by year and party.</p>
+<p>Call this merged data set <code>combined_data</code>. It should contain 5 columns: the state, party, year, two party vote share in the state, and two party vote share for the candidate nationally.</p>
+<p><em>Note that you could also use the <code>right_join</code>, <code>left_join</code>, or <code>inner_join</code> here. In general, it is usually safest to start with <code>full_join</code> so that you don&rsquo;t inadvertently eliminate rows in the data set. Suppose for example you are trying to merge data sets by congressional district. If North Dakota&rsquo;s lone district is called ND-01 in one dataframe and ND-AL in the other, neither will be included in the joined dataframe if you use <code>inner_join</code>.</em></p>
+<pre><code class="language-r">combined_data &lt;- national_mutate_filter_long |&gt;
+  full_join(state_select, by = c(&quot;year&quot;, &quot;party&quot;))
+head(combined_data)
+</code></pre>
+<pre><code>## # A tibble: 6 × 5
+##    year party    national_two_party_vote_share state      two_party_vote_share
+##   &lt;dbl&gt; &lt;chr&gt;                            &lt;dbl&gt; &lt;chr&gt;                     &lt;dbl&gt;
+## 1  2020 Democrat                          52.2 Alabama                    37.1
+## 2  2020 Democrat                          52.2 Alaska                     44.7
+## 3  2020 Democrat                          52.2 Arizona                    50.2
+## 4  2020 Democrat                          52.2 Arkansas                   35.8
+## 5  2020 Democrat                          52.2 California                 64.9
+## 6  2020 Democrat                          52.2 Colorado                   56.9
+</code></pre>
+<h1 id="question-5-pivoting-data-long-to-wide">Question 5: Pivoting Data: Long to Wide</h1>
+<p>In the previous two questions, we pivoted the national data to a long format and then merged the two data sets. Now, let&rsquo;s merge the data sets in the wide format. Start with the <code>state_select</code> dataframe and use the <code>pivot_wider</code> function so that that each column represents the vote share <strong>for a given party in a specific state</strong>. Call this dataframe <code>combined_data_wide</code>.</p>
+<p>Merge this with the <code>national_mutate_filter</code> dataframe so that you also have one column representing the national Democratic two party vote proportion and one column representing the national Republican two party vote proportion.</p>
+<p><em>Hint: You should end up with 19 rows, one for each election year. You should have 105 columns: the year, the national Democratic vote share, the national Republican vote share, and the Democratic and Republican vote shares in each of the 50 states + DC</em></p>
+<pre><code class="language-r">combined_data_wide &lt;- state_select |&gt;
+  pivot_wider(
+    names_from = c(&quot;party&quot;, &quot;state&quot;), values_from = c(two_party_vote_share)
+  ) |&gt;
+  full_join(national_mutate_filter, by = &quot;year&quot;)
+head(combined_data_wide)
+</code></pre>
+<pre><code>## # A tibble: 6 × 105
+##    year Democrat_Alabama Republican_Alabama Democrat_Alaska Republican_Alaska
+##   &lt;dbl&gt;            &lt;dbl&gt;              &lt;dbl&gt;           &lt;dbl&gt;             &lt;dbl&gt;
+## 1  2020             37.1               62.9            44.7              55.3
+## 2  2016             35.6               64.4            41.6              58.4
+## 3  2012             38.8               61.2            42.7              57.3
+## 4  2008             39.1               60.9            38.9              61.1
+## 5  2004             37.1               62.9            36.8              63.2
+## 6  2000             42.4               57.6            32.1              67.9
+## # ℹ 100 more variables: Democrat_Arizona &lt;dbl&gt;, Republican_Arizona &lt;dbl&gt;,
+## #   Democrat_Arkansas &lt;dbl&gt;, Republican_Arkansas &lt;dbl&gt;,
+## #   Democrat_California &lt;dbl&gt;, Republican_California &lt;dbl&gt;,
+## #   Democrat_Colorado &lt;dbl&gt;, Republican_Colorado &lt;dbl&gt;,
+## #   Democrat_Connecticut &lt;dbl&gt;, Republican_Connecticut &lt;dbl&gt;,
+## #   Democrat_Delaware &lt;dbl&gt;, Republican_Delaware &lt;dbl&gt;,
+## #   `Democrat_District Of Columbia` &lt;dbl&gt;, …
+</code></pre>
+<h1 id="question-6-running-some-very-basic-linear-models">Question 6: Running Some Very Basic Linear Models</h1>
+<h2 id="a-simple-regression">(a) Simple Regression</h2>
+<p>With the wide combined data set, run a basic linear model using the <code>lm</code> function to predict the national two-party Democratic vote share from the two party Democratic vote share in Florida. Interpret the model coefficients and use the <code>summary</code> function to determine whether the relationship is statistically significant.</p>
+<pre><code class="language-r">lm1 &lt;- lm(dem_tpv ~ Democrat_Florida, data = combined_data_wide)
+summary(lm1)
+</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = dem_tpv ~ Democrat_Florida, data = combined_data_wide)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -4.9092 -1.2060 -0.0151  1.4236  9.1158 
+## 
+## Coefficients:
+##                  Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)       20.4329     4.9123   4.160 0.000657 ***
+## Democrat_Florida   0.6217     0.1044   5.953 1.57e-05 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 3.208 on 17 degrees of freedom
+## Multiple R-squared:  0.6758,	Adjusted R-squared:  0.6568 
+## F-statistic: 35.44 on 1 and 17 DF,  p-value: 1.572e-05
+</code></pre>
+<p><em>Interpretation: The coefficient of 0.6217 means that for every one percentage point increase in Democratic vote share in Florida, we would expect the candidate to gain 0.6217 percentage points nationally. This relationship is statistically significant, with a test statistic approaching 6.</em></p>
+<h2 id="b-multiple-regression">(b) Multiple Regression</h2>
+<p>Now run a model predicting the national two-party Democratic vote share from the two party Democratic vote share in Florida and New York. What do you notice about the magnitude of the coefficient on the Florida term relative to part (a)?</p>
+<pre><code class="language-r">lm2 &lt;- lm(dem_tpv ~ Democrat_Florida + `Democrat_New York`, 
+           data = combined_data_wide)
+summary(lm2)
+</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = dem_tpv ~ Democrat_Florida + `Democrat_New York`, 
+##     data = combined_data_wide)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -2.8756 -1.0588 -0.1154  0.5401  6.1314 
+## 
+## Coefficients:
+##                     Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)         13.73627    3.51341   3.910 0.001248 ** 
+## Democrat_Florida     0.37573    0.08544   4.398 0.000449 ***
+## `Democrat_New York`  0.32424    0.06710   4.833 0.000184 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 2.108 on 16 degrees of freedom
+## Multiple R-squared:  0.8682,	Adjusted R-squared:  0.8517 
+## F-statistic:  52.7 on 2 and 16 DF,  p-value: 9.101e-08
+</code></pre>
+<p><em>Interpretation: The magnitude of the coefficient on the Florida term is smaller than in the single-predictor model. This is likely due to collinearities between Florida and New York: when they are both included, Florida&rsquo;s individual explanatory power becomes diluted because it is correlated with New York.</em></p>
+<p>These basic linear models are, of course, useless when it comes to predicting the election result in advance of election day because we only know the result in Florida or New York on election day (or afterwards). These types of models could be more useful in trying to determine the overall result of the election on election day; the New York Times Needle, for example, updates its probabilities in real time on election day as results come in (of course, these model are being fed data at the county or precinct level, not just the state level). But the very simple analysis above also touches on an important theme of the course: election results are correlated across states. The Democratic vote share in Florida is predictive of the national vote share, but it&rsquo;s also predictive of the vote share in New York. And the correlation between Florida and New York may be different than, for example, the correlation between Florida and Georgia, given different demographics and historical voting patterns.</p>
+<h1 id="question-7-prediction">Question 7: Prediction</h1>
+<p>Using the multivariate model above, use the <code>predict</code> function to predict the national two party Democratic vote share if the two party Democratic vote share is 48% in Florida and 60% in New York.</p>
+<pre><code class="language-r">test_data &lt;- data.frame(Democrat_Florida = 48, Democrat_New_York = 60) |&gt;
+  rename(&quot;Democrat_New York&quot; = Democrat_New_York)
+
+predict(lm2, newdata = test_data, type = &quot;response&quot;)
+</code></pre>
+<pre><code>##        1 
+## 51.22594
+</code></pre>
+<h1 id="question-8-saving-csv-files">Question 8: Saving <code>.csv</code> Files</h1>
+<p>The combined data sets you&rsquo;ve created may be useful in the future, so let&rsquo;s save them as <code>.csv</code> files to your directory so that you can reuse them in future assignments using the <code>write.csv</code> function.</p>
+<pre><code class="language-r">write.csv(combined_data_wide, &quot;/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/data/combined_popular_vote_wide.csv&quot;)
+write.csv(combined_data, &quot;/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/data/combined_popular_vote.csv&quot;)
+</code></pre>
+<h1 id="question-9-visualization">Question 9: Visualization</h1>
+<h1 id="a-histogram">(a) Histogram</h1>
+<p>In <code>ggplot</code>, plot a histogram of the two-party Democratic vote share in Florida going back to 1948 with <code>geom_histogram</code>. Label the chart as appropriate and play with different numbers of bins and theme settings until you have a chart style you are satisfied with.</p>
+<pre><code class="language-r">florida_hist &lt;- ggplot(combined_data_wide, 
+       mapping = aes(x = Democrat_Florida)) +
+  geom_histogram(bins = 20, fill = &quot;darkblue&quot;) +
+  xlab(&quot;Two-Party Democratic Vote Share&quot;) +
+  ylab(&quot;Count&quot;) +
+  ggtitle(&quot;Democratic Performance in Florida Since 1948&quot;)
+florida_hist
+</code></pre>
+<img src="/post/2024/09/03/assignment-0/index_files/figure-html/hist-1.png" width="672" />
+<pre><code class="language-r">dem_swing &lt;- combined_data |&gt;
+  filter(party == &quot;Democrat&quot;) |&gt;
+  filter(state == &quot;Georgia&quot; | state == &quot;Michigan&quot; | state == &quot;Arizona&quot; |
+           state == &quot;Wisconsin&quot; | state == &quot;Nevada&quot; | state == &quot;Pennsylvania&quot; |
+           state == &quot;North Carolina&quot;)
+
+state_hist &lt;- ggplot(data = dem_swing, 
+                     mapping = aes(x = two_party_vote_share)) +
+  geom_histogram(bins = 20, fill = &quot;darkblue&quot;) +
+  facet_wrap(~ state) +
+  xlab(&quot;Two-Party Democratic Vote Share&quot;) +
+  ylab(&quot;Count&quot;) +
+  ggtitle(&quot;Democratic Performance Since 1948 In 2024 Swing States&quot;) +
+  geom_vline(xintercept = 50)
+state_hist
+</code></pre>
+<img src="/post/2024/09/03/assignment-0/index_files/figure-html/facet wrap-1.png" width="672" />
+<h1 id="b-scatterplot">(b) Scatterplot</h1>
+<p>In ggplot, plot a scatterplot of the two-party Democratic vote share in Florida going back to 1948 on the x-axis and the national Democratic two-party vote share on the y-axis. Instead of dots, label each point with the election year using geom_label. Also label the chart as appropriate and play with different theme settings until you have a chart style you are satisfied with.</p>
+<pre><code class="language-r">florida_scatter &lt;- ggplot(combined_data_wide, 
+                          mapping = aes(x = Democrat_Florida, y = dem_tpv,
+                                        label = year)) +
+  geom_label() +
+  xlab(&quot;Two-Party Democratic Vote Share in Florida&quot;) +
+  ylab(&quot;Two-Party National Democratic Vote Share&quot;) +
+  ggtitle(&quot;Democratic Performance in Florida vs. National Vote Share&quot;)
+florida_scatter
+</code></pre>
+<img src="/post/2024/09/03/assignment-0/index_files/figure-html/scatter-1.png" width="672" />
+
+</main>
+
+  <footer>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<script src="//cdn.jsdelivr.net/combine/npm/katex/dist/katex.min.js,npm/katex/dist/contrib/auto-render.min.js,npm/@xiee/utils/js/render-katex.js" defer></script>
+
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/center-img.min.js" defer></script>
+
+  
+  <hr/>
+  © <a href="https://yihui.org">Yihui Xie</a> 2017 &ndash; 2024 | <a href="https://github.com/yihui">Github</a> | <a href="https://twitter.com/xieyihui">Twitter</a>
+  
+  </footer>
+  </body>
+</html>
+
