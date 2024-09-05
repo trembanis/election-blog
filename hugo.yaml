@@ -19,7 +19,7 @@ menu:
 
 params:
   description: "A website built through Hugo and blogdown."
-  footer: "Ella Trembanis 2024 | [Github](https://github.com/trembanis) | [Blog Theme: Hugo XMin](https://github.com/yihui/hugo-xmin)"
+  footer: "Ella Trembanis | 2024 | [Github](https://github.com/trembanis) | [Blog Theme: Hugo XMin](https://github.com/yihui/hugo-xmin)"
 
 markup:
   highlight:
