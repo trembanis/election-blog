@@ -1,0 +1,150 @@
+---
+title: "Lab 1 gov 1347"
+author: "Ella Trembanis"
+date: "2024-09-04"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r load}
+library(tidyverse)
+library(ggplot2)
+library(maps)
+
+d_pvstate_wide <- read.csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/data/clean_wide_state_2pv_1948_2020.csv")
+ec_full <- read.csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/data/ec_full.csv")
+d_pop_vote <- read.csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/data/popvote_1948-2020.csv")
+```
+
+```{r}
+head(d_pvstate_wide)
+```
+
+```{r}
+head(ec_full)
+```
+
+```{r}
+head(d_pop_vote)
+```
+
+```{r}
+d_pop_vote |>
+  ggplot(aes(x = year, y = pv2p, color = party)) +
+  geom_line() +
+  scale_color_manual(values = c("dodgerblue4", "firebrick")) +
+  ggtitle("Two Party Vote Share by Party, 1948-2020")
+```
+
+# Pivot data to wide format with party names as columns and two-party vote share as values.
+```{r}
+d_pop_vote_wide <- d_pop_vote |>
+    select(year, party, pv2p) |>
+    pivot_wider(names_from = party, values_from = pv2p)
+```
+
+# Modify winner column to show "D" if Democrats win and "R" if Republicans win. 
+```{r}
+d_pop_vote_wide <- d_pop_vote_wide |> 
+    mutate(winner = case_when(democrat > republican ~ "D",
+                              TRUE ~ "R"))
+```
+
+# Summarize data with respect to winners. 
+```{r}
+d_pop_vote_wide |> 
+  group_by(winner) |>
+  summarise(races = n())
+```
+
+```{r}
+# Sequester shapefile of states from `maps` library.
+states_map <- map_data("state")
+
+# Merge d_pvstate_wide with state_map.
+d_pvstate_wide$region <- tolower(d_pvstate_wide$state)
+```
+
+```{r}
+pv_map <- d_pvstate_wide |>
+  filter(year == 2020) |>
+  left_join(states_map, by = "region") |>
+  mutate(
+    winner = ifelse(R_pv2p > D_pv2p, "Republican", "Democrat")
+  )
+```
+
+
+```{r}
+pv_win_map <- pv_map |>
+  ggplot(aes(long, lat, group = group)) +
+  geom_polygon(aes(fill = winner)) +
+  scale_fill_manual(values = c("dodgerblue4", "firebrick"))
+pv_win_map
+```
+
+```{r}
+pv_maps <- d_pvstate_wide |>
+  filter(year >= 1980) |>
+  left_join(states_map, by = "region") |>
+  mutate(
+    winner = ifelse(R_pv2p > D_pv2p, "Republican", "Democrat")
+  ) |>
+  ggplot(aes(long, lat, group = group)) +
+  facet_wrap(facets = year ~.) +
+  geom_polygon(aes(fill = winner), color = "white") +
+  scale_fill_manual(values = c("dodgerblue4", "firebrick")) +
+  theme_void() +
+  theme(strip.text = element_text(size = 12), 
+        aspect.ratio = 0.75)
+pv_maps
+```
+
+```{r, electoral cycle model}
+pv2p_2024_states <- d_pvstate_wide |>
+  filter(year == "2020") |>
+  group_by(state) |>
+  summarize(
+    R_pv2p_24 = (0.75*R_pv2p_lag1) + (0.25*R_pv2p_lag2),
+    D_pv2p_24 = (0.75*D_pv2p_lag1) + (0.25*D_pv2p_lag2)
+  ) |>
+  mutate(
+    margin = R_pv2p_24 - D_pv2p_24,
+    winner = ifelse(R_pv2p_24 > D_pv2p_24, "Republican", "Democrat"),
+    region = tolower(state)
+  )
+```
+
+```{r}
+pv_map_2024 <- pv2p_2024_states |>
+  left_join(states_map, by = "region") |>
+  ggplot(aes(long, lat, group = group)) +
+  geom_polygon(aes(fill = margin), color = "black") +
+  scale_fill_gradient2(high = "firebrick", 
+                       low = "dodgerblue4", 
+                       mid = "white",
+                       name = "win margin",
+                       breaks = c(-50, -25, 0, 25, 50),
+                       limits = c(-50, 50)) +
+  theme_void()
+pv_map_2024
+```
+
+```{r}
+pv2p_2024_states <- pv2p_2024_states |>
+  mutate(year = 2024) |>
+  left_join(ec_full, by = c("state", "year"))
+
+pv2p_2024_states |>
+  group_by(winner) |>
+  summarize(electoral_votes = sum(electors))
+```
