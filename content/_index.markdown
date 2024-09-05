@@ -8,4 +8,4 @@ title: Home
 
 ## _A GOV 1347 Blog for the 2024 U.S. Presidential Election_
 
-Welcome to my GOV 1347 blog! This site will be updated weekly with predictive models for the 2024 presidential election as part of an ongoing assignment for GOV 1347: Election Analytics. All code used is public and accessible on Github - you can navigate to my repository by clicking on the American flag icon in the upper right corner of this page.
+Welcome to my GOV 1347 blog! This site will be updated weekly with predictive models for the 2024 presidential election as part of an ongoing assignment for GOV 1347: Election Analytics. All code used is public and accessible on Github - you can navigate to my repository by clicking on the American flag icon in the upper right corner of this page or by scrolling down to the hyperlink at the bottom of this page.
