@@ -2,23 +2,10 @@
 title: Home
 ---
 
-[<img src="https://simpleicons.org/icons/github.svg" style="max-width:15%;min-width:40px;float:right;" alt="Github repo" />](https://github.com/yihui/hugo-xmin)
+[<img src="https://upload.wikimedia.org/wikipedia/commons/archive/a/a9/20230603000304%21Flag_of_the_United_States_%28DoS_ECA_Color_Standard%29.svg" style="max-width:15%;min-width:40px;float:right;" alt="Github repo" />](https://github.com/trembanis/election-blog)
 
-# HUGO XMIN
+# Ella's Election Predictions
 
-## _Keep it simple, but not simpler_
+## _A GOV 1347 Blog for the 2024 U.S. Presidential Election_
 
-**XMin** is a Hugo theme written by [Yihui Xie](https://yihui.org) in about four hours: half an hour was spent on the Hugo templates, and 3.5 hours were spent on styling. The main motivation for writing this theme was to provide a really minimal example to beginners of Hugo templates. This XMin theme contains about 140 lines of code in total, including the code in HTML templates and CSS (also counting empty lines).
-
-
-``` bash
-find . -not -path '*/exampleSite/*' \( -name '*.html' -o -name '*.css' \) | xargs wc -l
-```
-
-I can certainly further reduce the code, for example, by eliminating the CSS, but I believe a tiny bit of CSS can greatly improve readability. You cannot really find many CSS frameworks that only contain 50 lines of code.
-
-Although it is a minimal theme, it is actually fully functional. It supports pages (including the home page), blog posts, a navigation menu, categories, tags, and RSS. With [a little bit customization](https://github.com/yihui/hugo-xmin/blob/master/exampleSite/layouts/partials/foot_custom.html), it can easily support LaTeX math expressions, e.g.,
-
-`$${\sqrt {n}}\left(\left({\frac {1}{n}}\sum _{i=1}^{n}X_{i}\right)-\mu \right)\ {\xrightarrow {d}}\ N\left(0,\sigma ^{2}\right)$$`
-
-All pages not under the root directory of the website are listed below. You can also visit the list page of a single section, e.g., [posts](/post/), or [notes](/note/). See the [About](/about/) page for the usage of this theme.
+Welcome to my GOV 1347 blog! This site will be updated weekly with predictive models for the 2024 presidential election as part of an ongoing assignment for GOV 1347: Election Analytics. All code used is public and accessible on Github - you can navigate to my repository by clicking on the American flag icon in the upper right corner of this page.
