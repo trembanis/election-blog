@@ -1,0 +1,150 @@
+---
+title: 'Blog #1 Code'
+author: "Ella Trembanis"
+date: "2024-09-06"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r load data and packages, echo=FALSE}
+library(tidyverse)
+library(ggplot2)
+library(maps)
+
+# two-party vote share (state-by-state)
+d_pvstate_wide <- read.csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/data/clean_wide_state_2pv_1948_2020.csv")
+
+# electoral college
+ec_full <- read.csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/data/ec_full.csv")
+
+# popular vote (national)
+d_pop_vote <- read.csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/data/popvote_1948-2020.csv")
+
+# map of u.s. with state borders
+states_map <- map_data("state")
+```
+
+```{r custom theme, echo=FALSE}
+my_theme <- function() {
+  theme(
+  panel.border = element_rect(color = "#000033", fill = NA, linetype = 1),
+  panel.background = element_rect(fill = "#FFFFFF"),
+  panel.grid.major.x = element_line(color = "#9999CC", linetype = 2, size = 0.2),
+  panel.grid.minor.x = element_blank(),
+  panel.grid.major.y = element_line(color = "#9999CC", linetype = 2, size = 0.2),
+  panel.grid.minor.y = element_blank(),
+  text = element_text(color = "#000033", family = "Courier"),
+  title = element_text(color = "#000033", face = "bold", family = "Courier"),
+  axis.ticks = element_line(color = "#000033"),
+  legend.position = "bottom",
+  legend.background = element_rect(color = "#000033", fill = NA, linetype = 1)
+  )
+}
+```
+
+```{r simplified custom theme, echo=FALSE}
+my_map_theme <- function() {
+  theme(
+    panel.background = element_rect(fill = "#FFFFFF"),
+    text = element_text(color = "#000033", family = "Courier"),
+    title = element_text(color = "#000033", face = "bold", family = "Courier"),
+    legend.position = "bottom",
+    legend.title.position = "top",
+    legend.background = element_rect(color = "#000033", fill = NA, linetype = 1),
+    legend.margin = margin(10, 20, 10, 20, "pt"),
+    axis.title = element_blank(),
+    axis.text = element_blank(),
+    axis.ticks = element_blank()
+  )
+}
+```
+
+
+## Competitiveness
+
+```{r vote share graph, echo=FALSE}
+d_pop_vote |>
+  ggplot(aes(x = year, y = pv2p, color = party)) +
+  geom_point() +
+  geom_line() +
+  scale_color_manual(values = c("dodgerblue4", "firebrick")) +
+  ggtitle("Two Party Vote Share by Party, 1948-2020") +
+  ylab("Two Party Vote Share (Percentage)") +
+  xlab("Time (Years)") +
+  my_theme()
+```
+
+```{r margin histogram, echo=FALSE}
+# pivot pop_vote data frame so parties are columns (previously both parties' vote shares fell in the pv2p column)
+d_pop_vote_wide <- d_pop_vote |> 
+    select(year, party, pv2p) |>
+    pivot_wider(names_from = party, values_from = pv2p)
+
+d_pop_vote_wide |>
+  mutate(
+    margin = republican - democrat
+  ) |>
+  ggplot(aes(x = margin)) +
+  geom_histogram(bins = 20, fill = "#9999CC", col = "#000033") +
+  geom_vline(xintercept = 0) +
+  xlab("Margin (Republican - Democrat)") +
+  ylab("Count") +
+  my_theme()
+```
+
+
+```{r merge d_pvstate_wide with state map, echo=FALSE}
+pv2p_margins <- d_pvstate_wide |>
+  group_by(state) |>
+  summarize(
+    avg_D_pv2p = mean(D_pv2p), # average Dem vote share by state (all time)
+    avg_R_pv2p = mean(R_pv2p) # average Rep vote share by state (all time)
+  ) |>
+  mutate(
+    margin = avg_R_pv2p - avg_D_pv2p, # average margin (+Rep, -Dem)
+    region = tolower(state) # create variable for merging purposes
+  )
+```
+
+```{r margin map, echo=FALSE}
+pv2p_margins |>
+  left_join(states_map, by = "region") |> # merge to map by state
+  ggplot(aes(long, lat, group = group)) + # set aesthetics with longitude and latitude
+  geom_polygon(aes(fill = margin), color = "#000033") +
+  scale_fill_gradient2(high = "firebrick", # high (positive) values represent a greater average Republican vote share
+                       low = "dodgerblue4", # low (negative) values represent a greater average Democratic vote share
+                       mid = "white", # competitive margins approach zero and display as white / light-colored
+                       name = "margin",
+                       breaks = c(-50, -25, 0, 25, 50),
+                       limits = c(-50, 50)) +
+  ggtitle("Average Two-Party Vote Share Margin, 1948-2020") +
+  my_map_theme() +
+  theme(aspect.ratio = 0.5)
+```
+
+```{r facet wrap margin map, echo=FALSE}
+d_pvstate_wide |>
+  mutate(
+    margin = R_pv2p - D_pv2p, # create margin variable
+    region = tolower(state) # create variable for merging purposes
+  ) |>
+  left_join(states_map, by = "region") |>
+  ggplot(aes(long, lat, group = group)) +
+  facet_wrap(facets = year ~.) + # produce separate maps for each year, 1948-2020
+  geom_polygon(aes(fill = margin), color = "black") +
+  scale_fill_gradient2(high = "firebrick", # high (positive) values represent a greater average Republican vote share
+                       low = "dodgerblue4", # low (negative) values represent a greater average Democratic vote share
+                       mid = "white", # competitive margins approach zero and display as white / light-colored
+                       name = "margin",
+                       breaks = c(-50, -25, 0, 25, 50),
+                       limits = c(-50, 50)) +
+  my_map_theme() +
+  theme(strip.text = element_text(size = 12), legend.position = "right",
+        aspect.ratio = 0.75)
+```
+
+## State Trends
+
