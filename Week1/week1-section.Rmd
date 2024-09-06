@@ -20,8 +20,13 @@ library(tidyverse)
 library(ggplot2)
 library(maps)
 
+# two-party vote share
 d_pvstate_wide <- read.csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/data/clean_wide_state_2pv_1948_2020.csv")
+
+# electoral college
 ec_full <- read.csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/data/ec_full.csv")
+
+# presidential popular vote
 d_pop_vote <- read.csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/data/popvote_1948-2020.csv")
 ```
 
@@ -40,9 +45,12 @@ head(d_pop_vote)
 ```{r}
 d_pop_vote |>
   ggplot(aes(x = year, y = pv2p, color = party)) +
+  geom_point() +
   geom_line() +
   scale_color_manual(values = c("dodgerblue4", "firebrick")) +
-  ggtitle("Two Party Vote Share by Party, 1948-2020")
+  ggtitle("Two Party Vote Share by Party, 1948-2020") +
+  ylab("Two Party Vote Share (Percentage)") +
+  xlab("Time (Years)")
 ```
 
 # Pivot data to wide format with party names as columns and two-party vote share as values.
@@ -70,7 +78,7 @@ d_pop_vote_wide |>
 # Sequester shapefile of states from `maps` library.
 states_map <- map_data("state")
 
-# Merge d_pvstate_wide with state_map.
+# Merge d_pvstate_wide with state_map
 d_pvstate_wide$region <- tolower(d_pvstate_wide$state)
 ```
 
@@ -125,7 +133,7 @@ pv2p_2024_states <- d_pvstate_wide |>
 ```
 
 ```{r}
-pv_map_2024 <- pv2p_2024_states |>
+pv2p_2024_states |>
   left_join(states_map, by = "region") |>
   ggplot(aes(long, lat, group = group)) +
   geom_polygon(aes(fill = margin), color = "black") +
@@ -136,15 +144,17 @@ pv_map_2024 <- pv2p_2024_states |>
                        breaks = c(-50, -25, 0, 25, 50),
                        limits = c(-50, 50)) +
   theme_void()
-pv_map_2024
 ```
 
 ```{r}
-pv2p_2024_states <- pv2p_2024_states |>
-  mutate(year = 2024) |>
-  left_join(ec_full, by = c("state", "year"))
-
-pv2p_2024_states |>
-  group_by(winner) |>
-  summarize(electoral_votes = sum(electors))
+d_pop_vote |>
+  ggplot(aes(x = year, y = pv2p, color = party)) +
+  geom_point() +
+  geom_line() +
+  scale_color_manual(values = c("dodgerblue4", "firebrick")) +
+  ggtitle("Two Party Vote Share by Party, 1948-2020") +
+  ylab("Two Party Vote Share (Percentage)") +
+  xlab("Time (Years)")
 ```
+
+

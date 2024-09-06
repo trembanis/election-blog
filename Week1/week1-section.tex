@@ -1,0 +1,411 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Lab 1 gov 1347},
+  pdfauthor={Ella Trembanis},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Lab 1 gov 1347}
+\author{Ella Trembanis}
+\date{2024-09-04}
+
+\begin{document}
+\maketitle
+
+\subsection{R Markdown}\label{r-markdown}
+
+This is an R Markdown document. Markdown is a simple formatting syntax
+for authoring HTML, PDF, and MS Word documents. For more details on
+using R Markdown see \url{http://rmarkdown.rstudio.com}.
+
+When you click the \textbf{Knit} button a document will be generated
+that includes both content as well as the output of any embedded R code
+chunks within the document. You can embed an R code chunk like this:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## -- Attaching core tidyverse packages ------------------------ tidyverse 2.0.0 --
+## v dplyr     1.1.4     v readr     2.1.5
+## v forcats   1.0.0     v stringr   1.5.1
+## v ggplot2   3.5.1     v tibble    3.2.1
+## v lubridate 1.9.3     v tidyr     1.3.1
+## v purrr     1.0.2     
+## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()
+## i Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{library}\NormalTok{(maps)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'maps'
+## 
+## The following object is masked from 'package:purrr':
+## 
+##     map
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# two{-}party vote share}
+\NormalTok{d\_pvstate\_wide }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"/Users/ellatrembanis/Desktop/Gov 1347/election{-}blog/election{-}blog/data/clean\_wide\_state\_2pv\_1948\_2020.csv"}\NormalTok{)}
+
+\CommentTok{\# electoral college}
+\NormalTok{ec\_full }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"/Users/ellatrembanis/Desktop/Gov 1347/election{-}blog/election{-}blog/data/ec\_full.csv"}\NormalTok{)}
+
+\CommentTok{\# presidential popular vote}
+\NormalTok{d\_pop\_vote }\OtherTok{\textless{}{-}} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"/Users/ellatrembanis/Desktop/Gov 1347/election{-}blog/election{-}blog/data/popvote\_1948{-}2020.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(d\_pvstate\_wide)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   year       state     D_pv     R_pv   D_pv2p    R_pv2p D_pv_lag1 R_pv_lag1
+## 1 1948     Alabama  0.00000 19.03898  0.00000 100.00000        NA        NA
+## 2 1948     Arizona 53.79437 43.82402 55.10680  44.89320        NA        NA
+## 3 1948    Arkansas 61.72141 21.01619 74.59899  25.40101        NA        NA
+## 4 1948  California 47.57220 47.12796 50.23455  49.76545        NA        NA
+## 5 1948    Colorado 51.87671 46.52500 52.71932  47.28068        NA        NA
+## 6 1948 Connecticut 47.91040 49.54670 49.16050  50.83950        NA        NA
+##   D_pv2p_lag1 R_pv2p_lag1 D_pv_lag2 R_pv_lag2 D_pv2p_lag2 R_pv2p_lag2
+## 1          NA          NA        NA        NA          NA          NA
+## 2          NA          NA        NA        NA          NA          NA
+## 3          NA          NA        NA        NA          NA          NA
+## 4          NA          NA        NA        NA          NA          NA
+## 5          NA          NA        NA        NA          NA          NA
+## 6          NA          NA        NA        NA          NA          NA
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(ec\_full)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        state electors year
+## 1    Alabama        9 1952
+## 2     Alaska        3 1952
+## 3    Arizona       11 1952
+## 4   Arkansas        6 1952
+## 5 California       55 1952
+## 6   Colorado        9 1952
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(d\_pop\_vote)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   year      party winner          candidate       pv     pv2p incumbent
+## 1 1948   democrat   TRUE      Truman, Harry 49.50723 52.31764      TRUE
+## 2 1948 republican  FALSE      Dewey, Thomas 45.12095 47.68236     FALSE
+## 3 1952   democrat  FALSE   Stevenson, Adlai 44.37788 44.71056     FALSE
+## 4 1952 republican   TRUE Eisenhower, Dwight 54.87805 55.28944     FALSE
+## 5 1956   democrat  FALSE   Stevenson, Adlai 41.95397 42.23566      TRUE
+## 6 1956 republican   TRUE Eisenhower, Dwight 57.37908 57.76434      TRUE
+##   incumbent_party prev_admin
+## 1            TRUE      FALSE
+## 2           FALSE      FALSE
+## 3            TRUE      FALSE
+## 4           FALSE      FALSE
+## 5           FALSE      FALSE
+## 6            TRUE      FALSE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d\_pop\_vote }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ year, }\AttributeTok{y =}\NormalTok{ pv2p, }\AttributeTok{color =}\NormalTok{ party)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{scale\_color\_manual}\NormalTok{(}\AttributeTok{values =} \FunctionTok{c}\NormalTok{(}\StringTok{"dodgerblue4"}\NormalTok{, }\StringTok{"firebrick"}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Two Party Vote Share by Party, 1948{-}2020"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Two Party Vote Share (Percentage)"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Time (Years)"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{week1-section_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+\section{Pivot data to wide format with party names as columns and
+two-party vote share as
+values.}\label{pivot-data-to-wide-format-with-party-names-as-columns-and-two-party-vote-share-as-values.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d\_pop\_vote\_wide }\OtherTok{\textless{}{-}}\NormalTok{ d\_pop\_vote }\SpecialCharTok{|\textgreater{}}
+    \FunctionTok{select}\NormalTok{(year, party, pv2p) }\SpecialCharTok{|\textgreater{}}
+    \FunctionTok{pivot\_wider}\NormalTok{(}\AttributeTok{names\_from =}\NormalTok{ party, }\AttributeTok{values\_from =}\NormalTok{ pv2p)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Modify winner column to show ``D'' if Democrats win and ``R''
+if Republicans
+win.}\label{modify-winner-column-to-show-d-if-democrats-win-and-r-if-republicans-win.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d\_pop\_vote\_wide }\OtherTok{\textless{}{-}}\NormalTok{ d\_pop\_vote\_wide }\SpecialCharTok{|\textgreater{}} 
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{winner =} \FunctionTok{case\_when}\NormalTok{(democrat }\SpecialCharTok{\textgreater{}}\NormalTok{ republican }\SpecialCharTok{\textasciitilde{}} \StringTok{"D"}\NormalTok{,}
+                              \ConstantTok{TRUE} \SpecialCharTok{\textasciitilde{}} \StringTok{"R"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Summarize data with respect to
+winners.}\label{summarize-data-with-respect-to-winners.}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d\_pop\_vote\_wide }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{group\_by}\NormalTok{(winner) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{races =} \FunctionTok{n}\NormalTok{())}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 2 x 2
+##   winner races
+##   <chr>  <int>
+## 1 D         11
+## 2 R          8
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Sequester shapefile of states from \textasciigrave{}maps\textasciigrave{} library.}
+\NormalTok{states\_map }\OtherTok{\textless{}{-}} \FunctionTok{map\_data}\NormalTok{(}\StringTok{"state"}\NormalTok{)}
+
+\CommentTok{\# Merge d\_pvstate\_wide with state\_map}
+\NormalTok{d\_pvstate\_wide}\SpecialCharTok{$}\NormalTok{region }\OtherTok{\textless{}{-}} \FunctionTok{tolower}\NormalTok{(d\_pvstate\_wide}\SpecialCharTok{$}\NormalTok{state)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pv\_map }\OtherTok{\textless{}{-}}\NormalTok{ d\_pvstate\_wide }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{filter}\NormalTok{(year }\SpecialCharTok{==} \DecValTok{2020}\NormalTok{) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{left\_join}\NormalTok{(states\_map, }\AttributeTok{by =} \StringTok{"region"}\NormalTok{) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{winner =} \FunctionTok{ifelse}\NormalTok{(R\_pv2p }\SpecialCharTok{\textgreater{}}\NormalTok{ D\_pv2p, }\StringTok{"Republican"}\NormalTok{, }\StringTok{"Democrat"}\NormalTok{)}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pv\_win\_map }\OtherTok{\textless{}{-}}\NormalTok{ pv\_map }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(long, lat, }\AttributeTok{group =}\NormalTok{ group)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_polygon}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{fill =}\NormalTok{ winner)) }\SpecialCharTok{+}
+  \FunctionTok{scale\_fill\_manual}\NormalTok{(}\AttributeTok{values =} \FunctionTok{c}\NormalTok{(}\StringTok{"dodgerblue4"}\NormalTok{, }\StringTok{"firebrick"}\NormalTok{))}
+\NormalTok{pv\_win\_map}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{week1-section_files/figure-latex/unnamed-chunk-10-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pv\_maps }\OtherTok{\textless{}{-}}\NormalTok{ d\_pvstate\_wide }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{filter}\NormalTok{(year }\SpecialCharTok{\textgreater{}=} \DecValTok{1980}\NormalTok{) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{left\_join}\NormalTok{(states\_map, }\AttributeTok{by =} \StringTok{"region"}\NormalTok{) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{winner =} \FunctionTok{ifelse}\NormalTok{(R\_pv2p }\SpecialCharTok{\textgreater{}}\NormalTok{ D\_pv2p, }\StringTok{"Republican"}\NormalTok{, }\StringTok{"Democrat"}\NormalTok{)}
+\NormalTok{  ) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(long, lat, }\AttributeTok{group =}\NormalTok{ group)) }\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\AttributeTok{facets =}\NormalTok{ year }\SpecialCharTok{\textasciitilde{}}\NormalTok{.) }\SpecialCharTok{+}
+  \FunctionTok{geom\_polygon}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{fill =}\NormalTok{ winner), }\AttributeTok{color =} \StringTok{"white"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_fill\_manual}\NormalTok{(}\AttributeTok{values =} \FunctionTok{c}\NormalTok{(}\StringTok{"dodgerblue4"}\NormalTok{, }\StringTok{"firebrick"}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{theme\_void}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{strip.text =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{12}\NormalTok{), }
+        \AttributeTok{aspect.ratio =} \FloatTok{0.75}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in left_join(filter(d_pvstate_wide, year >= 1980), states_map, by = "region"): Detected an unexpected many-to-many relationship between `x` and `y`.
+## i Row 1 of `x` matches multiple rows in `y`.
+## i Row 1 of `y` matches multiple rows in `x`.
+## i If a many-to-many relationship is expected, set `relationship =
+##   "many-to-many"` to silence this warning.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pv\_maps}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{week1-section_files/figure-latex/unnamed-chunk-11-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pv2p\_2024\_states }\OtherTok{\textless{}{-}}\NormalTok{ d\_pvstate\_wide }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{filter}\NormalTok{(year }\SpecialCharTok{==} \StringTok{"2020"}\NormalTok{) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{group\_by}\NormalTok{(state) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{summarize}\NormalTok{(}
+    \AttributeTok{R\_pv2p\_24 =}\NormalTok{ (}\FloatTok{0.75}\SpecialCharTok{*}\NormalTok{R\_pv2p\_lag1) }\SpecialCharTok{+}\NormalTok{ (}\FloatTok{0.25}\SpecialCharTok{*}\NormalTok{R\_pv2p\_lag2),}
+    \AttributeTok{D\_pv2p\_24 =}\NormalTok{ (}\FloatTok{0.75}\SpecialCharTok{*}\NormalTok{D\_pv2p\_lag1) }\SpecialCharTok{+}\NormalTok{ (}\FloatTok{0.25}\SpecialCharTok{*}\NormalTok{D\_pv2p\_lag2)}
+\NormalTok{  ) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{margin =}\NormalTok{ R\_pv2p\_24 }\SpecialCharTok{{-}}\NormalTok{ D\_pv2p\_24,}
+    \AttributeTok{winner =} \FunctionTok{ifelse}\NormalTok{(R\_pv2p\_24 }\SpecialCharTok{\textgreater{}}\NormalTok{ D\_pv2p\_24, }\StringTok{"Republican"}\NormalTok{, }\StringTok{"Democrat"}\NormalTok{),}
+    \AttributeTok{region =} \FunctionTok{tolower}\NormalTok{(state)}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pv2p\_2024\_states }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{left\_join}\NormalTok{(states\_map, }\AttributeTok{by =} \StringTok{"region"}\NormalTok{) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(long, lat, }\AttributeTok{group =}\NormalTok{ group)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_polygon}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{fill =}\NormalTok{ margin), }\AttributeTok{color =} \StringTok{"black"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{scale\_fill\_gradient2}\NormalTok{(}\AttributeTok{high =} \StringTok{"firebrick"}\NormalTok{, }
+                       \AttributeTok{low =} \StringTok{"dodgerblue4"}\NormalTok{, }
+                       \AttributeTok{mid =} \StringTok{"white"}\NormalTok{,}
+                       \AttributeTok{name =} \StringTok{"win margin"}\NormalTok{,}
+                       \AttributeTok{breaks =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{50}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{25}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{25}\NormalTok{, }\DecValTok{50}\NormalTok{),}
+                       \AttributeTok{limits =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{50}\NormalTok{, }\DecValTok{50}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{theme\_void}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{week1-section_files/figure-latex/unnamed-chunk-12-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d\_pop\_vote }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ year, }\AttributeTok{y =}\NormalTok{ pv2p, }\AttributeTok{color =}\NormalTok{ party)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{scale\_color\_manual}\NormalTok{(}\AttributeTok{values =} \FunctionTok{c}\NormalTok{(}\StringTok{"dodgerblue4"}\NormalTok{, }\StringTok{"firebrick"}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{ggtitle}\NormalTok{(}\StringTok{"Two Party Vote Share by Party, 1948{-}2020"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{ylab}\NormalTok{(}\StringTok{"Two Party Vote Share (Percentage)"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{xlab}\NormalTok{(}\StringTok{"Time (Years)"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{week1-section_files/figure-latex/unnamed-chunk-13-1.pdf}
+
+\end{document}
