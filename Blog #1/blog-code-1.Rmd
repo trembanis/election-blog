@@ -92,7 +92,7 @@ d_pop_vote |>
   geom_point() +
   geom_line() +
   scale_color_manual(values = c("#003366", "#990000")) + # manually assign colors
-  ggtitle("Two Party Vote Share by Party, 1948-2020") +
+  ggtitle("Fig. II - Two Party Vote Share by Party, 1948-2020") +
   ylab("Two Party Vote Share (Percentage)") +
   xlab("Time (Years)") +
   my_theme()
@@ -113,6 +113,7 @@ d_pop_vote_wide |>
   geom_vline(xintercept = 0) +
   xlab("Margin (Republican - Democrat)") +
   ylab("Count") +
+  ggtitle("Fig. I - Popular Vote Margins, 1948-2020") +
   my_theme()
 ```
 
@@ -140,7 +141,7 @@ pv2p_margins |>
                        name = "margin",
                        breaks = c(-50, -25, 0, 25, 50),
                        limits = c(-50, 50)) +
-  ggtitle("Average Two-Party Vote Share Margin, 1948-2020") +
+  ggtitle("Fig. III - Average Two-Party Vote Share Margin, 1948-2020") +
   # add labels
   geom_label(aes(x = center.long, y = center.lat, label = abbreviation), 
              size = 2.5, color = "#000033", family = "Courier") +
@@ -165,6 +166,7 @@ d_pvstate_wide |>
                        name = "margin",
                        breaks = c(-50, -25, 0, 25, 50),
                        limits = c(-50, 50)) +
+  ggtitle("Fig IV - State Vote Share Margin by Year") +
   # use custom map theme
   my_map_theme() +
   theme(strip.text = element_text(size = 12), legend.position = "right",
