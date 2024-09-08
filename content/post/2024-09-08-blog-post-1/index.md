@@ -15,7 +15,7 @@ At a first pass, the answer seems to be: not really.
 
 Figure 1 plots all 18 presidential elections between 1948 and 2020 by their respective margins in the two-party popular vote. The vast majority of these elections resulted in margins of less than 10 points in either direction, with only two exceeding a 20-point differential – one in favor of a Democrat, and one in favor of a Republican. If the Harris-Trump race remains just about tied, it would fall somewhere around a 0-point margin, putting it in line with one of the two modes; not out of step with historical outcomes at all.
 
-<img src="images/fig1.png" width="100%" />
+<img src="../../../../../../../../../images/fig1.png" width="100%" />
 
 However, Figure 1 does not show trends over time: it could be that many of the elections clustered around 0 occurred over half a century ago, and may therefore be much less useful as points of comparison for the upcoming 2024 contest.
 
