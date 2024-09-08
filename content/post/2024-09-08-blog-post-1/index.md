@@ -15,12 +15,7 @@ At a first pass, the answer seems to be: not really.
 
 Figure 1 plots all 18 presidential elections between 1948 and 2020 by their respective margins in the two-party popular vote. The vast majority of these elections resulted in margins of less than 10 points in either direction, with only two exceeding a 20-point differential – one in favor of a Democrat, and one in favor of a Republican. If the Harris-Trump race remains just about tied, it would fall somewhere around a 0-point margin, putting it in line with one of the two modes; not out of step with historical outcomes at all.
 
-
-```
-## here() starts at /Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog
-```
-
-<img src="../../../images/fig1.png" width="100%" />
+<img src="images/fig1.png" width="100%" />
 
 However, Figure 1 does not show trends over time: it could be that many of the elections clustered around 0 occurred over half a century ago, and may therefore be much less useful as points of comparison for the upcoming 2024 contest.
 
@@ -28,7 +23,7 @@ Figure II offers a clearer picture of national-level competitiveness trends. Bet
 
 Figure II confirms that, were the 2024 race to result in even tighter margins than the last four presidential elections, this would be consistent with the latest trends; for some time, neither party seems to have had the momentum which characterized the blowout victories of the ‘60s and ‘70s.
 
-<img src="../../../images/fig2.png" width="100%" />
+<img src="images/fig2.png" width="100%" />
 
 What these graphs fail to illustrate is why blowouts seem to have become less common in recent elections. One possible explanation concerns “affective polarization” – that is, the tendency of partisans to express distaste for members of the opposing party – which Iyengar et al. [note](“https://pcl.sites.stanford.edu/sites/g/files/sbiybj22066/files/media/file/iyengar-poq-affect-not-ideology.pdf”) has grown even where this animosity does not correspond with more divergent policy positions between Republicans and Democrats. It could be, then, that the underlying mechanism, whereby voters become predictably dissatisfied with the party in power, is still at work, but that intraparty dissatisfaction cannot, in many cases, override partisans’ increased hostility to the opposing party.
 
@@ -38,7 +33,7 @@ Of course, the national popular vote is only one part of the equation – we sho
 
 To this end, Figure III provides a bird’s eye view of states’ voting records between 1948-2020 by compressing all 18 races into their state-level two-party vote share margin. The map places these margins on a continuous scale, where deep red represents an average margin in favor of Republicans, deep blue represents an average margin in favor of Democrats, and white is an average margin of 0.
 
-<img src="../../../images/fig3.png" width="100%" />
+<img src="images/fig3.png" width="100%" />
 
 Since our interest lies with the 2024 election, we should now ask: how well does this map reflect the electoral realities Trump and Harris are currently facing?
 
@@ -50,7 +45,7 @@ Imagine we have two states, A and B, which both have average margins around 0 fo
 
 The difference between state A and state B is invisible in Figure III, but it is important to forecasters and campaign strategists alike: it would not make sense – and might be highly wasteful – to consider state B a “toss-up” state on the basis of its past voting patterns.
 
-<img src="../../../images/fig4.png" width="100%" />
+<img src="images/fig4.png" width="100%" />
 
 Figure IV allows us to visually tease apart state As and state Bs. If we focus, for instance, on California, we see that it experienced a macro-swing from a purple state with an occasional Republican lean at the start of the dataset, to a lean-Democratic state in the ‘90s and early aughts, and finally to a deep blue state in the last four presidential elections. California therefore seems to be more of a state A, compared to a state like Pennsylvania which has experienced more micro-swings from one election to the next in the same period. 
 
