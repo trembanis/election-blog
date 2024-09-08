@@ -87,7 +87,7 @@ states_map_labeled <- states_map |>
 ## Graphs
 
 ```{r vote share graph, echo=FALSE}
-d_pop_vote |>
+fig2 <- d_pop_vote |>
   ggplot(aes(x = year, y = pv2p, color = party)) +
   geom_point() +
   geom_line() +
@@ -96,6 +96,7 @@ d_pop_vote |>
   ylab("Two Party Vote Share (Percentage)") +
   xlab("Time (Years)") +
   my_theme()
+fig2
 ```
 
 ```{r margin histogram, echo=FALSE}
