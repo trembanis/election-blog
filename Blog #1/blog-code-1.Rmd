@@ -63,6 +63,19 @@ my_map_theme <- function() {
 ```
 
 
+```{r}
+state_labels <- data.frame(
+  region = tolower(state.name),
+  abbreviation = state.abb,
+  center.long = state.center$x,
+  center.lat = state.center$y
+)
+
+states_map_labeled <- states_map |>
+  left_join(state_labels, by = "region")
+```
+
+
 ## Competitiveness
 
 ```{r vote share graph, echo=FALSE}
@@ -111,7 +124,7 @@ pv2p_margins <- d_pvstate_wide |>
 
 ```{r margin map, echo=FALSE}
 pv2p_margins |>
-  left_join(states_map, by = "region") |> # merge to map by state
+  left_join(states_map_labeled, by = "region") |> # merge to map by state
   ggplot(aes(long, lat, group = group)) + # set aesthetics with longitude and latitude
   geom_polygon(aes(fill = margin), color = "#000033") +
   scale_fill_gradient2(high = "firebrick", # high (positive) values represent a greater average Republican vote share
@@ -121,6 +134,7 @@ pv2p_margins |>
                        breaks = c(-50, -25, 0, 25, 50),
                        limits = c(-50, 50)) +
   ggtitle("Average Two-Party Vote Share Margin, 1948-2020") +
+  geom_label(aes(x = center.long, y = center.lat, label = abbreviation), size = 2.5, color = "#000033", face = "bold", family = "Courier") +
   my_map_theme() +
   theme(aspect.ratio = 0.5)
 ```
