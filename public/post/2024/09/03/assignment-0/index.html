@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-us">
-  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=4321&amp;path=livereload" data-no-instant defer></script>
+  <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Assignment 0 | A minimal Hugo website</title>
@@ -380,7 +380,7 @@ write.csv(combined_data, &quot;/Users/ellatrembanis/Desktop/Gov 1347/election-bl
   ggtitle(&quot;Democratic Performance in Florida Since 1948&quot;)
 florida_hist
 </code></pre>
-<img src="/post/2024/09/03/assignment-0/index_files/figure-html/hist-1.png" width="672" />
+<img src="https://example.org/post/2024/09/03/assignment-0/index_files/figure-html/hist-1.png" width="672" />
 <pre><code class="language-r">dem_swing &lt;- combined_data |&gt;
   filter(party == &quot;Democrat&quot;) |&gt;
   filter(state == &quot;Georgia&quot; | state == &quot;Michigan&quot; | state == &quot;Arizona&quot; |
@@ -397,7 +397,7 @@ state_hist &lt;- ggplot(data = dem_swing,
   geom_vline(xintercept = 50)
 state_hist
 </code></pre>
-<img src="/post/2024/09/03/assignment-0/index_files/figure-html/facet wrap-1.png" width="672" />
+<img src="https://example.org/post/2024/09/03/assignment-0/index_files/figure-html/facet wrap-1.png" width="672" />
 <h1 id="b-scatterplot">(b) Scatterplot</h1>
 <p>In ggplot, plot a scatterplot of the two-party Democratic vote share in Florida going back to 1948 on the x-axis and the national Democratic two-party vote share on the y-axis. Instead of dots, label each point with the election year using geom_label. Also label the chart as appropriate and play with different theme settings until you have a chart style you are satisfied with.</p>
 <pre><code class="language-r">florida_scatter &lt;- ggplot(combined_data_wide, 
@@ -409,7 +409,7 @@ state_hist
   ggtitle(&quot;Democratic Performance in Florida vs. National Vote Share&quot;)
 florida_scatter
 </code></pre>
-<img src="/post/2024/09/03/assignment-0/index_files/figure-html/scatter-1.png" width="672" />
+<img src="https://example.org/post/2024/09/03/assignment-0/index_files/figure-html/scatter-1.png" width="672" />
 
 </main>
 
