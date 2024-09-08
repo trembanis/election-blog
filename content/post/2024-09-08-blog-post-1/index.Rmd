@@ -15,7 +15,7 @@ At a first pass, the answer seems to be: not really.
 
 Figure 1 plots all 18 presidential elections between 1948 and 2020 by their respective margins in the two-party popular vote. The vast majority of these elections resulted in margins of less than 10 points in either direction, with only two exceeding a 20-point differential – one in favor of a Democrat, and one in favor of a Republican. If the Harris-Trump race remains just about tied, it would fall somewhere around a 0-point margin, putting it in line with one of the two modes; not out of step with historical outcomes at all.
 
-```{r fig 1, echo=FALSE, fig.cap="A caption", out.width = '100%'}
+```{r fig 1, echo=FALSE, out.width = '100%'}
 knitr::include_graphics("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Blog #1/fig1.png")
 ```
 
@@ -25,7 +25,7 @@ Figure II offers a clearer picture of national-level competitiveness trends. Bet
 
 Figure II confirms that, were the 2024 race to result in even tighter margins than the last four presidential elections, this would be consistent with the latest trends; for some time, neither party seems to have had the momentum which characterized the blowout victories of the ‘60s and ‘70s.
 
-```{r fig 2, echo=FALSE, fig.cap="A caption", out.width = '100%'}
+```{r fig 2, echo=FALSE, out.width = '100%'}
 knitr::include_graphics("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Blog #1/fig2.png")
 ```
 
@@ -37,7 +37,7 @@ Of course, the national popular vote is only one part of the equation – we sho
 
 To this end, Figure III provides a bird’s eye view of states’ voting records between 1948-2020 by compressing all 18 races into their state-level two-party vote share margin. The map places these margins on a continuous scale, where deep red represents an average margin in favor of Republicans, deep blue represents an average margin in favor of Democrats, and white is an average margin of 0.
 
-```{r fig 3, echo=FALSE, fig.cap="A caption", out.width = '100%'}
+```{r fig 3, echo=FALSE, out.width = '100%'}
 knitr::include_graphics("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Blog #1/fig3.png")
 ```
 
@@ -51,7 +51,7 @@ Imagine we have two states, A and B, which both have average margins around 0 fo
 
 The difference between state A and state B is invisible in Figure III, but it is important to forecasters and campaign strategists alike: it would not make sense – and might be highly wasteful – to consider state B a “toss-up” state on the basis of its past voting patterns.
 
-```{r fig 4, echo=FALSE, fig.cap="A caption", out.width = '100%'}
+```{r fig 4, echo=FALSE, out.width = '100%'}
 knitr::include_graphics("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Blog #1/fig4.png")
 ```
 
