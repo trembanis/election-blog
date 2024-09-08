@@ -9,6 +9,8 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+#Set-Up
+
 ```{r load data and packages, echo=FALSE}
 library(tidyverse)
 library(ggplot2)
@@ -30,15 +32,18 @@ states_map <- map_data("state")
 ```{r custom theme, echo=FALSE}
 my_theme <- function() {
   theme(
+  # set panel features
   panel.border = element_rect(color = "#000033", fill = NA, linetype = 1),
   panel.background = element_rect(fill = "#FFFFFF"),
   panel.grid.major.x = element_line(color = "#9999CC", linetype = 2, size = 0.2),
   panel.grid.minor.x = element_blank(),
   panel.grid.major.y = element_line(color = "#9999CC", linetype = 2, size = 0.2),
   panel.grid.minor.y = element_blank(),
+  # set text and axis features
   text = element_text(color = "#000033", family = "Courier"),
   title = element_text(color = "#000033", face = "bold", family = "Courier"),
   axis.ticks = element_line(color = "#000033"),
+  # set legend features
   legend.position = "bottom",
   legend.background = element_rect(color = "#000033", fill = NA, linetype = 1)
   )
@@ -48,13 +53,17 @@ my_theme <- function() {
 ```{r simplified custom theme, echo=FALSE}
 my_map_theme <- function() {
   theme(
+    # set panel features
     panel.background = element_rect(fill = "#FFFFFF"),
+    # set text features
     text = element_text(color = "#000033", family = "Courier"),
     title = element_text(color = "#000033", face = "bold", family = "Courier"),
+    # set legend features
     legend.position = "bottom",
     legend.title.position = "top",
     legend.background = element_rect(color = "#000033", fill = NA, linetype = 1),
     legend.margin = margin(10, 20, 10, 20, "pt"),
+    # set axis features to not display
     axis.title = element_blank(),
     axis.text = element_blank(),
     axis.ticks = element_blank()
@@ -62,11 +71,11 @@ my_map_theme <- function() {
 }
 ```
 
-
-```{r}
+```{r labeling, echo=FALSE}
 state_labels <- data.frame(
   region = tolower(state.name),
   abbreviation = state.abb,
+  # display abbreviation in center of state
   center.long = state.center$x,
   center.lat = state.center$y
 )
@@ -75,15 +84,14 @@ states_map_labeled <- states_map |>
   left_join(state_labels, by = "region")
 ```
 
-
-## Competitiveness
+## Graphs
 
 ```{r vote share graph, echo=FALSE}
 d_pop_vote |>
   ggplot(aes(x = year, y = pv2p, color = party)) +
   geom_point() +
   geom_line() +
-  scale_color_manual(values = c("dodgerblue4", "firebrick")) +
+  scale_color_manual(values = c("#003366", "#990000")) + # manually assign colors
   ggtitle("Two Party Vote Share by Party, 1948-2020") +
   ylab("Two Party Vote Share (Percentage)") +
   xlab("Time (Years)") +
@@ -108,7 +116,6 @@ d_pop_vote_wide |>
   my_theme()
 ```
 
-
 ```{r merge d_pvstate_wide with state map, echo=FALSE}
 pv2p_margins <- d_pvstate_wide |>
   group_by(state) |>
@@ -127,14 +134,17 @@ pv2p_margins |>
   left_join(states_map_labeled, by = "region") |> # merge to map by state
   ggplot(aes(long, lat, group = group)) + # set aesthetics with longitude and latitude
   geom_polygon(aes(fill = margin), color = "#000033") +
-  scale_fill_gradient2(high = "firebrick", # high (positive) values represent a greater average Republican vote share
-                       low = "dodgerblue4", # low (negative) values represent a greater average Democratic vote share
+  scale_fill_gradient2(high = "#990000", # high (positive) values represent a greater average Republican vote share
+                       low = "#003366", # low (negative) values represent a greater average Democratic vote share
                        mid = "white", # competitive margins approach zero and display as white / light-colored
                        name = "margin",
                        breaks = c(-50, -25, 0, 25, 50),
                        limits = c(-50, 50)) +
   ggtitle("Average Two-Party Vote Share Margin, 1948-2020") +
-  geom_label(aes(x = center.long, y = center.lat, label = abbreviation), size = 2.5, color = "#000033", face = "bold", family = "Courier") +
+  # add labels
+  geom_label(aes(x = center.long, y = center.lat, label = abbreviation), 
+             size = 2.5, color = "#000033", family = "Courier") +
+  # use custom map theme
   my_map_theme() +
   theme(aspect.ratio = 0.5)
 ```
@@ -149,16 +159,14 @@ d_pvstate_wide |>
   ggplot(aes(long, lat, group = group)) +
   facet_wrap(facets = year ~.) + # produce separate maps for each year, 1948-2020
   geom_polygon(aes(fill = margin), color = "black") +
-  scale_fill_gradient2(high = "firebrick", # high (positive) values represent a greater average Republican vote share
-                       low = "dodgerblue4", # low (negative) values represent a greater average Democratic vote share
+  scale_fill_gradient2(high = "#990000", # high (positive) values represent a greater average Republican vote share
+                       low = "#003366", # low (negative) values represent a greater average Democratic vote share
                        mid = "white", # competitive margins approach zero and display as white / light-colored
                        name = "margin",
                        breaks = c(-50, -25, 0, 25, 50),
                        limits = c(-50, 50)) +
+  # use custom map theme
   my_map_theme() +
   theme(strip.text = element_text(size = 12), legend.position = "right",
         aspect.ratio = 0.75)
 ```
-
-## State Trends
-
