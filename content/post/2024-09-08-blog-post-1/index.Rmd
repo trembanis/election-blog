@@ -136,6 +136,19 @@ Of course, the national popular vote is only one part of the equation – we sho
 
 To this end, Figure III provides a bird’s eye view of states’ voting records between 1948-2020 by compressing all 18 races into their state-level two-party vote share margin. The map places these margins on a continuous scale, where deep red represents an average margin in favor of Republicans, deep blue represents an average margin in favor of Democrats, and white is an average margin of 0.
 
+```{r merge d_pvstate_wide with state map, echo=FALSE}
+pv2p_margins <- d_pvstate_wide |>
+  group_by(state) |>
+  summarize(
+    avg_D_pv2p = mean(D_pv2p), # average Dem vote share by state (all time)
+    avg_R_pv2p = mean(R_pv2p) # average Rep vote share by state (all time)
+  ) |>
+  mutate(
+    margin = avg_R_pv2p - avg_D_pv2p, # average margin (+Rep, -Dem)
+    region = tolower(state) # create variable for merging purposes
+  )
+```
+
 ```{r fig III, echo=FALSE, include=TRUE}
 pv2p_margins |>
   left_join(states_map_labeled, by = "region") |> # merge to map by state
