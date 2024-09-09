@@ -17,13 +17,40 @@ At a first pass, the answer seems to be: not really.
 
 Figure 1 plots all 18 presidential elections between 1948 and 2020 by their respective margins in the two-party popular vote. The vast majority of these elections resulted in margins of less than 10 points in either direction, with only two exceeding a 20-point differential – one in favor of a Democrat, and one in favor of a Republican. If the Harris-Trump race remains just about tied, it would fall somewhere around a 0-point margin, putting it in line with one of the two modes; not out of step with historical outcomes at all.
 
-<img src="../../../../../../../../../images/fig1.png" width="100%" />
+
+
+
+```
+## Warning: The `size` argument of `element_line()` is deprecated as of ggplot2 3.4.0.
+## ℹ Please use the `linewidth` argument instead.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.
+```
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/fig 1 code-1.png" width="672" />
 
 However, Figure 1 does not show trends over time: it could be that many of the elections clustered around 0 occurred over half a century ago, and may therefore be much less useful as points of comparison for the upcoming 2024 contest.
 
 Figure II offers a clearer picture of national-level competitiveness trends. Between the 1950s and the 1980s, the graph shows a highly regular pattern where the parties trade off blowout victories about every three or four election cycles, with one highly competitive race in between. This pendulum swing begins to break down in the early 1990s – as even the highest-margin races begin contracting to 50% – and becomes virtually indistinguishable in the 21st century. Though a Republican candidate has not won the two-party popular vote since 2004, Democrats have not run away with the subsequent elections either, with both parties’ vote shares hovering between 45-55%. 
 
 Figure II confirms that, were the 2024 race to result in even tighter margins than the last four presidential elections, this would be consistent with the latest trends; for some time, neither party seems to have had the momentum which characterized the blowout victories of the ‘60s and ‘70s.
+
+
+``` r
+fig2 <- d_pop_vote |>
+  ggplot(aes(x = year, y = pv2p, color = party)) +
+  geom_point() +
+  geom_line() +
+  scale_color_manual(values = c("#003366", "#990000")) + # manually assign colors
+  ggtitle("Fig. II - Two Party Vote Share by Party, 1948-2020") +
+  ylab("Two Party Vote Share (Percentage)") +
+  xlab("Time (Years)") +
+  my_theme()
+fig2
+```
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-1-1.png" width="672" />
 
 <img src="../../../../../../../../../images/fig2.png" width="100%" />
 
