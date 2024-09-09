@@ -17,9 +17,96 @@ At a first pass, the answer seems to be: not really.
 
 Figure 1 plots all 18 presidential elections between 1948 and 2020 by their respective margins in the two-party popular vote. The vast majority of these elections resulted in margins of less than 10 points in either direction, with only two exceeding a 20-point differential – one in favor of a Democrat, and one in favor of a Republican. If the Harris-Trump race remains just about tied, it would fall somewhere around a 0-point margin, putting it in line with one of the two modes; not out of step with historical outcomes at all.
 
-```{r fig 1, echo=FALSE, out.width = '100%'}
-knitr::include_graphics("/images/fig1.png", error = FALSE)
+```{r set-up, echo=FALSE, include=FALSE}
+library(tidyverse)
+library(ggplot2)
+library(maps)
+
+# two-party vote share (state-by-state)
+d_pvstate_wide <- read.csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/data/clean_wide_state_2pv_1948_2020.csv")
+
+# electoral college
+ec_full <- read.csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/data/ec_full.csv")
+
+# popular vote (national)
+d_pop_vote <- read.csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/data/popvote_1948-2020.csv")
+
+# map of u.s. with state borders
+states_map <- map_data("state")
+
+my_theme <- function() {
+  theme(
+  # set panel features
+  panel.border = element_rect(color = "#000033", fill = NA, linetype = 1),
+  panel.background = element_rect(fill = "#FFFFFF"),
+  panel.grid.major.x = element_line(color = "#9999CC", linetype = 2, size = 0.2),
+  panel.grid.minor.x = element_blank(),
+  panel.grid.major.y = element_line(color = "#9999CC", linetype = 2, size = 0.2),
+  panel.grid.minor.y = element_blank(),
+  # set text and axis features
+  text = element_text(color = "#000033", family = "Courier"),
+  title = element_text(color = "#000033", face = "bold", family = "Courier"),
+  axis.ticks = element_line(color = "#000033"),
+  # set legend features
+  legend.position = "bottom",
+  legend.background = element_rect(color = "#000033", fill = NA, linetype = 1)
+  )
+}
+
+my_map_theme <- function() {
+  theme(
+    # set panel features
+    panel.background = element_rect(fill = "#FFFFFF"),
+    # set text features
+    text = element_text(color = "#000033", family = "Courier"),
+    title = element_text(color = "#000033", face = "bold", family = "Courier"),
+    # set legend features
+    legend.position = "bottom",
+    legend.title.position = "top",
+    legend.background = element_rect(color = "#000033", fill = NA, linetype = 1),
+    legend.margin = margin(10, 20, 10, 20, "pt"),
+    # set axis features to not display
+    axis.title = element_blank(),
+    axis.text = element_blank(),
+    axis.ticks = element_blank()
+  )
+}
+
+state_labels <- data.frame(
+  region = tolower(state.name),
+  abbreviation = state.abb,
+  # display abbreviation in center of state
+  center.long = state.center$x,
+  center.lat = state.center$y
+)
+
+states_map_labeled <- states_map |>
+  left_join(state_labels, by = "region")
 ```
+
+```{r fig 1 code, echo=FALSE, include=FALSE}
+# pivot pop_vote data frame so parties are columns (previously both parties' vote shares fell in the pv2p column)
+d_pop_vote_wide <- d_pop_vote |> 
+    select(year, party, pv2p) |>
+    pivot_wider(names_from = party, values_from = pv2p)
+
+fig1 <- d_pop_vote_wide |>
+  mutate(
+    margin = republican - democrat
+  ) |>
+  ggplot(aes(x = margin)) +
+  geom_histogram(bins = 20, fill = "#9999CC", col = "#000033") +
+  geom_vline(xintercept = 0) +
+  xlab("Margin (Republican - Democrat)") +
+  ylab("Count") +
+  ggtitle("Fig. I - Popular Vote Margins, 1948-2020") +
+  my_theme()
+```
+
+```{r print, echo=FALSE, include=TRUE}
+fig1
+```
+
 
 However, Figure 1 does not show trends over time: it could be that many of the elections clustered around 0 occurred over half a century ago, and may therefore be much less useful as points of comparison for the upcoming 2024 contest.
 
@@ -27,8 +114,20 @@ Figure II offers a clearer picture of national-level competitiveness trends. Bet
 
 Figure II confirms that, were the 2024 race to result in even tighter margins than the last four presidential elections, this would be consistent with the latest trends; for some time, neither party seems to have had the momentum which characterized the blowout victories of the ‘60s and ‘70s.
 
-```{r fig 2, echo=FALSE, out.width = '100%'}
-knitr::include_graphics("/images/fig2.png", error = FALSE)
+```{r fig 2 code, echo=FALSE, include=FALSE}
+fig2 <- d_pop_vote |>
+  ggplot(aes(x = year, y = pv2p, color = party)) +
+  geom_point() +
+  geom_line() +
+  scale_color_manual(values = c("#003366", "#990000")) + # manually assign colors
+  ggtitle("Fig. II - Two Party Vote Share by Party, 1948-2020") +
+  ylab("Two Party Vote Share (Percentage)") +
+  xlab("Time (Years)") +
+  my_theme()
+```
+
+```{r print, echo=FALSE, include=TRUE}
+fig2
 ```
 
 What these graphs fail to illustrate is why blowouts seem to have become less common in recent elections. One possible explanation concerns “affective polarization” – that is, the tendency of partisans to express distaste for members of the opposing party – which Iyengar et al. [note](“https://pcl.sites.stanford.edu/sites/g/files/sbiybj22066/files/media/file/iyengar-poq-affect-not-ideology.pdf”) has grown even where this animosity does not correspond with more divergent policy positions between Republicans and Democrats. It could be, then, that the underlying mechanism, whereby voters become predictably dissatisfied with the party in power, is still at work, but that intraparty dissatisfaction cannot, in many cases, override partisans’ increased hostility to the opposing party.
