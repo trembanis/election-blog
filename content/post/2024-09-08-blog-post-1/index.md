@@ -11,7 +11,7 @@ slug: "blog-post-1"
 ---
 # Competitiveness on the National Stage
 
-As we enter the final, frantic months of the 2024 presidential election with the two major party candidates, former President Donald Trump and Vice President Kamala Harris, “effectively tied” according to Reuters’ [analysis](“https://www.reuters.com/world/us/harris-trump-effectively-tied-final-stretch-2024-race-nytsiena-poll-shows-2024-09-08/”) of a recent NY Times/Siena poll, circumstances beg the question: how competitive are American presidential elections, anyway? Put another way, if current national polls end up being a fair predictor of the vote share margin come Election Day, will this razor-tight race be out of step with historical races?
+As we enter the final, frantic months of the 2024 presidential election with the two major party candidates, former President Donald Trump and Vice President Kamala Harris, “effectively tied” according to Reuters’ [analysis](“https://www.reuters.com/world/us/harris-trump-effectively-tied-final-stretch-2024-race-nytsiena-poll-shows-2024-09-08/”) of a recent NY Times/Siena poll, circumstances beg the question: how competitive are American presidential elections, anyway? Put another way, if current national polls end up being a fair predictor of the vote share margin come Election Day, will this razor-tight race be out of step with historical elections?
 
 At a first pass, the answer seems to be: not really.
 
