@@ -15,44 +15,24 @@ As we enter the final, frantic months of the 2024 presidential election with the
 
 At a first pass, the answer seems to be: not really.
 
-Figure 1 plots all 18 presidential elections between 1948 and 2020 by their respective margins in the two-party popular vote. The vast majority of these elections resulted in margins of less than 10 points in either direction, with only two exceeding a 20-point differential – one in favor of a Democrat, and one in favor of a Republican. If the Harris-Trump race remains just about tied, it would fall somewhere around a 0-point margin, putting it in line with one of the two modes; not out of step with historical outcomes at all.
+Figure I plots all 18 presidential elections between 1948 and 2020 by their respective margins in the two-party popular vote. The vast majority of these elections resulted in margins of less than 10 points in either direction, with only two exceeding a 20-point differential – one in favor of a Democrat, and one in favor of a Republican. If the Harris-Trump race remains just about tied, it would fall somewhere around a 0-point margin, putting it in line with one of the two modes; not out of step with historical outcomes at all.
 
 
 
 
-```
-## Warning: The `size` argument of `element_line()` is deprecated as of ggplot2 3.4.0.
-## ℹ Please use the `linewidth` argument instead.
-## This warning is displayed once every 8 hours.
-## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
-## generated.
-```
 
-<img src="{{< blogdown/postref >}}index_files/figure-html/fig 1 code-1.png" width="672" />
+<img src="{{< blogdown/postref >}}index_files/figure-html/fig 1 print-1.png" width="672" />
 
-However, Figure 1 does not show trends over time: it could be that many of the elections clustered around 0 occurred over half a century ago, and may therefore be much less useful as points of comparison for the upcoming 2024 contest.
+
+However, Figure I does not show trends over time: it could be that many of the elections clustered around 0 occurred over half a century ago, and may therefore be much less useful as points of comparison for the upcoming 2024 contest.
 
 Figure II offers a clearer picture of national-level competitiveness trends. Between the 1950s and the 1980s, the graph shows a highly regular pattern where the parties trade off blowout victories about every three or four election cycles, with one highly competitive race in between. This pendulum swing begins to break down in the early 1990s – as even the highest-margin races begin contracting to 50% – and becomes virtually indistinguishable in the 21st century. Though a Republican candidate has not won the two-party popular vote since 2004, Democrats have not run away with the subsequent elections either, with both parties’ vote shares hovering between 45-55%. 
 
 Figure II confirms that, were the 2024 race to result in even tighter margins than the last four presidential elections, this would be consistent with the latest trends; for some time, neither party seems to have had the momentum which characterized the blowout victories of the ‘60s and ‘70s.
 
 
-``` r
-fig2 <- d_pop_vote |>
-  ggplot(aes(x = year, y = pv2p, color = party)) +
-  geom_point() +
-  geom_line() +
-  scale_color_manual(values = c("#003366", "#990000")) + # manually assign colors
-  ggtitle("Fig. II - Two Party Vote Share by Party, 1948-2020") +
-  ylab("Two Party Vote Share (Percentage)") +
-  xlab("Time (Years)") +
-  my_theme()
-fig2
-```
 
-<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-1-1.png" width="672" />
-
-<img src="../../../../../../../../../images/fig2.png" width="100%" />
+<img src="{{< blogdown/postref >}}index_files/figure-html/fig 2 print-1.png" width="672" />
 
 What these graphs fail to illustrate is why blowouts seem to have become less common in recent elections. One possible explanation concerns “affective polarization” – that is, the tendency of partisans to express distaste for members of the opposing party – which Iyengar et al. [note](“https://pcl.sites.stanford.edu/sites/g/files/sbiybj22066/files/media/file/iyengar-poq-affect-not-ideology.pdf”) has grown even where this animosity does not correspond with more divergent policy positions between Republicans and Democrats. It could be, then, that the underlying mechanism, whereby voters become predictably dissatisfied with the party in power, is still at work, but that intraparty dissatisfaction cannot, in many cases, override partisans’ increased hostility to the opposing party.
 
@@ -62,7 +42,10 @@ Of course, the national popular vote is only one part of the equation – we sho
 
 To this end, Figure III provides a bird’s eye view of states’ voting records between 1948-2020 by compressing all 18 races into their state-level two-party vote share margin. The map places these margins on a continuous scale, where deep red represents an average margin in favor of Republicans, deep blue represents an average margin in favor of Democrats, and white is an average margin of 0.
 
-<img src="../../../../../../../../../images/fig3.png" width="100%" />
+
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/print fig 3-1.png" width="672" />
+
 
 Since our interest lies with the 2024 election, we should now ask: how well does this map reflect the electoral realities Trump and Harris are currently facing?
 
@@ -74,7 +57,10 @@ Imagine we have two states, A and B, which both have average margins around 0 fo
 
 The difference between state A and state B is invisible in Figure III, but it is important to forecasters and campaign strategists alike: it would not make sense – and might be highly wasteful – to consider state B a “toss-up” state on the basis of its past voting patterns.
 
-<img src="../../../../../../../../../images/fig4.png" width="100%" />
+
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/print fig4-1.png" width="672" />
+
 
 Figure IV allows us to visually tease apart state As and state Bs. If we focus, for instance, on California, we see that it experienced a macro-swing from a purple state with an occasional Republican lean at the start of the dataset, to a lean-Democratic state in the ‘90s and early aughts, and finally to a deep blue state in the last four presidential elections. California therefore seems to be more of a state A, compared to a state like Pennsylvania which has experienced more micro-swings from one election to the next in the same period. 
 
