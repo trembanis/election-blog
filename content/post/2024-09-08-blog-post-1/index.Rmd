@@ -2,7 +2,9 @@
 title: 'Blog Post #1'
 author: "By Ella Trembanis"
 date: "2024-09-08"
-output: pdf_document
+output:
+  html_document:
+    df_print: paged
 categories: []
 tags: []
 slug: "blog-post-1"
