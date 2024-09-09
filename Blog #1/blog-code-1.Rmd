@@ -105,7 +105,7 @@ d_pop_vote_wide <- d_pop_vote |>
     select(year, party, pv2p) |>
     pivot_wider(names_from = party, values_from = pv2p)
 
-d_pop_vote_wide |>
+fig1 <- d_pop_vote_wide |>
   mutate(
     margin = republican - democrat
   ) |>
@@ -116,6 +116,7 @@ d_pop_vote_wide |>
   ylab("Count") +
   ggtitle("Fig. I - Popular Vote Margins, 1948-2020") +
   my_theme()
+fig1
 ```
 
 ```{r merge d_pvstate_wide with state map, echo=FALSE}
