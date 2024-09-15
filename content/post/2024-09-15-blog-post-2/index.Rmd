@@ -1,0 +1,150 @@
+---
+title: "Blog Post #2"
+author: "By Ella Trembanis"
+date: '2024-09-15'
+output:
+  html_document:
+    df_print: paged
+categories: []
+tags: []
+slug: "blog-post-2"
+---
+# Voters & "The Economy"
+
+# Gross Domestic Product (GDP)
+
+```{r set-up, echo=FALSE, include=FALSE, warning=FALSE}
+library(ggplot2)
+library(tidyverse)
+
+# My custom theme
+my_theme <- function() {
+  theme(
+  # set panel features
+  panel.border = element_rect(color = "#000033", fill = NA, linetype = 1),
+  panel.background = element_rect(fill = "#FFFFFF"),
+  panel.grid.major.x = element_line(color = "#9999CC", linetype = 2, size = 0.2),
+  panel.grid.minor.x = element_blank(),
+  panel.grid.major.y = element_line(color = "#9999CC", linetype = 2, size = 0.2),
+  panel.grid.minor.y = element_blank(),
+  # set text and axis features
+  text = element_text(color = "#000033", family = "Courier"),
+  title = element_text(color = "#000033", face = "bold", family = "Courier"),
+  axis.ticks = element_line(color = "#000033"),
+  # set legend features
+  legend.position = "bottom",
+  legend.background = element_rect(color = "#000033", fill = NA, linetype = 1)
+  )
+}
+
+# Load popular vote data
+popvote <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Week2/data/popvote_1948-2020.csv")
+
+
+# FRED variables:
+
+# GDP, billions $, 1947-2024
+# GDP_growth_quarterly, %
+# RDPI, $, 1959-2024
+# RDPI_growth_quarterly, %
+# CPI, $ index, 1947-2024
+# unemployment, %, 1948-2024
+# sp500_, $, 1927-2024 
+
+# Load Fred
+fred <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Week2/data/fred_econ.csv")
+
+# BEA variables:
+
+# GDP, 1947-2024 (all)
+# GNP
+# RDPI
+# Personal consumption expenditures
+# Goods
+# Durable goods
+# Nondurable goods
+# Services 
+# Population (midperiod, thousands)
+
+# Load Bea
+bea <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Week2/data/bea_econ.csv") |> 
+  # standardize column names
+  rename(year = "Year",
+         quarter = "Quarter", 
+         gdp = "Gross domestic product", 
+         gnp = "Gross national product", 
+         dpi = "Disposable personal income", 
+         consumption = "Personal consumption expenditures", 
+         goods = "Goods", 
+         durables = "Durable goods", 
+         nondurables = "Nondurable goods", 
+         services = "Services", 
+         pop = "Population (midperiod, thousands)")
+
+# Filter and Merge
+
+party_econ <- popvote |> 
+  # incumbent party vote share only
+  filter(incumbent_party == TRUE) |> 
+  select(year, pv, pv2p, winner, incumbent) |> 
+  # filter to Q2 (most recent available quarter of current year)
+  left_join(fred |> filter(quarter == 2)) |> 
+  left_join(bea |> filter(quarter == "Q2") |> 
+              select(year, dpi))
+
+inc_econ <- popvote |>
+  # incumbent (individual) vote share only, omit 2020
+  filter(incumbent == TRUE & year != 2020) |>
+  select(year, pv, pv2p, winner) |>
+  left_join(fred |> 
+              filter(quarter == 2)) |>
+  left_join(bea |> 
+              filter(quarter == "Q2") |>
+              select(year, dpi))
+
+heir_econ <- popvote |>
+  # incumbent (same-party heir) vote share only
+  filter(incumbent_party == TRUE & incumbent == FALSE) |>
+  select(year, pv, pv2p, winner) |>
+  left_join(fred |>
+              filter(quarter == 2)) |>
+  left_join(bea |>
+              filter(quarter == "Q2") |>
+              select(year, dpi))
+```
+
+```{r fig 1 code, echo=FALSE, include=FALSE, warning=FALSE}
+fig1 <- party_econ |> 
+  ggplot(aes(x = GDP_growth_quarterly, y = pv2p, label = year)) + 
+  geom_label(aes(family = "Courier")) + 
+  geom_smooth(method = "lm", formula = y ~ x, color = "#9999CC") +
+  geom_hline(yintercept = 50, lty = 2, color = "#000033") + 
+  geom_vline(xintercept = 0.01, lty = 2, color = "#000033") + 
+  labs(x = "Second Quarter GDP Growth (%)", 
+       y = "Popular Vote Share - Incumbent Party (%)", 
+       title = "Fig. I - Q2 GDP vs. Vote Share") + 
+  my_theme() + 
+  theme(plot.title = element_text(size = 18))
+```
+
+```{r fig 1 print, echo=FALSE, include=TRUE, warning=FALSE}
+fig1
+```
+
+
+
+# Unemployment
+
+
+
+# Disposable Personal Income (DPI)
+
+# Consumer Price Index (CPI)
+
+# Models in Review
+
+
+
+# Prediction, and a Note on Incumbency
+
+
