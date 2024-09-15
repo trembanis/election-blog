@@ -39,12 +39,11 @@ my_theme <- function() {
 
 # Load popular vote data
 ```{r load pop}
-d_popvote <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Week2/data/popvote_1948-2020.csv")
+popvote <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Week2/data/popvote_1948-2020.csv")
 ```
 
 # FRED variables:
 
-# Variables, units, & ranges: 
 # GDP, billions $, 1947-2024
 # GDP_growth_quarterly, %
 # RDPI, $, 1959-2024
@@ -54,7 +53,7 @@ d_popvote <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/elect
 # sp500_, $, 1927-2024 
 
 ```{r load fred}
-d_fred <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Week2/data/fred_econ.csv")
+fred <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Week2/data/fred_econ.csv")
 ```
 
 # BEA variables:
@@ -70,7 +69,7 @@ d_fred <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election
 # Population (midperiod, thousands)
 
 ```{r load bea}
-d_bea <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Week2/data/bea_econ.csv") |> 
+bea <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Week2/data/bea_econ.csv") |> 
   # standardize column names
   rename(year = "Year",
          quarter = "Quarter", 
@@ -87,26 +86,160 @@ d_bea <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-
 
 # Filter and Merge
 
-```{r}
-d_inc_econ <- d_popvote |> 
+```{r clean up}
+inc_econ <- popvote |> 
   # incumbent vote share only
   filter(incumbent_party == TRUE) |> 
   select(year, pv, pv2p, winner) |> 
   # filter to Q2 (most recent available quarter of current year)
-  left_join(d_fred |> filter(quarter == 2)) |> 
-  left_join(d_bea |> filter(quarter == "Q2") |> 
+  left_join(fred |> filter(quarter == 2)) |> 
+  left_join(bea |> filter(quarter == "Q2") |> 
               select(year, dpi))
 ```
 
-# Comparing Predictors
+# Assess GDP
 
-```{r}
-
+```{r gdp scatter w/ 2020}
+inc_econ |> 
+  ggplot(aes(x = GDP_growth_quarterly, y = pv2p, label = year)) + 
+  geom_label(aes(family = "Courier")) + 
+  geom_smooth(method = "lm", formula = y ~ x, color = "#9999CC") +
+  geom_hline(yintercept = 50, lty = 2, color = "#000033") + 
+  geom_vline(xintercept = 0.01, lty = 2, color = "#000033") + 
+  labs(x = "Second Quarter GDP Growth (%)", 
+       y = "Popular Vote Share - Incumbent Party (%)", 
+       title = "Fig. I - Q2 GDP vs. Vote Share") + 
+  my_theme() + 
+  theme(plot.title = element_text(size = 18))
 ```
 
+```{r gdp scatter w/o 2020}
+inc_econ_omit <- inc_econ |>
+  filter(year != 2020)
+
+inc_econ_omit |> 
+  ggplot(aes(x = GDP_growth_quarterly, y = pv2p, label = year)) + 
+  geom_label(aes(family = "Courier")) + 
+  geom_smooth(method = "lm", formula = y ~ x, color = "#9999CC") +
+  geom_hline(yintercept = 50, lty = 2, color = "#000033") + 
+  geom_vline(xintercept = 0.01, lty = 2, color = "#000033") + 
+  labs(x = "Second Quarter GDP Growth (%)", 
+       y = "Popular Vote Share - Incumbent Party (%)", 
+       title = "Fig. II - Q2 GDP vs. Vote Share, 2020 Omitted") + 
+  my_theme() + 
+  theme(plot.title = element_text(size = 18))
+```
+
+```{r gdp boxplot}
+ggplot(inc_econ, aes(x=GDP_growth_quarterly)) +
+  geom_boxplot() +
+  xlab("Second Quarter GDP Growth (%)") +
+  ggtitle("Q2 GDP Growth Boxplot") +
+  geom_label(x=-27.9, y=0.05, label = "2020") +
+  geom_label(x=-8, y=0.05, label = "1980") +
+  my_theme() +
+  theme(plot.title = element_text(size = 18))
+```
+
+# Fit bivariate OLS
+```{r OLS gdp}
+gdp_with <- lm(pv2p ~ GDP_growth_quarterly, 
+               data = inc_econ)
+gdp_with |> summary()
+
+gdp_without <- lm(pv2p ~ GDP_growth_quarterly, 
+                         data = inc_econ_omit)
+gdp_without |> summary()
+```
+
+# Compute correlations between Q2 GDP growth and incumbent vote 2-party vote share.
+```{r correlation}
+cor(inc_econ$GDP_growth_quarterly, 
+    inc_econ$pv2p) # with 2020
+
+cor(inc_econ_omit$GDP_growth_quarterly, 
+    inc_econ_omit$pv2p) # drop 2020
+```
+
+# Assess unemployment
+
+```{r unemployment scatter}
+inc_econ |> 
+  ggplot(aes(x = unemployment, y = pv2p, label = year)) + 
+  geom_label(aes(family = "Courier")) + 
+  geom_smooth(method = "lm", formula = y ~ x, color = "#9999CC") +
+  geom_hline(yintercept = 50, lty = 2, color = "#000033") + 
+  geom_vline(xintercept = 0.01, lty = 2, color = "#000033") + 
+  labs(x = "Second Quarter Unemployment Rate (%)", 
+       y = "Popular Vote Share - Incumbent Party (%)", 
+       title = "Fig. III - Q2 Unemployment vs. Vote Share") + 
+  my_theme() + 
+  theme(plot.title = element_text(size = 18))
+```
+
+```{r unemployment scatter w/o 2020}
+inc_econ_omit |> 
+  ggplot(aes(x = unemployment, y = pv2p, label = year)) + 
+  geom_label(aes(family = "Courier")) + 
+  geom_smooth(method = "lm", formula = y ~ x, color = "#9999CC") +
+  geom_hline(yintercept = 50, lty = 2, color = "#000033") + 
+  geom_vline(xintercept = 0.01, lty = 2, color = "#000033") + 
+  labs(x = "Second Quarter Unemployment Rate (%)", 
+       y = "Popular Vote Share - Incumbent Party (%)", 
+       title = "Fig. IV - Q2 Unemployment vs. Vote Share, 2020 Omitted") + 
+  my_theme() + 
+  theme(plot.title = element_text(size = 18))
+```
+
+```{r OLS unemployment}
+unemp_with <- lm(pv2p ~ unemployment, 
+               data = inc_econ)
+unemp_with |> summary()
+
+unemp_without <- lm(pv2p ~ unemployment, 
+                         data = inc_econ_omit)
+unemp_without |> summary()
+```
+
+```{r unemp boxplot}
+ggplot(inc_econ, aes(x=unemployment)) +
+  geom_boxplot() +
+  xlab("Second Quarter Unemployment Rate (%)") +
+  geom_label(x=13, y=0.05, label = "1980") +
+  ggtitle("Q2 Unemployment Boxplot") +
+  my_theme() +
+  theme(plot.title = element_text(size = 18))
+```
+
+```{r}
+gdp_without_res <- resid(gdp_without)
+plot(fitted(gdp_without), gdp_without_res)
+abline(0,0)
+```
 
 # A Tale of Two Incumbents
 
 ```{r}
 
+```
+
+# 2024 Prediction
+
+# Sequester 2024 data
+```{r sequester 2024}
+GDP_new <- fred |> 
+  filter(year == 2024 & quarter == 2) |> 
+  select(GDP_growth_quarterly)
+```
+
+# Predict
+```{r predict w/ gdp}
+# use q2 gdp for 2024 to predict next pop vote
+predict(gdp_without, GDP_new)
+```
+
+# Predict uncertainty
+```{r predict bounds}
+predict(gdp_without, GDP_new, interval = "prediction")
+# baseline alpha probably 0.05 (95% confidence)
 ```
