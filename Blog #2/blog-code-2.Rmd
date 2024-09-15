@@ -192,7 +192,7 @@ party_econ |>
   geom_vline(xintercept = 0.01, lty = 2, color = "#000033") + 
   labs(x = "Second Quarter Unemployment Rate (%)", 
        y = "Popular Vote Share - Incumbent Party (%)", 
-       title = "Fig. III - Q2 Unemployment vs. Vote Share") + 
+       title = "Fig. X - Q2 Unemployment vs. Vote Share") + 
   my_theme() + 
   theme(plot.title = element_text(size = 18))
 ```
@@ -206,7 +206,7 @@ party_econ_omit |>
   geom_vline(xintercept = 0.01, lty = 2, color = "#000033") + 
   labs(x = "Second Quarter Unemployment Rate (%)", 
        y = "Popular Vote Share - Incumbent Party (%)", 
-       title = "Fig. IV - Q2 Unemployment vs. Vote Share, 2020 Omitted") + 
+       title = "Fig. III - Q2 Unemployment vs. Vote Share, 2020 Omitted") + 
   my_theme() + 
   theme(plot.title = element_text(size = 18))
 ```
@@ -225,7 +225,7 @@ unemp_without |> summary()
 ggplot(party_econ, aes(x=unemployment)) +
   geom_boxplot() +
   xlab("Second Quarter Unemployment Rate (%)") +
-  geom_label(x=13, y=0.05, label = "1980") +
+  geom_label(x=13, y=0.05, label = "2020") +
   ggtitle("Q2 Unemployment Boxplot") +
   my_theme() +
   theme(plot.title = element_text(size = 18))
