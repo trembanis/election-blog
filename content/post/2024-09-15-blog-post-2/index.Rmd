@@ -197,6 +197,40 @@ fig4
 
 # Models in Review
 
+```{r fig 5 code, echo=FALSE, include=FALSE, warning=FALSE}
+fig5 <- party_econ_omit |> 
+  ggplot(aes(x = GDP_growth_quarterly, y = pv2p, label = year, fill = incumbent)) + 
+  geom_label(aes(family = "Courier")) + 
+  geom_hline(yintercept = 50, lty = 2, color = "#000033") + 
+  geom_vline(xintercept = 0.01, lty = 2, color = "#000033") + 
+  labs(x = "Second Quarter GDP Growth (%)", 
+       y = "Popular Vote Share - Incumbent Party (%)", 
+       title = "Fig. V - Q2 GDP vs. Vote Share by Incumbent Type") + 
+  my_theme() + 
+  theme(plot.title = element_text(size = 18))
+```
+
+```{r fig 5 print, echo=FALSE, include=TRUE, warning=FALSE}
+fig5
+```
+
+```{r fig 6 code, echo=FALSE, include=FALSE, warning=FALSE}
+fig6 <- party_econ_omit |> 
+  ggplot(aes(x = unemployment, y = pv2p, label = year, fill = incumbent)) + 
+  geom_label(aes(family = "Courier")) + 
+  geom_smooth(method = "lm", formula = y ~ x, color = "#9999CC") +
+  geom_hline(yintercept = 50, lty = 2, color = "#000033") + 
+  geom_vline(xintercept = 0.01, lty = 2, color = "#000033") + 
+  labs(x = "Second Quarter Unemployment Rate (%)", 
+       y = "Popular Vote Share - Incumbent Party (%)", 
+       title = "Fig. VI - Q2 Unemployment vs. Vote Share by Incumbent Type") + 
+  my_theme() + 
+  theme(plot.title = element_text(size = 18))
+```
+
+```{r fig 6 print, echo=FALSE, include=TRUE, warning=FALSE}
+fig6
+```
 
 
 # Prediction, and a Note on Incumbency
