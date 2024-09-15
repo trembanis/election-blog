@@ -392,6 +392,29 @@ cpi_new <- fred |>
 multi_new <- c(GDP_new, unemp_new, dpi_new, cpi_new)
 ```
 
+```{r cross-validation 1k runs}
+out_samp_errors <- sapply(1:1000, function(i) {
+  years_out_samp <- sample(party_econ_omit$year, 9)
+  mod <- lm(pv2p ~ GDP_growth_quarterly,
+            party_econ_omit[!(party_econ_omit$year %in% years_out_samp),])
+  out_samp_pred <- predict(mod, party_econ_omit[party_econ_omit$year %in% years_out_samp,])
+  out_samp_truth <- party_econ_omit$pv2p[party_econ_omit$year %in% years_out_samp]
+  mean(out_samp_pred - out_samp_truth)
+})
+```
+
+```{r}
+hist(x = out_samp_errors)
+```
+
+```{r mean out-of-sample residuals}
+mean(abs(out_samp_errors))
+```
+
+```{r compare to pv2p range}
+range(party_econ_omit$pv2p)
+```
+
 # Predict
 ```{r predict w/ diff models}
 # use q2 gdp for 2024 to predict next pop vote (2020 omitted)

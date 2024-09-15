@@ -243,12 +243,12 @@ mean(out_samp_pred - out_samp_truth)
 # Model Testing: Cross-Validation (1000 Runs)
 ```{r 1k run}
 out_samp_errors <- sapply(1:1000, function(i) {
-  years_out_samp <- sample(d_inc_econ_2$year, 9)
+  years_out_samp <- sample(party_econ_omit$year, 9)
   mod <- lm(pv2p ~ GDP_growth_quarterly,
-            d_inc_econ_2[!(d_inc_econ_2$year %in% years_out_samp),])
-  out_samp_pred <- predict(mod, d_inc_econ_2[d_inc_econ_2$year %in% years_out_samp],)
-  
-  
+            party_econ_omit[!(party_econ_omit$year %in% years_out_samp),])
+  out_samp_pred <- predict(mod, party_econ_omit[party_econ_omit$year %in% years_out_samp],)
+  out_samp_truth <- party_econ_omit$pv2p[party_econ_omit$year %in% years_out_samp]
+  mean(out_samp_pred - out_samp_truth)
 })
 ```
 
