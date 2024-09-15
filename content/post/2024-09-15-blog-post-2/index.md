@@ -11,7 +11,7 @@ slug: "blog-post-2"
 ---
 # Voters & "The Economy"
 
-# Gross Domestic Product (GDP)
+# Gross Domestic Product (GDP) Growth
 
 
 

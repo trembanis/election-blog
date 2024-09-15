@@ -11,7 +11,9 @@ slug: "blog-post-2"
 ---
 # Voters & "The Economy"
 
-# Gross Domestic Product (GDP)
+# Gross Domestic Product (GDP) Growth
+
+
 
 ```{r set-up, echo=FALSE, include=FALSE, warning=FALSE}
 library(ggplot2)
@@ -122,9 +124,9 @@ fig1 <- party_econ |>
   geom_vline(xintercept = 0.01, lty = 2, color = "#000033") + 
   labs(x = "Second Quarter GDP Growth (%)", 
        y = "Popular Vote Share - Incumbent Party (%)", 
-       title = "Fig. I - Q2 GDP vs. Vote Share") + 
+       title = "Fig. I - GDP vs. Vote Share") + 
   my_theme() + 
-  theme(plot.title = element_text(size = 18))
+  theme(plot.title = element_text(size = 14))
 ```
 
 ```{r fig 1 print, echo=FALSE, include=TRUE, warning=FALSE}
@@ -144,9 +146,9 @@ fig2 <- party_econ_omit |>
   geom_vline(xintercept = 0.01, lty = 2, color = "#000033") + 
   labs(x = "Second Quarter GDP Growth (%)", 
        y = "Popular Vote Share - Incumbent Party (%)", 
-       title = "Fig. II - Q2 GDP vs. Vote Share, No Outliers") + 
+       title = "Fig. II - GDP vs. Vote Share, No Outliers") + 
   my_theme() + 
-  theme(plot.title = element_text(size = 18))
+  theme(plot.title = element_text(size = 14))
 ```
 
 ```{r fig 2 print, echo=FALSE, include=TRUE, warning=FALSE}
@@ -165,10 +167,10 @@ fig3 <- party_econ_omit |>
   geom_vline(xintercept = 0.01, lty = 2, color = "#000033") + 
   labs(x = "Second Quarter Unemployment Rate (%)", 
        y = "Popular Vote Share - Incumbent Party (%)", 
-       title = "Fig. III - Q2 Unemployment vs. Vote Share, No Outlier") + 
+       title = "Fig. III - Unemployment vs. Vote Share, No Outlier") + 
   xlim(2, 9) +
   my_theme() + 
-  theme(plot.title = element_text(size = 18))
+  theme(plot.title = element_text(size = 14))
 ```
 
 ```{r fig 3 print, echo=FALSE, include=TRUE, warning=FALSE}
@@ -186,9 +188,9 @@ fig4 <- party_econ |>
   geom_vline(xintercept = 0.01, lty = 2, color = "#000033") + 
   labs(x = "Second Quarter Consumer Price Index", 
        y = "Popular Vote Share - Incumbent Party (%)", 
-       title = "Fig. IV - Q2 CPI vs. Vote Share") + 
+       title = "Fig. IV - CPI vs. Vote Share") + 
   my_theme() + 
-  theme(plot.title = element_text(size = 18))
+  theme(plot.title = element_text(size = 14))
 ```
 
 ```{r fig 4 print, echo=FALSE, include=TRUE, warning=FALSE}
@@ -207,9 +209,9 @@ fig5 <- party_econ_omit |>
   geom_vline(xintercept = 0.01, lty = 2, color = "#000033") + 
   labs(x = "Second Quarter GDP Growth (%)", 
        y = "Popular Vote Share - Incumbent Party (%)", 
-       title = "Fig. V - Q2 GDP vs. Vote Share by Incumbent Type") + 
+       title = "Fig. V - GDP vs. Vote Share by Incumbent Type") + 
   my_theme() + 
-  theme(plot.title = element_text(size = 18))
+  theme(plot.title = element_text(size = 14))
 ```
 
 ```{r fig 5 print, echo=FALSE, include=TRUE, warning=FALSE}
@@ -225,9 +227,9 @@ fig6 <- party_econ_omit |>
   geom_vline(xintercept = 0.01, lty = 2, color = "#000033") + 
   labs(x = "Second Quarter Unemployment Rate (%)", 
        y = "Popular Vote Share - Incumbent Party (%)", 
-       title = "Fig. VI - Q2 Unemployment vs. Vote Share by Incumbent Type") + 
+       title = "Fig. VI - Unemployment vs. Vote Share by Incumbent Type") + 
   my_theme() + 
-  theme(plot.title = element_text(size = 18))
+  theme(plot.title = element_text(size = 14))
 ```
 
 ```{r fig 6 print, echo=FALSE, include=TRUE, warning=FALSE}
