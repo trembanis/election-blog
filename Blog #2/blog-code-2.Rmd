@@ -248,7 +248,7 @@ party_econ |>
   geom_vline(xintercept = 0.01, lty = 2, color = "#000033") + 
   labs(x = "Second Quarter Disposable Personal Income", 
        y = "Popular Vote Share - Incumbent Party (%)", 
-       title = "Fig. VII - Q2 DPI vs. Vote Share") + 
+       title = "Fig. X - Q2 DPI vs. Vote Share") + 
   my_theme() + 
   theme(plot.title = element_text(size = 18))
 ```
@@ -283,7 +283,7 @@ party_econ |>
   geom_vline(xintercept = 0.01, lty = 2, color = "#000033") + 
   labs(x = "Second Quarter Consumer Price Index", 
        y = "Popular Vote Share - Incumbent Party (%)", 
-       title = "Fig. VIII - Q2 CPI vs. Vote Share") + 
+       title = "Fig. IV - Q2 CPI vs. Vote Share") + 
   my_theme() + 
   theme(plot.title = element_text(size = 18))
 ```

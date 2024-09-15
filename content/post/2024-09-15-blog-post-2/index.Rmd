@@ -175,10 +175,25 @@ fig3 <- party_econ_omit |>
 fig3
 ```
 
-
-# Disposable Personal Income (DPI)
-
 # Consumer Price Index (CPI)
+
+```{r fig 4 code, echo=FALSE, include=FALSE, warning=FALSE}
+fig4 <- party_econ |> 
+  ggplot(aes(x = CPI, y = pv2p, label = year)) + 
+  geom_label(aes(family = "Courier")) + 
+  geom_smooth(method = "lm", formula = y ~ x, color = "#9999CC") +
+  geom_hline(yintercept = 50, lty = 2, color = "#000033") + 
+  geom_vline(xintercept = 0.01, lty = 2, color = "#000033") + 
+  labs(x = "Second Quarter Consumer Price Index", 
+       y = "Popular Vote Share - Incumbent Party (%)", 
+       title = "Fig. IV - Q2 CPI vs. Vote Share") + 
+  my_theme() + 
+  theme(plot.title = element_text(size = 18))
+```
+
+```{r fig 4 print, echo=FALSE, include=TRUE, warning=FALSE}
+fig4
+```
 
 # Models in Review
 
