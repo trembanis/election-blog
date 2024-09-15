@@ -21,6 +21,9 @@ slug: "blog-post-2"
 
 
 
+<img src="{{< blogdown/postref >}}index_files/figure-html/fig 2 print-1.png" width="672" />
+
+
 # Unemployment
 
 

@@ -133,9 +133,9 @@ party_econ |>
   theme(plot.title = element_text(size = 18))
 ```
 
-```{r gdp scatter w/o 2020}
+```{r gdp scatter w/o outliers}
 party_econ_omit <- party_econ |>
-  filter(year != 2020)
+  filter(year != 2020 & year != 1980)
 
 party_econ_omit |> 
   ggplot(aes(x = GDP_growth_quarterly, y = pv2p, label = year)) + 
@@ -145,7 +145,7 @@ party_econ_omit |>
   geom_vline(xintercept = 0.01, lty = 2, color = "#000033") + 
   labs(x = "Second Quarter GDP Growth (%)", 
        y = "Popular Vote Share - Incumbent Party (%)", 
-       title = "Fig. II - Q2 GDP vs. Vote Share, 2020 Omitted") + 
+       title = "Fig. II - Q2 GDP vs. Vote Share, No Outliers") + 
   my_theme() + 
   theme(plot.title = element_text(size = 18))
 ```
