@@ -137,7 +137,7 @@ fig1 <- party_econ |>
 fig1
 ```
 
-While 2020 has an incumbent vote share that is consistent with other election years, its extreme drop in Q2 GDP – negative 28% – due to the productivity stall caused by the COVID-19 pandemic dramatically flattens out the slope of the regression line. 1980 may seem tame by comparison, but it still registers a substantial decline in Q2 GDP, a symptom of the late-1970s recession which tanked Jimmy Carter’s reelection bid. It is admittedly a shame to lose two points in a dataset as limited as this, with elections only going back as far as 1948, but since both 1980 and 2020 fall more than 1.5 times the Interquartile Range beneath the first quartile, satisfying a common threshold for outliers, they are excluded from Figure II (below).
+While 2020 has an incumbent vote share that is consistent with other election years, its extreme drop in Q2 GDP – negative 28% – due to the productivity stall caused by the COVID-19 pandemic dramatically flattens out the slope of the regression line. 1980 may seem tame by comparison, but it still registers a substantial decline in Q2 GDP, a symptom of the late-1970s recession which tanked Jimmy Carter’s reelection bid. It is not ideal to lose two points in a dataset as limited as this, with elections only going back as far as 1948, but since both 1980 and 2020 fall more than 1.5 times the Interquartile Range beneath the first quartile, satisfying a common threshold for outliers, they are excluded from Figure II (below).
 
 ```{r fig 2 code, echo=FALSE, include=FALSE, warning=FALSE}
 party_econ_omit <- party_econ |>
