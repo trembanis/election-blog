@@ -28,6 +28,9 @@ slug: "blog-post-2"
 
 
 
+<img src="{{< blogdown/postref >}}index_files/figure-html/fig 3 print-1.png" width="672" />
+
+
 # Disposable Personal Income (DPI)
 
 # Consumer Price Index (CPI)

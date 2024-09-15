@@ -156,6 +156,24 @@ fig2
 
 # Unemployment
 
+```{r fig 3 code, echo=FALSE, include=FALSE, warning=FALSE}
+fig3 <- party_econ_omit |> 
+  ggplot(aes(x = unemployment, y = pv2p, label = year)) + 
+  geom_label(aes(family = "Courier")) + 
+  geom_smooth(method = "lm", formula = y ~ x, color = "#9999CC") +
+  geom_hline(yintercept = 50, lty = 2, color = "#000033") + 
+  geom_vline(xintercept = 0.01, lty = 2, color = "#000033") + 
+  labs(x = "Second Quarter Unemployment Rate (%)", 
+       y = "Popular Vote Share - Incumbent Party (%)", 
+       title = "Fig. III - Q2 Unemployment vs. Vote Share, No Outlier") + 
+  xlim(2, 9) +
+  my_theme() + 
+  theme(plot.title = element_text(size = 18))
+```
+
+```{r fig 3 print, echo=FALSE, include=TRUE, warning=FALSE}
+fig3
+```
 
 
 # Disposable Personal Income (DPI)
