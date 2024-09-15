@@ -11,7 +11,9 @@ slug: "blog-post-2"
 ---
 # Voters & "The Economy"
 
-The idea that economic conditions can make or break incumbent campaigns is well-embedded popular wisdom by now. But it is not clear what “the economy” means to voters: which metrics they care about and which crises they attribute to the White House. Building on [Achen and Bartels’](“https://hollis.harvard.edu/primo-explore/fulldisplay?docid=01HVD_ALMA512397392810003941&vid=HVD2&search_scope=everything&tab=everything&lang=en_US&context=L”) argument that retrospective voters have a recency bias in favor of recent economic conditions, this week I examine three short-term economic measures as candidates to approximate “the economy”: GDP growth, unemployment, and CPI.
+The idea that economic conditions can make or break incumbent campaigns is well-embedded popular wisdom by now. But it is not clear what “the economy” means to voters: which metrics they care about and which crises they attribute to the White House. 
+
+Building on [Achen and Bartels’](“https://hollis.harvard.edu/primo-explore/fulldisplay?docid=01HVD_ALMA512397392810003941&vid=HVD2&search_scope=everything&tab=everything&lang=en_US&context=L”) argument that retrospective voters have a recency bias in favor of recent economic conditions, this week I examine three short-term economic measures as candidates to approximate “the economy”: GDP growth, unemployment, and CPI.
 
 # Gross Domestic Product (GDP) Growth
 
