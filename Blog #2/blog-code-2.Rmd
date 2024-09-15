@@ -198,7 +198,10 @@ party_econ |>
 ```
 
 ```{r unemployment scatter w/o 2020}
-party_econ_omit |> 
+party_econ_2020 <- party_econ |>
+  filter(year != 2020)
+
+party_econ_2020 |> 
   ggplot(aes(x = unemployment, y = pv2p, label = year)) + 
   geom_label(aes(family = "Courier")) + 
   geom_smooth(method = "lm", formula = y ~ x, color = "#9999CC") +
@@ -217,7 +220,7 @@ unemp_with <- lm(pv2p ~ unemployment,
 unemp_with |> summary()
 
 unemp_without <- lm(pv2p ~ unemployment, 
-                         data = party_econ_omit)
+                         data = party_econ_2020)
 unemp_without |> summary()
 ```
 
@@ -310,11 +313,11 @@ ggplot(party_econ, aes(x=CPI)) +
 # Multiple OLS
 
 ```{r multi OLS}
-multi_with <- lm(pv2p ~ GDP_growth_quarterly + unemployment + CPI + dpi, 
+multi_with <- lm(pv2p ~ GDP_growth_quarterly + unemployment + CPI, 
                data = party_econ)
 multi_with |> summary()
 
-multi_without <- lm(pv2p ~ GDP_growth_quarterly + unemployment + CPI + dpi,
+multi_without <- lm(pv2p ~ GDP_growth_quarterly + unemployment + CPI,
                     data = party_econ_omit)
 multi_without |> summary()
 ```
@@ -417,18 +420,28 @@ range(party_econ_omit$pv2p)
 
 # Predict
 ```{r predict w/ diff models}
-# use q2 gdp for 2024 to predict next pop vote (2020 omitted)
+# use q2 gdp for 2024 to predict next pop vote (outliers omitted)
 predict(gdp_without, GDP_new, interval = "prediction")
 
-# use q2 unemployment for 2024 to predict next pop vote (2020 included)
-predict(unemp_with, unemp_new, interval = "prediction")
+# use q2 unemployment for 2024 to predict next pop vote (outlier omitted)
+predict(unemp_without, unemp_new, interval = "prediction")
 
-# use q2 dpi for 2024 to predict next pop vote (2020 included)
-predict(dpi_with, dpi_new, interval = "prediction")
-
-# use q2 cpi for 2024 to predict next pop vote (2020 included)
+# use q2 cpi for 2024 to predict next pop vote
 predict(cpi_with, cpi_new, interval = "prediction")
 
-# use multi OLS to predict next pop vote (2020 omitted)
+# use multi OLS to predict next pop vote
 predict(multi_without, multi_new, interval = "prediction")
 ```
+
+```{r predictions table}
+predictions <- tibble(Model = c("GDP Growth", "Unemployment", "CPI", "Multiple"),
+                 Prediction = c(51.35652, 51.97273, 48.33048, 46.30151),
+                 `Lower Bound` = c(41.25755, 39.83306, 35.591, 33.24755),
+                 `Upper Bound` = c(61.4555, 64.11241, 61.06995, 59.35547))
+knitr::kable(predictions, digits = 2)
+```
+
+```{r}
+predict(gdp_without, GDP_new, interval = "prediction", level = 0.8)
+```
+

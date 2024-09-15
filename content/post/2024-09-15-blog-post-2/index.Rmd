@@ -159,7 +159,10 @@ fig2
 # Unemployment
 
 ```{r fig 3 code, echo=FALSE, include=FALSE, warning=FALSE}
-fig3 <- party_econ_omit |> 
+party_econ_2020 <- party_econ |>
+  filter(year != 2020)
+
+fig3 <- party_econ_2020 |> 
   ggplot(aes(x = unemployment, y = pv2p, label = year)) + 
   geom_label(aes(family = "Courier")) + 
   geom_smooth(method = "lm", formula = y ~ x, color = "#9999CC") +
@@ -199,6 +202,17 @@ fig4
 
 # Models in Review
 
+```{r table code, echo=FALSE, include=FALSE, warning=FALSE}
+predictions <- tibble(Model = c("GDP Growth", "Unemployment", "CPI", "Multiple"),
+                 Prediction = c(51.35652, 51.97273, 48.33048, 46.30151),
+                 `Lower Bound` = c(41.25755, 39.83306, 35.591, 33.24755),
+                 `Upper Bound` = c(61.4555, 64.11241, 61.06995, 59.35547))
+```
+
+```{r table print, echo=FALSE, include=TRUE, warning=FALSE}
+knitr::kable(predictions, digits = 2)
+```
+
 # Prediction, and a Note on Incumbency
 
 ```{r fig 5 code, echo=FALSE, include=FALSE, warning=FALSE}
@@ -219,7 +233,7 @@ fig5
 ```
 
 ```{r fig 6 code, echo=FALSE, include=FALSE, warning=FALSE}
-fig6 <- party_econ_omit |> 
+fig6 <- party_econ_2020 |> 
   ggplot(aes(x = unemployment, y = pv2p, label = year, fill = incumbent)) + 
   geom_label(aes(family = "Courier")) + 
   geom_smooth(method = "lm", formula = y ~ x, color = "#9999CC") +
