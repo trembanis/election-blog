@@ -197,6 +197,8 @@ fig4
 
 # Models in Review
 
+# Prediction, and a Note on Incumbency
+
 ```{r fig 5 code, echo=FALSE, include=FALSE, warning=FALSE}
 fig5 <- party_econ_omit |> 
   ggplot(aes(x = GDP_growth_quarterly, y = pv2p, label = year, fill = incumbent)) + 
@@ -231,8 +233,3 @@ fig6 <- party_econ_omit |>
 ```{r fig 6 print, echo=FALSE, include=TRUE, warning=FALSE}
 fig6
 ```
-
-
-# Prediction, and a Note on Incumbency
-
-
