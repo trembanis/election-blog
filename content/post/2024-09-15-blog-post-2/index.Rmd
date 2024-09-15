@@ -131,6 +131,27 @@ fig1 <- party_econ |>
 fig1
 ```
 
+```{r fig 2 code, echo=FALSE, include=FALSE, warning=FALSE}
+party_econ_omit <- party_econ |>
+  # exclude outliers
+  filter(year != 2020 & year != 1980)
+
+fig2 <- party_econ_omit |> 
+  ggplot(aes(x = GDP_growth_quarterly, y = pv2p, label = year)) + 
+  geom_label(aes(family = "Courier")) + 
+  geom_smooth(method = "lm", formula = y ~ x, color = "#9999CC") +
+  geom_hline(yintercept = 50, lty = 2, color = "#000033") + 
+  geom_vline(xintercept = 0.01, lty = 2, color = "#000033") + 
+  labs(x = "Second Quarter GDP Growth (%)", 
+       y = "Popular Vote Share - Incumbent Party (%)", 
+       title = "Fig. II - Q2 GDP vs. Vote Share, No Outliers") + 
+  my_theme() + 
+  theme(plot.title = element_text(size = 18))
+```
+
+```{r fig 2 print, echo=FALSE, include=TRUE, warning=FALSE}
+fig2
+```
 
 
 # Unemployment
