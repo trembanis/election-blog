@@ -420,16 +420,16 @@ range(party_econ_omit$pv2p)
 
 # Predict
 ```{r predict w/ diff models}
-# use q2 gdp for 2024 to predict next pop vote (outliers omitted)
+# use q2 gdp for 2024 to predict next pop vote (2 outliers omitted)
 predict(gdp_without, GDP_new, interval = "prediction")
 
-# use q2 unemployment for 2024 to predict next pop vote (outlier omitted)
+# use q2 unemployment for 2024 to predict next pop vote (1 outlier omitted)
 predict(unemp_without, unemp_new, interval = "prediction")
 
 # use q2 cpi for 2024 to predict next pop vote
 predict(cpi_with, cpi_new, interval = "prediction")
 
-# use multi OLS to predict next pop vote
+# use multi OLS to predict next pop vote (2 outliers omitted)
 predict(multi_without, multi_new, interval = "prediction")
 ```
 
@@ -439,6 +439,7 @@ predictions <- tibble(Model = c("GDP Growth", "Unemployment", "CPI", "Multiple")
                  `Lower Bound` = c(41.25755, 39.83306, 35.591, 33.24755),
                  `Upper Bound` = c(61.4555, 64.11241, 61.06995, 59.35547))
 knitr::kable(predictions, digits = 2)
+# Note: multiple regression prediction excludes 1980 & 2020, since these are outliers in terms of GDP growth, the only significant variable. The multiple regression which includes these points had similar downsides (see multi ols code chunk for a detailed regression output). That different predictors identify different outliers is another difficulty of the multivariate approach.
 ```
 
 ```{r}
