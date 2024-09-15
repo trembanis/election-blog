@@ -24,7 +24,7 @@ library(maps)
 d_pvstate_wide <- read.csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/data/clean_wide_state_2pv_1948_2020.csv")
 
 # electoral college
-ec_full <- read.csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/data/ec_full.csv")
+ec_full <- read.csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Week1/corrected_ec_1948_2024.csv")
 
 # presidential popular vote
 d_pop_vote <- read.csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/data/popvote_1948-2020.csv")

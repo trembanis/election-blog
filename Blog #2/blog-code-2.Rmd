@@ -1,0 +1,112 @@
+---
+title: "Blog #2 Code"
+author: "Ella Trembanis"
+date: "2024-09-13"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Set-Up
+
+```{r load packages, echo=FALSE}
+library(ggplot2)
+library(tidyverse)
+```
+
+```{r custom theme, echo=FALSE}
+my_theme <- function() {
+  theme(
+  # set panel features
+  panel.border = element_rect(color = "#000033", fill = NA, linetype = 1),
+  panel.background = element_rect(fill = "#FFFFFF"),
+  panel.grid.major.x = element_line(color = "#9999CC", linetype = 2, size = 0.2),
+  panel.grid.minor.x = element_blank(),
+  panel.grid.major.y = element_line(color = "#9999CC", linetype = 2, size = 0.2),
+  panel.grid.minor.y = element_blank(),
+  # set text and axis features
+  text = element_text(color = "#000033", family = "Courier"),
+  title = element_text(color = "#000033", face = "bold", family = "Courier"),
+  axis.ticks = element_line(color = "#000033"),
+  # set legend features
+  legend.position = "bottom",
+  legend.background = element_rect(color = "#000033", fill = NA, linetype = 1)
+  )
+}
+```
+
+# Load popular vote data
+```{r load pop}
+d_popvote <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Week2/data/popvote_1948-2020.csv")
+```
+
+# FRED variables:
+
+# Variables, units, & ranges: 
+# GDP, billions $, 1947-2024
+# GDP_growth_quarterly, %
+# RDPI, $, 1959-2024
+# RDPI_growth_quarterly, %
+# CPI, $ index, 1947-2024
+# unemployment, %, 1948-2024
+# sp500_, $, 1927-2024 
+
+```{r load fred}
+d_fred <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Week2/data/fred_econ.csv")
+```
+
+# BEA variables:
+
+# GDP, 1947-2024 (all)
+# GNP
+# RDPI
+# Personal consumption expenditures
+# Goods
+# Durable goods
+# Nondurable goods
+# Services 
+# Population (midperiod, thousands)
+
+```{r load bea}
+d_bea <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Week2/data/bea_econ.csv") |> 
+  # standardize column names
+  rename(year = "Year",
+         quarter = "Quarter", 
+         gdp = "Gross domestic product", 
+         gnp = "Gross national product", 
+         dpi = "Disposable personal income", 
+         consumption = "Personal consumption expenditures", 
+         goods = "Goods", 
+         durables = "Durable goods", 
+         nondurables = "Nondurable goods", 
+         services = "Services", 
+         pop = "Population (midperiod, thousands)")
+```
+
+# Filter and Merge
+
+```{r}
+d_inc_econ <- d_popvote |> 
+  # incumbent vote share only
+  filter(incumbent_party == TRUE) |> 
+  select(year, pv, pv2p, winner) |> 
+  # filter to Q2 (most recent available quarter of current year)
+  left_join(d_fred |> filter(quarter == 2)) |> 
+  left_join(d_bea |> filter(quarter == "Q2") |> 
+              select(year, dpi))
+```
+
+# Comparing Predictors
+
+```{r}
+
+```
+
+
+# A Tale of Two Incumbents
+
+```{r}
+
+```
