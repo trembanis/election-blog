@@ -384,6 +384,7 @@ enet.weekpoll <- glmnet(x = x.train, y = y.train, alpha = 0.5)
 
 ```{r visualize enet shrinkage}
 plot(enet.weekpoll, xvar = "lambda")
+coef(enet.weekpoll, s = 0.1)
 ```
 
 # Optimize Lambda

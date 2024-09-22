@@ -2,45 +2,45 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Home on A minimal Hugo website</title>
-    <link>https://example.org/</link>
+    <link>http://localhost:4321/</link>
     <description>Recent content in Home on A minimal Hugo website</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Sun, 22 Sep 2024 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://example.org/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:4321/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Blog Post #3</title>
-      <link>https://example.org/post/2024/09/22/blog-post-3/</link>
+      <link>http://localhost:4321/post/2024/09/22/blog-post-3/</link>
       <pubDate>Sun, 22 Sep 2024 00:00:00 +0000</pubDate>
-      <guid>https://example.org/post/2024/09/22/blog-post-3/</guid>
-      <description>Polls and Campaign Narratives Felonies! Assassination attempts! Debate match-ups! With less than two months to go, the 2024 presidential race has already had its fair share of front-page moments.&#xA;Predictions and Methodology Table: (#tab:table code)Fig. III - Two-Party Vote Share Predictions&#xA;Model Harris Trump Polls by Week (A) 51.81 50.58 Polls by Proximity (B) 44.00 42.95 GDP Growth (C) 51.93 47.42 Combined (AC) 51.98 47.94 Combined (BC) 47.96 45.19 Assessing the Experts </description>
+      <guid>http://localhost:4321/post/2024/09/22/blog-post-3/</guid>
+      <description>Polls and Campaign Narratives Felonies! Assassination attempts! Debate match-ups! With less than two months to go, the 2024 presidential race has already had its fair share of front-page moments &amp;ndash; but which will truly stick with voters?&#xA;Figure I (below) plots some newsworthy events from the past several months against the candidates&amp;rsquo; performance in national polls.&#xA;In some cases, the graph lends itself to story-driven interpretations: there is, for instance, President Trump&amp;rsquo;s short-lived bump in approval around the time of his conviction and the dramatic blue spike where Vice President Harris first assumed the role of presumptive candidate in lieu of Biden.</description>
     </item>
     <item>
       <title>Blog Post #2</title>
-      <link>https://example.org/post/2024/09/15/blog-post-2/</link>
+      <link>http://localhost:4321/post/2024/09/15/blog-post-2/</link>
       <pubDate>Sun, 15 Sep 2024 00:00:00 +0000</pubDate>
-      <guid>https://example.org/post/2024/09/15/blog-post-2/</guid>
+      <guid>http://localhost:4321/post/2024/09/15/blog-post-2/</guid>
       <description>Voters &amp;amp; &amp;ldquo;The Economy&amp;rdquo; The idea that economic conditions can make or break incumbent campaigns is well-embedded popular wisdom by now. But it is not clear what “the economy” means to voters: which metrics they care about and which crises they attribute to the White House.&#xA;Building on Achen and Bartels’ argument that retrospective voters have a recency bias in favor of recent economic conditions, this week I examine three short-term economic measures as candidates to approximate “the economy”: GDP growth, unemployment, and CPI.</description>
     </item>
     <item>
       <title>Blog Post #1</title>
-      <link>https://example.org/post/2024/09/08/blog-post-1/</link>
+      <link>http://localhost:4321/post/2024/09/08/blog-post-1/</link>
       <pubDate>Sun, 08 Sep 2024 00:00:00 +0000</pubDate>
-      <guid>https://example.org/post/2024/09/08/blog-post-1/</guid>
+      <guid>http://localhost:4321/post/2024/09/08/blog-post-1/</guid>
       <description>Competitiveness on the National Stage As we enter the final, frantic months of the 2024 presidential election with the two major party candidates, former President Donald Trump and Vice President Kamala Harris, “effectively tied” according to Reuters’ analysis of a recent NY Times/Siena poll, circumstances beg the question: how competitive are American presidential elections, anyway? Put another way, if current national polls end up being a fair predictor of the vote share margin come Election Day, will this razor-tight race be out of step with historical elections?</description>
     </item>
     <item>
       <title>Assignment 0</title>
-      <link>https://example.org/post/2024/09/03/assignment-0/</link>
+      <link>http://localhost:4321/post/2024/09/03/assignment-0/</link>
       <pubDate>Tue, 03 Sep 2024 00:00:00 +0000</pubDate>
-      <guid>https://example.org/post/2024/09/03/assignment-0/</guid>
+      <guid>http://localhost:4321/post/2024/09/03/assignment-0/</guid>
       <description>Overview: In this assignment, we will work with historical national popular vote and state-level popular vote data from presidential elections. We will restructure the two data sets and eventually merge them, before running basic linear models to predict the national popular vote from the vote in certain states.&#xA;Data Details:&#xA;File Name: state_2pv_1948_2020.csv&#xA;These data contain the state-level popular vote from presidential elections from 1948 through 2020.&#xA;Variable Name Variable Description year election year state state candidate candidate party candidate&amp;rsquo;s party candidatevotes votes received by the candidate in the state totalvotes total votes cast in the state vote_share proportion of total votes received by the candidate two_party_votes total votes cast for Republicans and Democrats in the state two_party_vote_share proportion of Democratic and Republican votes received by the candidate File Name: nat_pv_1860_2020.</description>
     </item>
     <item>
       <title>About Hugo XMin</title>
-      <link>https://example.org/about/</link>
+      <link>http://localhost:4321/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://example.org/about/</guid>
+      <guid>http://localhost:4321/about/</guid>
       <description>XMin is the first Hugo theme I have designed. The original reason that I wrote it was I needed a minimal example of Hugo themes when I was writing the blogdown book. Basically I wanted a simple theme that supports a navigation menu, a home page, other single pages, lists of pages, blog posts, categories, tags, and RSS. That is all. Nothing fancy. In terms of CSS and JavaScript, I really want to keep them minimal.</description>
     </item>
   </channel>
