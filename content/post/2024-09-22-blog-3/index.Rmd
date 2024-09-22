@@ -12,6 +12,8 @@ slug: "blog-post-3"
 
 # Polls and Campaign Narratives
 
+Felonies! Assassination attempts! Debate match-ups! With less than two months to go, the 2024 presidential race has already had its fair share of front-page moments.
+
 ```{r load libraries, echo=FALSE, include=FALSE, warning=FALSE}
 library(car)
 library(caret)
@@ -113,6 +115,8 @@ fig1 <- nat_poll |>
 ```{r fig 1 print, echo=FALSE, include=TRUE, warning=FALSE}
 fig1
 ```
+
+# Predictions and Methodology
 
 ```{r week-by-week, echo=FALSE, include=FALSE, warning=FALSE}
 # use weeks left as columns
@@ -324,3 +328,4 @@ predictions <- tibble(Model = c("Polls by Week (A)", "Polls by Proximity (B)", "
 knitr::kable(predictions, digits = 2, caption = "Fig. III - Two-Party Vote Share Predictions")
 ```
 
+# Assessing the Experts
