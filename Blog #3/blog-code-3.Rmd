@@ -39,7 +39,7 @@ state_poll <- read_csv("data/state_polls_1968-2024.csv")
 # national popular vote
 nat_vote <- read_csv("data/popvote_1948-2020.csv") |>
   filter(year >= 1968) |>
-  select(year, party, pv2p)
+  select(year, party, pv2p, pv)
 nat_vote$party[nat_vote$party == "democrat"] <- "DEM"
 nat_vote$party[nat_vote$party == "republican"] <- "REP"
 
@@ -65,6 +65,15 @@ ec <- read_csv("data/corrected_ec_1948_2024.csv") |>
 
 # map of u.s. with state borders
 states_map <- map_data("state")
+
+# individual pollsters
+poll16 <- read_csv("data/president_polls_2016.csv") |>
+  filter(state == "U.S.")
+poll20 <- read_csv("data/president_polls_2020.csv") |>
+  filter(is.na(state) == T) |>
+  rename(grade = fte_grade)
+poll24 <- read_csv("data/president_polls_2024.csv") |>
+  filter(is.na(state) == T)
 ```
 
 ```{r state abbreviations, echo=FALSE, include=FALSE< warning=FALSE}
@@ -127,6 +136,339 @@ abbreviations <- c(
 )
 ```
 
+```{r dataframe by state}
+# merge state polls and popular votes
+state_results <- state_poll |>
+  select(year, party, state, poll_support, weeks_left, poll_date) |>
+  left_join(state_vote)
+
+# poll and voting results by state
+al_results <- state_poll |>
+  filter(state == "Alabama")
+al_vote <- state_vote |>
+  filter(state == "Alabama")
+ak_results <- state_results |>
+  filter(state == "Alaska")
+ak_vote <- state_vote |>
+  filter(state == "Alaska")
+az_results <- state_results |>
+  filter(state == "Arizona")
+az_vote <- state_vote |>
+  filter(state == "Arizona")
+ar_results <- state_results |>
+  filter(state == "Arkansas")
+ar_vote <- state_vote |>
+  filter(state == "Arkansas")
+ca_results <- state_results |>
+  filter(state == "California")
+co_results <- state_results |>
+  filter(state == "Colorado")
+ct_results <- state_results |>
+  filter(state == "Connecticut")
+de_results <- state_results |>
+  filter(state == "Delaware")
+fl_results <- state_results |>
+  filter(state == "Florida")
+ga_results <- state_results |>
+  filter(state == "Georgia")
+hi_results <- state_results |>
+  filter(state == "Hawaii")
+id_results <- state_results |>
+  filter(state == "Idaho")
+il_results <- state_results |>
+  filter(state == "Illinois")
+in_results <- state_results |>
+  filter(state == "Indiana")
+ia_results <- state_results |>
+  filter(state == "Iowa")
+ks_results <- state_results |>
+  filter(state == "Kansas")
+ky_results <- state_results |>
+  filter(state == "Kentucky")
+la_results <- state_results |>
+  filter(state == "Louisiana")
+me_results <- state_results |>
+  filter(state == "Maine")
+md_results <- state_results |>
+  filter(state == "Maryland")
+ma_results <- state_results |>
+  filter(state == "Massachusetts")
+mi_results <- state_results |>
+  filter(state == "Michigan")
+mn_results <- state_results |>
+  filter(state == "Minnesota")
+ms_results <- state_results |>
+  filter(state == "Mississippi")
+mo_results <- state_results |>
+  filter(state == "Missouri")
+mt_results <- state_results |>
+  filter(state == "Montana")
+ne_results <- state_results |>
+  filter(state == "Nebraska")
+nv_results <- state_results |>
+  filter(state == "Nevada")
+nh_results <- state_results |>
+  filter(state == "New Hampshire")
+nj_results <- state_results |>
+  filter(state == "New Jersey")
+nm_results <- state_results |>
+  filter(state == "New Mexico")
+ny_results <- state_results |>
+  filter(state == "New York")
+nc_results <- state_results |>
+  filter(state == "North Carolina")
+nd_results <- state_results |>
+  filter(state == "North Dakota")
+oh_results <- state_results |>
+  filter(state == "Ohio")
+ok_results <- state_results |>
+  filter(state == "Oklahoma")
+or_results <- state_results |>
+  filter(state == "Oregon")
+pa_results <- state_results |>
+  filter(state == "Pennsylvania")
+ri_results <- state_results |>
+  filter(state == "Rhode Island")
+sc_results <- state_results |>
+  filter(state == "South Carolina")
+sd_results <- state_results |>
+  filter(state == "South Dakota")
+tn_results <- state_results |>
+  filter(state == "Tennessee")
+tx_results <- state_results |>
+  filter(state == "Texas")
+ut_results <- state_results |>
+  filter(state == "Utah")
+vt_results <- state_results |>
+  filter(state == "Vermont")
+va_results <- state_results |>
+  filter(state == "Virginia")
+wa_results <- state_results |>
+  filter(state == "Washington")
+wv_results <- state_results |>
+  filter(state == "West Virginia")
+wi_results <- state_results |>
+  filter(state == "Wisconsin")
+wy_results <- state_results |>
+  filter(state == "Wyoming")
+```
+
+```{r 2024 polls with events}
+nat_poll |> 
+  filter(year == 2024) |> 
+  ggplot(aes(x = poll_date, y = poll_support, color = party)) +
+  geom_point(size = 1) + 
+  geom_line() + 
+  scale_x_date(date_labels = "%b %d") + 
+  scale_color_manual(values = c("dodgerblue4", "firebrick1")) +
+  labs(x = "Date",
+       y = "Average Poll Approval", 
+       title = "Polling Averages by Date, 2024") + 
+  geom_rect(xmin=as.Date("2024-08-19"), xmax=as.Date("2024-08-22"), ymin=45, ymax=48.5, alpha=0.02, colour=NA, fill="#9999CC") +
+  annotate("label", x=as.Date("2024-08-20"), y=48, label="DNC", size=4, family = "Courier") +
+  geom_rect(xmin=as.Date("2024-07-15"), xmax=as.Date("2024-07-18"), ymin=41.7, ymax=45, alpha=0.02, colour=NA, fill="#9999CC") +
+  annotate("label", x=as.Date("2024-07-16"), y=44, label="RNC", size=4, family = "Courier") +
+  geom_segment(x = as.Date("2024-06-27"), xend = as.Date("2024-06-27"), y = 41, yend = 46, linetype = "dashed", alpha = 0.4, color = "#9999CC") +
+  annotate("label", x = as.Date("2024-06-27"), y = 46, label = "Biden-Trump\nDebate", size = 3, family = "Courier") +
+  geom_segment(x = as.Date("2024-07-11"), xend = as.Date("2024-07-11"), y = 40.2, yend = 41.3, linetype = "dashed", alpha = 0.4, color = "#9999CC") +
+  annotate("label", x = as.Date("2024-07-11"), y = 41.3, label = "Putin\nGaffe", size = 3, family = "Courier") +
+  geom_segment(x = as.Date("2024-07-13"), xend = as.Date("2024-07-13"), y = 42.2, yend = 45, linetype = "dashed", alpha = 0.4, color = "#9999CC") +
+  annotate("label", x = as.Date("2024-07-13"), y = 45, label = "Trump Shot", size = 3, family = "Courier") +
+  geom_segment(x = as.Date("2024-07-21"), xend = as.Date("2024-07-21"), y = 39, yend = 40.2, linetype = "dashed", alpha = 0.4, color = "#9999CC") +
+  annotate("label", x = as.Date("2024-07-21"), y = 39, label = "Biden Drops Out", size = 3, family = "Courier") +
+  geom_segment(x = as.Date("2024-03-30"), xend = as.Date("2024-03-30"), y = 43.1, yend = 44.8, linetype = "dashed", alpha = 0.4, color = "#9999CC") +
+  annotate("label", x = as.Date("2024-03-30"), y = 44.8, label = "Trump Convicted", size = 3, family = "Courier") +
+  geom_segment(x = as.Date("2024-08-23"), xend = as.Date("2024-08-23"), y = 47.2, yend = 42.4, linetype = "dashed", alpha = 0.4, color = "#9999CC") +
+  annotate("label", x = as.Date("2024-08-23"), y = 42.4, label = "RFK Jr\nDrops Out", size = 3, family = "Courier") +
+  geom_segment(x = as.Date("2024-09-10"), xend = as.Date("2024-09-10"), y = 48.2, yend = 45.7, linetype = "dashed", alpha = 0.4, color = "#9999CC") +
+  annotate("label", x = as.Date("2024-09-10"), y = 46.6, label = "Trump-Harris\nDebate", size = 3, family = "Courier") +
+  my_theme()
+```
+
+```{r}
+nov_poll <- nat_vote |> 
+  left_join(nat_poll |> 
+              group_by(year, party) |> 
+              top_n(1, poll_date) |> 
+              select(-candidate), 
+            by = c("year", "party")) |> 
+  rename(nov_support = poll_support) |> 
+  filter(year <= 2020) |> 
+  drop_na()
+```
+
+
+```{r ols - dems nov pv2p poll}
+ols.nov.1 <- lm(pv2p ~ nov_support, 
+                data = subset(nov_poll, party == "DEM"))
+summary(ols.nov.1)
+```
+
+```{r ols - party stacked nov pv2p poll}
+ols.nov.2 <- lm(pv2p ~ nov_support, 
+                data = nov_poll)
+summary(ols.nov.2)
+```
+
+```{r create dataset by weeks}
+week_poll <- nat_poll |> 
+  group_by(year, party, weeks_left) |>
+  summarize(mean_poll_week = mean(poll_support)) |> 
+  filter(weeks_left <= 30) |> 
+  pivot_wider(names_from = weeks_left, values_from = mean_poll_week) |> 
+  left_join(nat_vote, by = c("year", "party"))
+```
+
+```{r split train & test sets}
+week_poll_train <- week_poll |> 
+  filter(year <= 2020)
+week_poll_test <- week_poll |> 
+  filter(year == 2024)
+
+# rename
+colnames(week_poll)[3:33] <- paste0("poll_weeks_left_", 0:30)
+colnames(week_poll_train)[3:33] <- paste0("poll_weeks_left_", 0:30)
+colnames(week_poll_test)[3:33] <- paste0("poll_weeks_left_", 0:30)
+```
+
+```{r ols vs. regularized regression - dimensionality error}
+ols.weekpoll <- lm(paste0("pv2p ~ ", paste0( "poll_weeks_left_", 0:30, collapse = " + ")), 
+                    data = week_poll_train)
+summary(ols.weekpoll) # N.B. Inestimable: p (31) > n (30)! 
+```
+
+```{r split into x & y for training}
+x.train <- week_poll_train |>
+  ungroup() |> 
+  select(all_of(starts_with("poll_weeks_left_"))) |> 
+  as.matrix()
+y.train <- week_poll_train$pv2p
+```
+
+# Ridge
+
+```{r ridge}
+ridge.weekpoll <- glmnet(x = x.train, y = y.train, alpha = 0)
+# set ridge using alpha = 0
+```
+
+```{r visualize ridge shrinkage}
+plot(ridge.weekpoll, xvar = "lambda")
+```
+
+```{r get ridge coefs}
+coef(ridge.weekpoll, s = 0.1)
+```
+
+# Lasso
+
+```{r lasso}
+lasso.weekpoll <- glmnet(x = x.train, y = y.train, alpha = 1) 
+# set lasso using alpha = 1
+```
+
+```{r visualize lasso shrinkage}
+plot(lasso.weekpoll, xvar = "lambda")
+```
+
+```{r get lasso coefs}
+coef(lasso.weekpoll, s = 0.1)
+```
+
+# Elastic Net
+
+```{r enet}
+enet.weekpoll <- glmnet(x = x.train, y = y.train, alpha = 0.5) 
+# set elastic net using alpha = 0.5
+```
+
+```{r visualize enet shrinkage}
+plot(enet.weekpoll, xvar = "lambda")
+```
+
+# Optimize Lambda
+
+```{r cross-validate to minimize mse}
+set.seed(19709)
+cv.ridge.weekpoll <- cv.glmnet(x = x.train, y = y.train, alpha = 0)
+
+set.seed(19709)
+cv.lasso.weekpoll <- cv.glmnet(x = x.train, y = y.train, alpha = 1)
+
+set.seed(19709)
+cv.enet.weekpoll <- cv.glmnet(x = x.train, y = y.train, alpha = 0.5)
+```
+
+```{r retrieve min lambdas}
+lambda.min.ridge <- cv.ridge.weekpoll$lambda.min
+lambda.min.lasso <- cv.lasso.weekpoll$lambda.min
+lambda.min.enet <- cv.enet.weekpoll$lambda.min
+```
+
+```{r predict using training data & min lambda}
+(mse.ridge <- mean((predict(ridge.weekpoll, s = lambda.min.ridge, newx = x.train) - y.train)^2))
+(mse.lasso <- mean((predict(lasso.weekpoll, s = lambda.min.lasso, newx = x.train) - y.train)^2))
+(mse.enet <- mean((predict(enet.weekpoll, s = lambda.min.enet, newx = x.train) - y.train)^2))
+```
+
+```{r plot coefficients by week}
+coefplot <- data.frame("OLS" = coef(ols.weekpoll)[-1], 
+                         "Ridge" = coef(ridge.weekpoll, s = lambda.min.ridge)[-1], 
+                         "Lasso" = coef(lasso.weekpoll, s = lambda.min.lasso)[-1], 
+                         "Elastic Net" = coef(enet.weekpoll, s = lambda.min.enet)[-1]) |> 
+  rownames_to_column("coef_name") |> 
+  pivot_longer(cols = -coef_name, names_to = "method", values_to = "coef_est") |> 
+  mutate(week = rep(0:30, each = 4))
+
+coefplot[which(is.na(coefplot$coef_est)),]$coef_est <- 0 
+
+coefplot |>
+  ggplot(aes(x = coef_est, y = reorder(coef_name, -week), color = method)) +
+  geom_segment(aes(xend = 0, yend = reorder(coef_name, -week)), alpha = 0.5, lty = "dashed") +
+  geom_vline(aes(xintercept = 0), lty = "dashed") +   
+  geom_point() + 
+  labs(x = "Coefficient Estimate", 
+       y = "Coefficient Name", 
+       title = "Comparison of Coefficients Across Regularization Methods") + 
+  my_theme() +
+  theme(
+     panel.grid.major.x = element_blank(),
+     panel.grid.major.y = element_blank()
+  )
+```
+
+```{r check 2024 weeks available}
+nat_poll |> 
+  filter(year == 2024) |> 
+  select(weeks_left) |> 
+  distinct() |> 
+  range()
+```
+
+```{r split for training}
+# Take week 30 - 7 as predictors since those are the weeks we have polling data for 2024 and historically
+x.train <- week_poll_train |>
+  ungroup() |> 
+  select(all_of(paste0("poll_weeks_left_", 7:30))) |> 
+  as.matrix()
+y.train <- week_poll_train$pv2p
+x.test <- week_poll_test |>
+  ungroup() |> 
+  select(all_of(paste0("poll_weeks_left_", 7:30))) |> 
+  as.matrix()
+```
+
+```{r use enet}
+set.seed(19709)
+enet.poll <- cv.glmnet(x = x.train, y = y.train, alpha = 0.5)
+lambda.min.enet.poll <- enet.poll$lambda.min
+```
+
+```{r predict 2024 w/ enet}
+(polls.pred <- predict(enet.poll, s = lambda.min.enet.poll, newx = x.test))
+# 51.8% Harris, 50.6% Trump
+```
+
 ```{r state poll coverage 2020, echo=FALSE, warning=FALSE}
 state_poll |> 
   filter(year == 2020) |> 
@@ -180,32 +522,36 @@ summary(ols.nov)
 ```{r create state polls as vars object}
 state_vars_poll <- state_poll |>
   # since we only have data from 7+ weeks out in 2024
-  filter(weeks_left >= 7) |>
-  group_by(year, party, state) |>
+  # also filter to republican popular vote
+  filter(weeks_left >= 7 & party == "REP") |>
+  group_by(year, state) |>
   summarize(avg_poll = mean(poll_support)) |>
   pivot_wider(names_from = state, values_from = avg_poll)
+state_vars_poll <- as.data.frame(state_vars_poll)
 
-# merge state polls with national vote
-nat_state_vars <- nat_vote |>
-  right_join(state_vars_poll, by = "year", "party")
-nat_state_vars <- as.data.frame(nat_state_vars)
+nat_vote_rep <- nat_vote |>
+  filter(party == "REP" & year >= 1972) |>
+  select(year, pv2p)
+rows <- nrow(nat_vote_rep)
+nat_vote_rep[rows+1, ] <- NA
+nat_vote_rep$year <- c(1972, 1976, 1980, 1984, 1988, 1992, 1996, 2000, 2004, 2008, 2012, 2016, 2020, 2024)
 
 # imputation with mean
-nsv_imputed1 <- nat_state_vars
-for(i in 1:ncol(nsv_imputed1)) {
-  nsv_imputed1[ ,i][is.na(nsv_imputed1[ ,i])] <- mean(nsv_imputed1[ ,i], na.rm=T)
+for(i in 1:ncol(state_vars_poll)) {
+  state_vars_poll[ ,i][is.na(state_vars_poll[ ,i])] <- mean(state_vars_poll[ ,i], na.rm=T)
 }
 
-# imputation with median
-nsv_imputed2 <- nat_state_vars
-for(i in 1:ncol(nsv_imputed2)) {
-  nsv_imputed2[ ,i][is.na(nsv_imputed2[ ,i])] <- mean(nsv_imputed2[ ,i], na.rm=T)
-}
+state_vars_poll[ ,1][is.na(state_vars_poll[ ,1])] <- mean(state_vars_poll[ ,1], na.rm=T)
+
+# merge state polls (mean imputed) with national vote
+nat_state_vars <- state_vars_poll |> 
+  left_join(nat_vote_rep, by = join_by(year))
+nat_state_vars <- as.data.frame(nat_state_vars)
 ```
 
 ```{r split to train and test}
 # train on all available data up to and through 2020
-state_poll_train <- nsv_imputed1 |> 
+state_poll_train <- nat_state_vars |> 
   filter(year <= 2020)
 # test on 2024
 state_poll_test <- nat_state_vars |> 
@@ -215,7 +561,7 @@ state_poll_test <- nat_state_vars |>
 ```{r create x and y for training}
 x.train <- state_poll_train |>
   ungroup() |> 
-  select(California:Pennsylvania) |> 
+  select(-year, -pv2p) |> 
   as.matrix()
 y.train <- state_poll_train$pv2p
 ```
@@ -243,4 +589,65 @@ enet.statepoll <- glmnet(x = x.train, y = y.train, alpha = 0.5)
 plot(enet.statepoll, xvar = "lambda")
 coef(enet.statepoll, s = 0.1)
 ```
+```{r}
+lm(formula = pv2p ~ California + `New York` + Florida, Maryland + Nevada, data = state_poll_train, na.action = "na.omit") |>
+  summary()
+lm(formula = pv2p ~ California, `New York`, Florida, `Maryland`, Nevada, data = state_poll_train)
+```
 
+```{r mean squared error of regularized regressions}
+# cross-validate
+set.seed(19709)
+cv.ridge.statepoll <- cv.glmnet(x = x.train, y = y.train, alpha = 0)
+
+set.seed(19709)
+cv.lasso.statepoll <- cv.glmnet(x = x.train, y = y.train, alpha = 1)
+
+set.seed(19709)
+cv.enet.statepoll <- cv.glmnet(x = x.train, y = y.train, alpha = 0.5)
+
+# retrieve min lambdas
+lambda.min.ridge <- cv.ridge.statepoll$lambda.min
+lambda.min.lasso <- cv.lasso.statepoll$lambda.min
+lambda.min.enet <- cv.enet.statepoll$lambda.min
+
+# retrieve mean squared error
+(mse.ridge <- mean((predict(ridge.statepoll, s = lambda.min.ridge, newx = x.train) - y.train)^2))
+(mse.lasso <- mean((predict(lasso.statepoll, s = lambda.min.lasso, newx = x.train) - y.train)^2))
+(mse.enet <- mean((predict(enet.statepoll, s = lambda.min.enet, newx = x.train) - y.train)^2))
+```
+
+```{r plot state coefficients}
+coefplot <- data.frame("Ridge" = coef(ridge.statepoll, s = lambda.min.ridge)[-1], 
+                         "Lasso" = coef(lasso.statepoll, s = lambda.min.lasso)[-1], 
+                         "Elastic Net" = coef(enet.statepoll, s = lambda.min.enet)[-1]) |> 
+  rownames_to_column("coef_name") |> 
+  pivot_longer(cols = -coef_name, names_to = "method", values_to = "coef_est")
+
+coefplot[which(is.na(coefplot$coef_est)),]$coef_est <- 0 
+
+coefplot |>
+  ggplot(aes(x = coef_est, y = reorder(coef_name, coef_est), color = method)) +
+  geom_segment(aes(xend = 0, yend = reorder(coef_name, coef_est)), alpha = 0.5, lty = "dashed") +
+  geom_vline(aes(xintercept = 0), lty = "dashed") +   
+  geom_point() + 
+  labs(x = "Coefficient Estimate", 
+       y = "Coefficient Name", 
+       title = "Comparison of Coefficients Across Regularization Methods") + 
+  my_theme() +
+  theme(
+     panel.grid.major.x = element_blank(),
+     panel.grid.major.y = element_blank()
+  )
+```
+
+```{r use state enet to predict}
+set.seed(19709)
+enet.statepoll <- glmnet(x = x.train, y = y.train, alpha = 0.5)
+lambda.min.enet.statepoll <- enet.statepoll$lambda.min
+x.test <- state_poll_test |>
+  ungroup() |> 
+  select(-year, -pv2p) |> 
+  as.matrix()
+(state.pred <- predict(enet.statepoll, s = lambda.min.enet.statepoll, newx = x.test))
+```
