@@ -34,7 +34,7 @@ Felonies! Assassination attempts! Debate match-ups! With less than two months to
 
 
 
-Table: (\#tab:table print)Fig. III - Two-Party Vote Share Predictions
+Table: (\#tab:table code)Fig. III - Two-Party Vote Share Predictions
 
 |Model                  | Harris| Trump|
 |:----------------------|------:|-----:|

@@ -322,10 +322,11 @@ predictions <- tibble(Model = c("Polls by Week (A)", "Polls by Proximity (B)", "
                                 "Combined (BC)"),
                       Harris = c(51.81, 44.0, 51.93, 51.98, 47.96),
                       Trump = c(50.58, 42.95, 47.42, 47.94, 45.19))
+fig3 <- knitr::kable(predictions, digits = 2, caption = "Fig. III - Two-Party Vote Share Predictions")
 ```
 
 ```{r table print, echo=FALSE, include=TRUE, warning=FALSE}
-knitr::kable(predictions, digits = 2, caption = "Fig. III - Two-Party Vote Share Predictions")
+fig3
 ```
 
 # Assessing the Experts
