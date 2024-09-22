@@ -155,6 +155,24 @@ nat_poll |>
   labs(x = "Date",
        y = "Average Poll Approval", 
        title = "Polling Averages by Date, 2024") + 
+  geom_rect(xmin=as.Date("2024-08-19"), xmax=as.Date("2024-08-22"), ymin=45, ymax=48.5, alpha=0.02, colour=NA, fill="#9999CC") +
+  annotate("label", x=as.Date("2024-08-20"), y=48, label="DNC", size=4, family = "Courier") +
+  geom_rect(xmin=as.Date("2024-07-15"), xmax=as.Date("2024-07-18"), ymin=41.7, ymax=45, alpha=0.02, colour=NA, fill="#9999CC") +
+  annotate("label", x=as.Date("2024-07-16"), y=44, label="RNC", size=4, family = "Courier") +
+  geom_segment(x = as.Date("2024-06-27"), xend = as.Date("2024-06-27"), y = 41, yend = 46, linetype = "dashed", alpha = 0.4, color = "#9999CC") +
+  annotate("label", x = as.Date("2024-06-27"), y = 46, label = "Biden-Trump\nDebate", size = 3, family = "Courier") +
+  geom_segment(x = as.Date("2024-07-11"), xend = as.Date("2024-07-11"), y = 40.2, yend = 41.3, linetype = "dashed", alpha = 0.4, color = "#9999CC") +
+  annotate("label", x = as.Date("2024-07-11"), y = 41.3, label = "Putin\nGaffe", size = 3, family = "Courier") +
+  geom_segment(x = as.Date("2024-07-13"), xend = as.Date("2024-07-13"), y = 42.2, yend = 45, linetype = "dashed", alpha = 0.4, color = "#9999CC") +
+  annotate("label", x = as.Date("2024-07-13"), y = 45, label = "Trump Shot", size = 3, family = "Courier") +
+  geom_segment(x = as.Date("2024-07-21"), xend = as.Date("2024-07-21"), y = 39, yend = 40.2, linetype = "dashed", alpha = 0.4, color = "#9999CC") +
+  annotate("label", x = as.Date("2024-07-21"), y = 39, label = "Biden Drops Out", size = 3, family = "Courier") +
+  geom_segment(x = as.Date("2024-03-30"), xend = as.Date("2024-03-30"), y = 43.1, yend = 44.8, linetype = "dashed", alpha = 0.4, color = "#9999CC") +
+  annotate("label", x = as.Date("2024-03-30"), y = 44.8, label = "Trump Convicted", size = 3, family = "Courier") +
+  geom_segment(x = as.Date("2024-08-23"), xend = as.Date("2024-08-23"), y = 47.2, yend = 42.4, linetype = "dashed", alpha = 0.4, color = "#9999CC") +
+  annotate("label", x = as.Date("2024-08-23"), y = 42.4, label = "RFK Jr\nDrops Out", size = 3, family = "Courier") +
+  geom_segment(x = as.Date("2024-09-10"), xend = as.Date("2024-09-10"), y = 48.2, yend = 45.7, linetype = "dashed", alpha = 0.4, color = "#9999CC") +
+  annotate("label", x = as.Date("2024-09-10"), y = 46.6, label = "Trump-Harris\nDebate", size = 3, family = "Courier") +
   my_theme()
 ```
 
