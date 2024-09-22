@@ -47,8 +47,6 @@ The dull truth is that polls lie somewhere between magic bullet and useless driv
 
 
 
-Table: (\#tab:table code)Fig. III - Two-Party Vote Share Predictions
-
 |Model                  | Harris| Trump|
 |:----------------------|------:|-----:|
 |Polls by Week (A)      |  51.81| 50.58|
