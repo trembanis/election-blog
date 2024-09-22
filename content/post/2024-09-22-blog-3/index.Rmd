@@ -43,7 +43,7 @@ my_theme <- function() {
 }
 ```
 
-```{r read polls data, echo=FALSE, include=FALSE, warning=FALSE}
+```{r read data, echo=FALSE, include=FALSE, warning=FALSE}
 # processed FiveThirtyEight polling average datasets
 nat_poll <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Blog #3/data/national_polls_1968-2024.csv")
 state_poll <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Blog #3/data/national_polls_1968-2024.csv")
@@ -70,6 +70,11 @@ state_vote$pv2p <- state_vote$value
 
 state_vote <- state_vote |>
   select(year, state, party, pv2p)
+
+# economic data
+econ <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Blog #3/data/fred_econ.csv") |> 
+# filter to most recent available quarter of 2024
+  filter(quarter == 2)
 ```
 
 
@@ -83,7 +88,7 @@ fig1 <- nat_poll |>
   scale_color_manual(values = c("dodgerblue4", "firebrick1")) +
   labs(x = "Date",
        y = "Average Poll Approval", 
-       title = "Polling Averages by Date, 2024") + 
+       title = "Fig. I - Polling Averages by Date, 2024") + 
   geom_rect(xmin=as.Date("2024-08-19"), xmax=as.Date("2024-08-22"), ymin=45, ymax=48.5, alpha=0.02, colour=NA, fill="#9999CC") +
   annotate("label", x=as.Date("2024-08-20"), y=48, label="DNC", size=4, family = "Courier") +
   geom_rect(xmin=as.Date("2024-07-15"), xmax=as.Date("2024-07-18"), ymin=41.7, ymax=45, alpha=0.02, colour=NA, fill="#9999CC") +
@@ -183,7 +188,7 @@ fig2 <- coefplot |>
   geom_point() + 
   labs(x = "Coefficient Estimate", 
        y = "Weeks Left", 
-       title = "Coefficients Across Regularization Methods") + 
+       title = "Fig II. - Coefficients Across Regularization Methods") + 
   my_theme() +
   theme(
      panel.grid.major.x = element_blank(),
@@ -214,9 +219,108 @@ lambda.min.enet.poll <- enet.poll$lambda.min
 polls.pred <- predict(enet.poll, s = lambda.min.enet.poll, newx = x.test)
 # Harris 51.81%
 # Trump 50.58%
+
+# weight on proximity to election day
+election_day_2024 <- "2024-11-05"
+today <- "2024-09-22"
+days_left <- as.numeric(as.Date(election_day_2024) - as.Date(today))
+
+(poll_model_weight <- 1- (1/sqrt(days_left)))
+(fund_model_weight <- 1/sqrt(days_left))
+
+proximity.pred <- polls.pred * poll_model_weight
+# Harris 44.0
+# Trump 42.95
+
+# merge, create vote lags. 
+combined <- econ |> 
+  left_join(week_poll, by = "year") |> 
+  filter(year %in% c(unique(nat_vote$year), 2024)) |> 
+  group_by(party) |> 
+  mutate(pv2p_lag1 = lag(pv2p, 1), 
+         pv2p_lag2 = lag(pv2p, 2)) |> 
+  ungroup()
+
+# fundamentals-only dataset
+fund <- combined |> 
+  select("year", "pv2p", "GDP_growth_quarterly", "pv2p_lag1", "pv2p_lag2") 
+# split to train and test
+x.train.fund <- fund |> 
+  filter(year <= 2020) |>
+  select(-c(year, pv2p)) |> 
+  slice(-c(1:9)) |> 
+  as.matrix()
+y.train.fund <- fund |> 
+  filter(year <= 2020) |> 
+  select(pv2p) |> 
+  slice(-c(1:9)) |> 
+  as.matrix()
+x.test.fund <- fund |> 
+  filter(year == 2024) |> 
+  select(-c(year, pv2p)) |> 
+  drop_na() |> 
+  as.matrix()
+
+# fundamentals-only ols
+lm.fund <- lm(y.train.fund ~ x.train.fund)
+lm.fund.pred <- predict(lm.fund, newx = x.test.fund)
+# Harris 51.93%
+# Trump 47.42%
+
+# run fundamentals-only enet (note: prediction is the same as ols, since only one economic variable is used -- enet is only used to facilitate combination with other models below)
+set.seed(02138)
+enet.fund <- cv.glmnet(x = x.train.fund, y = y.train.fund, intercept = FALSE, alpha = 0.5)
+lambda.min.enet.fund <- enet.fund$lambda.min
+enet.fund.pred <- predict(enet.fund, s = lambda.min.enet.fund, newx = x.test.fund)
+
+# Sequester data for combined model.
+combo <- combined |> 
+  select("year", "pv2p", "GDP_growth_quarterly", "pv2p_lag1", "pv2p_lag2", all_of(paste0("poll_weeks_left_", 7:30))) 
+
+x.train.combined <- combo |> 
+  filter(year <= 2020) |> 
+  select(-c(year, pv2p)) |> 
+  slice(-c(1:9)) |> 
+  as.matrix()
+y.train.combined <- combo |>
+  filter(year <= 2020) |> 
+  select(pv2p) |> 
+  slice(-c(1:9)) |> 
+  as.matrix()
+x.test.combined <- combo |>
+  filter(year == 2024) |> 
+  select(-c(year, pv2p)) |> 
+  drop_na() |> 
+  as.matrix()
+
+# combined enet
+set.seed(02138)
+enet.combined <- cv.glmnet(x = x.train.combined, y = y.train.combined, intercept = FALSE, alpha = 0.5)
+lambda.min.enet.combined <- enet.combined$lambda.min
+
+# predict combo
+combo.pred <- predict(enet.combined, s = lambda.min.enet.combined, newx = x.test.combined)
+# Harris 51.98%
+# Trump 47.94%
+
+# combo - polls weighted on proximity, fundamentals not adjusted
+ensemble.2.pred <- (proximity.pred + enet.fund.pred)/2
+# Harris 47.96%
+# Trump 45.19%
 ```
 
 ```{r fig 2 print, echo=FALSE, include=TRUE, warning=FALSE}
 fig2
+```
+
+```{r table code, echo=FALSE, include=FALSE, warning=FALSE}
+predictions <- tibble(Model = c("Polls by Week (A)", "Polls by Proximity (B)", "GDP Growth (C)", "Combined (AC)",
+                                "Combined (BC)"),
+                      Harris = c(51.81, 44.0, 51.93, 51.98, 47.96),
+                      Trump = c(50.58, 42.95, 47.42, 47.94, 45.19))
+```
+
+```{r table print, echo=FALSE, include=TRUE, warning=FALSE}
+knitr::kable(predictions, digits = 2, caption = "Fig. III - Two-Party Vote Share Predictions")
 ```
 
