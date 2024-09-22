@@ -1,5 +1,5 @@
 ---
-title: 'Blog #3'
+title: 'Blog Post #3'
 author: "By Ella Trembanis"
 date: '2024-09-22'
 output:
@@ -22,4 +22,8 @@ slug: "blog-post-3"
 
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/fig 1 print-1.png" width="672" />
+
+
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/fig 2 print-1.png" width="672" />
 
