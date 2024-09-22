@@ -46,7 +46,7 @@ my_theme <- function() {
 ```{r read polls data, echo=FALSE, include=FALSE, warning=FALSE}
 # processed FiveThirtyEight polling average datasets
 nat_poll <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Blog #3/data/national_polls_1968-2024.csv")
-state_poll <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Blog #3/data/state_polls_1968-2024.csv")
+state_poll <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Blog #3/data/national_polls_1968-2024.csv")
 
 # national popular vote
 nat_vote <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Blog #3/data/popvote_1948-2020.csv") |>
@@ -191,6 +191,29 @@ fig2 <- coefplot |>
      axis.text.y = element_blank(),
      axis.ticks.y = element_blank()
   )
+
+# enet prediction
+
+x.train <- week_poll_train |>
+  ungroup() |> 
+# select weeks 7-30 left to maximize coverage (we are 7 weeks away)
+  select(all_of(paste0("poll_weeks_left_", 7:30))) |> 
+  as.matrix()
+# train and test sets
+y.train <- week_poll_train$pv2p
+x.test <- week_poll_test |>
+  ungroup() |> 
+  select(all_of(paste0("poll_weeks_left_", 7:30))) |> 
+  as.matrix()
+# create enet for selected weeks
+set.seed(19709)
+enet.poll <- cv.glmnet(x = x.train, y = y.train, alpha = 0.5)
+lambda.min.enet.poll <- enet.poll$lambda.min
+
+#predict
+polls.pred <- predict(enet.poll, s = lambda.min.enet.poll, newx = x.test)
+# Harris 51.81%
+# Trump 50.58%
 ```
 
 ```{r fig 2 print, echo=FALSE, include=TRUE, warning=FALSE}
