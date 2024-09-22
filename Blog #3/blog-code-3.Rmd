@@ -1,0 +1,246 @@
+# Set-Up
+
+```{r load libraries, echo=FALSE, include=FALSE, warning=FALSE}
+library(car)
+library(caret)
+library(CVXR)
+library(glmnet)
+library(tidyverse)
+library(ggplot2)
+library(mice)
+```
+
+```{r custom theme, echo=FALSE, include=FALSE, warning=FALSE}
+my_theme <- function() {
+  theme(
+  # set panel features
+  panel.border = element_rect(color = "#000033", fill = NA, linetype = 1),
+  panel.background = element_rect(fill = "#FFFFFF"),
+  panel.grid.major.x = element_line(color = "#9999CC", linetype = 2, size = 0.2),
+  panel.grid.minor.x = element_blank(),
+  panel.grid.major.y = element_line(color = "#9999CC", linetype = 2, size = 0.2),
+  panel.grid.minor.y = element_blank(),
+  # set text and axis features
+  text = element_text(color = "#000033", family = "Courier"),
+  title = element_text(color = "#000033", face = "bold", family = "Courier"),
+  axis.ticks = element_line(color = "#000033"),
+  # set legend features
+  legend.position = "bottom",
+  legend.background = element_rect(color = "#000033", fill = NA, linetype = 1)
+  )
+}
+```
+
+```{r read polls data, echo=FALSE, include=FALSE, warning=FALSE}
+# processed FiveThirtyEight polling average datasets
+nat_poll <- read_csv("data/national_polls_1968-2024.csv")
+state_poll <- read_csv("data/state_polls_1968-2024.csv")
+
+# national popular vote
+nat_vote <- read_csv("data/popvote_1948-2020.csv") |>
+  filter(year >= 1968) |>
+  select(year, party, pv2p)
+nat_vote$party[nat_vote$party == "democrat"] <- "DEM"
+nat_vote$party[nat_vote$party == "republican"] <- "REP"
+
+# state popular vote
+state_vote <- read_csv("data/clean_wide_state_2pv_1948_2020.csv") |>
+  filter(year >= 1968) |>
+  select(year, state, D_pv2p, R_pv2p) |>
+  pivot_longer(
+    cols = D_pv2p:R_pv2p,
+    cols_vary = "fastest",
+    names_to = ("party")
+  )
+state_vote$party[state_vote$party == "D_pv2p"] <- "DEM"
+state_vote$party[state_vote$party == "R_pv2p"] <- "REP"
+state_vote$pv2p <- state_vote$value
+
+state_vote <- state_vote |>
+  select(year, state, party, pv2p)
+
+# electoral college
+ec <- read_csv("data/corrected_ec_1948_2024.csv") |>
+  filter(year >= 1968)
+
+# map of u.s. with state borders
+states_map <- map_data("state")
+```
+
+```{r state abbreviations, echo=FALSE, include=FALSE< warning=FALSE}
+# state abbreviations for easy labelling
+abbreviations <- c(
+  Alabama = "AL",
+  Alaska = "AK",
+  Arizona = "AZ",
+  Arkansas = "AR",
+  California = "CA",
+  Colorado = "CO",
+  Delaware = "DE",
+  `District of Columbia` = "DC",
+  Florida = "FL",
+  Georgia = "GA",
+  Hawaii = "HI",
+  Idaho = "ID",
+  Illinois = "IL",
+  Indiana = "IN",
+  Iowa = "IA",
+  Kansas = "KS",
+  Kentucky = "KY",
+  Louisiana = "LA",
+  Maine = "ME",
+  Maryland = "MD",
+  Massachusetts = "MA",
+  `ME-1` = "ME-1",
+  `ME-2` = "ME-2",
+  Michigan = "MI",
+  Minnesota = "MN",
+  Mississippi = "MS",
+  Missouri = "MO",
+  Montana = "MT",
+  `NE-1` = "NE-1",
+  `NE-2` = "NE-2",
+  Nebraska = "NE",
+  Nevada = "NV",
+  `New Hampshire` = "NH",
+  `New Jersey` = "NJ",
+  `New Mexico` = "NM",
+  `New York` = "NY",
+  `North Carolina` = "NC",
+  `North Dakota` = "ND",
+  Ohio = "OH",
+  Oklahoma = "OK",
+  Oregon = "OR",
+  Pennsylvania = "PA",
+  `Rhode Island` = "RI",
+  `South Carolina` = "SC",
+  `South Dakota` = "SD",
+  Tennessee = "TN",
+  Texas = "TX",
+  Utah = "UT",
+  Vermont = "VT",
+  Virginia = "VA",
+  Washington = "WA",
+  `West Virginia` = "WV",
+  Wisconsin = "WI",
+  Wyoming = "WY"
+)
+```
+
+```{r state poll coverage 2020, echo=FALSE, warning=FALSE}
+state_poll |> 
+  filter(year == 2020) |> 
+  group_by(state) |>
+  ggplot(aes(x = poll_date, y = poll_support, color = party)) +
+  facet_wrap(vars(state), labeller = as_labeller(abbreviations)) +
+  geom_point(size = 1) + 
+  geom_line() + 
+  scale_color_manual(values = c("dodgerblue4", "firebrick1")) +
+  labs(x = "Date",
+       y = "Average Poll Approval", 
+       title = "Polling Averages by State, 2020") + 
+  my_theme() +
+  theme(axis.text = element_blank(), axis.ticks = element_blank(), aspect.ratio = 0.3)
+```
+
+```{r state poll coverage 1972, echo=FALSE, warning=FALSE}
+state_poll |> 
+  filter(year == 1972) |> 
+  group_by(state) |>
+  ggplot(aes(x = poll_date, y = poll_support, color = party)) +
+  facet_wrap(vars(state)) +
+  geom_point(size = 1) + 
+  geom_line() + 
+  scale_color_manual(values = c("dodgerblue4", "firebrick1")) +
+  labs(x = "Date",
+       y = "Average Poll Approval", 
+       title = "Polling Averages by State, 1972") + 
+  my_theme() +
+  theme(axis.text = element_blank(), axis.ticks = element_blank(), aspect.ratio = 0.3)
+```
+
+```{r merge by nov}
+nov_state_poll <- state_vote |> 
+  left_join(state_poll |> 
+              group_by(year, party, state) |> 
+              top_n(1, poll_date) |> 
+              select(-candidate), 
+            by = c("year", "party", "state")) |> 
+  rename(nov_support = poll_support) |> 
+  filter(year <= 2020) |> 
+  drop_na()
+```
+
+```{r ols - state pv2p nov poll}
+ols.nov <- lm(pv2p ~ nov_support, 
+                data = nov_state_poll)
+summary(ols.nov)
+```
+
+```{r create state polls as vars object}
+state_vars_poll <- state_poll |>
+  # since we only have data from 7+ weeks out in 2024
+  filter(weeks_left >= 7) |>
+  group_by(year, party, state) |>
+  summarize(avg_poll = mean(poll_support)) |>
+  pivot_wider(names_from = state, values_from = avg_poll)
+
+# merge state polls with national vote
+nat_state_vars <- nat_vote |>
+  right_join(state_vars_poll, by = "year", "party")
+nat_state_vars <- as.data.frame(nat_state_vars)
+
+# imputation with mean
+nsv_imputed1 <- nat_state_vars
+for(i in 1:ncol(nsv_imputed1)) {
+  nsv_imputed1[ ,i][is.na(nsv_imputed1[ ,i])] <- mean(nsv_imputed1[ ,i], na.rm=T)
+}
+
+# imputation with median
+nsv_imputed2 <- nat_state_vars
+for(i in 1:ncol(nsv_imputed2)) {
+  nsv_imputed2[ ,i][is.na(nsv_imputed2[ ,i])] <- mean(nsv_imputed2[ ,i], na.rm=T)
+}
+```
+
+```{r split to train and test}
+# train on all available data up to and through 2020
+state_poll_train <- nsv_imputed1 |> 
+  filter(year <= 2020)
+# test on 2024
+state_poll_test <- nat_state_vars |> 
+  filter(year == 2024)
+```
+
+```{r create x and y for training}
+x.train <- state_poll_train |>
+  ungroup() |> 
+  select(California:Pennsylvania) |> 
+  as.matrix()
+y.train <- state_poll_train$pv2p
+```
+
+```{r ridge}
+# set ridge
+ridge.statepoll <- glmnet(x = x.train, y = y.train, alpha = 0)
+# visualize shrinkage
+plot(ridge.statepoll, xvar = "lambda")
+coef(ridge.statepoll, s = 0.1)
+```
+
+```{r lasso}
+# set LASSO
+lasso.statepoll <- glmnet(x = x.train, y = y.train, alpha = 1)
+# visualize shrinkage
+plot(lasso.statepoll, xvar = "lambda")
+coef(lasso.statepoll, s = 0.1)
+```
+
+```{r enet}
+# set enet
+enet.statepoll <- glmnet(x = x.train, y = y.train, alpha = 0.5)
+# visualize shrinkage
+plot(enet.statepoll, xvar = "lambda")
+coef(enet.statepoll, s = 0.1)
+```
+

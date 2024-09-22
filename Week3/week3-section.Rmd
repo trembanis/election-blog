@@ -1,0 +1,467 @@
+#' @title GOV 1347: Week 3 (Polling) Laboratory Session
+#' @author Ella Trembanis
+#' @date September 18, 2024
+
+# Set-Up
+
+```{r load libraries}
+library(car)
+library(caret)
+library(CVXR)
+library(glmnet)
+library(tidyverse)
+library(ggplot2)
+```
+
+```{r custom theme}
+my_theme <- function() {
+  theme(
+  # set panel features
+  panel.border = element_rect(color = "#000033", fill = NA, linetype = 1),
+  panel.background = element_rect(fill = "#FFFFFF"),
+  panel.grid.major.x = element_line(color = "#9999CC", linetype = 2, size = 0.2),
+  panel.grid.minor.x = element_blank(),
+  panel.grid.major.y = element_line(color = "#9999CC", linetype = 2, size = 0.2),
+  panel.grid.minor.y = element_blank(),
+  # set text and axis features
+  text = element_text(color = "#000033", family = "Courier"),
+  title = element_text(color = "#000033", face = "bold", family = "Courier"),
+  axis.ticks = element_line(color = "#000033"),
+  # set legend features
+  legend.position = "bottom",
+  legend.background = element_rect(color = "#000033", fill = NA, linetype = 1)
+  )
+}
+```
+
+
+```{r read polls data}
+nat_poll <- read_csv("data/national_polls_1968-2024.csv")
+state_poll <- read_csv("data/state_polls_1968-2024.csv")
+# processed FiveThirtyEight polling average datasets
+```
+
+# Visualize Poll Variation Over Time
+
+```{r}
+nat_poll |> 
+  filter(year == 2020) |> 
+  ggplot(aes(x = poll_date, y = poll_support, color = party)) +
+  geom_point(size = 1) + 
+  geom_line() + 
+  scale_x_date(date_labels = "%b %d") + 
+  scale_color_manual(values = c("dodgerblue4", "firebrick1")) +
+  labs(x = "Date",
+       y = "Average Poll Approval", 
+       title = "Polling Averages by Date, 2020") + 
+  my_theme()
+```
+
+```{r 2020 convention bumps}
+nat_poll |> 
+  filter(year == 2020) |> 
+  ggplot(aes(x = poll_date, y = poll_support, color = party)) +
+  geom_rect(xmin = as.Date("2020-08-17"), xmax = as.Date("2020-08-20"), ymin = 47.5, ymax = 100, alpha = 0.1, color = NA, fill = "#9999CC") + 
+  annotate("label", x = as.Date("2020-08-07"), y = 51.5, label = "DNC", size = 4, family = "Courier") + 
+  geom_rect(xmin = as.Date("2020-08-24"), xmax = as.Date("2020-08-27"), ymin = 0, ymax = 46, alpha = 0.1, color = NA, fill = "#9999CC") +
+  annotate("label", x = as.Date("2020-09-04"), y = 45, label = "RNC", size = 4, family = "Courier") +
+  geom_point(size = 1) + 
+  geom_line() + 
+  scale_x_date(date_labels = "%b %d") + 
+  scale_color_manual(values = c("dodgerblue4", "firebrick1")) +
+  labs(x = "Date",
+       y = "Average Poll Approval", 
+       title = "Polling Averages by Date, 2020 (with Conference Dates)") + 
+  my_theme()
+```
+
+```{r add dates of interest}
+nat_poll |> 
+  filter(year == 2020) |> 
+  ggplot(aes(x = poll_date, y = poll_support, color = party)) +
+  geom_rect(xmin = as.Date("2020-08-17"), xmax = as.Date("2020-08-20"), ymin = 47.5, ymax = 100, alpha = 0.1, color = NA, fill = "#9999CC") + 
+  annotate("label", x = as.Date("2020-08-07"), y = 51.5, label = "DNC", size = 4, family = "Courier") +
+  geom_rect(xmin = as.Date("2020-08-24"), xmax = as.Date("2020-08-27"), ymin = 0, ymax = 47.2, alpha = 0.1, color = NA, fill = "#9999CC") +
+  annotate("label", x = as.Date("2020-09-04"), y = 45, label = "RNC", size = 4, family = "Courier") +
+  geom_rect(xmin = as.Date("2020-10-02"), xmax = as.Date("2020-10-12"), ymin = 0, ymax = 42.7, alpha = 0.05, color = NA, fill = "#9999CC") +
+  
+  geom_point(size = 1) + 
+  geom_line() + 
+  
+  geom_segment(x = as.Date("2020-03-12"), xend = as.Date("2020-03-12"), y = 0, yend = 44.8, linetype = "dashed", alpha = 0.4, color = "#9999CC") +
+  annotate("label", x = as.Date("2020-03-12"), y = 42.5, label = "COVID \n Market Crash", size = 3, family = "Courier") +
+  geom_segment(x = as.Date("2020-04-08"), xend = as.Date("2020-04-08"), y = 49, yend = 100, linetype = "dashed", alpha = 0.4, color = "#9999CC") +
+  annotate("label", x = as.Date("2020-03-25"), y = 51.3, label = "Bernie Ends Run", size = 3, family = "Courier") +
+  geom_segment(x = as.Date("2020-04-16"), xend = as.Date("2020-04-16"), y = 0, yend = 44, linetype = "dashed", alpha = 0.4, color = "#9999CC") +
+  annotate("label", x = as.Date("2020-04-16"), y = 44.7, label = "22 mil \n Unemployment", size = 3, family = "Courier") +
+  geom_segment(x = as.Date("2020-05-27"), xend = as.Date("2020-05-27"), y = 0, yend = 43, linetype = "dashed", alpha = 0.4, color = "#9999CC") +
+  annotate("label", x = as.Date("2020-06-05"), y = 44, label = "100k COVID Dead, \n George Floyd", size = 3, family = "Courier") +
+  
+  geom_segment(x = as.Date("2020-07-14"), xend = as.Date("2020-07-14"), y = 0, yend = 50.3, linetype = "dashed", alpha = 0.4, color = "#9999CC") +
+  annotate("label", x = as.Date("2020-06-19"), y = 47.5, label = "Moderna Announces", size = 3, family = "Courier") +
+  
+  geom_segment(x = as.Date("2020-09-29"), xend = as.Date("2020-09-29"), y = 50, yend = 100, linetype = "dashed", alpha = 0.4, color = "#9999CC") +
+  annotate("label", x = as.Date("2020-9-12"), y = 49.5, label = "Pres. Debate", size = 3, family = "Courier") +
+  geom_segment(x = as.Date("2020-10-07"), xend = as.Date("2020-10-07"), y = 51.7, yend = 100, linetype = "dashed", alpha = 0.4, color = "#9999CC") +
+  annotate("label", x = as.Date("2020-10-17"), y = 50.3, label = "VP Debate", size = 3, family = "Courier") +
+  geom_segment(x = as.Date("2020-10-22"), xend = as.Date("2020-10-22"), y = 52, yend = 100, linetype = "dashed", alpha = 0.4, color = "#9999CC") +
+  annotate("label", x = as.Date("2020-10-30"), y = 51.5, label = "Pres. Debate", size = 3, family = "Courier") +
+  annotate("label", x = as.Date("2020-10-15"), y = 43.7, label = "Trump Has COVID", size = 3, family = "Courier") +
+  geom_segment(x = as.Date("2020-09-18"), xend = as.Date("2020-09-18"), y = 50, yend = 100, linetype = "dashed", alpha = 0.4, color = "#9999CC") +
+  annotate("label", x = as.Date("2020-09-03"), y = 51.5, label = "RBG Passes", size = 3, family = "Courier") +
+  
+  scale_x_date(date_labels = "%b %d") + 
+  scale_color_manual(values = c("dodgerblue4", "firebrick1")) +
+  labs(x = "Date",
+       y = "Average Poll Approval", 
+       title = "Polling Averages by Date, 2020 (with Game Changers)") + 
+  my_theme()
+```
+
+```{r 1988 gamechangers}
+nat_poll |>
+  filter(year == 1988) |>
+  ggplot(aes(x = poll_date, y = poll_support, color = party)) +
+  geom_rect(xmin=as.Date("1988-07-18"), xmax=as.Date("1988-07-21"), ymin=47, ymax=100, alpha=0.1, colour=NA, fill="#9999CC") +
+  annotate("label", x=as.Date("1988-07-10"), y=50, label="DNC", size=4, family = "Courier") +
+  geom_rect(xmin=as.Date("1988-08-15"), xmax=as.Date("1988-08-18"), ymin=0, ymax=44, alpha=0.1, colour=NA, fill="#9999CC") +
+  annotate("label", x=as.Date("1988-08-26"), y=40, label="RNC", size=4, family = "Courier") +
+  
+  geom_point(size = 1) +
+  geom_line() + 
+  
+  geom_segment(x=as.Date("1988-09-13"), xend=as.Date("1988-09-13"), y=49, yend=100, lty=2, color="#9999CC", alpha=0.4) +
+  annotate("label", x=as.Date("1988-09-13"), y=52, label="Tank Gaffe", size=3, family = "Courier") +
+  annotate("label", x=as.Date("1988-09-21"), y=57, label="Willie Horton Ad", size=3, family = "Courier") +
+  geom_segment(x=as.Date("1988-09-21"), xend=as.Date("1988-09-21"), y=49, yend=100, lty=2, color="#9999CC", alpha=0.4) +
+  annotate("label", x=as.Date("1988-10-15"), y=64, label="First Debate\n(Death\nPenalty\nGaffe)", size=3, family = "Courier") +
+  geom_segment(x=as.Date("1988-10-15"), xend=as.Date("1988-10-15"), y=49, yend=100, lty=2, color="#9999CC", alpha=0.4) +
+  scale_x_date(date_labels = "%b, %Y") +
+  scale_color_manual(values = c("dodgerblue4","firebrick1")) +
+  labs(x = "Date",
+       y = "Average Poll Approval", 
+       title = "Polling Averages by Date, 1988 (with Game Changers)") + 
+  my_theme()
+```
+
+```{r 2024 poll averages}
+nat_poll |> 
+  filter(year == 2024) |> 
+  ggplot(aes(x = poll_date, y = poll_support, color = party)) +
+  geom_point(size = 1) + 
+  geom_line() + 
+  scale_x_date(date_labels = "%b %d") + 
+  scale_color_manual(values = c("dodgerblue4", "firebrick1")) +
+  labs(x = "Date",
+       y = "Average Poll Approval", 
+       title = "Polling Averages by Date, 2024") + 
+  my_theme()
+```
+
+# Regularized Regression with Polling Data
+
+```{r read results data}
+vote <- read_csv("data/popvote_1948-2020.csv")
+vote$party[vote$party == "democrat"] <- "DEM"
+vote$party[vote$party == "republican"] <- "REP"
+```
+
+```{r merge by nov}
+nov_poll <- vote |> 
+  left_join(nat_poll |> 
+              group_by(year, party) |> 
+              top_n(1, poll_date) |> 
+              select(-candidate), 
+            by = c("year", "party")) |> 
+  rename(nov_support = poll_support) |> 
+  filter(year <= 2020) |> 
+  drop_na()
+```
+
+```{r ols - dems nov pv2p poll}
+ols.nov.1 <- lm(pv2p ~ nov_support, 
+                data = subset(nov_poll, party == "DEM"))
+summary(ols.nov.1)
+```
+
+```{r ols - party stacked nov pv2p poll}
+ols.nov.2 <- lm(pv2p ~ nov_support, 
+                data = nov_poll)
+summary(ols.nov.2)
+```
+
+```{r create dataset by weeks}
+week_poll <- nat_poll |> 
+  group_by(year, party, weeks_left) |>
+  summarize(mean_poll_week = mean(poll_support)) |> 
+  filter(weeks_left <= 30) |> 
+  pivot_wider(names_from = weeks_left, values_from = mean_poll_week) |> 
+  left_join(vote, by = c("year", "party"))
+```
+
+```{r split train & test sets}
+week_poll_train <- week_poll |> 
+  filter(year <= 2020)
+week_poll_test <- week_poll |> 
+  filter(year == 2024)
+
+# rename
+colnames(week_poll)[3:33] <- paste0("poll_weeks_left_", 0:30)
+colnames(week_poll_train)[3:33] <- paste0("poll_weeks_left_", 0:30)
+colnames(week_poll_test)[3:33] <- paste0("poll_weeks_left_", 0:30)
+```
+
+```{r ols vs. regularized regression - dimensionality error}
+ols.weekpoll <- lm(paste0("pv2p ~ ", paste0( "poll_weeks_left_", 0:30, collapse = " + ")), 
+                    data = week_poll_train)
+summary(ols.weekpoll) # N.B. Inestimable: p (31) > n (30)! 
+```
+
+```{r split into x & y for training}
+x.train <- week_poll_train |>
+  ungroup() |> 
+  select(all_of(starts_with("poll_weeks_left_"))) |> 
+  as.matrix()
+y.train <- week_poll_train$pv2p
+```
+
+# Ridge
+
+```{r ridge}
+ridge.weekpoll <- glmnet(x = x.train, y = y.train, alpha = 0)
+# set ridge using alpha = 0
+```
+
+```{r visualize ridge shrinkage}
+plot(ridge.weekpoll, xvar = "lambda")
+```
+
+```{r get ridge coefs}
+coef(ridge.weekpoll, s = 0.1)
+```
+
+# Lasso
+
+```{r lasso}
+lasso.weekpoll <- glmnet(x = x.train, y = y.train, alpha = 1) 
+# set lasso using alpha = 1
+```
+
+```{r visualize lasso shrinkage}
+plot(lasso.weekpoll, xvar = "lambda")
+```
+
+```{r get lasso coefs}
+coef(lasso.weekpoll, s = 0.1)
+```
+
+# Elastic Net
+
+```{r enet}
+enet.weekpoll <- glmnet(x = x.train, y = y.train, alpha = 0.5) 
+# set elastic net using alpha = 0.5
+```
+
+```{r visualize enet shrinkage}
+plot(enet.weekpoll, xvar = "lambda")
+```
+
+# Optimize Lambda
+
+```{r cross-validate to minimize mse}
+set.seed(19709)
+cv.ridge.weekpoll <- cv.glmnet(x = x.train, y = y.train, alpha = 0)
+
+set.seed(19709)
+cv.lasso.weekpoll <- cv.glmnet(x = x.train, y = y.train, alpha = 1)
+
+set.seed(19709)
+cv.enet.weekpoll <- cv.glmnet(x = x.train, y = y.train, alpha = 0.5)
+```
+
+```{r retrieve min lambdas}
+lambda.min.ridge <- cv.ridge.weekpoll$lambda.min
+lambda.min.lasso <- cv.lasso.weekpoll$lambda.min
+lambda.min.enet <- cv.enet.weekpoll$lambda.min
+```
+
+```{r predict using training data & min lambda}
+(mse.ridge <- mean((predict(ridge.weekpoll, s = lambda.min.ridge, newx = x.train) - y.train)^2))
+(mse.lasso <- mean((predict(lasso.weekpoll, s = lambda.min.lasso, newx = x.train) - y.train)^2))
+(mse.enet <- mean((predict(enet.weekpoll, s = lambda.min.enet, newx = x.train) - y.train)^2))
+```
+
+```{r plot coefficients by week}
+coefplot <- data.frame("OLS" = coef(ols.weekpoll)[-1], 
+                         "Ridge" = coef(ridge.weekpoll, s = lambda.min.ridge)[-1], 
+                         "Lasso" = coef(lasso.weekpoll, s = lambda.min.lasso)[-1], 
+                         "Elastic Net" = coef(enet.weekpoll, s = lambda.min.enet)[-1]) |> 
+  rownames_to_column("coef_name") |> 
+  pivot_longer(cols = -coef_name, names_to = "method", values_to = "coef_est") |> 
+  mutate(week = rep(0:30, each = 4))
+
+coefplot[which(is.na(coefplot$coef_est)),]$coef_est <- 0 
+
+coefplot |>
+  ggplot(aes(x = coef_est, y = reorder(coef_name, -week), color = method)) +
+  geom_segment(aes(xend = 0, yend = reorder(coef_name, -week)), alpha = 0.5, lty = "dashed") +
+  geom_vline(aes(xintercept = 0), lty = "dashed") +   
+  geom_point() + 
+  labs(x = "Coefficient Estimate", 
+       y = "Coefficient Name", 
+       title = "Comparison of Coefficients Across Regularization Methods") + 
+  my_theme() +
+  theme(
+     panel.grid.major.x = element_blank(),
+     panel.grid.major.y = element_blank()
+  )
+```
+
+```{r check 2024 weeks available}
+nat_poll |> 
+  filter(year == 2024) |> 
+  select(weeks_left) |> 
+  distinct() |> 
+  range()
+```
+
+```{r split for training}
+# Take week 30 - 7 as predictors since those are the weeks we have polling data for 2024 and historically
+x.train <- week_poll_train |>
+  ungroup() |> 
+  select(all_of(paste0("poll_weeks_left_", 7:30))) |> 
+  as.matrix()
+y.train <- week_poll_train$pv2p
+x.test <- week_poll_test |>
+  ungroup() |> 
+  select(all_of(paste0("poll_weeks_left_", 7:30))) |> 
+  as.matrix()
+```
+
+```{r use enet}
+set.seed(19709)
+enet.poll <- cv.glmnet(x = x.train, y = y.train, alpha = 0.5)
+lambda.min.enet.poll <- enet.poll$lambda.min
+```
+
+```{r predict 2024 w/ enet}
+(polls.pred <- predict(enet.poll, s = lambda.min.enet.poll, newx = x.test))
+# 51.8% Harris, 50.6% Trump
+```
+
+# Model Ensembling
+
+```{r read econ data}
+econ <- read_csv("data/fred_econ.csv") |> 
+  filter(quarter == 2)
+```
+
+```{r combine data sets & create vote lags}
+combined <- econ |> 
+  left_join(week_poll, by = "year") |> 
+  filter(year %in% c(unique(vote$year), 2024)) |> 
+  group_by(party) |> 
+  mutate(pv2p_lag1 = lag(pv2p, 1), 
+         pv2p_lag2 = lag(pv2p, 2)) |> 
+  ungroup() |> 
+  mutate(gdp_growth_x_incumbent = GDP_growth_quarterly * incumbent, 
+         rdpi_growth_quarterly = RDPI_growth_quarterly * incumbent,
+         cpi_x_incumbent = CPI * incumbent,
+         unemployment_x_incumbent = unemployment * incumbent,
+         sp500_x_incumbent = sp500_close * incumbent) # Generate interaction effects
+```
+
+# Fundamentals-Only Model
+
+```{r fundamentals only & split to train}
+fund <- combined |> 
+  select("year", "pv2p", "GDP", "GDP_growth_quarterly", "RDPI", "RDPI_growth_quarterly", "CPI", "unemployment", "sp500_close",
+         "incumbent", "gdp_growth_x_incumbent", "rdpi_growth_quarterly", "cpi_x_incumbent", "unemployment_x_incumbent", "sp500_x_incumbent", 
+         "pv2p_lag1", "pv2p_lag2") 
+x.train.fund <- fund |> 
+  filter(year <= 2020) |>
+  select(-c(year, pv2p)) |> 
+  slice(-c(1:9)) |> 
+  as.matrix()
+y.train.fund <- fund |> 
+  filter(year <= 2020) |> 
+  select(pv2p) |> 
+  slice(-c(1:9)) |> 
+  as.matrix()
+x.test.fund <- fund |> 
+  filter(year == 2024) |> 
+  select(-c(year, pv2p)) |> 
+  drop_na() |> 
+  as.matrix()
+```
+
+```{r enet fundamentals only}
+set.seed(19709)
+enet.fund <- cv.glmnet(x = x.train.fund, y = y.train.fund, intercept = FALSE, alpha = 0.5)
+lambda.min.enet.fund <- enet.fund$lambda.min
+```
+
+```{r predict w/ enet fundamentals only}
+(fund.pred <- predict(enet.fund, s = lambda.min.enet.fund, newx = x.test.fund))
+```
+
+# Combo Model
+
+```{r sequester data for combo model}
+combo <- combined |> 
+  select("year", "pv2p", "GDP", "GDP_growth_quarterly", "RDPI", "RDPI_growth_quarterly", "CPI", "unemployment", "sp500_close",
+         "incumbent", "gdp_growth_x_incumbent", "rdpi_growth_quarterly", "cpi_x_incumbent", "unemployment_x_incumbent", "sp500_x_incumbent", 
+         "pv2p_lag1", "pv2p_lag2", all_of(paste0("poll_weeks_left_", 7:30)))
+
+x.train.combined <- combo |> 
+  filter(year <= 2020) |> 
+  select(-c(year, pv2p)) |> 
+  slice(-c(1:9)) |> 
+  as.matrix()
+y.train.combined <- combo |>
+  filter(year <= 2020) |> 
+  select(pv2p) |> 
+  slice(-c(1:9)) |> 
+  as.matrix()
+x.test.combined <- combo |>
+  filter(year == 2024) |> 
+  select(-c(year, pv2p)) |> 
+  drop_na() |> 
+  as.matrix()
+```
+
+```{r enet combo model}
+set.seed(19709)
+enet.combined <- cv.glmnet(x = x.train.combined, y = y.train.combined, intercept = FALSE, alpha = 0.5)
+lambda.min.enet.combined <- enet.combined$lambda.min
+```
+
+```{r predict w/ enet combo model}
+(combo.pred <- predict(enet.combined, s = lambda.min.enet.combined, newx = x.test.combined))
+```
+
+```{r ensemble 1}
+# polls & fundamentals equally weighted/unweighted
+(ensemble.1.pred <- (polls.pred + fund.pred)/2)
+```
+
+```{r ensemble 2 - silver}
+# weight on polls' proximity to november
+election_day_2024 <- "2024-11-05"
+today <- "2024-09-18"
+days_left <- as.numeric(as.Date(election_day_2024) - as.Date(today))
+
+(poll_model_weight <- 1- (1/sqrt(days_left)))
+(fund_model_weight <- 1/sqrt(days_left))
+
+(ensemble.2.pred <- polls.pred * poll_model_weight + fund.pred * fund_model_weight)
+```
+
+```{r ensemble 3 - gelman & king}
+# weight on fundamentals' proximity to november
+(poll_model_weight <- 1/sqrt(days_left))
+(fund_model_weight <- 1-(1/sqrt(days_left)))
+
+(ensemble.3.pred <- polls.pred * poll_model_weight + fund.pred * fund_model_weight)
+```
+
