@@ -1,5 +1,5 @@
 ---
-title: 'Blog #3'
+title: 'Blog Post #3'
 author: "By Ella Trembanis"
 date: '2024-09-22'
 output:
@@ -107,5 +107,93 @@ fig1 <- nat_poll |>
 
 ```{r fig 1 print, echo=FALSE, include=TRUE, warning=FALSE}
 fig1
+```
+
+```{r week-by-week, echo=FALSE, include=FALSE, warning=FALSE}
+# use weeks left as columns
+week_poll <- nat_poll |> 
+  group_by(year, party, weeks_left) |>
+  summarize(mean_poll_week = mean(poll_support)) |> 
+  filter(weeks_left <= 30) |> 
+  pivot_wider(names_from = weeks_left, values_from = mean_poll_week) |>
+# merge national vote
+  left_join(nat_vote, by = c("year", "party"))
+
+# split to train and test
+week_poll_train <- week_poll |> 
+  filter(year <= 2020)
+week_poll_test <- week_poll |> 
+  filter(year == 2024)
+
+# rename
+colnames(week_poll)[3:33] <- paste0("poll_weeks_left_", 0:30)
+colnames(week_poll_train)[3:33] <- paste0("poll_weeks_left_", 0:30)
+colnames(week_poll_test)[3:33] <- paste0("poll_weeks_left_", 0:30)
+
+# define x (polls by weeks left) and y (popular vote)
+x.train <- week_poll_train |>
+  ungroup() |> 
+  select(all_of(starts_with("poll_weeks_left_"))) |> 
+  as.matrix()
+y.train <- week_poll_train$pv2p
+
+# ols
+ols.weekpoll <- lm(paste0("pv2p ~ ", paste0( "poll_weeks_left_", 0:30, collapse = " + ")), 
+                    data = week_poll_train)
+# set ridge using alpha = 0
+ridge.weekpoll <- glmnet(x = x.train, y = y.train, alpha = 0)
+# set lasso using alpha = 1
+lasso.weekpoll <- glmnet(x = x.train, y = y.train, alpha = 1) 
+# set elastic net using alpha = 0.5
+enet.weekpoll <- glmnet(x = x.train, y = y.train, alpha = 0.5) 
+
+# cross-validate
+set.seed(19709)
+cv.ridge.weekpoll <- cv.glmnet(x = x.train, y = y.train, alpha = 0)
+set.seed(19709)
+cv.lasso.weekpoll <- cv.glmnet(x = x.train, y = y.train, alpha = 1)
+set.seed(19709)
+cv.enet.weekpoll <- cv.glmnet(x = x.train, y = y.train, alpha = 0.5)
+
+# retrieve optimized lambdas
+lambda.min.ridge <- cv.ridge.weekpoll$lambda.min
+lambda.min.lasso <- cv.lasso.weekpoll$lambda.min
+lambda.min.enet <- cv.enet.weekpoll$lambda.min
+
+# compare mean-squared error
+mse.ridge <- mean((predict(ridge.weekpoll, s = lambda.min.ridge, newx = x.train) - y.train)^2) #9.575001
+mse.lasso <- mean((predict(lasso.weekpoll, s = lambda.min.lasso, newx = x.train) - y.train)^2) #4.681366
+mse.enet <- mean((predict(enet.weekpoll, s = lambda.min.enet, newx = x.train) - y.train)^2) #4.302942
+
+# generate coefficient plot to compare regularization methods
+coefplot <- data.frame("OLS" = coef(ols.weekpoll)[-1],
+                       "Ridge" = coef(ridge.weekpoll, s = lambda.min.ridge)[-1], 
+                         "Lasso" = coef(lasso.weekpoll, s = lambda.min.lasso)[-1], 
+                         "Elastic Net" = coef(enet.weekpoll, s = lambda.min.enet)[-1]) |> 
+  rownames_to_column("coef_name") |> 
+  pivot_longer(cols = -coef_name, names_to = "method", values_to = "coef_est") |> 
+  mutate(week = rep(0:30, each = 4))
+
+coefplot[which(is.na(coefplot$coef_est)),]$coef_est <- 0 
+
+fig2 <- coefplot |>
+  ggplot(aes(x = coef_est, y = reorder(coef_name, -week), color = method)) +
+  geom_segment(aes(xend = 0, yend = reorder(coef_name, -week)), alpha = 0.5, lty = "dashed") +
+  geom_vline(aes(xintercept = 0), lty = "dashed") +   
+  geom_point() + 
+  labs(x = "Coefficient Estimate", 
+       y = "Weeks Left", 
+       title = "Coefficients Across Regularization Methods") + 
+  my_theme() +
+  theme(
+     panel.grid.major.x = element_blank(),
+     panel.grid.major.y = element_blank(),
+     axis.text.y = element_blank(),
+     axis.ticks.y = element_blank()
+  )
+```
+
+```{r fig 2 print, echo=FALSE, include=TRUE, warning=FALSE}
+fig2
 ```
 
