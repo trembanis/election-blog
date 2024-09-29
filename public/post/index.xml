@@ -6,8 +6,15 @@
     <description>Recent content in Posts on A minimal Hugo website</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 22 Sep 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 29 Sep 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:4321/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Blog Post #4</title>
+      <link>http://localhost:4321/post/2024/09/29/blog-post-4/</link>
+      <pubDate>Sun, 29 Sep 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:4321/post/2024/09/29/blog-post-4/</guid>
+      <description>Time for Change Table: (#tab:table 1 code)Time for Change Predicts Harris&amp;rsquo;s Two-Party Vote Share&#xA;Prediction Lower Bound Upper Bound Adjusted R-squared 46.67 42.05 51.29 0.67 Time for MORE Change Model Prediction Lower Bound Upper Bound Adjusted R-squared Average Absolute Value of Out-of-Sample Residuals Time for More Change 50.69 47.15 54.22 0.77 1.58 Index of Consumer Sentiment 47.06 42.63 51.49 0.67 2.03 Poll Average at 7 Weeks To Election 52.25 48.18 56.</description>
+    </item>
     <item>
       <title>Blog Post #3</title>
       <link>http://localhost:4321/post/2024/09/22/blog-post-3/</link>
