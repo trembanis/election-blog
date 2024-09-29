@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-us">
-  <head>
+  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=4321&amp;path=livereload" data-no-instant defer></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Blog Post #3 | A minimal Hugo website</title>
@@ -29,7 +29,7 @@
 <h1 id="polls-and-campaign-narratives">Polls and Campaign Narratives</h1>
 <p>Felonies! Assassination attempts! Debate match-ups! With less than two months to go, the 2024 presidential race has already had its fair share of front-page moments &ndash; but which will truly stick with voters?</p>
 <p>Figure I (below) plots some newsworthy events from the past several months against the candidates&rsquo; performance in national polls.</p>
-<img src="https://example.org/post/2024/09/22/blog-post-3/index_files/figure-html/fig 1 print-1.png" width="672" />
+<img src="/post/2024/09/22/blog-post-3/index_files/figure-html/fig 1 print-1.png" width="672" />
 <p>In some cases, the graph lends itself to story-driven interpretations: there is, for instance, President Trump&rsquo;s short-lived bump in approval around the time of his conviction and the dramatic blue spike where Vice President Harris first assumed the role of presumptive candidate in lieu of Biden.</p>
 <p>At other times, however, the polls defy the headlines. The first assassination attempt against President Trump is virtually indistinguishable in this aggregation. While Biden&rsquo;s numbers were already low in early July, confusing Presidents Putin and Zelensky &ndash; not to mention his opponent and his own vice president &ndash; did not perceivably worsen his standing in the polls. Even the DNC, with its splashy line-up of Democratic stalwarts and Republicans for Harris, fades into the background.</p>
 <p>Notice, too, how close the polls remain across these data. Even when one candidate has a particularly good week or month, they tend to remain within a scant few points of their opponent.</p>
@@ -38,7 +38,7 @@
 <p>The dull truth is that polls lie somewhere between magic bullet and useless drivel. My prediction for this week, like the graph above, uses simple aggregation to curb the effects of potential outliers among the major pollsters, and incorporates a measure of fundamental economic conditions to account for the influence of broad, retrospective evaluation on voter behavior.</p>
 <h1 id="predictions-and-methodology">Predictions and Methodology</h1>
 <p>For my first prediction, I looked at week-by-week poll aggregations. Incorporating every single week into a plain OLS regression, however, would have created a dimensionality error since there are so few election years in the dataset compared to the number of weekly predictors. To reduce the dimensionality of my data, I tested a few regularized regression approaches, including Ridge, LASSO, and Elastic Net. These methods shrink the coefficients of less important predictor variables, making the data easier to work with. Figure II (below) displays the result of this shrinking across the regularization methods.</p>
-<img src="https://example.org/post/2024/09/22/blog-post-3/index_files/figure-html/fig 2 print-1.png" width="672" />
+<img src="/post/2024/09/22/blog-post-3/index_files/figure-html/fig 2 print-1.png" width="672" />
 <p>I found that Elastic Net produced the lowest mean-squared error of the three approaches. Since Elastic Net is also a middle-point between LASSO &ndash; a more aggressive approach which shrinks some variables to 0 &ndash; and Ridge &ndash; a more conservative shrinker &ndash; I chose to use this method to create my predictions.</p>
 <table>
 <thead>
