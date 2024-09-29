@@ -362,11 +362,11 @@ fig1 <- pork_state |>
 fig1
 ```
 
+** Note that these figures are drawn from historical data from Kriner and Greeves (2008) – they are used here to appeal to broad ideas about elected officials’ behavior, not to make specific claims about individual politicians or recent events. **
+
 ```{r fig 2 print, echo=FALSE, include=TRUE, warning=FALSE}
 fig2
 ```
-
-* Note that these figures are drawn from historical data from Kriner and Greeves (2008) – they are used here to appeal to broad ideas about elected officials’ behavior, not to make specific claims about individual politicians or recent events. *
 
 Thus, the last-minute switch-out allows Harris to enjoy at least one of the benefits of being a straightforward incumbent. However, the picture is not entirely as simple as it seems. In Figure II (above), we see that incumbents tend to allocate pork in greater quantities to swing states, especially during election years. This means that any strategic spending by Biden is vulnerable to slight changes in the electoral map with Harris as the Democratic nominee; though overall federal grant spending might have declined had Biden never sought re-election, the administration might have been able to spend more strategically had the Harris campaign started earlier.
 
@@ -444,6 +444,8 @@ fig3
 
 # How About Even More Change?
 
+Time for Change is altogether an impressive model; given the looming threat of overfitting, its simplicity is particularly admirable. In this section, I propose three tweaks to Time for Change, which seek to accommodate some of the quirks of the current election season while retaining the simple construction of the original.
+
 ```{r run models, echo=FALSE, include=FALSE, warning=FALSE}
 # merge datasets (polling + fundamentals + time for change)
 combined_tfc <- tfc_train |>
@@ -485,7 +487,7 @@ summary(tfc_prev)
 predict(tfc_prev, combined_tfc_24, interval = "prediction", level = 0.8)
 ```
 
-```{r fig2 code, echo=FALSE, include=FALSE, warning=FALSE}
+```{r fig4 code, echo=FALSE, include=FALSE, warning=FALSE}
 # sequester pre-2024 (training) data
 combined_tfc_pre_24 <- combined_tfc |>
   filter(year <= 2016) # 2020 is omitted for consistency
@@ -568,7 +570,7 @@ knitr::kable(table2, digits = 2)
 ```
 
 
-```{r fig 2 print, echo=FALSE, include=TRUE, warning=FALSE}
+```{r fig 4 print, echo=FALSE, include=TRUE, warning=FALSE}
 fig4
 ```
 
