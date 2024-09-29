@@ -314,6 +314,44 @@ ensemble.2.pred <- (proximity.pred + enet.fund.pred)/2
 # When regularized: Harris 51.4% & Trump 48.6%
 ```
 
+```{r pork, echo=FALSE, include=FALSE, warning=FALSE}
+fig1 <- pork_state |> 
+  filter(!is.na(state_year_type)) |> 
+  group_by(state_year_type) |>
+  summarize(mean_grant = mean(grant_mil, na.rm = T), se_grant = sd(grant_mil, na.rm = T)/sqrt(n())) |> 
+  ggplot(aes(x = state_year_type, y = mean_grant, ymin = mean_grant-1.96*se_grant, ymax = mean_grant+1.96*se_grant)) + 
+  coord_flip() + 
+  geom_bar(stat = "identity", fill = "#9999CC") + 
+  geom_errorbar(width = 0.2) + 
+  labs(x = "Type of State & Year", 
+       y = "Federal Grant Spending (Millions of $)", 
+       title = "Fig. I - Spending by State Election Type") + 
+  my_theme()
+
+fig2 <- pork_state |> 
+  filter(!is.na(state_year_type2)) |> 
+  group_by(state_year_type2) |>
+  summarize(mean_grant = mean(grant_mil, na.rm = T), se_grant = sd(grant_mil, na.rm = T)/sqrt(n())) |> 
+  ggplot(aes(x = state_year_type2, y = mean_grant, ymin = mean_grant-1.96*se_grant, ymax = mean_grant+1.96*se_grant)) + 
+  coord_flip() + 
+  geom_bar(stat = "identity", fill = "#9999CC") + 
+  geom_errorbar(width = 0.2) + 
+  labs(x = "Type of State & Year", 
+       y = "Federal Grant Spending (Millions of $)", 
+       title = "Fig. II - Spending for Self vs. Successor") + 
+  my_theme()
+```
+
+```{r fig 1 print, echo=FALSE, include=TRUE, warning=FALSE}
+fig1
+```
+
+```{r fig 2 print, echo=FALSE, include=TRUE, warning=FALSE}
+fig2
+```
+
+
+
 # Time for Change
 
 ```{r table 1 code, echo=FALSE, include=FALSE, warning=FALSE}
@@ -334,14 +372,14 @@ tfc_prediction <- tibble(Prediction = 46.67255,
                  `Lower Bound` = 42.05436,
                  `Upper Bound` = 51.29074,
                  `Adjusted R-squared` = 0.6692)
-table1 <- knitr::kable(tfc_prediction, digits = 2, caption = "Time for Change Predicts Harris's Two-Party Vote Share")
+table1 <- knitr::kable(tfc_prediction, digits = 2)
 ```
 
 ```{r table 1 print, echo=FALSE, include=TRUE, warning=FALSE}
 table1
 ```
 
-```{r fig 1 code, echo=FALSE, include=FALSE, warning=FALSE}
+```{r fig 3 code, echo=FALSE, include=FALSE, warning=FALSE}
 # sequester pre-2024 (training) data
 tfc_train_pre_24 <- tfc_train |>
   filter(year <= 2016) # 2020 is omitted because Abramowitz used a COVID-specific model
@@ -364,16 +402,16 @@ mean(abs(out_samp_errors)) # 2.088094
 range(tfc_train_pre_24$pv2p)
 
 # histogram of prediction errors (out-of-sample residuals)
-fig1 <- ggplot() +
+fig3 <- ggplot() +
   geom_histogram(mapping = aes(x = out_samp_errors), fill = "#9999CC", binwidth = 2) +
   xlab("Out-of-Sample Residuals") +
   ylab("Count") +
-  ggtitle("Out-of-Sample Error from Cross-Validation - TFC") +
+  ggtitle("Fig. III - Out-of-Sample Error from Cross-Validation (TFC)") +
   my_theme()
 ```
 
-```{r fig 1 print, echo=FALSE, include=TRUE, warning=FALSE}
-fig1
+```{r fig 3 print, echo=FALSE, include=TRUE, warning=FALSE}
+fig3
 ```
 
 # Time for MORE Change
