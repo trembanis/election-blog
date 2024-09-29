@@ -372,7 +372,11 @@ Thus, the last-minute switch-out allows Harris to enjoy at least one of the bene
 
 As I move into this week’s predictive models, which do not come close to capturing all of these complexities, it is worthwhile to keep these limitations in mind. Determining who gets to be an incumbent, and to what degree, may be the make-or-break question for forecasters during this strange, abbreviated election cycle.
 
-# Time for Change
+# Is it Time for Change?
+
+Alan Abramowitz’s Time for Change model uses just three explanatory variables – incumbency status, the president’s June approval rating, and GDP growth during Q2 of the election year – to predict the incumbent party’s vote share. The model’s basic philosophy is that voters experience incumbent fatigue at predictable intervals, and that this ebb and flow largely determines presidential election results.
+
+With 2020 omitted from the training data, since Abramowitz implemented a COVID-specific model, and Harris categorized as a non-incumbent, Time for Change predicts a Democratic two-party vote share of 46.67%. The table below expands on this finding – notably, the 50% mark falls within the selected confidence interval, so the model cannot be said to predict a popular vote winner at an 80% confidence level.
 
 ```{r table 1 code, echo=FALSE, include=FALSE, warning=FALSE}
 # estimate time for change model through 2016
@@ -398,6 +402,10 @@ table1 <- knitr::kable(tfc_prediction, digits = 2)
 ```{r table 1 print, echo=FALSE, include=TRUE, warning=FALSE}
 table1
 ```
+
+The table also indicates that the model, despite having just three components, explains a respectable two-thirds of the observed variation in historical incumbent party vote share.
+
+I also performed one thousand runs of a cross-validation procedure, randomly selecting half of the election years in my dataset to test the model each time, and found that the mean of the absolute value of the out-of-sample residuals was equal to approximately 2.1. Given that the vote share variable has a range of almost 20 points, this, too, seems like a positive indication of model quality. Figure III (below) displays the distribution of out-of-sample errors; they are approximately normal, which suggests that the model overestimates incumbent party performance about as often as it underestimates.
 
 ```{r fig 3 code, echo=FALSE, include=FALSE, warning=FALSE}
 # sequester pre-2024 (training) data
