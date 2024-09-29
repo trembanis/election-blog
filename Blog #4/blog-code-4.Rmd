@@ -1,0 +1,461 @@
+---
+title: "blog-code-4"
+author: "Ella Trembanis"
+date: "2024-09-28"
+output: html_document
+---
+
+```{r load libraries, echo=FALSE, include=FALSE, warning=FALSE}
+library(ggplot2)
+library(mice)
+library(car)
+library(caret)
+library(CVXR)
+library(glmnet)
+library(kableExtra)
+library(maps)
+library(RColorBrewer)
+library(sf)
+library(tidyverse)
+library(viridis)
+```
+
+```{r custom theme, echo=FALSE, include=FALSE, warning=FALSE}
+my_theme <- function() {
+  theme(
+  # set panel features
+  panel.border = element_rect(color = "#000033", fill = NA, linetype = 1),
+  panel.background = element_rect(fill = "#FFFFFF"),
+  panel.grid.major.x = element_line(color = "#9999CC", linetype = 2, size = 0.2),
+  panel.grid.minor.x = element_blank(),
+  panel.grid.major.y = element_line(color = "#9999CC", linetype = 2, size = 0.2),
+  panel.grid.minor.y = element_blank(),
+  # set text and axis features
+  text = element_text(color = "#000033", family = "Courier"),
+  title = element_text(color = "#000033", face = "bold", family = "Courier"),
+  axis.ticks = element_line(color = "#000033"),
+  # set legend features
+  legend.position = "bottom",
+  legend.background = element_rect(color = "#000033", fill = NA, linetype = 1)
+  )
+}
+```
+
+```{r read data, echo=FALSE, include=FALSE, warning=FALSE}
+# processed FiveThirtyEight polling average datasets
+nat_poll <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Blog #3/data/national_polls_1968-2024.csv")
+state_poll <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Week4/data/state_polls_1968-2024.csv")
+
+# national popular vote
+nat_vote <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Week4/data/popvote_1948-2020(3).csv") |>
+  filter(year >= 1968)
+nat_vote$party[nat_vote$party == "democrat"] <- "DEM"
+nat_vote$party[nat_vote$party == "republican"] <- "REP"
+
+# state popular vote
+state_vote <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Blog #3/data/clean_wide_state_2pv_1948_2020.csv") |>
+  filter(year >= 1968) |>
+  select(year, state, D_pv2p, R_pv2p) |>
+  pivot_longer(
+    cols = D_pv2p:R_pv2p,
+    cols_vary = "fastest",
+    names_to = ("party")
+  )
+state_vote$party[state_vote$party == "D_pv2p"] <- "DEM"
+state_vote$party[state_vote$party == "R_pv2p"] <- "REP"
+state_vote$pv2p <- state_vote$value
+
+state_vote <- state_vote |>
+  select(year, state, party, pv2p)
+
+# Read electoral college data.
+ec <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Week4/data/corrected_ec_1948_2024.csv")
+
+# Read economic data.
+econ <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Blog #3/data/fred_econ.csv") |> 
+# filter to most recent available quarter of 2024
+  filter(quarter == 2)
+
+# Shape and merge polling and election data using November polls. 
+poll_nov <- nat_vote |> 
+  left_join(nat_poll |> 
+              group_by(year, party) |> 
+              top_n(1, poll_date) |> 
+              select(-candidate), 
+            by = c("year", "party")) |> 
+  rename(nov_poll = poll_support) |> 
+  filter(year <= 2020) |> 
+  drop_na()
+
+# Create dataset of polling average by week until the election. 
+week_poll <- nat_poll |> 
+  group_by(year, party, weeks_left) |>
+  summarize(mean_poll_week = mean(poll_support)) |> 
+  filter(weeks_left <= 30) |> 
+  pivot_wider(names_from = weeks_left, values_from = mean_poll_week) |> 
+  left_join(nat_vote, by = c("year", "party"))
+
+# Read federal grants dataset from Kriner & Reeves (2008). 
+pork_state <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Week4/data/fedgrants_bystate_1988-2008.csv")
+pork_county <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Week4/data/fedgrants_bycounty_1988-2008.csv")
+
+# Join data for time for change model.
+tfc_train <- nat_vote |> 
+  left_join(econ, by = "year") |> 
+  filter(incumbent_party) |>
+  mutate(incumbent = as.numeric(incumbent))
+
+# Recode Harris as an incumbent party heir (incumbent = 0, incumbent_party = TRUE).
+tfc_train[15, "incumbent"] = 0
+```
+
+```{r}
+# use weeks left as columns
+week_poll <- nat_poll |> 
+  group_by(year, party, weeks_left) |>
+  summarize(mean_poll_week = mean(poll_support)) |> 
+  filter(weeks_left <= 30) |> 
+  pivot_wider(names_from = weeks_left, values_from = mean_poll_week) |>
+# merge national vote
+  left_join(nat_vote, by = c("year", "party"))
+
+# split to train and test
+week_poll_train <- week_poll |> 
+  filter(year <= 2020)
+week_poll_test <- week_poll |> 
+  filter(year == 2024)
+
+# rename
+colnames(week_poll)[3:33] <- paste0("poll_weeks_left_", 0:30)
+colnames(week_poll_train)[3:33] <- paste0("poll_weeks_left_", 0:30)
+colnames(week_poll_test)[3:33] <- paste0("poll_weeks_left_", 0:30)
+
+# define x (polls by weeks left) and y (popular vote)
+x.train <- week_poll_train |>
+  ungroup() |> 
+  select(all_of(starts_with("poll_weeks_left_"))) |> 
+  as.matrix()
+y.train <- week_poll_train$pv2p
+
+# ols
+ols.weekpoll <- lm(paste0("pv2p ~ ", paste0( "poll_weeks_left_", 0:30, collapse = " + ")), 
+                    data = week_poll_train)
+# set ridge using alpha = 0
+ridge.weekpoll <- glmnet(x = x.train, y = y.train, alpha = 0)
+# set lasso using alpha = 1
+lasso.weekpoll <- glmnet(x = x.train, y = y.train, alpha = 1) 
+# set elastic net using alpha = 0.5
+enet.weekpoll <- glmnet(x = x.train, y = y.train, alpha = 0.5) 
+
+# cross-validate
+set.seed(19709)
+cv.ridge.weekpoll <- cv.glmnet(x = x.train, y = y.train, alpha = 0)
+set.seed(19709)
+cv.lasso.weekpoll <- cv.glmnet(x = x.train, y = y.train, alpha = 1)
+set.seed(19709)
+cv.enet.weekpoll <- cv.glmnet(x = x.train, y = y.train, alpha = 0.5)
+
+# retrieve optimized lambdas
+lambda.min.ridge <- cv.ridge.weekpoll$lambda.min
+lambda.min.lasso <- cv.lasso.weekpoll$lambda.min
+lambda.min.enet <- cv.enet.weekpoll$lambda.min
+
+# compare mean-squared error
+mse.ridge <- mean((predict(ridge.weekpoll, s = lambda.min.ridge, newx = x.train) - y.train)^2) #9.575001
+mse.lasso <- mean((predict(lasso.weekpoll, s = lambda.min.lasso, newx = x.train) - y.train)^2) #4.681366
+mse.enet <- mean((predict(enet.weekpoll, s = lambda.min.enet, newx = x.train) - y.train)^2) #4.302942
+
+# enet prediction
+
+x.train.poll <- week_poll_train |>
+  ungroup() |> 
+# select weeks 7-30 left to maximize coverage (we are 7 weeks away)
+  select(all_of(paste0("poll_weeks_left_", 7:30))) |> 
+  as.matrix()
+# train and test sets
+y.train.poll <- week_poll_train$pv2p
+x.test.poll <- week_poll_test |>
+  ungroup() |> 
+  select(all_of(paste0("poll_weeks_left_", 7:30))) |> 
+  as.matrix()
+# create enet for selected weeks
+set.seed(19709)
+enet.poll <- cv.glmnet(x = x.train.poll, y = y.train.poll, alpha = 0.5)
+lambda.min.enet.poll <- enet.poll$lambda.min
+
+#predict
+polls.pred <- predict(enet.poll, s = lambda.min.enet.poll, newx = x.test.poll)
+# Harris 51.81%
+# Trump 50.58%
+
+# find mean squared error
+mse.poll <- mean((predict(enet.poll, s = lambda.min.enet.poll, newx = x.train.poll) - y.train.poll)^2) #6.020323
+
+# weight on proximity to election day
+election_day_2024 <- "2024-11-05"
+today <- "2024-09-22"
+days_left <- as.numeric(as.Date(election_day_2024) - as.Date(today))
+
+(poll_model_weight <- 1- (1/sqrt(days_left)))
+(fund_model_weight <- 1/sqrt(days_left))
+
+proximity.pred <- polls.pred * poll_model_weight
+# Harris 44.0
+# Trump 42.95
+
+# merge
+combined <- econ |> 
+  left_join(week_poll, by = "year") |> 
+  filter(year %in% c(unique(nat_vote$year), 2024)) |> 
+  group_by(party) |> 
+  mutate(pv2p_lag1 = lag(pv2p, 1), 
+         pv2p_lag2 = lag(pv2p, 2)) |> 
+  ungroup()
+
+combined[29, "incumbent_party"] = FALSE
+combined[30, "incumbent_party"] = TRUE
+
+combined[1, "pv2p_lag1"] = 0.612033364797
+combined[3, "pv2p_lag2"] = 0.612033364797
+combined[2, "pv2p_lag1"] = 0.387966635203
+combined[4, "pv2p_lag2"] = 0.387966635203
+combined[1, "pv2p_lag2"] = 0.500874006373
+combined[2, "pv2p_lag2"] = 0.499125993627
+
+combined <- combined |> 
+  mutate(gdp_growth_x_incumbent_party = GDP_growth_quarterly * incumbent_party,
+         cpi_x_incumbent_party = CPI * incumbent_party)
+
+combined_lags <- combined |>
+  select(year, party, pv2p, pv2p_lag1, pv2p_lag2)
+
+# fundamentals-only dataset
+fund <- combined |> 
+  select("year", "pv2p", "gdp_growth_x_incumbent_party", "GDP_growth_quarterly", "CPI", "cpi_x_incumbent_party", "pv2p_lag1", "pv2p_lag2") 
+
+fund_train <- fund |> 
+  filter(year <= 2020)
+fund_test <- fund |> 
+  filter(year == 2024)
+
+# split to train and test
+x.train.fund <- fund_train |> 
+  select(-c(year, pv2p)) |>
+  as.matrix()
+y.train.fund <- fund_train$pv2p
+x.test.fund <- fund_test |> 
+  select(-c(year, pv2p)) |> 
+  drop_na() |> 
+  as.matrix()
+
+#  fundamentals-only enet
+set.seed(02138)
+enet.fund <- cv.glmnet(x = x.train.fund, y = y.train.fund, intercept = FALSE, alpha = 0.5)
+lambda.min.enet.fund <- enet.fund$lambda.min
+enet.fund.pred <- predict(enet.fund, s = lambda.min.enet.fund, newx = x.test.fund)
+# Harris 52%
+# Trump 47.83%
+
+mse.fund <- mean((predict(enet.fund, s = lambda.min.enet.fund, newx = x.train.fund) - y.train.fund)^2) #209.4678?
+
+# Sequester data for combined model.
+combo <- combined |> 
+  select("year", "pv2p", "GDP_growth_quarterly", "gdp_growth_x_incumbent_party", "CPI", "cpi_x_incumbent_party", "pv2p_lag1", "pv2p_lag2", all_of(paste0("poll_weeks_left_", 7:30))) 
+
+x.train.combined <- combo |> 
+  filter(year <= 2020) |> 
+  select(-c(year, pv2p)) |> 
+  slice(-c(1:9)) |> 
+  as.matrix()
+y.train.combined <- combo |>
+  filter(year <= 2020) |> 
+  select(pv2p) |> 
+  slice(-c(1:9)) |> 
+  as.matrix()
+x.test.combined <- combo |>
+  filter(year == 2024) |> 
+  select(-c(year, pv2p)) |> 
+  drop_na() |> 
+  as.matrix()
+
+# combined enet
+set.seed(02138)
+enet.combined <- cv.glmnet(x = x.train.combined, y = y.train.combined, intercept = FALSE, alpha = 0.5)
+lambda.min.enet.combined <- enet.combined$lambda.min
+
+# predict combo
+combo.pred <- predict(enet.combined, s = lambda.min.enet.combined, newx = x.test.combined)
+# Harris 51.98%
+# Trump 47.94%
+
+mse.combo <- mean((predict(enet.combined, s = lambda.min.enet.combined, newx = x.train.combined) - y.train.combined)^2) #5.49924
+
+# combo - polls weighted on proximity, fundamentals not adjusted
+ensemble.2.pred <- (proximity.pred + enet.fund.pred)/2
+# Harris 47.96%
+# Trump 45.19%
+
+# When regularized: Harris 51.4% & Trump 48.6%
+```
+
+```{r lm based on var selection}
+combined_tfc <- tfc_train |>
+  left_join(combined, by = join_by(year, candidate, GDP_growth_quarterly, party, pv, pv2p, incumbent, incumbent_party)) |>
+  mutate(
+    gdp_growth_x_prev_admin = GDP_growth_quarterly * prev_admin.x
+  )
+
+# add back in values lost in merge
+combined_tfc[15, "poll_weeks_left_7"] = 48.03697 # Harris poll at t-minus 7 weeks
+combined_tfc[15, "pv2p_lag1"] = 52.2698591 # Biden pv2p in 2020
+combined_tfc[15, "gdp_growth_x_incumbent_party"] = 3.0 # gdp growth & party incumbency interaction term
+
+# ols
+model <- lm(pv2p ~ gdp_growth_x_prev_admin + poll_weeks_left_7 + pv2p_lag1, data = combined_tfc)
+summary(model)
+
+# sequester pre-2024 (training) data
+combined_tfc_pre_24 <- combined_tfc |>
+  filter(year <= 2020)
+
+# run cross-validation 1k times
+set.seed(19709)
+out_samp_errors <- sapply(1:1000, function(i) {
+  years_out_samp <- sample(combined_tfc_pre_24$year, 6)
+  mod <- lm(pv2p ~ gdp_growth_x_prev_admin + poll_weeks_left_7 + pv2p_lag1,
+            combined_tfc_pre_24[!(combined_tfc_pre_24$year %in% years_out_samp),])
+  out_samp_pred <- predict(mod, combined_tfc_pre_24[combined_tfc_pre_24$year %in% years_out_samp,])
+  out_samp_truth <- combined_tfc_pre_24$pv2p[combined_tfc_pre_24$year %in% years_out_samp]
+  mean(out_samp_pred - out_samp_truth)
+})
+
+# mean of out-of-sample residuals
+mean(abs(out_samp_errors))
+
+# compare mean to pv2p range
+range(combined_tfc_pre_24$pv2p)
+
+# histogram of prediction errors (out-of-sample residuals)
+ggplot() +
+  geom_histogram(mapping = aes(x = out_samp_errors), fill = "#9999CC", binwidth = 2) +
+  xlab("Out-of-Sample Residuals") +
+  ylab("Count") +
+  ggtitle("Out-of-Sample Error from Cross-Validation") +
+  my_theme()
+```
+
+# Time for Change
+
+```{r tfc through 2016}
+# Estimate time for change model through 2016.
+tfc_mod_2016 <- lm(pv2p ~ GDP_growth_quarterly + incumbent + juneapp, 
+                   data = subset(tfc_train, year < 2020))
+summary(tfc_mod_2016)
+```
+
+```{r tfc in 2020}
+# Estimate simplified time for change model for 2020. 
+# https://www-cambridge-org.ezp-prod1.hul.harvard.edu/core/services/aop-cambridge-core/content/view/47BBC0D5A2B7913DBB37FDA0542FD7E8/S1049096520001389a.pdf/its-the-pandemic-stupid-a-simplified-model-for-forecasting-the-2020-presidential-election.pdf
+tfc_mod_2020 <- lm(pv2p ~ juneapp, 
+                   data = subset(tfc_train, year < 2024))
+summary(tfc_mod_2020)
+```
+
+```{r tfc prediction}
+# sequester 2024 data
+tfc_2024 <- tfc_train |>
+  filter(year == 2024)
+
+# predict using tfc - 80% confidence level
+predict(tfc_mod_2016, tfc_2024, interval = "prediction", level = 0.8)
+```
+
+```{r results table}
+tfc_prediction <- tibble(Prediction = 46.67255,
+                 `Lower Bound` = 42.05436,
+                 `Upper Bound` = 51.29074,
+                 `Adjusted R-squared` = 0.6692)
+knitr::kable(tfc_prediction, digits = 2, caption = "Time for Change Predicts Harris's Two-Party Vote Share")
+```
+
+
+```{r tfc cross-validation}
+# sequester pre-2024 (training) data
+tfc_train_pre_24 <- tfc_train |>
+  filter(year <= 2016) # 2020 is omitted because Abramowitz used a COVID-specific model
+
+# run cross-validation 1k times
+set.seed(19709)
+out_samp_errors <- sapply(1:1000, function(i) {
+  years_out_samp <- sample(tfc_train_pre_24$year, 6)
+  mod <- lm(pv2p ~ GDP_growth_quarterly + incumbent + juneapp,
+            tfc_train_pre_24[!(tfc_train_pre_24$year %in% years_out_samp),])
+  out_samp_pred <- predict(mod, tfc_train_pre_24[tfc_train_pre_24$year %in% years_out_samp,])
+  out_samp_truth <- tfc_train_pre_24$pv2p[tfc_train_pre_24$year %in% years_out_samp]
+  mean(out_samp_pred - out_samp_truth)
+})
+
+# mean of out-of-sample residuals
+mean(abs(out_samp_errors))
+
+# compare mean to pv2p range
+range(tfc_train_pre_24$pv2p)
+
+# histogram of prediction errors (out-of-sample residuals)
+ggplot() +
+  geom_histogram(mapping = aes(x = out_samp_errors), fill = "#9999CC", binwidth = 2) +
+  xlab("Out-of-Sample Residuals") +
+  ylab("Count") +
+  ggtitle("Out-of-Sample Error from Cross-Validation") +
+  my_theme()
+```
+
+```{r tfc revised}
+# my take on tfc
+tfc_revised <- lm(pv2p ~ GDP_growth_quarterly + poll_weeks_left_7 + prev_admin.x, data = combined_tfc)
+summary(tfc_revised)
+
+# sequester 2024 data
+combined_tfc_24 <- combined_tfc |>
+  filter(year == 2024)
+
+# predict using tfc revised - 80% confidence level
+predict(tfc_revised, combined_tfc_24, interval = "prediction", level = 0.8)
+
+# results table
+tfc_revised_prediction <- tibble(Prediction = 52.88969,
+                 `Lower Bound` = 49.08341,
+                 `Upper Bound` = 56.69598,
+                 `Adjusted R-squared` = 0.7104)
+knitr::kable(tfc_revised_prediction, digits = 2, caption = "Time for More Change Predicts Harris's Two-Party Vote Share")
+
+# sequester pre-2024 (training) data
+combined_tfc_pre_24 <- combined_tfc |>
+  filter(year <= 2016) # 2020 is omitted for consistency
+
+# run cross-validation 1k times
+set.seed(19709)
+out_samp_errors <- sapply(1:1000, function(i) {
+  years_out_samp <- sample(combined_tfc_pre_24$year, 6)
+  mod <- lm(pv2p ~ GDP_growth_quarterly + poll_weeks_left_7 + prev_admin.x,
+            combined_tfc_pre_24[!(combined_tfc_pre_24$year %in% years_out_samp),])
+  out_samp_pred <- predict(mod, combined_tfc_pre_24[combined_tfc_pre_24$year %in% years_out_samp,])
+  out_samp_truth <- combined_tfc_pre_24$pv2p[combined_tfc_pre_24$year %in% years_out_samp]
+  mean(out_samp_pred - out_samp_truth)
+})
+
+# mean of out-of-sample residuals
+mean(abs(out_samp_errors))
+
+# compare mean to pv2p range
+range(combined_tfc_pre_24$pv2p)
+
+# histogram of prediction errors (out-of-sample residuals)
+ggplot() +
+  geom_histogram(mapping = aes(x = out_samp_errors), fill = "#9999CC", binwidth = 2) +
+  xlab("Out-of-Sample Residuals") +
+  ylab("Count") +
+  ggtitle("Out-of-Sample Error from Cross-Validation") +
+  my_theme()
+```
+
