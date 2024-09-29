@@ -1,0 +1,1061 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Week 4: Incumbency and Expert Predictions},
+  pdfauthor={Ella Trembanis},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Week 4: Incumbency and Expert Predictions}
+\author{Ella Trembanis}
+\date{2024-09-25}
+
+\begin{document}
+\maketitle
+
+\section{Set-Up}\label{set-up}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(car)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: carData
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(caret)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: ggplot2
+\end{verbatim}
+
+\begin{verbatim}
+## Loading required package: lattice
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(CVXR)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'CVXR'
+\end{verbatim}
+
+\begin{verbatim}
+## The following object is masked from 'package:stats':
+## 
+##     power
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(glmnet)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: Matrix
+\end{verbatim}
+
+\begin{verbatim}
+## Loaded glmnet 4.1-8
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(kableExtra)}
+\FunctionTok{library}\NormalTok{(maps)}
+\FunctionTok{library}\NormalTok{(RColorBrewer)}
+\FunctionTok{library}\NormalTok{(sf)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Linking to GEOS 3.11.0, GDAL 3.5.3, PROJ 9.1.0; sf_use_s2() is TRUE
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## -- Attaching core tidyverse packages ------------------------ tidyverse 2.0.0 --
+## v dplyr     1.1.4     v readr     2.1.5
+## v forcats   1.0.0     v stringr   1.5.1
+## v lubridate 1.9.3     v tibble    3.2.1
+## v purrr     1.0.2     v tidyr     1.3.1
+\end{verbatim}
+
+\begin{verbatim}
+## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x tidyr::expand()     masks Matrix::expand()
+## x dplyr::filter()     masks stats::filter()
+## x dplyr::group_rows() masks kableExtra::group_rows()
+## x dplyr::id()         masks CVXR::id()
+## x purrr::is_vector()  masks CVXR::is_vector()
+## x dplyr::lag()        masks stats::lag()
+## x purrr::lift()       masks caret::lift()
+## x purrr::map()        masks maps::map()
+## x tidyr::pack()       masks Matrix::pack()
+## x dplyr::recode()     masks car::recode()
+## x purrr::some()       masks car::some()
+## x tidyr::unpack()     masks Matrix::unpack()
+## i Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(viridis)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Loading required package: viridisLite
+## 
+## Attaching package: 'viridis'
+## 
+## The following object is masked from 'package:maps':
+## 
+##     unemp
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Read incumbency/vote data.}
+\NormalTok{d\_vote }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"data/popvote\_1948{-}2020(3).csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 40 Columns: 11
+## -- Column specification --------------------------------------------------------
+## Delimiter: ","
+## chr (2): party, candidate
+## dbl (5): year, pv, pv2p, deminc, juneapp
+## lgl (4): winner, incumbent, incumbent_party, prev_admin
+## 
+## i Use `spec()` to retrieve the full column specification for this data.
+## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d\_state\_vote }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"data/state\_popvote\_1948\_2020.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 959 Columns: 14
+## -- Column specification --------------------------------------------------------
+## Delimiter: ","
+## chr  (1): state
+## dbl (13): year, D_pv, R_pv, D_pv2p, R_pv2p, D_pv_lag1, R_pv_lag1, D_pv2p_lag...
+## 
+## i Use `spec()` to retrieve the full column specification for this data.
+## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d\_vote}\SpecialCharTok{$}\NormalTok{party[d\_vote}\SpecialCharTok{$}\NormalTok{party }\SpecialCharTok{==} \StringTok{"democrat"}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"DEM"}
+\NormalTok{d\_vote}\SpecialCharTok{$}\NormalTok{party[d\_vote}\SpecialCharTok{$}\NormalTok{party }\SpecialCharTok{==} \StringTok{"republican"}\NormalTok{] }\OtherTok{\textless{}{-}} \StringTok{"REP"}
+
+\CommentTok{\# Create state vote wide.}
+\NormalTok{d\_state\_vote\_wide }\OtherTok{\textless{}{-}}\NormalTok{ d\_state\_vote }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{select}\NormalTok{(state, year, R\_pv2p, D\_pv2p, R\_pv2p\_lag1, R\_pv2p\_lag2, D\_pv2p\_lag1, D\_pv2p\_lag2) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{margin =}\NormalTok{ D\_pv2p }\SpecialCharTok{{-}}\NormalTok{ R\_pv2p, }
+         \AttributeTok{winner =} \FunctionTok{ifelse}\NormalTok{(D\_pv2p }\SpecialCharTok{\textgreater{}}\NormalTok{ R\_pv2p, }\StringTok{"D"}\NormalTok{, }\StringTok{"R"}\NormalTok{))}
+\NormalTok{d\_state\_vote\_wide[d\_state\_vote\_wide}\SpecialCharTok{$}\NormalTok{state }\SpecialCharTok{==} \StringTok{"District Of Columbia"}\NormalTok{,]}\SpecialCharTok{$}\NormalTok{state }\OtherTok{\textless{}{-}} \StringTok{"District of Columbia"}
+
+\CommentTok{\# Read electoral college data.}
+\NormalTok{d\_ec }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"data/corrected\_ec\_1948\_2024.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 1010 Columns: 4
+## -- Column specification --------------------------------------------------------
+## Delimiter: ","
+## chr (2): state, stateab
+## dbl (2): year, electors
+## 
+## i Use `spec()` to retrieve the full column specification for this data.
+## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Read economic data.}
+\NormalTok{d\_econ }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"data/fred\_econ.csv"}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{filter}\NormalTok{(quarter }\SpecialCharTok{==} \DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 387 Columns: 14
+## -- Column specification --------------------------------------------------------
+## Delimiter: ","
+## dbl (14): year, quarter, GDP, GDP_growth_quarterly, RDPI, RDPI_growth_quarte...
+## 
+## i Use `spec()` to retrieve the full column specification for this data.
+## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Read polling and election results data. }
+\NormalTok{d\_pollav\_natl }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"data/national\_polls\_1968{-}2024.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 7378 Columns: 9
+## -- Column specification --------------------------------------------------------
+## Delimiter: ","
+## chr  (3): state, party, candidate
+## dbl  (4): year, weeks_left, days_left, poll_support
+## lgl  (1): before_convention
+## date (1): poll_date
+## 
+## i Use `spec()` to retrieve the full column specification for this data.
+## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d\_pollav\_state }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"data/state\_polls\_1968{-}2024.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 204564 Columns: 9
+## -- Column specification --------------------------------------------------------
+## Delimiter: ","
+## chr  (3): state, party, candidate
+## dbl  (4): year, weeks_left, days_left, poll_support
+## lgl  (1): before_convention
+## date (1): poll_date
+## 
+## i Use `spec()` to retrieve the full column specification for this data.
+## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Shape and merge polling and election data using November polls. }
+\NormalTok{d\_poll\_nov }\OtherTok{\textless{}{-}}\NormalTok{ d\_vote }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{left\_join}\NormalTok{(d\_pollav\_natl }\SpecialCharTok{|\textgreater{}} 
+              \FunctionTok{group\_by}\NormalTok{(year, party) }\SpecialCharTok{|\textgreater{}} 
+              \FunctionTok{top\_n}\NormalTok{(}\DecValTok{1}\NormalTok{, poll\_date) }\SpecialCharTok{|\textgreater{}} 
+              \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{candidate), }
+            \AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"year"}\NormalTok{, }\StringTok{"party"}\NormalTok{)) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{nov\_poll =}\NormalTok{ poll\_support) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{filter}\NormalTok{(year }\SpecialCharTok{\textless{}=} \DecValTok{2020}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{drop\_na}\NormalTok{()}
+
+\CommentTok{\# Create dataset of polling average by week until the election. }
+\NormalTok{d\_poll\_weeks }\OtherTok{\textless{}{-}}\NormalTok{ d\_pollav\_natl }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{group\_by}\NormalTok{(year, party, weeks\_left) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{mean\_poll\_week =} \FunctionTok{mean}\NormalTok{(poll\_support)) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{filter}\NormalTok{(weeks\_left }\SpecialCharTok{\textless{}=} \DecValTok{30}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{pivot\_wider}\NormalTok{(}\AttributeTok{names\_from =}\NormalTok{ weeks\_left, }\AttributeTok{values\_from =}\NormalTok{ mean\_poll\_week) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{left\_join}\NormalTok{(d\_vote, }\AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"year"}\NormalTok{, }\StringTok{"party"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `summarise()` has grouped output by 'year', 'party'. You can override using the
+## `.groups` argument.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Read federal grants dataset from Kriner \& Reeves (2008). }
+\NormalTok{d\_pork\_state }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"data/fedgrants\_bystate\_1988{-}2008.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 1251 Columns: 7
+## -- Column specification --------------------------------------------------------
+## Delimiter: ","
+## chr (3): state_abb, state_year_type, state_year_type2
+## dbl (4): year, elxn_year, grant_mil, state_incvote_avglast3
+## 
+## i Use `spec()` to retrieve the full column specification for this data.
+## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d\_pork\_county }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"data/fedgrants\_bycounty\_1988{-}2008.csv"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Rows: 18465 Columns: 16
+## -- Column specification --------------------------------------------------------
+## Delimiter: ","
+## chr  (3): state, county, state_abb
+## dbl (13): year, state_FIPS, county_FIPS, dvoteswing_inc, dpct_grants, dpc_in...
+## 
+## i Use `spec()` to retrieve the full column specification for this data.
+## i Specify the column types or set `show_col_types = FALSE` to quiet this message.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Join data for time for change model.}
+\NormalTok{d\_tfc\_train }\OtherTok{\textless{}{-}}\NormalTok{ d\_vote }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{left\_join}\NormalTok{(d\_econ, }\AttributeTok{by =} \StringTok{"year"}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{filter}\NormalTok{(incumbent\_party) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{incumbent =} \FunctionTok{as.numeric}\NormalTok{(incumbent))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# standard theme}
+\NormalTok{my\_theme }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{() \{}
+  \FunctionTok{theme}\NormalTok{(}
+  \CommentTok{\# set panel features}
+  \AttributeTok{panel.border =} \FunctionTok{element\_rect}\NormalTok{(}\AttributeTok{color =} \StringTok{"\#000033"}\NormalTok{, }\AttributeTok{fill =} \ConstantTok{NA}\NormalTok{, }\AttributeTok{linetype =} \DecValTok{1}\NormalTok{),}
+  \AttributeTok{panel.background =} \FunctionTok{element\_rect}\NormalTok{(}\AttributeTok{fill =} \StringTok{"\#FFFFFF"}\NormalTok{),}
+  \AttributeTok{panel.grid.major.x =} \FunctionTok{element\_line}\NormalTok{(}\AttributeTok{color =} \StringTok{"\#9999CC"}\NormalTok{, }\AttributeTok{linetype =} \DecValTok{2}\NormalTok{, }\AttributeTok{size =} \FloatTok{0.2}\NormalTok{),}
+  \AttributeTok{panel.grid.minor.x =} \FunctionTok{element\_blank}\NormalTok{(),}
+  \AttributeTok{panel.grid.major.y =} \FunctionTok{element\_line}\NormalTok{(}\AttributeTok{color =} \StringTok{"\#9999CC"}\NormalTok{, }\AttributeTok{linetype =} \DecValTok{2}\NormalTok{, }\AttributeTok{size =} \FloatTok{0.2}\NormalTok{),}
+  \AttributeTok{panel.grid.minor.y =} \FunctionTok{element\_blank}\NormalTok{(),}
+  \CommentTok{\# set text and axis features}
+  \AttributeTok{text =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{color =} \StringTok{"\#000033"}\NormalTok{, }\AttributeTok{family =} \StringTok{"Courier"}\NormalTok{),}
+  \AttributeTok{title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{color =} \StringTok{"\#000033"}\NormalTok{, }\AttributeTok{face =} \StringTok{"bold"}\NormalTok{, }\AttributeTok{family =} \StringTok{"Courier"}\NormalTok{),}
+  \AttributeTok{axis.ticks =} \FunctionTok{element\_line}\NormalTok{(}\AttributeTok{color =} \StringTok{"\#000033"}\NormalTok{),}
+  \CommentTok{\# set legend features}
+  \AttributeTok{legend.position =} \StringTok{"bottom"}\NormalTok{,}
+  \AttributeTok{legend.background =} \FunctionTok{element\_rect}\NormalTok{(}\AttributeTok{color =} \StringTok{"\#000033"}\NormalTok{, }\AttributeTok{fill =} \ConstantTok{NA}\NormalTok{, }\AttributeTok{linetype =} \DecValTok{1}\NormalTok{)}
+\NormalTok{  )}
+\NormalTok{\}}
+
+\CommentTok{\# simplified theme}
+\NormalTok{my\_map\_theme }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{() \{}
+  \FunctionTok{theme}\NormalTok{(}
+    \CommentTok{\# set panel features}
+    \AttributeTok{panel.background =} \FunctionTok{element\_rect}\NormalTok{(}\AttributeTok{fill =} \StringTok{"\#FFFFFF"}\NormalTok{),}
+    \CommentTok{\# set text features}
+    \AttributeTok{text =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{color =} \StringTok{"\#000033"}\NormalTok{, }\AttributeTok{family =} \StringTok{"Courier"}\NormalTok{),}
+    \AttributeTok{title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{color =} \StringTok{"\#000033"}\NormalTok{, }\AttributeTok{face =} \StringTok{"bold"}\NormalTok{, }\AttributeTok{family =} \StringTok{"Courier"}\NormalTok{),}
+    \CommentTok{\# set legend features}
+    \AttributeTok{legend.position =} \StringTok{"bottom"}\NormalTok{,}
+    \AttributeTok{legend.title.position =} \StringTok{"top"}\NormalTok{,}
+    \AttributeTok{legend.background =} \FunctionTok{element\_rect}\NormalTok{(}\AttributeTok{color =} \StringTok{"\#000033"}\NormalTok{, }\AttributeTok{fill =} \ConstantTok{NA}\NormalTok{, }\AttributeTok{linetype =} \DecValTok{1}\NormalTok{),}
+    \AttributeTok{legend.margin =} \FunctionTok{margin}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{20}\NormalTok{, }\StringTok{"pt"}\NormalTok{),}
+    \CommentTok{\# set axis features to not display}
+    \AttributeTok{axis.title =} \FunctionTok{element\_blank}\NormalTok{(),}
+    \AttributeTok{axis.text =} \FunctionTok{element\_blank}\NormalTok{(),}
+    \AttributeTok{axis.ticks =} \FunctionTok{element\_blank}\NormalTok{()}
+\NormalTok{  )}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Descriptive Statistics -
+Incumbency}\label{descriptive-statistics---incumbency}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# How many post{-}war elections (18 and 2024) have incumbent presidents won? }
+\NormalTok{d\_vote }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{filter}\NormalTok{(winner) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{select}\NormalTok{(year, }\AttributeTok{win\_party =}\NormalTok{ party, }\AttributeTok{win\_cand =}\NormalTok{ candidate) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{win\_party\_last =} \FunctionTok{lag}\NormalTok{(win\_party, }\AttributeTok{order\_by =}\NormalTok{ year),}
+         \AttributeTok{win\_cand\_last =} \FunctionTok{lag}\NormalTok{(win\_cand, }\AttributeTok{order\_by =}\NormalTok{ year)) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{reelect\_president =}\NormalTok{ win\_cand\_last }\SpecialCharTok{==}\NormalTok{ win\_cand) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{filter}\NormalTok{(year }\SpecialCharTok{\textgreater{}} \DecValTok{1948} \SpecialCharTok{\&}\NormalTok{ year }\SpecialCharTok{\textless{}} \DecValTok{2024}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{group\_by}\NormalTok{(reelect\_president) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{N =} \FunctionTok{n}\NormalTok{()) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Percent =} \FunctionTok{round}\NormalTok{(N}\SpecialCharTok{/}\FunctionTok{sum}\NormalTok{(N) }\SpecialCharTok{*} \DecValTok{100}\NormalTok{, }\DecValTok{2}\NormalTok{)) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{as.data.frame}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   reelect_president  N Percent
+## 1             FALSE 12   66.67
+## 2              TRUE  6   33.33
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# A different way of assessing the incumbency advantage }
+\CommentTok{\# (out of 11 elections where there was at least one incumbent running).}
+\NormalTok{inc\_tab }\OtherTok{\textless{}{-}}\NormalTok{ d\_vote }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{filter}\NormalTok{(year }\SpecialCharTok{\textgreater{}} \DecValTok{1948} \SpecialCharTok{\&}\NormalTok{ year }\SpecialCharTok{\textless{}} \DecValTok{2024}\NormalTok{) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{select}\NormalTok{(year, party, candidate, incumbent, winner) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{pivot\_wider}\NormalTok{(}\AttributeTok{names\_from =}\NormalTok{ party, }
+              \AttributeTok{values\_from =} \FunctionTok{c}\NormalTok{(candidate, incumbent, winner)) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{filter}\NormalTok{(incumbent\_DEM }\SpecialCharTok{==} \ConstantTok{TRUE} \SpecialCharTok{|}\NormalTok{ incumbent\_REP }\SpecialCharTok{==} \ConstantTok{TRUE}\NormalTok{)}
+
+
+\FunctionTok{cat}\NormalTok{(}\FunctionTok{paste0}\NormalTok{(}\StringTok{"Elections with At Least One Incumbent Running: "}\NormalTok{, }\FunctionTok{nrow}\NormalTok{(inc\_tab), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{,}
+   \StringTok{"Incumbent Victories: "}\NormalTok{, (}\FunctionTok{sum}\NormalTok{(inc\_tab}\SpecialCharTok{$}\NormalTok{incumbent\_REP }\SpecialCharTok{\&}\NormalTok{ inc\_tab}\SpecialCharTok{$}\NormalTok{winner\_REP) }\SpecialCharTok{+} 
+                             \FunctionTok{sum}\NormalTok{(inc\_tab}\SpecialCharTok{$}\NormalTok{incumbent\_DEM }\SpecialCharTok{\&}\NormalTok{ inc\_tab}\SpecialCharTok{$}\NormalTok{winner\_DEM)), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{,}
+    \StringTok{"Percentage: "}\NormalTok{, }\FunctionTok{round}\NormalTok{((}\FunctionTok{sum}\NormalTok{(inc\_tab}\SpecialCharTok{$}\NormalTok{incumbent\_REP }\SpecialCharTok{\&}\NormalTok{ inc\_tab}\SpecialCharTok{$}\NormalTok{winner\_REP) }\SpecialCharTok{+} 
+                           \FunctionTok{sum}\NormalTok{(inc\_tab}\SpecialCharTok{$}\NormalTok{incumbent\_DEM }\SpecialCharTok{\&}\NormalTok{ inc\_tab}\SpecialCharTok{$}\NormalTok{winner\_DEM))}\SpecialCharTok{/}
+                           \FunctionTok{nrow}\NormalTok{(inc\_tab)}\SpecialCharTok{*}\DecValTok{100}\NormalTok{, }\DecValTok{2}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Elections with At Least One Incumbent Running: 11
+## Incumbent Victories: 7
+## Percentage: 63.64
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# In the six elections since 2000?}
+\NormalTok{inc\_tab }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{filter}\NormalTok{(year }\SpecialCharTok{\textgreater{}=} \DecValTok{2000}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 3 x 7
+##    year candidate_DEM    candidate_REP    incumbent_DEM incumbent_REP winner_DEM
+##   <dbl> <chr>            <chr>            <lgl>         <lgl>         <lgl>     
+## 1  2004 Kerry, John      Bush, George W.  FALSE         TRUE          FALSE     
+## 2  2012 Obama, Barack H. Romney, Mitt     TRUE          FALSE         TRUE      
+## 3  2020 Biden, Joseph R. Trump, Donald J. FALSE         TRUE          TRUE      
+## # i 1 more variable: winner_REP <lgl>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# How many post{-}war elections have there been where the incumbent *party* won? }
+\NormalTok{d\_vote }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{filter}\NormalTok{(winner) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{select}\NormalTok{(year, }\AttributeTok{win\_party =}\NormalTok{ party, }\AttributeTok{win\_cand =}\NormalTok{ candidate) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{win\_party\_last =} \FunctionTok{lag}\NormalTok{(win\_party, }\AttributeTok{order\_by =}\NormalTok{ year),}
+         \AttributeTok{win\_cand\_last =} \FunctionTok{lag}\NormalTok{(win\_cand, }\AttributeTok{order\_by =}\NormalTok{ year)) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{reelect\_party =}\NormalTok{ win\_party\_last }\SpecialCharTok{==}\NormalTok{ win\_party) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{filter}\NormalTok{(year }\SpecialCharTok{\textgreater{}} \DecValTok{1948} \SpecialCharTok{\&}\NormalTok{ year }\SpecialCharTok{\textless{}} \DecValTok{2024}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{group\_by}\NormalTok{(reelect\_party) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{N =} \FunctionTok{n}\NormalTok{()) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Percent =} \FunctionTok{round}\NormalTok{(N}\SpecialCharTok{/}\FunctionTok{sum}\NormalTok{(N) }\SpecialCharTok{*} \DecValTok{100}\NormalTok{, }\DecValTok{2}\NormalTok{)) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{as.data.frame}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   reelect_party  N Percent
+## 1         FALSE 10   55.56
+## 2          TRUE  8   44.44
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# How many post{-}war elections have there been where the winner served in a previous administration?}
+\DecValTok{100}\SpecialCharTok{*}\FunctionTok{round}\NormalTok{(}\FunctionTok{prop.table}\NormalTok{(}\FunctionTok{table}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{prev\_admin}\StringTok{\textasciigrave{}} \OtherTok{=}\NormalTok{ d\_vote}\SpecialCharTok{$}\NormalTok{prev\_admin[d\_vote}\SpecialCharTok{$}\NormalTok{year }\SpecialCharTok{\textgreater{}} \DecValTok{1948} \SpecialCharTok{\&} 
+\NormalTok{                                     d\_vote}\SpecialCharTok{$}\NormalTok{year }\SpecialCharTok{\textless{}} \DecValTok{2024} \SpecialCharTok{\&} 
+\NormalTok{                                     d\_vote}\SpecialCharTok{$}\NormalTok{winner }\SpecialCharTok{==} \ConstantTok{TRUE}\NormalTok{])), }\DecValTok{4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## prev_admin
+## FALSE  TRUE 
+## 72.22 27.78
+\end{verbatim}
+
+\section{Pork Analysis}\label{pork-analysis}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# What strategy do presidents pursue? }
+\NormalTok{d\_pork\_state }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(state\_year\_type)) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{group\_by}\NormalTok{(state\_year\_type) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{mean\_grant =} \FunctionTok{mean}\NormalTok{(grant\_mil, }\AttributeTok{na.rm =}\NormalTok{ T), }\AttributeTok{se\_grant =} \FunctionTok{sd}\NormalTok{(grant\_mil, }\AttributeTok{na.rm =}\NormalTok{ T)}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(}\FunctionTok{n}\NormalTok{())) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ state\_year\_type, }\AttributeTok{y =}\NormalTok{ mean\_grant, }\AttributeTok{ymin =}\NormalTok{ mean\_grant}\FloatTok{{-}1.96}\SpecialCharTok{*}\NormalTok{se\_grant, }\AttributeTok{ymax =}\NormalTok{ mean\_grant}\FloatTok{+1.96}\SpecialCharTok{*}\NormalTok{se\_grant)) }\SpecialCharTok{+} 
+  \FunctionTok{coord\_flip}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{fill =} \StringTok{"\#9999CC"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_errorbar}\NormalTok{(}\AttributeTok{width =} \FloatTok{0.2}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Type of State \& Year"}\NormalTok{, }
+       \AttributeTok{y =} \StringTok{"Federal Grant Spending (Millions of $)"}\NormalTok{, }
+       \AttributeTok{title =} \StringTok{"Federal Grant Spending (Millions $) by State Election Type"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{my\_theme}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{15}\NormalTok{),}
+        \AttributeTok{axis.text =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{12}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: The `size` argument of `element_line()` is deprecated as of ggplot2 3.4.0.
+## i Please use the `linewidth` argument instead.
+## This warning is displayed once every 8 hours.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.
+\end{verbatim}
+
+\includegraphics{week4-section_files/figure-latex/strategy for self-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d\_pork\_state }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(state\_year\_type2)) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{group\_by}\NormalTok{(state\_year\_type2) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{mean\_grant =} \FunctionTok{mean}\NormalTok{(grant\_mil, }\AttributeTok{na.rm =}\NormalTok{ T), }\AttributeTok{se\_grant =} \FunctionTok{sd}\NormalTok{(grant\_mil, }\AttributeTok{na.rm =}\NormalTok{ T)}\SpecialCharTok{/}\FunctionTok{sqrt}\NormalTok{(}\FunctionTok{n}\NormalTok{())) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ state\_year\_type2, }\AttributeTok{y =}\NormalTok{ mean\_grant, }\AttributeTok{ymin =}\NormalTok{ mean\_grant}\FloatTok{{-}1.96}\SpecialCharTok{*}\NormalTok{se\_grant, }\AttributeTok{ymax =}\NormalTok{ mean\_grant}\FloatTok{+1.96}\SpecialCharTok{*}\NormalTok{se\_grant)) }\SpecialCharTok{+} 
+  \FunctionTok{coord\_flip}\NormalTok{() }\SpecialCharTok{+} 
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{fill =} \StringTok{"\#9999CC"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{geom\_errorbar}\NormalTok{(}\AttributeTok{width =} \FloatTok{0.2}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{x =} \StringTok{"Type of State \& Year"}\NormalTok{, }
+       \AttributeTok{y =} \StringTok{"Federal Grant Spending (Millions of $)"}\NormalTok{, }
+       \AttributeTok{title =} \StringTok{"Federal Grant Spending (Millions $) by State Election Type"}\NormalTok{) }\SpecialCharTok{+} 
+  \FunctionTok{my\_theme}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{axis.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{15}\NormalTok{),}
+        \AttributeTok{axis.text =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{12}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{week4-section_files/figure-latex/strategy for successor-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pork\_mod\_county\_1 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(dvoteswing\_inc  }\SpecialCharTok{\textasciitilde{}}\NormalTok{ dpct\_grants}\SpecialCharTok{*}\NormalTok{comp\_state }\SpecialCharTok{+} \FunctionTok{as.factor}\NormalTok{(year), }
+\NormalTok{                      d\_pork\_county)}
+\FunctionTok{summary}\NormalTok{(pork\_mod\_county\_1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = dvoteswing_inc ~ dpct_grants * comp_state + as.factor(year), 
+##     data = d_pork_county)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -27.7179  -2.8547  -0.0047   2.7889  23.2187 
+## 
+## Coefficients:
+##                         Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)            -6.450079   0.084452 -76.376  < 2e-16 ***
+## dpct_grants             0.004762   0.001036   4.595 4.35e-06 ***
+## comp_state              0.152687   0.076143   2.005 0.044949 *  
+## as.factor(year)1992     0.170688   0.115787   1.474 0.140458    
+## as.factor(year)1996     6.345396   0.115509  54.934  < 2e-16 ***
+## as.factor(year)2000    -2.049544   0.116215 -17.636  < 2e-16 ***
+## as.factor(year)2004     8.407388   0.115576  72.743  < 2e-16 ***
+## as.factor(year)2008     3.136792   0.116122  27.013  < 2e-16 ***
+## dpct_grants:comp_state  0.006391   0.001764   3.623 0.000292 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 4.495 on 18455 degrees of freedom
+##   (1 observation deleted due to missingness)
+## Multiple R-squared:  0.4027, Adjusted R-squared:  0.4025 
+## F-statistic:  1556 on 8 and 18455 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pork\_mod\_county\_2 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(dvoteswing\_inc }\SpecialCharTok{\textasciitilde{}}\NormalTok{ dpct\_grants}\SpecialCharTok{*}\NormalTok{comp\_state }\SpecialCharTok{+} \FunctionTok{as.factor}\NormalTok{(year) }\SpecialCharTok{+}
+\NormalTok{                          dpc\_income }\SpecialCharTok{+}\NormalTok{ inc\_ad\_diff }\SpecialCharTok{+}\NormalTok{ inc\_campaign\_diff }\SpecialCharTok{+} 
+\NormalTok{                          dhousevote\_inc }\SpecialCharTok{+}\NormalTok{ iraq\_cas2004 }\SpecialCharTok{+}\NormalTok{ iraq\_cas2008 }\SpecialCharTok{+} 
+\NormalTok{                          dpct\_popl,}
+                        \AttributeTok{data =}\NormalTok{ d\_pork\_county)}
+\FunctionTok{summary}\NormalTok{(pork\_mod\_county\_2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = dvoteswing_inc ~ dpct_grants * comp_state + as.factor(year) + 
+##     dpc_income + inc_ad_diff + inc_campaign_diff + dhousevote_inc + 
+##     iraq_cas2004 + iraq_cas2008 + dpct_popl, data = d_pork_county)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -27.321  -2.848  -0.025   2.728  22.994 
+## 
+## Coefficients:
+##                         Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)            -6.523210   0.084963 -76.777  < 2e-16 ***
+## dpct_grants             0.003954   0.001043   3.792 0.000150 ***
+## comp_state              0.155418   0.077223   2.013 0.044173 *  
+## as.factor(year)1992    -0.156389   0.120591  -1.297 0.194699    
+## as.factor(year)1996     6.230500   0.119533  52.124  < 2e-16 ***
+## as.factor(year)2000    -2.000293   0.118588 -16.868  < 2e-16 ***
+## as.factor(year)2004     8.248378   0.119371  69.099  < 2e-16 ***
+## as.factor(year)2008     3.574248   0.124060  28.811  < 2e-16 ***
+## dpc_income              0.134285   0.022326   6.015 1.84e-09 ***
+## inc_ad_diff             0.061345   0.010851   5.654 1.60e-08 ***
+## inc_campaign_diff       0.161845   0.013166  12.292  < 2e-16 ***
+## dhousevote_inc          0.012093   0.001952   6.196 5.91e-10 ***
+## iraq_cas2004           -0.153092   0.069585  -2.200 0.027816 *  
+## iraq_cas2008           -0.164783   0.021677  -7.602 3.07e-14 ***
+## dpct_popl               2.103344   0.530292   3.966 7.33e-05 ***
+## dpct_grants:comp_state  0.006411   0.001781   3.600 0.000319 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 4.452 on 17943 degrees of freedom
+##   (506 observations deleted due to missingness)
+## Multiple R-squared:  0.4199, Adjusted R-squared:  0.4194 
+## F-statistic: 865.9 on 15 and 17943 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d\_pork\_state\_model }\OtherTok{\textless{}{-}}\NormalTok{ d\_state\_vote }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{state\_abb =}\NormalTok{ state.abb[}\FunctionTok{match}\NormalTok{(d\_state\_vote}\SpecialCharTok{$}\NormalTok{state, state.name)]) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{inner\_join}\NormalTok{(d\_pork\_state, }\AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"year"}\NormalTok{, }\StringTok{"state\_abb"}\NormalTok{)) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{left\_join}\NormalTok{(d\_vote, }\AttributeTok{by =} \StringTok{"year"}\NormalTok{) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{filter}\NormalTok{(incumbent\_party }\SpecialCharTok{==} \ConstantTok{TRUE}\NormalTok{) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{inc\_pv2p =} \FunctionTok{ifelse}\NormalTok{(party }\SpecialCharTok{==} \StringTok{"REP"}\NormalTok{, R\_pv2p, D\_pv2p)) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{is\_comp =} \FunctionTok{case\_when}\NormalTok{(state\_year\_type }\SpecialCharTok{==} \StringTok{"swing + election year"} \SpecialCharTok{\textasciitilde{}} \DecValTok{1}\NormalTok{,}
+                             \AttributeTok{.default =} \DecValTok{0}\NormalTok{)) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{group\_by}\NormalTok{(state) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{change\_grant\_mil =}\NormalTok{ (}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{grant\_mil}\SpecialCharTok{/}\NormalTok{(}\FunctionTok{lag}\NormalTok{(grant\_mil, }\AttributeTok{n =} \DecValTok{1}\NormalTok{)))}\SpecialCharTok{*}\DecValTok{100}\NormalTok{,}
+         \AttributeTok{change\_inc\_pv2p =}\NormalTok{ (}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{inc\_pv2p}\SpecialCharTok{/}\NormalTok{(}\FunctionTok{lag}\NormalTok{(inc\_pv2p, }\AttributeTok{n =} \DecValTok{1}\NormalTok{)))}\SpecialCharTok{*}\DecValTok{100}\NormalTok{) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{ungroup}\NormalTok{() }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{select}\NormalTok{(state, year, is\_comp, change\_grant\_mil, change\_inc\_pv2p)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in left_join(inner_join(mutate(d_state_vote, state_abb = state.abb[match(d_state_vote$state, : Detected an unexpected many-to-many relationship between `x` and `y`.
+## i Row 1 of `x` matches multiple rows in `y`.
+## i Row 19 of `y` matches multiple rows in `x`.
+## i If a many-to-many relationship is expected, set `relationship =
+##   "many-to-many"` to silence this warning.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pork\_state\_mod }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(change\_inc\_pv2p }\SpecialCharTok{\textasciitilde{}}\NormalTok{ is\_comp}\SpecialCharTok{*}\NormalTok{change\_grant\_mil }\SpecialCharTok{+} \FunctionTok{as.factor}\NormalTok{(year),}
+                     \AttributeTok{data =}\NormalTok{ d\_pork\_state\_model)}
+\FunctionTok{summary}\NormalTok{(pork\_state\_mod)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = change_inc_pv2p ~ is_comp * change_grant_mil + as.factor(year), 
+##     data = d_pork_state_model)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -136.740   -6.628    0.341    7.176   64.748 
+## 
+## Coefficients:
+##                          Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)                9.6346     3.6317   2.653  0.00842 ** 
+## is_comp                   -0.4004     4.1498  -0.096  0.92319    
+## change_grant_mil           0.1138     0.1051   1.082  0.28001    
+## as.factor(year)1992        6.8952     6.7168   1.027  0.30548    
+## as.factor(year)1996      -21.3789     5.2732  -4.054 6.46e-05 ***
+## as.factor(year)2000        3.5773     5.6260   0.636  0.52537    
+## as.factor(year)2004      -30.1619     5.4753  -5.509 7.96e-08 ***
+## as.factor(year)2008        1.0850     4.8627   0.223  0.82360    
+## is_comp:change_grant_mil  -0.1027     0.1643  -0.625  0.53246    
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 23.43 on 291 degrees of freedom
+##   (50 observations deleted due to missingness)
+## Multiple R-squared:  0.2675, Adjusted R-squared:  0.2474 
+## F-statistic: 13.29 on 8 and 291 DF,  p-value: 2.299e-16
+\end{verbatim}
+
+\section{Time for Change}\label{time-for-change}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Estimate time for change model through 2016.}
+\NormalTok{tfc\_mod\_2016 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(pv2p }\SpecialCharTok{\textasciitilde{}}\NormalTok{ GDP\_growth\_quarterly }\SpecialCharTok{+}\NormalTok{ incumbent }\SpecialCharTok{+}\NormalTok{ juneapp, }
+                   \AttributeTok{data =} \FunctionTok{subset}\NormalTok{(d\_tfc\_train, year }\SpecialCharTok{\textless{}} \DecValTok{2020}\NormalTok{))}
+\FunctionTok{summary}\NormalTok{(tfc\_mod\_2016)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = pv2p ~ GDP_growth_quarterly + incumbent + juneapp, 
+##     data = subset(d_tfc_train, year < 2020))
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -3.8593 -1.1826 -0.2782  1.7858  3.9544 
+## 
+## Coefficients:
+##                      Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)          48.21244    1.06959  45.076  < 2e-16 ***
+## GDP_growth_quarterly  0.46505    0.15494   3.001 0.009523 ** 
+## incumbent             2.22003    1.24448   1.784 0.096122 .  
+## juneapp               0.13177    0.02514   5.241 0.000125 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 2.486 on 14 degrees of freedom
+## Multiple R-squared:  0.8166, Adjusted R-squared:  0.7773 
+## F-statistic: 20.78 on 3 and 14 DF,  p-value: 2.007e-05
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Estimate simplified time for change model for 2020. }
+\CommentTok{\# https://www{-}cambridge{-}org.ezp{-}prod1.hul.harvard.edu/core/services/aop{-}cambridge{-}core/content/view/47BBC0D5A2B7913DBB37FDA0542FD7E8/S1049096520001389a.pdf/its{-}the{-}pandemic{-}stupid{-}a{-}simplified{-}model{-}for{-}forecasting{-}the{-}2020{-}presidential{-}election.pdf}
+\NormalTok{tfc\_mod\_2020 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(pv2p }\SpecialCharTok{\textasciitilde{}}\NormalTok{ juneapp, }
+                   \AttributeTok{data =} \FunctionTok{subset}\NormalTok{(d\_tfc\_train, year }\SpecialCharTok{\textless{}} \DecValTok{2024}\NormalTok{))}
+\FunctionTok{summary}\NormalTok{(tfc\_mod\_2020)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = pv2p ~ juneapp, data = subset(d_tfc_train, year < 
+##     2024))
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -6.0627 -1.9331 -0.1604  1.6453  6.9681 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) 51.02572    0.72026  70.844  < 2e-16 ***
+## juneapp      0.16501    0.02818   5.855 1.91e-05 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 3.089 on 17 degrees of freedom
+## Multiple R-squared:  0.6685, Adjusted R-squared:  0.649 
+## F-statistic: 34.28 on 1 and 17 DF,  p-value: 1.91e-05
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Evaluate models and compare them to your own models/predictions.}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Super learning for swing
+states}\label{super-learning-for-swing-states}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Get set of states where we have polling data for 2024 according to 538 poll averages.}
+\NormalTok{states\_2024 }\OtherTok{\textless{}{-}}\NormalTok{ d\_pollav\_state}\SpecialCharTok{$}\NormalTok{state[d\_pollav\_state}\SpecialCharTok{$}\NormalTok{year }\SpecialCharTok{==} \DecValTok{2024}\NormalTok{] }\SpecialCharTok{|\textgreater{}} \FunctionTok{unique}\NormalTok{()}
+
+
+\CommentTok{\# Predicting for Democratic incumbents.}
+\CommentTok{\# Simplifications and assumptions: }
+  \CommentTok{\# Assuming Harris can be treated as incumbent for 2024 (could test either)}
+  \CommentTok{\# Getting weights from testing models on 2020 (could do different years)}
+  \CommentTok{\# Pooled models (could run state{-}specific models)}
+  \CommentTok{\# Using LOO{-}CV on 2020 (could do K{-}fold CV)}
+  \CommentTok{\# Using average poll support across all 30 weeks until election (could do weekly support, various imputation methods)}
+\NormalTok{d\_state\_combo }\OtherTok{\textless{}{-}}\NormalTok{ d\_pollav\_state }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{filter}\NormalTok{((state }\SpecialCharTok{\%in\%}\NormalTok{ states\_2024)) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{group\_by}\NormalTok{(year, state, party) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{mean\_pollav =} \FunctionTok{mean}\NormalTok{(poll\_support)) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{top\_n}\NormalTok{(}\DecValTok{1}\NormalTok{, poll\_date) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{rename}\NormalTok{(}\AttributeTok{latest\_pollav =}\NormalTok{ poll\_support) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{ungroup}\NormalTok{() }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{left\_join}\NormalTok{(d\_vote }\SpecialCharTok{|\textgreater{}} \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{pv, }\SpecialCharTok{{-}}\NormalTok{pv2p), }\AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"year"}\NormalTok{, }\StringTok{"party"}\NormalTok{)) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{filter}\NormalTok{(party }\SpecialCharTok{==} \StringTok{"DEM"}\NormalTok{) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{left\_join}\NormalTok{(d\_state\_vote\_wide, }\AttributeTok{by =} \FunctionTok{c}\NormalTok{(}\StringTok{"year"}\NormalTok{, }\StringTok{"state"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Model 1. Polling averages only. }
+\NormalTok{mod\_1 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(D\_pv2p }\SpecialCharTok{\textasciitilde{}}\NormalTok{ latest\_pollav }\SpecialCharTok{+}\NormalTok{ mean\_pollav, }
+            \AttributeTok{data =} \FunctionTok{subset}\NormalTok{(d\_state\_combo, year }\SpecialCharTok{\textless{}} \DecValTok{2020}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Model 2. Lagged vote model. }
+\NormalTok{mod\_2 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(D\_pv2p }\SpecialCharTok{\textasciitilde{}}\NormalTok{ D\_pv2p\_lag1 }\SpecialCharTok{+}\NormalTok{ D\_pv2p\_lag2, }
+            \AttributeTok{data =} \FunctionTok{subset}\NormalTok{(d\_state\_combo, year }\SpecialCharTok{\textless{}} \DecValTok{2020}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Model 3. Combined models. }
+\NormalTok{mod\_3 }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(D\_pv2p }\SpecialCharTok{\textasciitilde{}}\NormalTok{ incumbent }\SpecialCharTok{+}\NormalTok{ latest\_pollav }\SpecialCharTok{+}\NormalTok{ mean\_pollav }\SpecialCharTok{+}\NormalTok{ D\_pv2p\_lag1 }\SpecialCharTok{+}\NormalTok{ D\_pv2p\_lag2, }
+            \AttributeTok{data =} \FunctionTok{subset}\NormalTok{(d\_state\_combo, year }\SpecialCharTok{\textless{}} \DecValTok{2020}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{pred\_1 }\OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{predict}\NormalTok{(mod\_1, }\AttributeTok{newdata =} \FunctionTok{subset}\NormalTok{(d\_state\_combo, year }\SpecialCharTok{==} \DecValTok{2020}\NormalTok{)))}
+\NormalTok{pred\_2 }\OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{predict}\NormalTok{(mod\_2, }\AttributeTok{newdata =} \FunctionTok{subset}\NormalTok{(d\_state\_combo, year }\SpecialCharTok{==} \DecValTok{2020}\NormalTok{)))}
+\NormalTok{pred\_3 }\OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{predict}\NormalTok{(mod\_3, }\AttributeTok{newdata =} \FunctionTok{subset}\NormalTok{(d\_state\_combo, year }\SpecialCharTok{==} \DecValTok{2020}\NormalTok{)))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Get weights to build super learner. }
+\NormalTok{d\_weight }\OtherTok{\textless{}{-}} \FunctionTok{data.frame}\NormalTok{(}\StringTok{"truth"} \OtherTok{=}\NormalTok{ d\_state\_combo}\SpecialCharTok{$}\NormalTok{D\_pv2p[d\_state\_combo}\SpecialCharTok{$}\NormalTok{year }\SpecialCharTok{==} \DecValTok{2020}\NormalTok{],}
+                       \StringTok{"polls"} \OtherTok{=}\NormalTok{ pred\_1,}
+                       \StringTok{"lag\_vote"} \OtherTok{=}\NormalTok{ pred\_2,}
+                       \StringTok{"combo"} \OtherTok{=}\NormalTok{ pred\_3)}
+
+\CommentTok{\# Constrained optimization for ensemble mod weights. }
+\NormalTok{mod\_ensemble }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(truth }\SpecialCharTok{\textasciitilde{}}\NormalTok{ polls }\SpecialCharTok{+}\NormalTok{ lag\_vote }\SpecialCharTok{+}\NormalTok{ combo, }
+                   \AttributeTok{data =}\NormalTok{ d\_weight)}
+
+\CommentTok{\# Get weights and estimated weighted ensemble via constrained regression.}
+\NormalTok{c }\OtherTok{\textless{}{-}} \DecValTok{3} \CommentTok{\# number of models}
+\NormalTok{predictions }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(pred\_1, pred\_2, pred\_3)}
+\NormalTok{y.test }\OtherTok{\textless{}{-}}\NormalTok{ d\_weight}\SpecialCharTok{$}\NormalTok{truth}
+\NormalTok{w }\OtherTok{\textless{}{-}} \FunctionTok{lm}\NormalTok{(y.test }\SpecialCharTok{\textasciitilde{}}\NormalTok{ predictions}\DecValTok{{-}1}\NormalTok{)}
+\NormalTok{beta }\OtherTok{\textless{}{-}} \FunctionTok{Variable}\NormalTok{(c)}
+\NormalTok{objective }\OtherTok{\textless{}{-}} \FunctionTok{Minimize}\NormalTok{(}\FunctionTok{sum\_squares}\NormalTok{(y.test }\SpecialCharTok{{-}}\NormalTok{ predictions }\SpecialCharTok{\%*\%}\NormalTok{ beta))}
+\NormalTok{prob }\OtherTok{\textless{}{-}} \FunctionTok{Problem}\NormalTok{(objective)}
+\FunctionTok{constraints}\NormalTok{(prob) }\OtherTok{\textless{}{-}} \FunctionTok{list}\NormalTok{(beta }\SpecialCharTok{\textgreater{}=} \DecValTok{0}\NormalTok{, beta }\SpecialCharTok{\textless{}=} \DecValTok{1}\NormalTok{)}
+\NormalTok{solution\_prob }\OtherTok{\textless{}{-}} \FunctionTok{solve}\NormalTok{(prob)}
+\NormalTok{weights }\OtherTok{\textless{}{-}}\NormalTok{ solution\_prob}\SpecialCharTok{$}\FunctionTok{getValue}\NormalTok{(beta)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Predict using previous model output.}
+\NormalTok{ensemble\_pred }\OtherTok{\textless{}{-}} \FunctionTok{cbind}\NormalTok{(}\StringTok{"state"} \OtherTok{=} \FunctionTok{subset}\NormalTok{(d\_state\_combo, year }\SpecialCharTok{==} \DecValTok{2020}\NormalTok{)}\SpecialCharTok{$}\NormalTok{state,}
+                       \StringTok{"pred"} \OtherTok{=} \FunctionTok{round}\NormalTok{(}\FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{t}\NormalTok{(weights) }\SpecialCharTok{\%*\%} \FunctionTok{t}\NormalTok{(predictions)), }\DecValTok{3}\NormalTok{)) }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{as.data.frame}\NormalTok{()}
+
+\NormalTok{ensemble\_pred }\OtherTok{\textless{}{-}}\NormalTok{ ensemble\_pred }\SpecialCharTok{|\textgreater{}} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{winner =} \FunctionTok{ifelse}\NormalTok{(pred }\SpecialCharTok{\textgreater{}} \DecValTok{50}\NormalTok{, }\StringTok{"D"}\NormalTok{, }\StringTok{"R"}\NormalTok{))}
+
+\NormalTok{ensemble\_pred}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##             state   pred winner
+## 1       Wisconsin 52.277      D
+## 2        Virginia 54.681      D
+## 3           Texas 49.352      R
+## 4    Pennsylvania 50.596      D
+## 5            Ohio 46.866      R
+## 6  North Carolina 49.832      R
+## 7        New York  61.19      D
+## 8   New Hampshire 53.933      D
+## 9          Nevada 50.815      D
+## 10      Minnesota 51.821      D
+## 11       Michigan 51.114      D
+## 12        Georgia 50.206      D
+## 13        Florida 50.004      D
+## 14     California 61.701      D
+## 15        Arizona 50.292      D
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Merge with electoral college dataset and make plots. }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{d\_ec\_2024 }\OtherTok{\textless{}{-}}\NormalTok{ d\_ec }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{filter}\NormalTok{(year }\SpecialCharTok{==} \DecValTok{2024}\NormalTok{)}
+
+\NormalTok{ensemble\_pred\_vis }\OtherTok{\textless{}{-}}\NormalTok{ ensemble\_pred }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{left\_join}\NormalTok{(d\_ec\_2024, }\AttributeTok{by =} \FunctionTok{join\_by}\NormalTok{(state))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{incumbents\_table }\OtherTok{\textless{}{-}}\NormalTok{ d\_vote }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{filter}\NormalTok{(incumbent }\SpecialCharTok{==} \StringTok{"TRUE"} \SpecialCharTok{\&}\NormalTok{ year }\SpecialCharTok{\textless{}=} \DecValTok{2020}\NormalTok{) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{group\_by}\NormalTok{(candidate, year) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{summarize}\NormalTok{(}
+    \AttributeTok{margin =}\NormalTok{ pv2p }\SpecialCharTok{{-}}\NormalTok{ (}\DecValTok{100}\SpecialCharTok{{-}}\NormalTok{pv2p)}
+\NormalTok{  ) }\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(margin))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## `summarise()` has grouped output by 'candidate'. You can override using the
+## `.groups` argument.
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{knitr}\SpecialCharTok{::}\FunctionTok{kable}\NormalTok{(incumbents\_table, }\AttributeTok{col.names =} \FunctionTok{c}\NormalTok{(}\StringTok{"Incumbent"}\NormalTok{, }\StringTok{"Year"}\NormalTok{, }\StringTok{"2{-}Party Vote Share Margin"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{longtable}[]{@{}lrr@{}}
+\toprule\noalign{}
+Incumbent & Year & 2-Party Vote Share Margin \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Nixon, Richard M. & 1972 & 23.578018 \\
+Johnson, Lyndon B. & 1964 & 22.687936 \\
+Reagan, Ronald & 1984 & 18.246702 \\
+Eisenhower, Dwight & 1956 & 15.528679 \\
+Clinton, Bill & 1996 & 9.608048 \\
+Truman, Harry & 1948 & 4.635281 \\
+Obama, Barack H. & 2012 & 3.830516 \\
+Bush, George W. & 2004 & 2.538632 \\
+Ford, Gerald & 1976 & -2.274698 \\
+Trump, Donald J. & 2020 & -4.539718 \\
+Bush, George H.W. & 1992 & -7.241392 \\
+Carter, Jimmy & 1980 & -10.315117 \\
+\end{longtable}
+
+\end{document}
