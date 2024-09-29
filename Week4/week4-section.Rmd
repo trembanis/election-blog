@@ -1,0 +1,381 @@
+---
+title: "Week 4: Incumbency and Expert Predictions"
+author: "Ella Trembanis"
+date: "2024-09-25"
+output: pdf_document
+---
+
+# Set-Up
+
+```{r load libraries}
+library(car)
+library(caret)
+library(CVXR)
+library(glmnet)
+library(kableExtra)
+library(maps)
+library(RColorBrewer)
+library(sf)
+library(tidyverse)
+library(viridis)
+```
+
+```{r load data}
+# Read incumbency/vote data.
+d_vote <- read_csv("data/popvote_1948-2020(3).csv")
+d_state_vote <- read_csv("data/state_popvote_1948_2020.csv")
+d_vote$party[d_vote$party == "democrat"] <- "DEM"
+d_vote$party[d_vote$party == "republican"] <- "REP"
+
+# Create state vote wide.
+d_state_vote_wide <- d_state_vote |> 
+  select(state, year, R_pv2p, D_pv2p, R_pv2p_lag1, R_pv2p_lag2, D_pv2p_lag1, D_pv2p_lag2) |>
+  mutate(margin = D_pv2p - R_pv2p, 
+         winner = ifelse(D_pv2p > R_pv2p, "D", "R"))
+d_state_vote_wide[d_state_vote_wide$state == "District Of Columbia",]$state <- "District of Columbia"
+
+# Read electoral college data.
+d_ec <- read_csv("data/corrected_ec_1948_2024.csv")
+
+# Read economic data.
+d_econ <- read_csv("data/fred_econ.csv") |> 
+  filter(quarter == 2)
+
+# Read polling and election results data. 
+d_pollav_natl <- read_csv("data/national_polls_1968-2024.csv")
+d_pollav_state <- read_csv("data/state_polls_1968-2024.csv")
+
+# Shape and merge polling and election data using November polls. 
+d_poll_nov <- d_vote |> 
+  left_join(d_pollav_natl |> 
+              group_by(year, party) |> 
+              top_n(1, poll_date) |> 
+              select(-candidate), 
+            by = c("year", "party")) |> 
+  rename(nov_poll = poll_support) |> 
+  filter(year <= 2020) |> 
+  drop_na()
+
+# Create dataset of polling average by week until the election. 
+d_poll_weeks <- d_pollav_natl |> 
+  group_by(year, party, weeks_left) |>
+  summarize(mean_poll_week = mean(poll_support)) |> 
+  filter(weeks_left <= 30) |> 
+  pivot_wider(names_from = weeks_left, values_from = mean_poll_week) |> 
+  left_join(d_vote, by = c("year", "party"))
+
+# Read federal grants dataset from Kriner & Reeves (2008). 
+d_pork_state <- read_csv("data/fedgrants_bystate_1988-2008.csv")
+d_pork_county <- read_csv("data/fedgrants_bycounty_1988-2008.csv")
+
+# Join data for time for change model.
+d_tfc_train <- d_vote |> 
+  left_join(d_econ, by = "year") |> 
+  filter(incumbent_party) |>
+  mutate(incumbent = as.numeric(incumbent))
+```
+
+```{r custom theme}
+# standard theme
+my_theme <- function() {
+  theme(
+  # set panel features
+  panel.border = element_rect(color = "#000033", fill = NA, linetype = 1),
+  panel.background = element_rect(fill = "#FFFFFF"),
+  panel.grid.major.x = element_line(color = "#9999CC", linetype = 2, size = 0.2),
+  panel.grid.minor.x = element_blank(),
+  panel.grid.major.y = element_line(color = "#9999CC", linetype = 2, size = 0.2),
+  panel.grid.minor.y = element_blank(),
+  # set text and axis features
+  text = element_text(color = "#000033", family = "Courier"),
+  title = element_text(color = "#000033", face = "bold", family = "Courier"),
+  axis.ticks = element_line(color = "#000033"),
+  # set legend features
+  legend.position = "bottom",
+  legend.background = element_rect(color = "#000033", fill = NA, linetype = 1)
+  )
+}
+
+# simplified theme
+my_map_theme <- function() {
+  theme(
+    # set panel features
+    panel.background = element_rect(fill = "#FFFFFF"),
+    # set text features
+    text = element_text(color = "#000033", family = "Courier"),
+    title = element_text(color = "#000033", face = "bold", family = "Courier"),
+    # set legend features
+    legend.position = "bottom",
+    legend.title.position = "top",
+    legend.background = element_rect(color = "#000033", fill = NA, linetype = 1),
+    legend.margin = margin(10, 20, 10, 20, "pt"),
+    # set axis features to not display
+    axis.title = element_blank(),
+    axis.text = element_blank(),
+    axis.ticks = element_blank()
+  )
+}
+```
+
+# Descriptive Statistics - Incumbency
+
+```{r postwar}
+# How many post-war elections (18 and 2024) have incumbent presidents won? 
+d_vote |> 
+  filter(winner) |> 
+  select(year, win_party = party, win_cand = candidate) |> 
+  mutate(win_party_last = lag(win_party, order_by = year),
+         win_cand_last = lag(win_cand, order_by = year)) |> 
+  mutate(reelect_president = win_cand_last == win_cand) |> 
+  filter(year > 1948 & year < 2024) |> 
+  group_by(reelect_president) |> 
+  summarize(N = n()) |> 
+  mutate(Percent = round(N/sum(N) * 100, 2)) |>
+  as.data.frame()
+```
+
+```{r when incumbents ran}
+# A different way of assessing the incumbency advantage 
+# (out of 11 elections where there was at least one incumbent running).
+inc_tab <- d_vote |> 
+  filter(year > 1948 & year < 2024) |>
+  select(year, party, candidate, incumbent, winner) |> 
+  pivot_wider(names_from = party, 
+              values_from = c(candidate, incumbent, winner)) |> 
+  filter(incumbent_DEM == TRUE | incumbent_REP == TRUE)
+
+
+cat(paste0("Elections with At Least One Incumbent Running: ", nrow(inc_tab), "\n",
+   "Incumbent Victories: ", (sum(inc_tab$incumbent_REP & inc_tab$winner_REP) + 
+                             sum(inc_tab$incumbent_DEM & inc_tab$winner_DEM)), "\n",
+    "Percentage: ", round((sum(inc_tab$incumbent_REP & inc_tab$winner_REP) + 
+                           sum(inc_tab$incumbent_DEM & inc_tab$winner_DEM))/
+                           nrow(inc_tab)*100, 2)))
+```
+
+```{r 21st cent}
+# In the six elections since 2000?
+inc_tab |> 
+  filter(year >= 2000)
+```
+
+```{r incumbent party}
+# How many post-war elections have there been where the incumbent *party* won? 
+d_vote |> 
+  filter(winner) |> 
+  select(year, win_party = party, win_cand = candidate) |> 
+  mutate(win_party_last = lag(win_party, order_by = year),
+         win_cand_last = lag(win_cand, order_by = year)) |> 
+  mutate(reelect_party = win_party_last == win_party) |> 
+  filter(year > 1948 & year < 2024) |> 
+  group_by(reelect_party) |> 
+  summarize(N = n()) |> 
+  mutate(Percent = round(N/sum(N) * 100, 2)) |>
+  as.data.frame()
+```
+
+```{r previous admin}
+# How many post-war elections have there been where the winner served in a previous administration?
+100*round(prop.table(table(`prev_admin` = d_vote$prev_admin[d_vote$year > 1948 & 
+                                     d_vote$year < 2024 & 
+                                     d_vote$winner == TRUE])), 4)
+```
+
+# Pork Analysis
+
+```{r strategy for self}
+# What strategy do presidents pursue? 
+d_pork_state |> 
+  filter(!is.na(state_year_type)) |> 
+  group_by(state_year_type) |>
+  summarize(mean_grant = mean(grant_mil, na.rm = T), se_grant = sd(grant_mil, na.rm = T)/sqrt(n())) |> 
+  ggplot(aes(x = state_year_type, y = mean_grant, ymin = mean_grant-1.96*se_grant, ymax = mean_grant+1.96*se_grant)) + 
+  coord_flip() + 
+  geom_bar(stat = "identity", fill = "#9999CC") + 
+  geom_errorbar(width = 0.2) + 
+  labs(x = "Type of State & Year", 
+       y = "Federal Grant Spending (Millions of $)", 
+       title = "Federal Grant Spending (Millions $) by State Election Type") + 
+  my_theme() + 
+  theme(axis.title = element_text(size = 15),
+        axis.text = element_text(size = 12))
+```
+
+```{r strategy for successor}
+d_pork_state |> 
+  filter(!is.na(state_year_type2)) |> 
+  group_by(state_year_type2) |>
+  summarize(mean_grant = mean(grant_mil, na.rm = T), se_grant = sd(grant_mil, na.rm = T)/sqrt(n())) |> 
+  ggplot(aes(x = state_year_type2, y = mean_grant, ymin = mean_grant-1.96*se_grant, ymax = mean_grant+1.96*se_grant)) + 
+  coord_flip() + 
+  geom_bar(stat = "identity", fill = "#9999CC") + 
+  geom_errorbar(width = 0.2) + 
+  labs(x = "Type of State & Year", 
+       y = "Federal Grant Spending (Millions of $)", 
+       title = "Federal Grant Spending (Millions $) by State Election Type") + 
+  my_theme() +
+  theme(axis.title = element_text(size = 15),
+        axis.text = element_text(size = 12))
+```
+
+```{r county model}
+pork_mod_county_1 <- lm(dvoteswing_inc  ~ dpct_grants*comp_state + as.factor(year), 
+                      d_pork_county)
+summary(pork_mod_county_1)
+
+pork_mod_county_2 <- lm(dvoteswing_inc ~ dpct_grants*comp_state + as.factor(year) +
+                          dpc_income + inc_ad_diff + inc_campaign_diff + 
+                          dhousevote_inc + iraq_cas2004 + iraq_cas2008 + 
+                          dpct_popl,
+                        data = d_pork_county)
+summary(pork_mod_county_2)
+```
+
+```{r state model}
+d_pork_state_model <- d_state_vote |>
+  mutate(state_abb = state.abb[match(d_state_vote$state, state.name)]) |>
+  inner_join(d_pork_state, by = c("year", "state_abb")) |>
+  left_join(d_vote, by = "year") |>
+  filter(incumbent_party == TRUE) |>
+  mutate(inc_pv2p = ifelse(party == "REP", R_pv2p, D_pv2p)) |>
+  mutate(is_comp = case_when(state_year_type == "swing + election year" ~ 1,
+                             .default = 0)) |>
+  group_by(state) |>
+  mutate(change_grant_mil = (1-grant_mil/(lag(grant_mil, n = 1)))*100,
+         change_inc_pv2p = (1-inc_pv2p/(lag(inc_pv2p, n = 1)))*100) |>
+  ungroup() |>
+  select(state, year, is_comp, change_grant_mil, change_inc_pv2p)
+
+pork_state_mod <- lm(change_inc_pv2p ~ is_comp*change_grant_mil + as.factor(year),
+                     data = d_pork_state_model)
+summary(pork_state_mod)
+```
+
+# Time for Change
+
+```{r tfc through 2016}
+# Estimate time for change model through 2016.
+tfc_mod_2016 <- lm(pv2p ~ GDP_growth_quarterly + incumbent + juneapp, 
+                   data = subset(d_tfc_train, year < 2020))
+summary(tfc_mod_2016)
+```
+
+```{r tfc 2020}
+# Estimate simplified time for change model for 2020. 
+# https://www-cambridge-org.ezp-prod1.hul.harvard.edu/core/services/aop-cambridge-core/content/view/47BBC0D5A2B7913DBB37FDA0542FD7E8/S1049096520001389a.pdf/its-the-pandemic-stupid-a-simplified-model-for-forecasting-the-2020-presidential-election.pdf
+tfc_mod_2020 <- lm(pv2p ~ juneapp, 
+                   data = subset(d_tfc_train, year < 2024))
+summary(tfc_mod_2020)
+
+# Evaluate models and compare them to your own models/predictions.
+```
+
+# Super learning for swing states
+
+```{r super learning set-up}
+# Get set of states where we have polling data for 2024 according to 538 poll averages.
+states_2024 <- d_pollav_state$state[d_pollav_state$year == 2024] |> unique()
+
+
+# Predicting for Democratic incumbents.
+# Simplifications and assumptions: 
+  # Assuming Harris can be treated as incumbent for 2024 (could test either)
+  # Getting weights from testing models on 2020 (could do different years)
+  # Pooled models (could run state-specific models)
+  # Using LOO-CV on 2020 (could do K-fold CV)
+  # Using average poll support across all 30 weeks until election (could do weekly support, various imputation methods)
+d_state_combo <- d_pollav_state |> 
+  filter((state %in% states_2024)) |> 
+  group_by(year, state, party) |>
+  mutate(mean_pollav = mean(poll_support)) |>
+  top_n(1, poll_date) |> 
+  rename(latest_pollav = poll_support) |> 
+  ungroup() |> 
+  left_join(d_vote |> select(-pv, -pv2p), by = c("year", "party")) |> 
+  filter(party == "DEM") |> 
+  left_join(d_state_vote_wide, by = c("year", "state"))
+```
+
+```{r model 1}
+# Model 1. Polling averages only. 
+mod_1 <- lm(D_pv2p ~ latest_pollav + mean_pollav, 
+            data = subset(d_state_combo, year < 2020))
+```
+
+```{r model 2}
+# Model 2. Lagged vote model. 
+mod_2 <- lm(D_pv2p ~ D_pv2p_lag1 + D_pv2p_lag2, 
+            data = subset(d_state_combo, year < 2020))
+```
+
+```{r model 3}
+# Model 3. Combined models. 
+mod_3 <- lm(D_pv2p ~ incumbent + latest_pollav + mean_pollav + D_pv2p_lag1 + D_pv2p_lag2, 
+            data = subset(d_state_combo, year < 2020))
+```
+
+```{r model predictions}
+pred_1 <- as.numeric(predict(mod_1, newdata = subset(d_state_combo, year == 2020)))
+pred_2 <- as.numeric(predict(mod_2, newdata = subset(d_state_combo, year == 2020)))
+pred_3 <- as.numeric(predict(mod_3, newdata = subset(d_state_combo, year == 2020)))
+```
+
+```{r build superlearner}
+# Get weights to build super learner. 
+d_weight <- data.frame("truth" = d_state_combo$D_pv2p[d_state_combo$year == 2020],
+                       "polls" = pred_1,
+                       "lag_vote" = pred_2,
+                       "combo" = pred_3)
+
+# Constrained optimization for ensemble mod weights. 
+mod_ensemble <- lm(truth ~ polls + lag_vote + combo, 
+                   data = d_weight)
+
+# Get weights and estimated weighted ensemble via constrained regression.
+c <- 3 # number of models
+predictions <- cbind(pred_1, pred_2, pred_3)
+y.test <- d_weight$truth
+w <- lm(y.test ~ predictions-1)
+beta <- Variable(c)
+objective <- Minimize(sum_squares(y.test - predictions %*% beta))
+prob <- Problem(objective)
+constraints(prob) <- list(beta >= 0, beta <= 1)
+solution_prob <- solve(prob)
+weights <- solution_prob$getValue(beta)
+```
+
+```{r ensemble prediction}
+# Predict using previous model output.
+ensemble_pred <- cbind("state" = subset(d_state_combo, year == 2020)$state,
+                       "pred" = round(as.numeric(t(weights) %*% t(predictions)), 3)) |> 
+  as.data.frame()
+
+ensemble_pred <- ensemble_pred |> 
+  mutate(winner = ifelse(pred > 50, "D", "R"))
+
+ensemble_pred
+
+# Merge with electoral college dataset and make plots. 
+```
+
+```{r}
+d_ec_2024 <- d_ec |>
+  filter(year == 2024)
+
+ensemble_pred_vis <- ensemble_pred |>
+  left_join(d_ec_2024, by = join_by(state))
+```
+
+```{r}
+incumbents_table <- d_vote |>
+  filter(incumbent == "TRUE" & year <= 2020) |>
+  group_by(candidate, year) |>
+  summarize(
+    margin = pv2p - (100-pv2p)
+  ) |>
+  arrange(desc(margin))
+  
+knitr::kable(incumbents_table, col.names = c("Incumbent", "Year", "2-Party Vote Share Margin"))
+```
+
+

@@ -1,0 +1,38 @@
+---
+title: "incumbent-table"
+author: "Ella Trembanis"
+date: "2024-09-27"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r}
+library(car)
+library(caret)
+library(CVXR)
+library(glmnet)
+library(kableExtra)
+library(maps)
+library(RColorBrewer)
+library(sf)
+library(tidyverse)
+library(viridis)
+
+d_vote <- read_csv("~/Desktop/Gov 1347/election-blog/election-blog/Week4/data/popvote_1948-2020(3).csv")
+d_vote$party[d_vote$party == "democrat"] <- "DEM"
+d_vote$party[d_vote$party == "republican"] <- "REP"
+
+
+incumbents_table <- d_vote |>
+  filter(incumbent == "TRUE" & year <= 2020) |>
+  group_by(year, candidate) |>
+  summarize(
+    margin = pv2p - (100-pv2p)
+  ) |>
+  arrange(desc(margin))
+  
+knitr::kable(incumbents_table, col.names = c("Year", "Incumbent", "2-Party Vote Share Margin"))
+```
+
+

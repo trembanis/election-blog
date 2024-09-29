@@ -1,0 +1,368 @@
+---
+title: 'Blog Post #3'
+author: "By Ella Trembanis"
+date: '2024-09-22'
+output:
+  html_document:
+    df_print: paged
+categories: []
+tags: []
+slug: "blog-post-3"
+---
+
+# Polls and Campaign Narratives
+
+Felonies! Assassination attempts! Debate match-ups! With less than two months to go, the 2024 presidential race has already had its fair share of front-page moments -- but which will truly stick with voters?
+
+Figure I (below) plots some newsworthy events from the past several months against the candidates' performance in national polls.
+
+```{r load libraries, echo=FALSE, include=FALSE, warning=FALSE}
+library(car)
+library(caret)
+library(CVXR)
+library(glmnet)
+library(tidyverse)
+library(ggplot2)
+library(mice)
+```
+
+```{r custom theme, echo=FALSE, include=FALSE, warning=FALSE}
+my_theme <- function() {
+  theme(
+  # set panel features
+  panel.border = element_rect(color = "#000033", fill = NA, linetype = 1),
+  panel.background = element_rect(fill = "#FFFFFF"),
+  panel.grid.major.x = element_line(color = "#9999CC", linetype = 2, size = 0.2),
+  panel.grid.minor.x = element_blank(),
+  panel.grid.major.y = element_line(color = "#9999CC", linetype = 2, size = 0.2),
+  panel.grid.minor.y = element_blank(),
+  # set text and axis features
+  text = element_text(color = "#000033", family = "Courier"),
+  title = element_text(color = "#000033", face = "bold", family = "Courier"),
+  axis.ticks = element_line(color = "#000033"),
+  # set legend features
+  legend.position = "bottom",
+  legend.background = element_rect(color = "#000033", fill = NA, linetype = 1)
+  )
+}
+```
+
+```{r read data, echo=FALSE, include=FALSE, warning=FALSE}
+# processed FiveThirtyEight polling average datasets
+nat_poll <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Blog #3/data/national_polls_1968-2024.csv")
+state_poll <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Blog #3/data/national_polls_1968-2024.csv")
+
+# national popular vote
+nat_vote <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Blog #3/data/popvote_1948-2020.csv") |>
+  filter(year >= 1968) |>
+  select(year, party, pv2p, pv, incumbent, incumbent_party)
+nat_vote$party[nat_vote$party == "democrat"] <- "DEM"
+nat_vote$party[nat_vote$party == "republican"] <- "REP"
+
+# state popular vote
+state_vote <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Blog #3/data/clean_wide_state_2pv_1948_2020.csv") |>
+  filter(year >= 1968) |>
+  select(year, state, D_pv2p, R_pv2p) |>
+  pivot_longer(
+    cols = D_pv2p:R_pv2p,
+    cols_vary = "fastest",
+    names_to = ("party")
+  )
+state_vote$party[state_vote$party == "D_pv2p"] <- "DEM"
+state_vote$party[state_vote$party == "R_pv2p"] <- "REP"
+state_vote$pv2p <- state_vote$value
+
+state_vote <- state_vote |>
+  select(year, state, party, pv2p)
+
+# economic data
+econ <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Blog #3/data/fred_econ.csv") |> 
+# filter to most recent available quarter of 2024
+  filter(quarter == 2)
+```
+
+```{r fig 1 code, echo=FALSE, include=FALSE, warning=FALSE}
+fig1 <- nat_poll |> 
+  filter(year == 2024) |> 
+  ggplot(aes(x = poll_date, y = poll_support, color = party)) +
+  geom_point(size = 1) + 
+  geom_line() + 
+  scale_x_date(date_labels = "%b %d") + 
+  scale_color_manual(values = c("dodgerblue4", "firebrick1")) +
+  labs(x = "Date",
+       y = "Average Poll Approval", 
+       title = "Fig. I - Polling Averages by Date, 2024") + 
+  geom_rect(xmin=as.Date("2024-08-19"), xmax=as.Date("2024-08-22"), ymin=45, ymax=48.5, alpha=0.02, colour=NA, fill="#9999CC") +
+  annotate("label", x=as.Date("2024-08-20"), y=48, label="DNC", size=4, family = "Courier") +
+  geom_rect(xmin=as.Date("2024-07-15"), xmax=as.Date("2024-07-18"), ymin=41.7, ymax=45, alpha=0.02, colour=NA, fill="#9999CC") +
+  annotate("label", x=as.Date("2024-07-16"), y=44, label="RNC", size=4, family = "Courier") +
+  geom_segment(x = as.Date("2024-06-27"), xend = as.Date("2024-06-27"), y = 41, yend = 46, linetype = "dashed", alpha = 0.4, color = "#9999CC") +
+  annotate("label", x = as.Date("2024-06-27"), y = 46, label = "Biden-Trump\nDebate", size = 3, family = "Courier") +
+  geom_segment(x = as.Date("2024-07-11"), xend = as.Date("2024-07-11"), y = 40.2, yend = 41.3, linetype = "dashed", alpha = 0.4, color = "#9999CC") +
+  annotate("label", x = as.Date("2024-07-11"), y = 41.3, label = "Putin\nGaffe", size = 3, family = "Courier") +
+  geom_segment(x = as.Date("2024-07-13"), xend = as.Date("2024-07-13"), y = 42.2, yend = 45, linetype = "dashed", alpha = 0.4, color = "#9999CC") +
+  annotate("label", x = as.Date("2024-07-13"), y = 45, label = "Trump Shot", size = 3, family = "Courier") +
+  geom_segment(x = as.Date("2024-07-21"), xend = as.Date("2024-07-21"), y = 39, yend = 40.2, linetype = "dashed", alpha = 0.4, color = "#9999CC") +
+  annotate("label", x = as.Date("2024-07-21"), y = 39, label = "Biden Drops Out", size = 3, family = "Courier") +
+  geom_segment(x = as.Date("2024-03-30"), xend = as.Date("2024-03-30"), y = 43.1, yend = 44.8, linetype = "dashed", alpha = 0.4, color = "#9999CC") +
+  annotate("label", x = as.Date("2024-03-30"), y = 44.8, label = "Trump Convicted", size = 3, family = "Courier") +
+  geom_segment(x = as.Date("2024-08-23"), xend = as.Date("2024-08-23"), y = 47.2, yend = 42.4, linetype = "dashed", alpha = 0.4, color = "#9999CC") +
+  annotate("label", x = as.Date("2024-08-23"), y = 42.4, label = "RFK Jr\nDrops Out", size = 3, family = "Courier") +
+  geom_segment(x = as.Date("2024-09-10"), xend = as.Date("2024-09-10"), y = 48.2, yend = 45.7, linetype = "dashed", alpha = 0.4, color = "#9999CC") +
+  annotate("label", x = as.Date("2024-09-10"), y = 46.6, label = "Trump-Harris\nDebate", size = 3, family = "Courier") +
+  my_theme()
+```
+
+```{r fig 1 print, echo=FALSE, include=TRUE, warning=FALSE}
+fig1
+```
+
+In some cases, the graph lends itself to story-driven interpretations: there is, for instance, President Trump's short-lived bump in approval around the time of his conviction and the dramatic blue spike where Vice President Harris first assumed the role of presumptive candidate in lieu of Biden. 
+
+At other times, however, the polls defy the headlines. The first assassination attempt against President Trump is virtually indistinguishable in this aggregation. While Biden's numbers were already low in early July, confusing Presidents Putin and Zelensky -- not to mention his opponent and his own vice president -- did not perceivably worsen his standing in the polls. Even the DNC, with its splashy line-up of Democratic stalwarts and Republicans for Harris, fades into the background.
+
+Notice, too, how close the polls remain across these data. Even when one candidate has a particularly good week or month, they tend to remain within a scant few points of their opponent.
+
+Polls can sometimes seem like a cheat code; a no-nonsense way to get into the minds of the electorate and satisfy our curiosity long before Election Day hands down its verdict. But as these inconsistent trends suggest, polls are deeply imperfect. They are swayed not just by what "should" matter -- policy proposals, scandals, good or bad speeches -- but also by the framing of the poll itself.
+
+Do the pollsters have a partisan bias? How do they adjust their raw data, if it is lopsided demographically or politically? Will their respondents actually turnout in November? If they do, will they change their minds? All of these answers have powerful implications for poll-dependent forecasts.
+
+The dull truth is that polls lie somewhere between magic bullet and useless drivel. My prediction for this week, like the graph above, uses simple aggregation to curb the effects of potential outliers among the major pollsters, and incorporates a measure of fundamental economic conditions to account for the influence of broad, retrospective evaluation on voter behavior.
+
+# Predictions and Methodology
+
+```{r week-by-week, echo=FALSE, include=FALSE, warning=FALSE}
+# use weeks left as columns
+week_poll <- nat_poll |> 
+  group_by(year, party, weeks_left) |>
+  summarize(mean_poll_week = mean(poll_support)) |> 
+  filter(weeks_left <= 30) |> 
+  pivot_wider(names_from = weeks_left, values_from = mean_poll_week) |>
+# merge national vote
+  left_join(nat_vote, by = c("year", "party"))
+
+# split to train and test
+week_poll_train <- week_poll |> 
+  filter(year <= 2020)
+week_poll_test <- week_poll |> 
+  filter(year == 2024)
+
+# rename
+colnames(week_poll)[3:33] <- paste0("poll_weeks_left_", 0:30)
+colnames(week_poll_train)[3:33] <- paste0("poll_weeks_left_", 0:30)
+colnames(week_poll_test)[3:33] <- paste0("poll_weeks_left_", 0:30)
+
+# define x (polls by weeks left) and y (popular vote)
+x.train <- week_poll_train |>
+  ungroup() |> 
+  select(all_of(starts_with("poll_weeks_left_"))) |> 
+  as.matrix()
+y.train <- week_poll_train$pv2p
+
+# ols
+ols.weekpoll <- lm(paste0("pv2p ~ ", paste0( "poll_weeks_left_", 0:30, collapse = " + ")), 
+                    data = week_poll_train)
+# set ridge using alpha = 0
+ridge.weekpoll <- glmnet(x = x.train, y = y.train, alpha = 0)
+# set lasso using alpha = 1
+lasso.weekpoll <- glmnet(x = x.train, y = y.train, alpha = 1) 
+# set elastic net using alpha = 0.5
+enet.weekpoll <- glmnet(x = x.train, y = y.train, alpha = 0.5) 
+
+# cross-validate
+set.seed(19709)
+cv.ridge.weekpoll <- cv.glmnet(x = x.train, y = y.train, alpha = 0)
+set.seed(19709)
+cv.lasso.weekpoll <- cv.glmnet(x = x.train, y = y.train, alpha = 1)
+set.seed(19709)
+cv.enet.weekpoll <- cv.glmnet(x = x.train, y = y.train, alpha = 0.5)
+
+# retrieve optimized lambdas
+lambda.min.ridge <- cv.ridge.weekpoll$lambda.min
+lambda.min.lasso <- cv.lasso.weekpoll$lambda.min
+lambda.min.enet <- cv.enet.weekpoll$lambda.min
+
+# compare mean-squared error
+mse.ridge <- mean((predict(ridge.weekpoll, s = lambda.min.ridge, newx = x.train) - y.train)^2) #9.575001
+mse.lasso <- mean((predict(lasso.weekpoll, s = lambda.min.lasso, newx = x.train) - y.train)^2) #4.681366
+mse.enet <- mean((predict(enet.weekpoll, s = lambda.min.enet, newx = x.train) - y.train)^2) #4.302942
+
+# generate coefficient plot to compare regularization methods
+coefplot <- data.frame("OLS" = coef(ols.weekpoll)[-1],
+                       "Ridge" = coef(ridge.weekpoll, s = lambda.min.ridge)[-1], 
+                         "Lasso" = coef(lasso.weekpoll, s = lambda.min.lasso)[-1], 
+                         "Elastic Net" = coef(enet.weekpoll, s = lambda.min.enet)[-1]) |> 
+  rownames_to_column("coef_name") |> 
+  pivot_longer(cols = -coef_name, names_to = "method", values_to = "coef_est") |> 
+  mutate(week = rep(0:30, each = 4))
+
+coefplot[which(is.na(coefplot$coef_est)),]$coef_est <- 0 
+
+fig2 <- coefplot |>
+  ggplot(aes(x = coef_est, y = reorder(coef_name, -week), color = method)) +
+  geom_segment(aes(xend = 0, yend = reorder(coef_name, -week)), alpha = 0.5, lty = "dashed") +
+  geom_vline(aes(xintercept = 0), lty = "dashed") +   
+  geom_point() + 
+  labs(x = "Coefficient Estimate", 
+       y = "Weeks Left", 
+       title = "Fig II. - Coefficients Across Regularization Methods") + 
+  my_theme() +
+  theme(
+     panel.grid.major.x = element_blank(),
+     panel.grid.major.y = element_blank()
+  )
+
+# enet prediction
+
+x.train <- week_poll_train |>
+  ungroup() |> 
+# select weeks 7-30 left to maximize coverage (we are 7 weeks away)
+  select(all_of(paste0("poll_weeks_left_", 7:30))) |> 
+  as.matrix()
+# train and test sets
+y.train <- week_poll_train$pv2p
+x.test <- week_poll_test |>
+  ungroup() |> 
+  select(all_of(paste0("poll_weeks_left_", 7:30))) |> 
+  as.matrix()
+# create enet for selected weeks
+set.seed(19709)
+enet.poll <- cv.glmnet(x = x.train, y = y.train, alpha = 0.5)
+lambda.min.enet.poll <- enet.poll$lambda.min
+
+#predict
+polls.pred <- predict(enet.poll, s = lambda.min.enet.poll, newx = x.test)
+# Harris 51.81%
+# Trump 50.58%
+
+# weight on proximity to election day
+election_day_2024 <- "2024-11-05"
+today <- "2024-09-22"
+days_left <- as.numeric(as.Date(election_day_2024) - as.Date(today))
+
+(poll_model_weight <- 1- (1/sqrt(days_left)))
+(fund_model_weight <- 1/sqrt(days_left))
+
+proximity.pred <- polls.pred * poll_model_weight
+# Harris 44.0
+# Trump 42.95
+
+# merge, create vote lags. 
+combined <- econ |> 
+  left_join(week_poll, by = "year") |> 
+  filter(year %in% c(unique(nat_vote$year), 2024)) |> 
+  group_by(party) |> 
+  mutate(pv2p_lag1 = lag(pv2p, 1), 
+         pv2p_lag2 = lag(pv2p, 2)) |> 
+  ungroup() |> 
+  mutate(gdp_growth_x_incumbent = GDP_growth_quarterly * incumbent) # Generate interaction effects.
+
+# fundamentals-only dataset
+fund <- combined |> 
+  select("year", "pv2p", "GDP_growth_quarterly", "gdp_growth_x_incumbent") 
+# split to train and test
+x.train.fund <- fund |> 
+  filter(year <= 2020) |>
+  select(-c(year, pv2p)) |> 
+  slice(-c(1:9)) |> 
+  as.matrix()
+y.train.fund <- fund |> 
+  filter(year <= 2020) |> 
+  select(pv2p) |> 
+  slice(-c(1:9)) |> 
+  as.matrix()
+x.test.fund <- fund |> 
+  filter(year == 2024) |> 
+  select(-c(year, pv2p)) |> 
+  drop_na() |> 
+  as.matrix()
+
+# run fundamentals-only enet (note: prediction is the same as ols, since only one economic variable is used -- enet is only used to facilitate combination with other models below)
+set.seed(02138)
+enet.fund <- cv.glmnet(x = x.train.fund, y = y.train.fund, intercept = FALSE, alpha = 0.5)
+lambda.min.enet.fund <- enet.fund$lambda.min
+enet.fund.pred <- predict(enet.fund, s = lambda.min.enet.fund, newx = x.test.fund)
+```
+
+```{r}
+# Sequester data for combined model.
+combo <- combined |> 
+  select("year", "pv2p", "GDP_growth_quarterly", "pv2p_lag1", "pv2p_lag2", all_of(paste0("poll_weeks_left_", 7:30))) 
+
+x.train.combined <- combo |> 
+  filter(year <= 2020) |> 
+  select(-c(year, pv2p)) |> 
+  slice(-c(1:9)) |> 
+  as.matrix()
+y.train.combined <- combo |>
+  filter(year <= 2020) |> 
+  select(pv2p) |> 
+  slice(-c(1:9)) |> 
+  as.matrix()
+x.test.combined <- combo |>
+  filter(year == 2024) |> 
+  select(-c(year, pv2p)) |> 
+  drop_na() |> 
+  as.matrix()
+
+# combined enet
+set.seed(02138)
+enet.combined <- cv.glmnet(x = x.train.combined, y = y.train.combined, intercept = FALSE, alpha = 0.5)
+lambda.min.enet.combined <- enet.combined$lambda.min
+
+# predict combo
+combo.pred <- predict(enet.combined, s = lambda.min.enet.combined, newx = x.test.combined)
+# Harris 51.98%
+# Trump 47.94%
+
+# combo - polls weighted on proximity, fundamentals not adjusted
+ensemble.2.pred <- (proximity.pred + enet.fund.pred)/2
+# Harris 47.96%
+# Trump 45.19%
+```
+
+For my first prediction, I looked at week-by-week poll aggregations. Incorporating every single week into a plain OLS regression, however, would have created a dimensionality error since there are so few election years in the dataset compared to the number of weekly predictors. To reduce the dimensionality of my data, I tested a few regularized regression approaches, including Ridge, LASSO, and Elastic Net. These methods shrink the coefficients of less important predictor variables, making the data easier to work with. Figure II (below) displays the result of this shrinking across the regularization methods.
+
+```{r fig 2 print, echo=FALSE, include=TRUE, warning=FALSE}
+fig2
+```
+
+I found that Elastic Net produced the lowest mean-squared error of the three approaches. Since Elastic Net is also a middle-point between LASSO -- a more aggressive approach which shrinks some variables to 0 -- and Ridge -- a more conservative shrinker -- I chose to use this method to create my predictions.
+
+```{r table code, echo=FALSE, include=FALSE, warning=FALSE}
+predictions <- tibble(Model = c("Polls by Week (A)", "Polls by Proximity (B)", "GDP Growth (C)", "Combined (AC)",
+                                "Combined (BC)"),
+                      Harris = c(51.81, 44.0, 51.93, 51.98, 47.96),
+                      Trump = c(50.58, 42.95, 47.42, 47.94, 45.19))
+fig3 <- knitr::kable(predictions, digits = 2)
+```
+
+```{r table print, echo=FALSE, include=TRUE, warning=FALSE}
+fig3
+```
+
+The results of my predictions are displayed in the table above. Model (A) uses the aforementioned week-by-week aggregations. Model (B) adds an explicit adjustment for the polls' proximity to Election Day. Model (C) does not use polls at all; it is based on Q2 GDP growth, like my forecast from last week. Model (AC) combines the poll-by-week model and GDP growth. Model (BC) weights polls by their proximity to Election Day and also incorporates a measure of GDP growth which is not adjusted for proximity.
+
+My working assumption about voter behavior is that polls will improve with additional proximity to the election, that fundamentals will have a more or less constant level of importance throughout the race, and that -- at least for now, with seven weeks to go -- fundamentals and polls are roughly evenly matched as predictors. For those reasons, my final prediction for this week is model (BC): 47.96% of the vote share for Vice President Harris and 45.19% for President Trump.
+
+# Assessing the Experts
+
+The trade-off between polls and fundamentals is a continual source of tension for professional forecasters, whose models inevitably reflect their creators’ philosophies about voter behavior. In their 2024 forecasts for FiveThirtyEight and the Silver Bulletin, respectively, G. Elliott Morris and Nate Silver both attempt to tread the line between the two.
+
+Polls are the centerpiece of the 2024 Silver Bulletin forecast, though some fundamental measures are incorporated, especially in the early stages of the race. The model uses a combination of a simple average which incorporates a measure of pollster quality and a trendline adjustment which helps reign in wayward state-level polls. Perhaps the most aggressive feature of the model is its “timeline adjustment” which retroactively nudges old polls to account for more recent shifts. This approach, of course, relies on the assumption that polls administered closer to Election Day are substantially more dependable than older polls.
+
+The current FiveThirtyEight model is somewhat more optimistic about the use of fundamentals, though it also decreases their weight as Election Day approaches. The 2024 forecast expands the list of economic variables from six to eleven, including a measure of respondents’ subjective perceptions of the state of the economy (the “Index of Consumer Sentiment”). They argue, based on past elections, particularly 2020, that fundamentals tend to counterbalance bias in the polls. Therefore, fundamentals are incorporated as a baseline to assess poll performance. While this is a compelling possibility, the assumption that this pattern will continue is underdeveloped as written, and makes the model vulnerable to fundamentals and polls trending in the same direction – which could very well happen, especially if the political analysts responsible for maintaining the polls are themselves sensitive to shifts in fundamental conditions.
+
+I am generally suspicious of pollster quality adjustments, which both models use in some fashion. While past performance seems like a reasonable-enough indicator of future accuracy, it could still unfairly punish or reward pollsters for last-minute shifts in voter intentions, or for irresponsible adjustment methods used to nudge the data towards a more popular answer. Other considerations, like “transparency” are even more far-fetched in terms of their predictive value. Though there should be some baseline for poll quality based on widely-accepted randomization procedures and the like, I am inclined to maximize for poll quantity instead, with the hope that an aggregation of truly wide-ranging polls will best approximate the truth.
+
+Of the two models, I tend to prefer the current FiveThirtyEight forecast for the greater range of fundamental variables which it incorporates. To be sure, there is a risk of overfitting with limited historical data, but I am more concerned about the Silver Bulletin model’s vulnerability to short-term pollster hivemind.
+
+# References
+
+Morris, G. (2024, June 11). “How 538's 2024 presidential election forecast works.” FiveThirtyEight. https://abcnews.go.com/538/538s-2024-presidential-election-forecast-works/story?id=110867585
+
+Morris, G. (2024, April 25). “Trump leads in swing-state polls and is tied with Biden nationally.” FiveThirtyEight. https://abcnews.go.com/538/trump-leads-swing-state-polls-tied-biden-nationally/story?id=109506070 
+
+Silver, N. (2020, Aug. 12). “How FiveThirtyEight’s 2020 Presidential Forecast Works – And What’s Different Because of COVID-19.” FiveThirtyEight. https://fivethirtyeight.com/features/how-fivethirtyeights-2020-presidential-forecast-works-and-whats-different-because-of-covid-19/ 
+
+Silver, N. (2024, June 26). “2024 presidential election model methodology update.” Silver Bullet. https://www.natesilver.net/p/model-methodology-2024
