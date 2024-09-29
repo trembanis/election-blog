@@ -442,7 +442,7 @@ fig3 <- ggplot() +
 fig3
 ```
 
-# Time for MORE Change
+# How About Even More Change?
 
 ```{r run models, echo=FALSE, include=FALSE, warning=FALSE}
 # merge datasets (polling + fundamentals + time for change)
