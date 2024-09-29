@@ -366,7 +366,7 @@ fig1
 fig2
 ```
 
-*Note that these figures are drawn from historical data from Kriner and Greeves (2008) – they are used here to appeal to broad ideas about elected officials’ behavior, not to make specific claims about individual politicians or recent events.*
+* Note that these figures are drawn from historical data from Kriner and Greeves (2008) – they are used here to appeal to broad ideas about elected officials’ behavior, not to make specific claims about individual politicians or recent events. *
 
 Thus, the last-minute switch-out allows Harris to enjoy at least one of the benefits of being a straightforward incumbent. However, the picture is not entirely as simple as it seems. In Figure II (above), we see that incumbents tend to allocate pork in greater quantities to swing states, especially during election years. This means that any strategic spending by Biden is vulnerable to slight changes in the electoral map with Harris as the Democratic nominee; though overall federal grant spending might have declined had Biden never sought re-election, the administration might have been able to spend more strategically had the Harris campaign started earlier.
 
