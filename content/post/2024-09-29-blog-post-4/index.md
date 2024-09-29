@@ -71,6 +71,14 @@ I also performed one thousand runs of a cross-validation procedure, randomly sel
 
 Time for Change is altogether an impressive model; given the looming threat of overfitting, its simplicity is particularly admirable. In this section, I propose three tweaks to Time for Change, which seek to accommodate some of the quirks of the current election season while retaining the simple construction of the original.
 
+First, I replaced Q2 GDP growth – a measure of factual economic performance – with subjective impressions of the Q2 economy. This new measure is drawn from the University of Michigan’s Index of Consumer Sentiment, and is meant to account for voters who still feel the pinch of inflation despite recent economic recoveries.
+
+Next, I used averaged poll aggregations from 7 weeks before the election instead of June approval ratings. Not only do June approval ratings have Biden, rather than Harris, as their subject, but even if I were to input Harris’s June approval ratings, respondents were not evaluating her as a presidential candidate at that time. Neither of those June measures seem appropriate. Admittedly, it remains to be seen whether the 7-week polls still reflect the echoes of a “Harris honeymoon” that will fade by Election Day.
+
+Finally, I substituted an indicator for whether a candidate was a member of the previous administration for Abramowitz’s incumbency variable. If Time for Change gave Harris too little credit for her proximity to Biden, this change will start close the gap.
+
+The results of my revised predictions are below: Time for More Change makes all three changes, while the other models keep all but one of Abramowitz’s variables (so “Index of Consumer Sentiment” uses consumer sentiment, June approval, and incumbency).
+
 
 
 
