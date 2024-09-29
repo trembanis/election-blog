@@ -358,7 +358,7 @@ out_samp_errors <- sapply(1:1000, function(i) {
 })
 
 # mean of out-of-sample residuals
-mean(abs(out_samp_errors))
+mean(abs(out_samp_errors)) # 2.088094
 
 # compare mean to pv2p range
 range(tfc_train_pre_24$pv2p)
@@ -489,12 +489,12 @@ out_samp_errors <- sapply(1:1000, function(i) {
 })
 mean(abs(out_samp_errors)) #1.985256
 
-table2 <- tibble(Model = c("Time for More Change", "Index of Consumer Sentiment", "Poll Average at 7 Weeks To Election", "Previous Administration"),
-                 Prediction = c(50.68777, 47.06069, 52.24668, 45.50143),
-                 `Lower Bound` = c(47.15242, 42.63226, 48.17872, 40.85433),
-                 `Upper Bound` = c(54.22312, 51.48912, 56.31463, 50.14854),
-                 `Adjusted R-squared` = c(0.7735, 0.6662, 0.6994, 0.6547),
-                 `Average Absolute Value of Out-of-Sample Residuals` = c(1.580498, 2.033321, 1.693974, 1.985256))
+table2 <- tibble(Model = c("Time for Change", "Time for More Change", "Index of Consumer Sentiment", "Poll Average at 7 Weeks To Election", "Previous Administration"),
+                 Prediction = c(46.67, 50.68777, 47.06069, 52.24668, 45.50143),
+                 `Lower Bound` = c(42.05, 47.15242, 42.63226, 48.17872, 40.85433),
+                 `Upper Bound` = c(51.29, 54.22312, 51.48912, 56.31463, 50.14854),
+                 `Adjusted R-squared` = c(0.67, 0.7735, 0.6662, 0.6994, 0.6547),
+                 `Average Absolute Value of Out-of-Sample Residuals` = c(2.088094, 1.580498, 2.033321, 1.693974, 1.985256))
 ```
 
 ```{r table 2 print, echo=FALSE, include=TRUE, warning=FALSE}
