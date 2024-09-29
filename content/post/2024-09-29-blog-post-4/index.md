@@ -94,6 +94,12 @@ The results of my revised predictions are below: Time for More Change makes all 
 |Poll Average at 7 Weeks To Election |      52.25|       48.18|       56.31|               0.70|                                              1.69|
 |Previous Administration             |      45.50|       40.85|       50.15|               0.65|                                              1.99|
 
+# This Week’s Prediction
+
+The completely revamped Time for More Change model performed the highest on the selected measures of in-sample and out-of-sample fit (adjusted R-squared and the average absolute value of out-of-sample errors, respectively). I also produced a visual representation of the cross-validation errors (below, Figure IV): the distribution again appears to be near-normal.
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/fig 4 print-1.png" width="672" />
 
+Since Time for More Change also addresses my main substantive concerns with the Abramowitz model, it is my preferred model for this week. Whether I have given too much weight to Harris’s role in the Biden administration remains to be seen. For now, I will leave you with the Time for More Change prediction of a 50.69% Harris two-party popular vote share.
+
+Until next time!
