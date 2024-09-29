@@ -55,9 +55,12 @@ state_poll <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/elec
 # national popular vote
 nat_vote <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Blog #3/data/popvote_1948-2020.csv") |>
   filter(year >= 1968) |>
-  select(year, party, pv2p, pv)
+  select(year, party, pv2p, pv, incumbent, incumbent_party)
 nat_vote$party[nat_vote$party == "democrat"] <- "DEM"
 nat_vote$party[nat_vote$party == "republican"] <- "REP"
+trump_24 <- c(2024, "REP", NA, NA, FALSE, FALSE)
+harris_24 <- c(2024, "DEM", NA, NA, FALSE, TRUE)
+nat_vote_new <- rbind(nat_vote, trump_24, harris_24)
 
 # state popular vote
 state_vote <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Blog #3/data/clean_wide_state_2pv_1948_2020.csv") |>
@@ -247,7 +250,7 @@ proximity.pred <- polls.pred * poll_model_weight
 # Harris 44.0
 # Trump 42.95
 
-# merge, create vote lags. 
+# merge
 combined <- econ |> 
   left_join(week_poll, by = "year") |> 
   filter(year %in% c(unique(nat_vote$year), 2024)) |> 
@@ -256,22 +259,38 @@ combined <- econ |>
          pv2p_lag2 = lag(pv2p, 2)) |> 
   ungroup()
 
+combined[29, "incumbent_party"] = FALSE
+combined[30, "incumbent_party"] = TRUE
+
+combined[1, "pv2p_lag1"] = 0.612033364797
+combined[3, "pv2p_lag2"] = 0.612033364797
+combined[2, "pv2p_lag1"] = 0.387966635203
+combined[4, "pv2p_lag2"] = 0.387966635203
+combined[1, "pv2p_lag2"] = 0.500874006373
+combined[2, "pv2p_lag2"] = 0.499125993627
+
+combined <- combined |> 
+  mutate(gdp_growth_x_incumbent_party = GDP_growth_quarterly * incumbent_party,
+         cpi_x_incumbent_party = CPI * incumbent_party)
+
+combined_lags <- combined |>
+  select(year, party, pv2p, pv2p_lag1, pv2p_lag2)
+
 # fundamentals-only dataset
 fund <- combined |> 
-  select("year", "pv2p", "GDP_growth_quarterly", "pv2p_lag1", "pv2p_lag2") 
+  select("year", "pv2p", "gdp_growth_x_incumbent_party", "GDP_growth_quarterly", "CPI", "cpi_x_incumbent_party", "pv2p_lag1", "pv2p_lag2") 
+
+fund_train <- fund |> 
+  filter(year <= 2020)
+fund_test <- fund |> 
+  filter(year == 2024)
+
 # split to train and test
-x.train.fund <- fund |> 
-  filter(year <= 2020) |>
-  select(-c(year, pv2p)) |> 
-  slice(-c(1:9)) |> 
+x.train.fund <- fund_train |> 
+  select(-c(year, pv2p)) |>
   as.matrix()
-y.train.fund <- fund |> 
-  filter(year <= 2020) |> 
-  select(pv2p) |> 
-  slice(-c(1:9)) |> 
-  as.matrix()
-x.test.fund <- fund |> 
-  filter(year == 2024) |> 
+y.train.fund <- fund_train$pv2p
+x.test.fund <- fund_test |> 
   select(-c(year, pv2p)) |> 
   drop_na() |> 
   as.matrix()
@@ -287,10 +306,12 @@ set.seed(02138)
 enet.fund <- cv.glmnet(x = x.train.fund, y = y.train.fund, intercept = FALSE, alpha = 0.5)
 lambda.min.enet.fund <- enet.fund$lambda.min
 enet.fund.pred <- predict(enet.fund, s = lambda.min.enet.fund, newx = x.test.fund)
+# Harris 52%
+# Trump 47.83%
 
 # Sequester data for combined model.
 combo <- combined |> 
-  select("year", "pv2p", "GDP_growth_quarterly", "pv2p_lag1", "pv2p_lag2", all_of(paste0("poll_weeks_left_", 7:30))) 
+  select("year", "pv2p", "GDP_growth_quarterly", "gdp_growth_x_incumbent_party", "CPI", "cpi_x_incumbent_party", "pv2p_lag1", "pv2p_lag2", all_of(paste0("poll_weeks_left_", 7:30))) 
 
 x.train.combined <- combo |> 
   filter(year <= 2020) |> 
@@ -322,6 +343,8 @@ combo.pred <- predict(enet.combined, s = lambda.min.enet.combined, newx = x.test
 ensemble.2.pred <- (proximity.pred + enet.fund.pred)/2
 # Harris 47.96%
 # Trump 45.19%
+
+# When regularized: Harris 51.4% & Trump 48.6%
 ```
 
 For my first prediction, I looked at week-by-week poll aggregations. Incorporating every single week into a plain OLS regression, however, would have created a dimensionality error since there are so few election years in the dataset compared to the number of weekly predictors. To reduce the dimensionality of my data, I tested a few regularized regression approaches, including Ridge, LASSO, and Elastic Net. These methods shrink the coefficients of less important predictor variables, making the data easier to work with. Figure II (below) displays the result of this shrinking across the regularization methods.
