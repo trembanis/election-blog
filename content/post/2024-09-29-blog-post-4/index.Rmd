@@ -10,6 +10,22 @@ tags: []
 slug: "blog-post-4"
 ---
 
+# The Incumbency Advantage(s)
+
+Roughly two-thirds of all presidential elections in the postwar period were won by incumbents. 2024 will not be one such election year – but even without a sitting president on the ticket, the question of incumbency looms larger than ever.
+
+To call incumbency an advantage is a little misleading; especially for a year like this one, it is useful to think of incumbency as a network of often conjoined – but theoretically separable – conditions. There’s name recognition, the ability to direct federal grants, access to the bully pulpit, avoidance of the primary gauntlet, and having already survived one general election, to name a few.
+
+So…who is the incumbent-iest of the 2024 candidates?
+
+Obviously Trump, right? He is a former president, has extensive name-recognition, and was not seriously derailed by his few co-partisan challengers in the primaries.
+
+Or maybe it should be Harris: she’s the sitting Vice President, after all, and she inherited much of Biden’s campaign machinery when he withdrew from consideration. Although…she fell quite a ways short of the nomination in 2020, dropping out early on during primary season, so she hasn’t been thoroughly battle-tested via a national election.
+
+Ultimately, the facets of “incumbency” are not neatly united in either candidate this year, leaving both to awkwardly stake claims to being the real changemaker on the ballot. Rather than using any single measure of incumbency status, the safest option is probably to break it down into its component parts – to the extent that we can identify them – and systematically distribute each one to the best-suited candidate.
+
+Take, for instance, the allocation of federal grant money – also known as pork – to certain constituencies. The Biden administration has had access to this benefit of office for the last several years. Since, until recently, Biden was running for re-election himself, it seems likely that his spending strategy would fall roughly in line with the pattern depicted in Figure I (below): spending relatively more than he would had Harris been the 2024 candidate from the start.
+
 ```{r load libraries, echo=FALSE, include=FALSE, warning=FALSE}
 library(ggplot2)
 library(mice)
@@ -315,7 +331,7 @@ ensemble.2.pred <- (proximity.pred + enet.fund.pred)/2
 ```
 
 ```{r pork, echo=FALSE, include=FALSE, warning=FALSE}
-fig1 <- pork_state |> 
+fig2 <- pork_state |> 
   filter(!is.na(state_year_type)) |> 
   group_by(state_year_type) |>
   summarize(mean_grant = mean(grant_mil, na.rm = T), se_grant = sd(grant_mil, na.rm = T)/sqrt(n())) |> 
@@ -325,10 +341,10 @@ fig1 <- pork_state |>
   geom_errorbar(width = 0.2) + 
   labs(x = "Type of State & Year", 
        y = "Federal Grant Spending (Millions of $)", 
-       title = "Fig. I - Spending by State Election Type") + 
+       title = "Fig. II - Spending by State Election Type") + 
   my_theme()
 
-fig2 <- pork_state |> 
+fig1 <- pork_state |> 
   filter(!is.na(state_year_type2)) |> 
   group_by(state_year_type2) |>
   summarize(mean_grant = mean(grant_mil, na.rm = T), se_grant = sd(grant_mil, na.rm = T)/sqrt(n())) |> 
@@ -338,7 +354,7 @@ fig2 <- pork_state |>
   geom_errorbar(width = 0.2) + 
   labs(x = "Type of State & Year", 
        y = "Federal Grant Spending (Millions of $)", 
-       title = "Fig. II - Spending for Self vs. Successor") + 
+       title = "Fig. I - Spending for Self vs. Successor") + 
   my_theme()
 ```
 
@@ -350,7 +366,11 @@ fig1
 fig2
 ```
 
+*Note that these figures are drawn from historical data from Kriner and Greeves (2008) – they are used here to appeal to broad ideas about elected officials’ behavior, not to make specific claims about individual politicians or recent events.*
 
+Thus, the last-minute switch-out allows Harris to enjoy at least one of the benefits of being a straightforward incumbent. However, the picture is not entirely as simple as it seems. In Figure II (above), we see that incumbents tend to allocate pork in greater quantities to swing states, especially during election years. This means that any strategic spending by Biden is vulnerable to slight changes in the electoral map with Harris as the Democratic nominee; though overall federal grant spending might have declined had Biden never sought re-election, the administration might have been able to spend more strategically had the Harris campaign started earlier.
+
+As I move into this week’s predictive models, which do not come close to capturing all of these complexities, it is worthwhile to keep these limitations in mind. Determining who gets to be an incumbent, and to what degree, may be the make-or-break question for forecasters during this strange, abbreviated election cycle.
 
 # Time for Change
 
@@ -482,11 +502,11 @@ mean(abs(out_samp_errors)) #1.580498
 range(combined_tfc_pre_24$pv2p)
 
 # histogram of prediction errors (out-of-sample residuals)
-fig2 <- ggplot() +
+fig4 <- ggplot() +
   geom_histogram(mapping = aes(x = out_samp_errors), fill = "#9999CC", binwidth = 2) +
   xlab("Out-of-Sample Residuals") +
   ylab("Count") +
-  ggtitle("Out-of-Sample Error from Cross-Validation - TFMC") +
+  ggtitle("Fig. IV - Out-of-Sample Error from Cross-Validation (TFMC)") +
   my_theme()
 ```
 
@@ -541,6 +561,6 @@ knitr::kable(table2, digits = 2)
 
 
 ```{r fig 2 print, echo=FALSE, include=TRUE, warning=FALSE}
-fig2
+fig4
 ```
 
