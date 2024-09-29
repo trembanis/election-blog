@@ -12,7 +12,7 @@ slug: "blog-post-4"
 
 # The Incumbency Advantage(s)
 
-Roughly two-thirds of all presidential elections in the postwar period were won by incumbents. 2024 will not be one such election year – but even without a sitting president on the ticket, the question of incumbency looms larger than ever.
+Roughly two-thirds of all presidential elections in the postwar period were won by incumbents. 2024 will not be one such election year, but even without a sitting president on the ticket, the question of incumbency looms larger than ever.
 
 To call incumbency an advantage is a little misleading; especially for a year like this one, it is useful to think of incumbency as a network of often conjoined – but theoretically separable – conditions. There’s name recognition, the ability to direct federal grants, access to the bully pulpit, avoidance of the primary gauntlet, and having already survived one general election, to name a few.
 
