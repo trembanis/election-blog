@@ -1,19 +1,26 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on A minimal Hugo website</title>
+    <title>Posts on Ella&#39;s Election Predictions</title>
     <link>http://localhost:4321/post/</link>
-    <description>Recent content in Posts on A minimal Hugo website</description>
+    <description>Recent content in Posts on Ella&#39;s Election Predictions</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 29 Sep 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 06 Oct 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:4321/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Blog Post #5</title>
+      <link>http://localhost:4321/post/2024/10/06/blog-post-4/</link>
+      <pubDate>Sun, 06 Oct 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:4321/post/2024/10/06/blog-post-4/</guid>
+      <description>Demographics &amp;amp; Voter Files However sophisticated their statistical techniques may be, even the greatest election forecasters can be humbled by hard-to-track changes in voter turnout. News reports unsurprisingly focus on the salacious headline story of voter behavior – who undecideds are inclined to vote for – and place less emphasis on the underlying issue of voter turnout. But of course, polls start to lose their sheen if they appear to be a poor proxy for the intentions of those who will ultimately cast their ballots.</description>
+    </item>
     <item>
       <title>Blog Post #4</title>
       <link>http://localhost:4321/post/2024/09/29/blog-post-4/</link>
       <pubDate>Sun, 29 Sep 2024 00:00:00 +0000</pubDate>
       <guid>http://localhost:4321/post/2024/09/29/blog-post-4/</guid>
-      <description>Time for Change Table: (#tab:table 1 code)Time for Change Predicts Harris&amp;rsquo;s Two-Party Vote Share&#xA;Prediction Lower Bound Upper Bound Adjusted R-squared 46.67 42.05 51.29 0.67 Time for MORE Change Model Prediction Lower Bound Upper Bound Adjusted R-squared Average Absolute Value of Out-of-Sample Residuals Time for Change 46.67 42.05 51.29 0.67 2.09 Time for More Change 50.69 47.15 54.22 0.77 1.58 Index of Consumer Sentiment 47.06 42.63 51.49 0.67 2.03 Poll Average at 7 Weeks To Election 52.</description>
+      <description>The Incumbency Advantage(s) Roughly two-thirds of all presidential elections in the postwar period were won by incumbents. 2024 will not be one such election year, but even without a sitting president on the ticket, the question of incumbency looms larger than ever.&#xA;To call incumbency an advantage is a little misleading; especially for a year like this one, it is useful to think of incumbency as a network of often conjoined – but theoretically separable – conditions.</description>
     </item>
     <item>
       <title>Blog Post #3</title>
