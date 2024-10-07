@@ -1,0 +1,927 @@
+---
+title: 'Blog Post #5'
+author: "Ella Trembanis"
+date: "2024-10-06"
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+categories: []
+tags: []
+slug: "blog-post-4"
+---
+
+# Demographics & Voter Files
+
+However sophisticated their statistical techniques may be, even the greatest election forecasters can be humbled by hard-to-track changes in voter turnout. News reports unsurprisingly focus on the salacious headline story of voter behavior – who undecideds are inclined to vote for – and place less emphasis on the underlying issue of voter turnout. But of course, polls start to lose their sheen if they appear to be a poor proxy for the intentions of those who will ultimately cast their ballots.
+
+Though Census data is an invaluable resource in analyst's efforts to reconcile noisy, overinclusive data with recognized demographic patterns, it does not provide the full picture. Not only can the Census itself be overinclusive – non-citizens, among other non-voting residents, may be counted – but since it is updated just every ten years, its accuracy is continually declining. In the aftermath of the COVID-19 pandemic, which shifted large numbers of workers into long-term remote work positions and gave some the opportunity to move across district and state lines, we should be particularly cautious about interpreting Census data as convincing evidence of who (still) lives where.
+
+Voter files – though not a panacea by any means – help bridge some of these shortcomings. These state records provide political campaigns with the invaluable opportunity to target voters on a microscopic level, and allow forecasters to seek a second opinion about a population’s demographic characteristics, and by extension its likely turnout.
+
+``` {r load libraries, echo=FALSE, include=FALSE, warning=FALSE}
+library(car)
+library(caret)
+library(CVXR)
+library(foreign)
+library(glmnet)
+library(haven)
+library(janitor)
+library(kableExtra)
+library(maps)
+library(mlr3)
+library(randomForest)
+library(ranger)
+library(RColorBrewer)
+library(sf)
+library(tidyverse)
+library(viridis)
+```
+
+```{r custom theme, echo=FALSE, include=FALSE, warning=FALSE}
+my_theme <- function() {
+  theme(
+  # set panel features
+  panel.border = element_rect(color = "#000033", fill = NA, linetype = 1),
+  panel.background = element_rect(fill = "#FFFFFF"),
+  panel.grid.major.x = element_line(color = "#9999CC", linetype = 2, size = 0.2),
+  panel.grid.minor.x = element_blank(),
+  panel.grid.major.y = element_line(color = "#9999CC", linetype = 2, size = 0.2),
+  panel.grid.minor.y = element_blank(),
+  # set text and axis features
+  text = element_text(color = "#000033", family = "Courier"),
+  title = element_text(color = "#000033", face = "bold", family = "Courier"),
+  axis.ticks = element_line(color = "#000033"),
+  # set legend features
+  legend.position = "bottom",
+  legend.background = element_rect(color = "#000033", fill = NA, linetype = 1)
+  )
+}
+```
+
+```{r simplified custom theme, echo=FALSE, include=FALSE, warning=FALSE}
+my_map_theme <- function() {
+  theme(
+    # set panel features
+    panel.background = element_rect(fill = "#FFFFFF"),
+    # set text features
+    text = element_text(color = "#000033", family = "Courier"),
+    title = element_text(color = "#000033", face = "bold", family = "Courier"),
+    # set legend features
+    legend.position = "bottom",
+    legend.title.position = "top",
+    legend.background = element_rect(color = "#000033", fill = NA, linetype = 1),
+    # set axis features to not display
+    axis.title = element_blank(),
+    axis.text = element_blank(),
+    axis.ticks = element_blank()
+  )
+}
+```
+
+``` {r read data, echo=FALSE, include=FALSE, warning=FALSE}
+# Read popular vote datasets. 
+d_popvote <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Week4/data/popvote_1948-2020(3).csv")
+d_state_popvote <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Week5/data/state_popvote_1948_2020.csv")
+
+# Read elector distribution dataset. 
+d_ec <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Week5/data/corrected_ec_1948_2024.csv")
+
+# Read economic data.
+econ <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Blog #3/data/fred_econ.csv") |> 
+# filter to most recent available quarter of 2024
+  filter(quarter == 2)
+
+# Read consumer sentiment index
+ics <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Week4/data/tbqics.csv") |>
+  filter(quarter == "Q2") |>
+  mutate(
+    quarter = if_else(quarter == "Q2", 2, NA)
+    )
+
+# Merge econ + ics
+econ <- econ |>
+  left_join(ics, by = join_by(year, quarter))
+
+# Read and merge demographics data. 
+d_demos <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Week5/data/demographics.csv")[,-1]
+
+# Read primary turnout data. 
+d_turnout <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Week5/data/turnout_1789_2020.csv")
+d_state_turnout <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Week5/data/state_turnout_1980_2022.csv")
+d_state_turnout <- d_state_turnout |> 
+  mutate(vep_turnout = as.numeric(str_remove(vep_turnout, "%"))/100) |> 
+  select(year, state, vep_turnout)
+
+# Read polling data. 
+d_polls <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Week5/data/national_polls_1968-2024(1).csv")
+d_state_polls <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Week5/data/state_polls_1968-2024(1).csv")
+
+# Process state-level polling data. 
+d_pollav_state <- d_state_polls |> 
+  group_by(year, state, party) |>
+  mutate(mean_pollav = mean(poll_support, na.rm = TRUE)) |>
+  top_n(1, poll_date) |> 
+  rename(latest_pollav = poll_support) |>
+  select(-c(weeks_left, days_left, poll_date, candidate, before_convention)) |>
+  pivot_wider(names_from = party, values_from = c(latest_pollav, mean_pollav))
+
+# Join data for time for change model.
+tfc_train <- d_popvote |> 
+  left_join(econ, by = "year") |> 
+  filter(incumbent_party) |>
+  mutate(incumbent = as.numeric(incumbent)) |>
+  filter(year >= 1968)
+
+# Delaware voterfile 
+vf_de <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/do not push/data/state_1pc_samples_aug24-20241002T184310Z-001/DE_sample.csv") |>
+  filter(sii_deceased == 0)
+
+# map of u.s. with state borders
+states_map <- map_data("state")
+```
+
+```{r modelling, echo=FALSE, include=FALSE, warning=FALSE}
+# use weeks left as columns
+week_poll <- d_polls |> 
+  group_by(year, party, weeks_left) |>
+  summarize(mean_poll_week = mean(poll_support)) |> 
+  filter(weeks_left <= 30) |> 
+  pivot_wider(names_from = weeks_left, values_from = mean_poll_week) |>
+# merge national vote
+  left_join(d_popvote, by = c("year", "party"))
+
+# split to train and test
+week_poll_train <- week_poll |> 
+  filter(year <= 2020)
+week_poll_test <- week_poll |> 
+  filter(year == 2024)
+
+# rename
+colnames(week_poll)[3:33] <- paste0("poll_weeks_left_", 0:30)
+colnames(week_poll_train)[3:33] <- paste0("poll_weeks_left_", 0:30)
+colnames(week_poll_test)[3:33] <- paste0("poll_weeks_left_", 0:30)
+
+# merge
+combined <- econ |> 
+  left_join(week_poll, by = "year") |> 
+  filter(year %in% c(unique(d_popvote$year), 2024)) |> 
+  group_by(party) |> 
+  mutate(pv2p_lag1 = lag(pv2p, 1), 
+         pv2p_lag2 = lag(pv2p, 2)) |> 
+  ungroup()
+
+combined[29, "incumbent_party"] = TRUE
+combined[30, "incumbent_party"] = FALSE
+combined[29, "incumbent"] = FALSE
+
+combined[1, "pv2p_lag1"] = 0.612033364797
+combined[3, "pv2p_lag2"] = 0.612033364797
+combined[2, "pv2p_lag1"] = 0.387966635203
+combined[4, "pv2p_lag2"] = 0.387966635203
+combined[1, "pv2p_lag2"] = 0.500874006373
+combined[2, "pv2p_lag2"] = 0.499125993627
+
+combined <- combined |> 
+  mutate(gdp_growth_x_incumbent_party = GDP_growth_quarterly * incumbent_party,
+         cpi_x_incumbent_party = CPI * incumbent_party)
+
+combined_lags <- combined |>
+  select(year, party, pv2p, pv2p_lag1, pv2p_lag2)
+
+# merge datasets (polling + fundamentals + time for change)
+combined_tfc <- tfc_train |>
+  left_join(combined, by = join_by(year, candidate, GDP_growth_quarterly, party, pv, pv2p, incumbent, incumbent_party)) |>
+  mutate(
+    gdp_growth_x_prev_admin = GDP_growth_quarterly * prev_admin.x
+  )
+
+# add back in values lost in merge
+combined_tfc[15, "incumbent"] = 0 # Harris incumbency status
+combined_tfc[15, "poll_weeks_left_5"] = 48.52034 # Harris poll at t-minus 5 weeks
+combined_tfc[15, "pv2p_lag1"] = 52.2698591 # Biden pv2p in 2020
+combined_tfc[15, "gdp_growth_x_incumbent_party"] = 3.0 # gdp growth & party incumbency interaction term
+combined_tfc[15, "ics"] = 71.1
+
+# sequester 2024 data
+combined_tfc_24 <- combined_tfc |>
+  filter(year == 2024)
+```
+
+```{r de turnout, echo=FALSE, include=FALSE, warning=FALSE}
+de_demo <- lm(svi_vote_all_general_pres_pct ~ sii_age_range + sii_gender + sii_race + svi_party_registration + sii_education_level + sii_homeowner, data = vf_de)
+```
+
+To kick off this week’s blog, I took a brief look at voter files from my home state of Delaware.
+
+I first conducted a simple linear regression to see which demographic variables seemed to be the best predictors of turnout. The summarized output, below, interestingly suggests that race and party registration have little observable impact on voter turnout.
+
+```{r print summary, echo=FALSE, include=TRUE, warning=FALSE}
+print(summary(de_demo))
+```
+
+That party registration seems to play such a small role is particularly counterintuitive since Delaware is a reliably blue state, in which Republican voters might conceivably be less motivated to vote in non-competitive federal races. Further research is needed to draw any detailed conclusions, but perhaps bipartisan interest in more competitive down-ballot races is driving this distribution.
+
+Figures I-III, below, summarize voter turnout rates across the variables determined to be most significant by the regression model: age, education level, and home ownership. In this regard, Delaware seems to be in lock-step with the conventional wisdom that older, wealthier, and more highly-educated individuals are more likely to vote. Not only do these groups often have an easier time shouldering the opportunity costs of voting, but they may also have distinctive policy interests that motivate them to participate. For instance, retirees may find it easier to take time out of their days to go to the polls, and they may also be impassioned about defending Social Security.
+
+```{r age hist code, echo=FALSE, include=FALSE, warning=FALSE}
+vf_de_rename <- vf_de |>
+  mutate(
+    sii_age_range = case_when(sii_age_range == "A" ~ "18-29",
+                              sii_age_range == "B" ~ "30-39",
+                              sii_age_range == "C" ~ "40-49",
+                              sii_age_range == "D" ~ "50-64",
+                              sii_age_range == "E" ~ "65-74",
+                              sii_age_range == "F" ~ "75+"),
+    sii_education_level = case_when(sii_education_level == "A" ~ "HS",
+                                    sii_education_level == "B" ~ "College",
+                                    sii_education_level == "C" ~ "Grad School",
+                                    sii_education_level == "D" ~ "Vo-Tech",
+                                    sii_education_level == "E" ~ "Some College",
+                                    sii_education_level == "U" ~ "Unknown",),
+    sii_homeowner = case_when(sii_homeowner == "H" ~ "Homeowner",
+                              sii_homeowner == "R" ~ "Renter",
+                              sii_homeowner == "U" ~ "Unknown")
+  )
+
+fig1 <- vf_de_rename |>
+  group_by(sii_age_range) |>
+  summarize(
+    avg_pres_turnout = mean(svi_vote_all_general_pres_pct)
+  ) |>
+  ggplot() +
+  geom_col(mapping = aes(x = sii_age_range, y = avg_pres_turnout), fill = "#9999CC") +
+  ggtitle("Fig I. Presidential Turnout vs. Age Range") +
+  xlab("Age Range (Registered Voters)") +
+  ylab("Presidential Elections Voted in (%)") +
+  my_theme()
+```
+
+```{r fig 1 print, echo=FALSE, include=TRUE, warning=FALSE}
+fig1
+```
+
+```{r edu hist code, echo=FALSE, include=FALSE, warning=FALSE}
+fig2 <- vf_de_rename |>
+  group_by(sii_education_level) |>
+  summarize(
+    avg_pres_turnout = mean(svi_vote_all_general_pres_pct)
+  ) |>
+  ggplot() +
+  geom_col(mapping = aes(x = fct_reorder(sii_education_level, avg_pres_turnout), y = avg_pres_turnout), fill = "#9999CC") +
+  ggtitle("Fig II. Presidential Turnout vs. Education Level") +
+  xlab("Education Level (Registered Voters)") +
+  ylab("Presidential Elections Voted in (%)") +
+  my_theme()
+```
+
+```{r fig 2 print, echo=FALSE, include=TRUE, warning=FALSE}
+fig2
+```
+
+```{r home hist code, echo=FALSE, include=FALSE, warning=FALSE}
+fig3 <- vf_de_rename |>
+  group_by(sii_homeowner) |>
+  summarize(
+    avg_pres_turnout = mean(svi_vote_all_general_pres_pct)
+  ) |>
+  ggplot() +
+  geom_col(mapping = aes(x = sii_homeowner, y = avg_pres_turnout), fill = "#9999CC") +
+  ggtitle("Fig II. Presidential Turnout vs. Home Ownership") +
+  xlab("Home Ownership Status (Registered Voters)") +
+  ylab("Presidential Elections Voted in (%)") +
+  my_theme()
+```
+
+```{r fig 3 print, echo=FALSE, include=TRUE, warning=FALSE}
+fig3
+```
+
+# This Week's Prediction
+
+This week’s model is an elaboration on the Time for More Change approach I proposed in last week’s blog. Time for More Change borrows its basic framework from Abramowitz’s Time for Change model, with a few tweaks made to account for the specific conditions of the 2024 race, namely, swapping out Biden’s June approval for Harris’s support in recent poll averages, incorporating the Index of Consumer Sentiment to acknowledge feelings – not just facts – about the state of the economy, and using a binary variable to indicate participation in the previous administration.
+
+Time for More Change predicts a Harris two-party popular vote share of 50.69%, with an upper bound of 54.22% and a lower bound of 47.15% at the 80% confidence level. This reflects the popular consensus that 2024 will be an exceptionally close contest, although even a very poor model could have stumbled into a prediction around the 50% mark.
+
+The real stress test for Time for More Change comes from the electoral college prediction, which I have added for this week.
+
+The most pressing issue I faced in constructing the electoral college extension of Time for More Change – besides some disastrous human error that had me temporarily predicting a blue Texas and a red Massachusetts – was accounting for the vast majority of the states which lack current polling data. I used Biden’s 2020 vote share by state and the most recent national polling average to fill in the gaps in these cases, but it is by no means a perfect proxy for polls. Fortunately, all of the major swing states for 2024 have state-level polling.
+
+Time For Change predicts that Harris will receive 287 electoral college votes, which would give her the presidency. While this estimate in itself is not out of the realm of possibility (give or take a few votes from Maine and Nebraska’s congressional districts, since their proportional systems are not yet incorporated in this model), it does produce a slightly sketchy map.
+
+In Figure IV, below, the model has Oregon and Virginia swinging toward the Republicans and Ohio, West Virginia, North Dakota, and South Carolina breaking for Harris. It is difficult to evaluate the model’s prediction of the swing states – even though we have more recent polling in those cases, they are genuinely up for grabs, so possible errors in their predicted electoral college vote are not as obvious as the improbable North Dakota guess.
+
+
+```{r states take 2, echo=FALSE, include=FALSE, warning=FALSE}
+# popvote
+d_popvote_simplified <- d_popvote |>
+  select(year, party, candidate, incumbent, pv2p, prev_admin, incumbent_party) |>
+  mutate(
+    party = if_else(party == "republican", "REP", "DEM")
+  )
+
+# ics and gdp
+d_econ_vars <- econ |>
+  select(year, ics, GDP_growth_quarterly)
+
+# nat poll
+d_natpoll <- week_poll |>
+  group_by(year, party) |>
+  summarize(
+    poll_week_5 = mean(poll_weeks_left_5)
+  ) |>
+  filter(year >= 1972)
+ 
+# merging
+
+d_popvote_simplified <- d_popvote_simplified |>
+  left_join(d_econ_vars, by = "year") |>
+  filter(year >= 1972) |>
+  select(year, party, candidate, prev_admin, ics, pv2p, incumbent, incumbent_party, GDP_growth_quarterly)
+
+d_popvote_simplified <- d_popvote_simplified |>
+  left_join(d_natpoll) |>
+  filter(year >= 1972) |>
+  select(year, party, candidate, prev_admin, ics, pv2p, incumbent, incumbent_party, GDP_growth_quarterly, poll_week_5)
+  
+d_state_popvote_simplified <- d_state_popvote |>
+  pivot_longer(
+    cols = c(D_pv2p, R_pv2p),
+    names_to = "party",
+    values_to = "state_pv2p"
+  ) |>
+  mutate(
+    party = if_else(party == "D_pv2p", "DEM", "REP")
+  ) |>
+  select(year, state, party, state_pv2p)
+
+d_state_popvote_2024 <- data.frame(year = rep(2024, 102),
+                                   state = rep(c(unique(d_state_popvote_simplified$state)), 2),
+                                   party = rep(c(unique(d_state_popvote_simplified$party)), 51),
+                                   state_pv2p = rep(NA, 102))
+
+d_state_popvote_simplified <- rbind(d_state_popvote_simplified, d_state_popvote_2024)
+
+# average state polls
+d_state_polls_simplified <- d_state_polls |>
+  group_by(state, year, party) |>
+  summarize(
+    mean_support = mean(poll_support, na.rm=T)
+  )
+
+#more  merging
+
+d_state_tfmc <- d_state_popvote_simplified |>
+  inner_join(d_state_polls_simplified)
+
+d_state_tfmc <- d_state_tfmc |>
+  left_join(d_popvote_simplified, join_by(year, party)) |>
+  filter(party == "DEM")
+
+# create lag variable
+d_state_tfmc <- d_state_tfmc |>
+  mutate(
+    state_pv2p_lag = lag(state_pv2p, n=1)
+  )
+
+# create tfmc dataframe for every state
+for (variable in unique(d_state_tfmc$state)) {
+  assign(variable, d_state_tfmc %>% filter (state == variable), envir = .GlobalEnv)
+}
+
+# separate 2024 and predict by state (where 2024 polls are available!)
+Arizona$state_pv2p_lag[Arizona$year == 2024] <- Arizona$state_pv2p[Arizona$year == 2020] # populate lag variable
+Arizona24 <- Arizona |> filter(year == 2024) # testing data
+tfmc_az <- lm(state_pv2p ~ ics + mean_support + prev_admin + state_pv2p_lag + poll_week_5, data = Arizona) # regression
+summary(tfmc_az) # produce summary
+az_pred <- predict(tfmc_az, Arizona24, interval = "none") # point estimate of dem's popular vote share
+
+California$state_pv2p_lag[California$year == 2024] <- California$state_pv2p[California$year == 2020]
+California24 <- California |> filter(year == 2024)
+tfmc_ca <- lm(state_pv2p ~ ics + mean_support + incumbent + state_pv2p_lag + poll_week_5, data = California)
+summary(tfmc_ca)
+ca_pred <- predict(tfmc_ca, California24, interval = "none")
+
+Florida$state_pv2p_lag[Florida$year == 2024] <- Florida$state_pv2p[Florida$year == 2020]
+Florida24 <- Florida |> filter(year == 2024)
+tfmc_fl <- lm(state_pv2p ~ ics + mean_support + incumbent + state_pv2p_lag + poll_week_5, data = Florida)
+summary(tfmc_fl)
+fl_pred <- predict(tfmc_fl, Florida24, interval = "none")
+
+Georgia$state_pv2p_lag[Georgia$year == 2024] <- Georgia$state_pv2p[Georgia$year == 2020]
+Georgia24 <- Georgia |> filter(year == 2024)
+tfmc_ga <- lm(state_pv2p ~ ics + mean_support + incumbent + state_pv2p_lag + poll_week_5, data = Georgia)
+summary(tfmc_ga)
+ga_pred <- predict(tfmc_ga, Georgia24, interval = "none")
+
+Maryland$state_pv2p_lag[Maryland$year == 2024] <- Maryland$state_pv2p[Maryland$year == 2020]
+Maryland24 <- Maryland |> filter(year == 2024)
+tfmc_md <- lm(state_pv2p ~ ics + mean_support + incumbent + state_pv2p_lag + poll_week_5, data = Maryland)
+summary(tfmc_md)
+md_pred <- predict(tfmc_md, Maryland24, interval = "none")
+
+Michigan$state_pv2p_lag[Michigan$year == 2024] <- Michigan$state_pv2p[Michigan$year == 2020]
+Michigan24 <- Michigan |> filter(year == 2024)
+tfmc_mi <- lm(state_pv2p ~ ics + mean_support + incumbent + state_pv2p_lag + poll_week_5, data = Michigan)
+summary(tfmc_mi)
+mi_pred <- predict(tfmc_mi, Michigan24, interval = "none")
+
+Minnesota$state_pv2p_lag[Minnesota$year == 2024] <- Minnesota$state_pv2p[Minnesota$year == 2020]
+Minnesota24 <- Minnesota |> filter(year == 2024)
+tfmc_mn <- lm(state_pv2p ~ ics + mean_support + incumbent + state_pv2p_lag + poll_week_5, data = Minnesota)
+summary(tfmc_mn)
+mn_pred <- predict(tfmc_mn, Minnesota24, interval = "none")
+
+Missouri$state_pv2p_lag[Missouri$year == 2024] <- Missouri$state_pv2p[Missouri$year == 2020]
+Missouri24 <- Missouri |> filter(year == 2024)
+tfmc_mo <- lm(state_pv2p ~ ics + mean_support + incumbent + state_pv2p_lag + poll_week_5, data = Missouri)
+summary(tfmc_mo)
+mo_pred <- predict(tfmc_mo, Missouri24, interval = "none")
+
+Montana$state_pv2p_lag[Montana$year == 2024] <- Montana$state_pv2p[Montana$year == 2020]
+Montana24 <- Montana |> filter(year == 2024)
+tfmc_mt <- lm(state_pv2p ~ ics + mean_support + incumbent + state_pv2p_lag + poll_week_5, data = Montana)
+summary(tfmc_mt)
+mt_pred <- predict(tfmc_mt, Montana24, interval = "none")
+
+Nevada$state_pv2p_lag[Nevada$year == 2024] <- Nevada$state_pv2p[Nevada$year == 2020]
+Nevada24 <- Nevada |> filter(year == 2024)
+tfmc_nv <- lm(state_pv2p ~ ics + mean_support + incumbent + state_pv2p_lag + poll_week_5, data = Nevada)
+summary(tfmc_nv)
+nv_pred <- predict(tfmc_nv, Nevada24, interval = "none")
+
+`New Hampshire`$state_pv2p_lag[`New Hampshire`$year == 2024] <- `New Hampshire`$state_pv2p[`New Hampshire`$year == 2020]
+NH24 <- `New Hampshire` |> filter(year == 2024)
+tfmc_nh <- lm(state_pv2p ~ ics + mean_support + incumbent + state_pv2p_lag + poll_week_5, data = `New Hampshire`)
+summary(tfmc_nh)
+nh_pred <- predict(tfmc_nh, NH24, interval = "none")
+
+`New Mexico`$state_pv2p_lag[`New Mexico`$year == 2024] <- `New Mexico`$state_pv2p[`New Mexico`$year == 2020]
+NM24 <- `New Mexico` |> filter(year == 2024)
+tfmc_nm <- lm(state_pv2p ~ ics + mean_support + incumbent + state_pv2p_lag + poll_week_5, data = `New Mexico`)
+summary(tfmc_nm)
+nm_pred <- predict(tfmc_nm, NM24, interval = "none")
+
+`New York`$state_pv2p_lag[`New York`$year == 2024] <- `New York`$state_pv2p[`New York`$year == 2020]
+NY24 <- `New York` |> filter(year == 2024)
+tfmc_ny <- lm(state_pv2p ~ ics + mean_support + incumbent + state_pv2p_lag + poll_week_5, data = `New York`)
+summary(tfmc_ny)
+ny_pred <- predict(tfmc_ny, NY24, interval = "none")
+
+`North Carolina`$state_pv2p_lag[`North Carolina`$year == 2024] <- `North Carolina`$state_pv2p[`North Carolina`$year == 2020]
+NC24 <- `North Carolina` |> filter(year == 2024)
+tfmc_nc <- lm(state_pv2p ~ ics + mean_support + incumbent + state_pv2p_lag + poll_week_5, data = `North Carolina`)
+summary(tfmc_nc)
+nc_pred <- predict(tfmc_nc, NC24, interval = "none")
+
+Ohio$state_pv2p_lag[Ohio$year == 2024] <- Ohio$state_pv2p[Ohio$year == 2020]
+Ohio24 <- Ohio |> filter(year == 2024)
+tfmc_oh <- lm(state_pv2p ~ ics + mean_support + incumbent + state_pv2p_lag + poll_week_5, data = Ohio)
+summary(tfmc_oh)
+oh_pred <- predict(tfmc_oh, Ohio24, interval = "none")
+
+Pennsylvania$state_pv2p_lag[Pennsylvania$year == 2024] <- Pennsylvania$state_pv2p[Pennsylvania$year == 2020]
+Pennsylvania24 <- Pennsylvania |> filter(year == 2024)
+tfmc_pa <- lm(state_pv2p ~ ics + mean_support + incumbent + state_pv2p_lag + poll_week_5, data = Pennsylvania)
+summary(tfmc_pa)
+pa_pred <- predict(tfmc_pa, Pennsylvania24, interval = "none")
+
+Texas$state_pv2p_lag[Texas$year == 2024] <- Texas$state_pv2p[Texas$year == 2020]
+Texas24 <- Texas |> filter(year == 2024)
+tfmc_tx <- lm(state_pv2p ~ ics + mean_support + incumbent + state_pv2p_lag + poll_week_5, data = Texas)
+summary(tfmc_tx)
+tx_pred <- predict(tfmc_tx, Texas24, interval = "none")
+
+Virginia$state_pv2p_lag[Virginia$year == 2024] <- Virginia$state_pv2p[Virginia$year == 2020]
+Virginia24 <- Virginia |> filter(year == 2024)
+tfmc_va <- lm(state_pv2p ~ ics + mean_support + incumbent + state_pv2p_lag + poll_week_5, data = Virginia)
+summary(tfmc_va)
+va_pred <- predict(tfmc_va, Virginia24, interval = "none")
+
+Wisconsin$state_pv2p_lag[Wisconsin$year == 2024] <- Wisconsin$state_pv2p[Wisconsin$year == 2020]
+Wisconsin24 <- Wisconsin |> filter(year == 2024)
+tfmc_wi <- lm(state_pv2p ~ ics + mean_support + incumbent + state_pv2p_lag + poll_week_5, data = Wisconsin)
+summary(tfmc_wi)
+wi_pred <- predict(tfmc_wi, Wisconsin24, interval = "none")
+
+# separate 2024 and predict by state (where 2024 polls are not available!)
+Alabama24 <- data.frame(year = 2024,
+                        state = "Alabama",
+                        party = "DEM",
+                        state_pv2p = NA,
+                        ics = unique(d_state_tfmc$ics[d_state_tfmc$year == 2024]),
+                        incumbent = TRUE,
+                        poll_week_5 = unique(d_state_tfmc$poll_week_5[d_state_tfmc$year == 2024]),
+                        state_pv2p_lag = Alabama$state_pv2p[Alabama$year == 2020])
+tfmc_al <- lm(state_pv2p ~ ics + incumbent + state_pv2p_lag + poll_week_5, data = Alabama)
+summary(tfmc_al)
+al_pred <- predict(tfmc_al, Alabama24, interval = "none")
+
+Alaska24 <- data.frame(year = 2024,
+                        state = "Alaska",
+                        party = "DEM",
+                        state_pv2p = NA,
+                        ics = unique(d_state_tfmc$ics[d_state_tfmc$year == 2024]),
+                        incumbent = TRUE,
+                        poll_week_5 = unique(d_state_tfmc$poll_week_5[d_state_tfmc$year == 2024]),
+                        state_pv2p_lag = Alaska$state_pv2p[Alaska$year == 2020])
+tfmc_ak <- lm(state_pv2p ~ ics + incumbent + state_pv2p_lag + poll_week_5, data = Alaska)
+summary(tfmc_ak)
+ak_pred <- predict(tfmc_ak, Alaska24, interval = "none")
+
+Arkansas24 <- data.frame(year = 2024,
+                        state = "Arkansas",
+                        party = "DEM",
+                        state_pv2p = NA,
+                        ics = unique(d_state_tfmc$ics[d_state_tfmc$year == 2024]),
+                        incumbent = TRUE,
+                        poll_week_5 = unique(d_state_tfmc$poll_week_5[d_state_tfmc$year == 2024]),
+                        state_pv2p_lag = Arkansas$state_pv2p[Arkansas$year == 2020])
+tfmc_ar <- lm(state_pv2p ~ ics + incumbent + state_pv2p_lag + poll_week_5, data = Arkansas)
+summary(tfmc_ar)
+ar_pred <- predict(tfmc_ar, Arkansas24, interval = "none")
+
+Colorado24 <- data.frame(year = 2024,
+                        state = "Colorado",
+                        party = "DEM",
+                        state_pv2p = NA,
+                        ics = unique(d_state_tfmc$ics[d_state_tfmc$year == 2024]),
+                        incumbent = TRUE,
+                        poll_week_5 = unique(d_state_tfmc$poll_week_5[d_state_tfmc$year == 2024]),
+                        state_pv2p_lag = Colorado$state_pv2p[Colorado$year == 2020])
+tfmc_co <- lm(state_pv2p ~ ics + incumbent + state_pv2p_lag + poll_week_5, data = Colorado)
+summary(tfmc_co)
+co_pred <- predict(tfmc_co, Colorado24, interval = "none")
+
+Connecticut24 <- data.frame(year = 2024,
+                        state = "Connecticut",
+                        party = "DEM",
+                        state_pv2p = NA,
+                        ics = unique(d_state_tfmc$ics[d_state_tfmc$year == 2024]),
+                        incumbent = TRUE,
+                        poll_week_5 = unique(d_state_tfmc$poll_week_5[d_state_tfmc$year == 2024]),
+                        state_pv2p_lag = Connecticut$state_pv2p[Connecticut$year == 2020])
+tfmc_ct <- lm(state_pv2p ~ ics + incumbent + state_pv2p_lag + poll_week_5, data = Connecticut)
+summary(tfmc_ct)
+ct_pred <- predict(tfmc_ct, Connecticut24, interval = "none")
+
+Delaware24 <- data.frame(year = 2024,
+                        state = "Delaware",
+                        party = "DEM",
+                        state_pv2p = NA,
+                        ics = unique(d_state_tfmc$ics[d_state_tfmc$year == 2024]),
+                        incumbent = TRUE,
+                        poll_week_5 = unique(d_state_tfmc$poll_week_5[d_state_tfmc$year == 2024]),
+                        state_pv2p_lag = Delaware$state_pv2p[Delaware$year == 2020])
+tfmc_de <- lm(state_pv2p ~ ics + incumbent + state_pv2p_lag + poll_week_5, data = Delaware)
+summary(tfmc_de)
+de_pred <- predict(tfmc_de, Delaware24, interval = "none")
+
+Hawaii24 <- data.frame(year = 2024,
+                        state = "Hawaii",
+                        party = "DEM",
+                        state_pv2p = NA,
+                        ics = unique(d_state_tfmc$ics[d_state_tfmc$year == 2024]),
+                        incumbent = TRUE,
+                        poll_week_5 = unique(d_state_tfmc$poll_week_5[d_state_tfmc$year == 2024]),
+                        state_pv2p_lag = Hawaii$state_pv2p[Hawaii$year == 2020])
+tfmc_hi <- lm(state_pv2p ~ ics + incumbent + state_pv2p_lag + poll_week_5, data = Hawaii)
+summary(tfmc_hi)
+hi_pred <- predict(tfmc_hi, Hawaii24, interval = "none")
+
+Idaho24 <- data.frame(year = 2024,
+                        state = "Idaho",
+                        party = "DEM",
+                        state_pv2p = NA,
+                        ics = unique(d_state_tfmc$ics[d_state_tfmc$year == 2024]),
+                        incumbent = TRUE,
+                        poll_week_5 = unique(d_state_tfmc$poll_week_5[d_state_tfmc$year == 2024]),
+                        state_pv2p_lag = Idaho$state_pv2p[Idaho$year == 2020])
+tfmc_id <- lm(state_pv2p ~ ics + incumbent + state_pv2p_lag + poll_week_5, data = Idaho)
+summary(tfmc_id)
+id_pred <- predict(tfmc_id, Idaho24, interval = "none")
+
+Illinois24 <- data.frame(year = 2024,
+                        state = "Illinois",
+                        party = "DEM",
+                        state_pv2p = NA,
+                        ics = unique(d_state_tfmc$ics[d_state_tfmc$year == 2024]),
+                        incumbent = TRUE,
+                        poll_week_5 = unique(d_state_tfmc$poll_week_5[d_state_tfmc$year == 2024]),
+                        state_pv2p_lag = Illinois$state_pv2p[Illinois$year == 2020])
+tfmc_il <- lm(state_pv2p ~ ics + incumbent + state_pv2p_lag + poll_week_5, data = Illinois)
+summary(tfmc_il)
+il_pred <- predict(tfmc_il, Illinois24, interval = "none")
+
+Indiana24 <- data.frame(year = 2024,
+                        state = "Indiana",
+                        party = "DEM",
+                        state_pv2p = NA,
+                        ics = unique(d_state_tfmc$ics[d_state_tfmc$year == 2024]),
+                        incumbent = TRUE,
+                        poll_week_5 = unique(d_state_tfmc$poll_week_5[d_state_tfmc$year == 2024]),
+                        state_pv2p_lag = Indiana$state_pv2p[Indiana$year == 2020])
+tfmc_in <- lm(state_pv2p ~ ics + incumbent + state_pv2p_lag + poll_week_5, data = Indiana)
+summary(tfmc_in)
+in_pred <- predict(tfmc_in, Indiana24, interval = "none")
+
+Iowa24 <- data.frame(year = 2024,
+                     state = "Iowa",
+                     party = "DEM",
+                     state_pv2p = NA,
+                     ics = unique(d_state_tfmc$ics[d_state_tfmc$year == 2024]),
+                     incumbent = TRUE,
+                     poll_week_5 = unique(d_state_tfmc$poll_week_5[d_state_tfmc$year == 2024]),
+                     state_pv2p_lag = Iowa$state_pv2p[Iowa$year == 2020])
+tfmc_ia <- lm(state_pv2p ~ ics + incumbent + state_pv2p_lag + poll_week_5, data = Iowa)
+summary(tfmc_ia)
+ia_pred <- predict(tfmc_ia, Iowa24, interval = "none")
+
+Kansas24 <- data.frame(year = 2024,
+                       state = "Kansas",
+                       party = "DEM",
+                       state_pv2p = NA,
+                       ics = unique(d_state_tfmc$ics[d_state_tfmc$year == 2024]),
+                       incumbent = TRUE,
+                       poll_week_5 = unique(d_state_tfmc$poll_week_5[d_state_tfmc$year == 2024]),
+                       state_pv2p_lag = Kansas$state_pv2p[Kansas$year == 2020])
+tfmc_ks <- lm(state_pv2p ~ ics + incumbent + state_pv2p_lag + poll_week_5, data = Kansas)
+summary(tfmc_ks)
+ks_pred <- predict(tfmc_ks, Kansas24, interval = "none")
+
+Kentucky24 <- data.frame(year = 2024,
+                         state = "Kentucky",
+                         party = "DEM",
+                         state_pv2p = NA,
+                         ics = unique(d_state_tfmc$ics[d_state_tfmc$year == 2024]),
+                         incumbent = TRUE,
+                         poll_week_5 = unique(d_state_tfmc$poll_week_5[d_state_tfmc$year == 2024]),
+                         state_pv2p_lag = Kentucky$state_pv2p[Kentucky$year == 2020])
+tfmc_ky <- lm(state_pv2p ~ ics + incumbent + state_pv2p_lag + poll_week_5, data = Kentucky)
+summary(tfmc_ky)
+ky_pred <- predict(tfmc_ky, Kentucky24, interval = "none")
+
+Louisiana24 <- data.frame(year = 2024,
+                          state = "Louisiana",
+                          party = "DEM",
+                          state_pv2p = NA,
+                          ics = unique(d_state_tfmc$ics[d_state_tfmc$year == 2024]),
+                          incumbent = TRUE,
+                        poll_week_5 = unique(d_state_tfmc$poll_week_5[d_state_tfmc$year == 2024]),
+                          state_pv2p_lag = Louisiana$state_pv2p[Louisiana$year == 2020])
+tfmc_la <- lm(state_pv2p ~ ics + incumbent + state_pv2p_lag + poll_week_5, data = Louisiana)
+summary(tfmc_la)
+la_pred <- predict(tfmc_la, Louisiana24, interval = "none")
+
+Maine24 <- data.frame(year = 2024,
+                      state = "Maine",
+                      party = "DEM",
+                      state_pv2p = NA,
+                      ics = unique(d_state_tfmc$ics[d_state_tfmc$year == 2024]),
+                      incumbent = TRUE,
+                        poll_week_5 = unique(d_state_tfmc$poll_week_5[d_state_tfmc$year == 2024]),
+                      state_pv2p_lag = Maine$state_pv2p[Maine$year == 2020])
+tfmc_me <- lm(state_pv2p ~ ics + incumbent + state_pv2p_lag + poll_week_5, data = Maine)
+summary(tfmc_me)
+me_pred <- predict(tfmc_me, Maine24, interval = "none")
+
+Massachusetts24 <- data.frame(year = 2024,
+                               state = "Massachusetts",
+                               party = "DEM",
+                               state_pv2p = NA,
+                               ics = unique(d_state_tfmc$ics[d_state_tfmc$year == 2024]),
+                               incumbent = TRUE,
+                        poll_week_5 = unique(d_state_tfmc$poll_week_5[d_state_tfmc$year == 2024]),
+                               state_pv2p_lag = Massachusetts$state_pv2p[Massachusetts$year == 2020])
+tfmc_ma <- lm(state_pv2p ~ ics + incumbent + state_pv2p_lag + poll_week_5, data = Massachusetts)
+summary(tfmc_ma)
+ma_pred <- predict(tfmc_ma, Massachusetts24, interval = "none")
+
+Mississippi24 <- data.frame(year = 2024,
+                            state = "Mississippi",
+                            party = "DEM",
+                            state_pv2p = NA,
+                            ics = unique(d_state_tfmc$ics[d_state_tfmc$year == 2024]),
+                            incumbent = TRUE,
+                        poll_week_5 = unique(d_state_tfmc$poll_week_5[d_state_tfmc$year == 2024]),
+                            state_pv2p_lag = Mississippi$state_pv2p[Mississippi$year == 2020])
+tfmc_ms <- lm(state_pv2p ~ ics + incumbent + state_pv2p_lag + poll_week_5, data = Mississippi)
+summary(tfmc_ms)
+ms_pred <- predict(tfmc_ms, Mississippi24, interval = "none")
+
+Nebraska24 <- data.frame(year = 2024,
+                         state = "Nebraska",
+                         party = "DEM",
+                         state_pv2p = NA,
+                         ics = unique(d_state_tfmc$ics[d_state_tfmc$year == 2024]),
+                         incumbent = TRUE,
+                        poll_week_5 = unique(d_state_tfmc$poll_week_5[d_state_tfmc$year == 2024]),
+                         state_pv2p_lag = Nebraska$state_pv2p[Nebraska$year == 2020])
+tfmc_ne <- lm(state_pv2p ~ ics + incumbent + state_pv2p_lag + poll_week_5, data = Nebraska)
+summary(tfmc_ne)
+ne_pred <- predict(tfmc_ne, Nebraska24, interval = "none")
+
+NJ24 <- data.frame(year = 2024,
+                           state = "New Jersey",
+                           party = "DEM",
+                           state_pv2p = NA,
+                           ics = unique(d_state_tfmc$ics[d_state_tfmc$year == 2024]),
+                           incumbent = TRUE,
+                        poll_week_5 = unique(d_state_tfmc$poll_week_5[d_state_tfmc$year == 2024]),
+                           state_pv2p_lag = `New Jersey`$state_pv2p[`New Jersey`$year == 2020])
+tfmc_nj <- lm(state_pv2p ~ ics + incumbent + state_pv2p_lag + poll_week_5, data = `New Jersey`)
+summary(tfmc_nj)
+nj_pred <- predict(tfmc_nj, NJ24, interval = "none")
+
+ND24 <- data.frame(year = 2024,
+                             state = "North Dakota",
+                             party = "DEM",
+                             state_pv2p = NA,
+                             ics = unique(d_state_tfmc$ics[d_state_tfmc$year == 2024]),
+                             incumbent = TRUE,
+                        poll_week_5 = unique(d_state_tfmc$poll_week_5[d_state_tfmc$year == 2024]),
+                             state_pv2p_lag = `North Dakota`$state_pv2p[`North Dakota`$year == 2020])
+tfmc_nd <- lm(state_pv2p ~ ics + incumbent + state_pv2p_lag + poll_week_5, data = `North Dakota`)
+summary(tfmc_nd)
+nd_pred <- predict(tfmc_nd, ND24, interval = "none")
+
+Oklahoma24 <- data.frame(year = 2024,
+                         state = "Oklahoma",
+                         party = "DEM",
+                         state_pv2p = NA,
+                         ics = unique(d_state_tfmc$ics[d_state_tfmc$year == 2024]),
+                         incumbent = TRUE,
+                        poll_week_5 = unique(d_state_tfmc$poll_week_5[d_state_tfmc$year == 2024]),
+                         state_pv2p_lag = Oklahoma$state_pv2p[Oklahoma$year == 2020])
+tfmc_ok <- lm(state_pv2p ~ ics + incumbent + state_pv2p_lag + poll_week_5, data = Oklahoma)
+summary(tfmc_ok)
+ok_pred <- predict(tfmc_ok, Oklahoma24, interval = "none")
+
+Oregon24 <- data.frame(year = 2024,
+                       state = "Oregon",
+                       party = "DEM",
+                       state_pv2p = NA,
+                       ics = unique(d_state_tfmc$ics[d_state_tfmc$year == 2024]),
+                       incumbent = TRUE,
+                        poll_week_5 = unique(d_state_tfmc$poll_week_5[d_state_tfmc$year == 2024]),
+                       state_pv2p_lag = Oregon$state_pv2p[Oregon$year == 2020])
+tfmc_or <- lm(state_pv2p ~ ics + incumbent + state_pv2p_lag + poll_week_5, data = Oregon)
+summary(tfmc_or)
+or_pred <- predict(tfmc_or, Oregon24, interval = "none")
+
+RI24 <- data.frame(year = 2024,
+                             state = "Rhode Island",
+                             party = "DEM",
+                             state_pv2p = NA,
+                             ics = unique(d_state_tfmc$ics[d_state_tfmc$year == 2024]),
+                             incumbent = TRUE,
+                        poll_week_5 = unique(d_state_tfmc$poll_week_5[d_state_tfmc$year == 2024]),
+                             state_pv2p_lag = `Rhode Island`$state_pv2p[`Rhode Island`$year == 2020])
+tfmc_ri <- lm(state_pv2p ~ ics + incumbent + state_pv2p_lag + poll_week_5, data = `Rhode Island`)
+summary(tfmc_ri)
+ri_pred <- predict(tfmc_ri, RI24, interval = "none")
+
+SC24 <- data.frame(year = 2024,
+                               state = "South Carolina",
+                               party = "DEM",
+                               state_pv2p = NA,
+                               ics = unique(d_state_tfmc$ics[d_state_tfmc$year == 2024]),
+                               incumbent = TRUE,
+                        poll_week_5 = unique(d_state_tfmc$poll_week_5[d_state_tfmc$year == 2024]),
+                               state_pv2p_lag = `South Carolina`$state_pv2p[`South Carolina`$year == 2020])
+tfmc_sc <- lm(state_pv2p ~ ics + incumbent + state_pv2p_lag + poll_week_5, data = `South Carolina`)
+summary(tfmc_sc)
+sc_pred <- predict(tfmc_sc, SC24, interval = "none")
+
+SD24 <- data.frame(year = 2024,
+                             state = "South Dakota",
+                             party = "DEM",
+                             state_pv2p = NA,
+                             ics = unique(d_state_tfmc$ics[d_state_tfmc$year == 2024]),
+                             incumbent = TRUE,
+                        poll_week_5 = unique(d_state_tfmc$poll_week_5[d_state_tfmc$year == 2024]),
+                             state_pv2p_lag = `South Dakota`$state_pv2p[`South Dakota`$year == 2020])
+tfmc_sd <- lm(state_pv2p ~ ics + incumbent + state_pv2p_lag + poll_week_5, data = `South Dakota`)
+summary(tfmc_sd)
+sd_pred <- predict(tfmc_sd, SD24, interval = "none")
+
+Tennessee24 <- data.frame(year = 2024,
+                          state = "Tennessee",
+                          party = "DEM",
+                          state_pv2p = NA,
+                          ics = unique(d_state_tfmc$ics[d_state_tfmc$year == 2024]),
+                          incumbent = TRUE,
+                        poll_week_5 = unique(d_state_tfmc$poll_week_5[d_state_tfmc$year == 2024]),
+                          state_pv2p_lag = Tennessee$state_pv2p[Tennessee$year == 2020])
+tfmc_tn <- lm(state_pv2p ~ ics + incumbent + state_pv2p_lag + poll_week_5, data = Tennessee)
+summary(tfmc_tn)
+tn_pred <- predict(tfmc_tn, Tennessee24, interval = "none")
+
+Utah24 <- data.frame(year = 2024,
+                     state = "Utah",
+                     party = "DEM",
+                     state_pv2p = NA,
+                     ics = unique(d_state_tfmc$ics[d_state_tfmc$year == 2024]),
+                     incumbent = TRUE,
+                        poll_week_5 = unique(d_state_tfmc$poll_week_5[d_state_tfmc$year == 2024]),
+                     state_pv2p_lag = Utah$state_pv2p[Utah$year == 2020])
+tfmc_ut <- lm(state_pv2p ~ ics + incumbent + state_pv2p_lag + poll_week_5, data = Utah)
+summary(tfmc_ut)
+ut_pred <- predict(tfmc_ut, Utah24, interval = "none")
+
+Vermont24 <- data.frame(year = 2024,
+                        state = "Vermont",
+                        party = "DEM",
+                        state_pv2p = NA,
+                        ics = unique(d_state_tfmc$ics[d_state_tfmc$year == 2024]),
+                        incumbent = TRUE,
+                        poll_week_5 = unique(d_state_tfmc$poll_week_5[d_state_tfmc$year == 2024]),
+                        state_pv2p_lag = Vermont$state_pv2p[Vermont$year == 2020])
+tfmc_vt <- lm(state_pv2p ~ ics + incumbent + state_pv2p_lag + poll_week_5, data = Vermont)
+summary(tfmc_vt)
+vt_pred <- predict(tfmc_vt, Vermont24, interval = "none")
+
+Washington24 <- data.frame(year = 2024,
+                           state = "Washington",
+                           party = "DEM",
+                           state_pv2p = NA,
+                           ics = unique(d_state_tfmc$ics[d_state_tfmc$year == 2024]),
+                           incumbent = TRUE,
+                        poll_week_5 = unique(d_state_tfmc$poll_week_5[d_state_tfmc$year == 2024]),
+                           state_pv2p_lag = Washington$state_pv2p[Washington$year == 2020])
+tfmc_wa <- lm(state_pv2p ~ ics + incumbent + state_pv2p_lag + poll_week_5, data = Washington)
+summary(tfmc_wa)
+wa_pred <- predict(tfmc_wa, Washington24, interval = "none")
+
+WV24 <- data.frame(year = 2024,
+                              state = "West Virginia",
+                              party = "DEM",
+                              state_pv2p = NA,
+                              ics = unique(d_state_tfmc$ics[d_state_tfmc$year == 2024]),
+                              incumbent = TRUE,
+                        poll_week_5 = unique(d_state_tfmc$poll_week_5[d_state_tfmc$year == 2024]),
+                              state_pv2p_lag = `West Virginia`$state_pv2p[`West Virginia`$year == 2020])
+tfmc_wv <- lm(state_pv2p ~ ics + incumbent + state_pv2p_lag + poll_week_5, data = `West Virginia`)
+summary(tfmc_wv)
+wv_pred <- predict(tfmc_wv, WV24, interval = "none")
+
+Wyoming24 <- data.frame(year = 2024,
+                        state = "Wyoming",
+                        party = "DEM",
+                        state_pv2p = NA,
+                        ics = unique(d_state_tfmc$ics[d_state_tfmc$year == 2024]),
+                        incumbent = TRUE,
+                        poll_week_5 = unique(d_state_tfmc$poll_week_5[d_state_tfmc$year == 2024]),
+                        state_pv2p_lag = Wyoming$state_pv2p[Wyoming$year == 2020])
+tfmc_wy <- lm(state_pv2p ~ ics + incumbent + state_pv2p_lag + poll_week_5, data = Wyoming)
+summary(tfmc_wy)
+wy_pred <- predict(tfmc_wy, Wyoming24, interval = "none")
+
+# electoral college prediction
+state_ec_pred <- data.frame(stateab = state.abb,
+                              pred = c(al_pred, ak_pred, az_pred, ar_pred, ca_pred, co_pred, ct_pred, de_pred, fl_pred, ga_pred, hi_pred, id_pred, il_pred, in_pred, ia_pred, ks_pred, ky_pred, la_pred, me_pred, md_pred, ma_pred, mi_pred, mn_pred, ms_pred, mo_pred, mt_pred, ne_pred, nv_pred, nh_pred, nj_pred, nm_pred, ny_pred, nc_pred, nd_pred, oh_pred, ok_pred, or_pred, pa_pred, ri_pred, sc_pred, sd_pred, tn_pred, tx_pred, ut_pred, vt_pred, va_pred, wv_pred, wa_pred, wi_pred, wy_pred))
+
+d_ec24 <- d_ec |>
+  filter(year == 2024)
+
+ec_pred <- state_ec_pred |>
+  left_join(d_ec24, by = join_by(stateab))
+
+ec_pred <- ec_pred |>
+  mutate(
+    winner = if_else(pred > 50, 1, 0), # 1 means the state's ec votes go to Harris
+    harris_ec = winner*electors
+  )
+
+sum(ec_pred$harris_ec) # 287 EC
+
+# map of continental u.s.
+states_map_cont <- states_map |>
+  filter(region != "district of columbia")
+
+state_tfmc_pred <- data.frame(region = unique(states_map_cont$region),
+                              pred = c(al_pred, az_pred, ar_pred, ca_pred, co_pred, ct_pred, de_pred, fl_pred, ga_pred, id_pred, il_pred, in_pred, ia_pred, ks_pred, ky_pred, la_pred, me_pred, md_pred, ma_pred, mi_pred, mn_pred, ms_pred, mo_pred, mt_pred, ne_pred, nv_pred, nh_pred, nj_pred, nm_pred, ny_pred, nc_pred, nd_pred, oh_pred, ok_pred, or_pred, pa_pred, ri_pred, sc_pred, sd_pred, tn_pred, tx_pred, ut_pred, vt_pred, va_pred, wa_pred, wv_pred, wi_pred, wy_pred))
+
+states_map_pred <- states_map |>
+  left_join(state_tfmc_pred, by = "region")
+
+fig4 <- states_map_pred |>
+  mutate(
+    winner = ifelse(pred > 50, "Democrat", "Republican")
+  ) |>
+  ggplot(aes(long, lat, group = group)) +
+  geom_polygon(aes(fill = winner), color = "#000033") +
+  scale_fill_manual(values = c("#3377FF", "#FF6680")) +
+  ggtitle("Fig IV. Electoral College Prediction 2024") +
+  my_map_theme() +
+  theme(strip.text = element_text(size = 12), 
+        aspect.ratio = 0.75)
+```
+
+```{r fig 4 print, echo=FALSE, include=TRUE, warning=FALSE}
+fig4
+```
+
+There is plenty more to be done with this model – its forecasting uncertainty is poorly defined, it is essentially blind to campaign factors and vulnerable to unrepresentative polls, and the Time for Change approach’s focus on incumbent party vote share means that it says very little about Trump’s viability as a candidate. 
+
+See you next week!
