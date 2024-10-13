@@ -1,0 +1,1011 @@
+state,stateab,year,electors
+Alabama,AL,1948,11
+Alabama,AL,1952,11
+Alabama,AL,1956,11
+Alabama,AL,1960,11
+Alabama,AL,1964,10
+Alabama,AL,1968,10
+Alabama,AL,1972,9
+Alabama,AL,1976,9
+Alabama,AL,1980,9
+Alabama,AL,1984,9
+Alabama,AL,1988,9
+Alabama,AL,1992,9
+Alabama,AL,1996,9
+Alabama,AL,2000,9
+Alabama,AL,2004,9
+Alabama,AL,2008,9
+Alabama,AL,2012,9
+Alabama,AL,2016,9
+Alabama,AL,2020,9
+Alabama,AL,2024,9
+Alaska,AK,1960,3
+Alaska,AK,1964,3
+Alaska,AK,1968,3
+Alaska,AK,1972,3
+Alaska,AK,1976,3
+Alaska,AK,1980,3
+Alaska,AK,1984,3
+Alaska,AK,1988,3
+Alaska,AK,1992,3
+Alaska,AK,1996,3
+Alaska,AK,2000,3
+Alaska,AK,2004,3
+Alaska,AK,2008,3
+Alaska,AK,2012,3
+Alaska,AK,2016,3
+Alaska,AK,2020,3
+Alaska,AK,2024,3
+Arizona,AZ,1948,4
+Arizona,AZ,1952,4
+Arizona,AZ,1956,4
+Arizona,AZ,1960,4
+Arizona,AZ,1964,5
+Arizona,AZ,1968,5
+Arizona,AZ,1972,6
+Arizona,AZ,1976,6
+Arizona,AZ,1980,6
+Arizona,AZ,1984,7
+Arizona,AZ,1988,7
+Arizona,AZ,1992,8
+Arizona,AZ,1996,8
+Arizona,AZ,2000,8
+Arizona,AZ,2004,10
+Arizona,AZ,2008,10
+Arizona,AZ,2012,11
+Arizona,AZ,2016,11
+Arizona,AZ,2020,11
+Arizona,AZ,2024,11
+Arkansas,AR,1948,9
+Arkansas,AR,1952,8
+Arkansas,AR,1956,8
+Arkansas,AR,1960,8
+Arkansas,AR,1964,6
+Arkansas,AR,1968,6
+Arkansas,AR,1972,6
+Arkansas,AR,1976,6
+Arkansas,AR,1980,6
+Arkansas,AR,1984,6
+Arkansas,AR,1988,6
+Arkansas,AR,1992,6
+Arkansas,AR,1996,6
+Arkansas,AR,2000,6
+Arkansas,AR,2004,6
+Arkansas,AR,2008,6
+Arkansas,AR,2012,6
+Arkansas,AR,2016,6
+Arkansas,AR,2020,6
+Arkansas,AR,2024,6
+California,CA,1948,25
+California,CA,1952,32
+California,CA,1956,32
+California,CA,1960,32
+California,CA,1964,40
+California,CA,1968,40
+California,CA,1972,45
+California,CA,1976,45
+California,CA,1980,45
+California,CA,1984,47
+California,CA,1988,47
+California,CA,1992,54
+California,CA,1996,54
+California,CA,2000,54
+California,CA,2004,55
+California,CA,2008,55
+California,CA,2012,55
+California,CA,2016,55
+California,CA,2020,55
+California,CA,2024,54
+Colorado,CO,1948,6
+Colorado,CO,1952,6
+Colorado,CO,1956,6
+Colorado,CO,1960,6
+Colorado,CO,1964,6
+Colorado,CO,1968,6
+Colorado,CO,1972,7
+Colorado,CO,1976,7
+Colorado,CO,1980,7
+Colorado,CO,1984,8
+Colorado,CO,1988,8
+Colorado,CO,1992,8
+Colorado,CO,1996,8
+Colorado,CO,2000,8
+Colorado,CO,2004,9
+Colorado,CO,2008,9
+Colorado,CO,2012,9
+Colorado,CO,2016,9
+Colorado,CO,2020,9
+Colorado,CO,2024,10
+Connecticut,CT,1948,8
+Connecticut,CT,1952,8
+Connecticut,CT,1956,8
+Connecticut,CT,1960,8
+Connecticut,CT,1964,8
+Connecticut,CT,1968,8
+Connecticut,CT,1972,8
+Connecticut,CT,1976,8
+Connecticut,CT,1980,8
+Connecticut,CT,1984,8
+Connecticut,CT,1988,8
+Connecticut,CT,1992,8
+Connecticut,CT,1996,8
+Connecticut,CT,2000,8
+Connecticut,CT,2004,7
+Connecticut,CT,2008,7
+Connecticut,CT,2012,7
+Connecticut,CT,2016,7
+Connecticut,CT,2020,7
+Connecticut,CT,2024,7
+Delaware,DE,1948,3
+Delaware,DE,1952,3
+Delaware,DE,1956,3
+Delaware,DE,1960,3
+Delaware,DE,1964,3
+Delaware,DE,1968,3
+Delaware,DE,1972,3
+Delaware,DE,1976,3
+Delaware,DE,1980,3
+Delaware,DE,1984,3
+Delaware,DE,1988,3
+Delaware,DE,1992,3
+Delaware,DE,1996,3
+Delaware,DE,2000,3
+Delaware,DE,2004,3
+Delaware,DE,2008,3
+Delaware,DE,2012,3
+Delaware,DE,2016,3
+Delaware,DE,2020,3
+Delaware,DE,2024,3
+District Of Columbia,DC,1964,3
+District Of Columbia,DC,1968,3
+District Of Columbia,DC,1972,3
+District Of Columbia,DC,1976,3
+District Of Columbia,DC,1980,3
+District Of Columbia,DC,1984,3
+District Of Columbia,DC,1988,3
+District Of Columbia,DC,1992,3
+District Of Columbia,DC,1996,3
+District Of Columbia,DC,2000,3
+District Of Columbia,DC,2004,3
+District Of Columbia,DC,2008,3
+District Of Columbia,DC,2012,3
+District Of Columbia,DC,2016,3
+District Of Columbia,DC,2020,3
+District Of Columbia,DC,2024,3
+Florida,FL,1948,8
+Florida,FL,1952,10
+Florida,FL,1956,10
+Florida,FL,1960,10
+Florida,FL,1964,14
+Florida,FL,1968,14
+Florida,FL,1972,17
+Florida,FL,1976,17
+Florida,FL,1980,17
+Florida,FL,1984,21
+Florida,FL,1988,21
+Florida,FL,1992,25
+Florida,FL,1996,25
+Florida,FL,2000,25
+Florida,FL,2004,27
+Florida,FL,2008,27
+Florida,FL,2012,29
+Florida,FL,2016,29
+Florida,FL,2020,29
+Florida,FL,2024,30
+Georgia,GA,1948,12
+Georgia,GA,1952,12
+Georgia,GA,1956,12
+Georgia,GA,1960,12
+Georgia,GA,1964,12
+Georgia,GA,1968,12
+Georgia,GA,1972,12
+Georgia,GA,1976,12
+Georgia,GA,1980,12
+Georgia,GA,1984,12
+Georgia,GA,1988,12
+Georgia,GA,1992,13
+Georgia,GA,1996,13
+Georgia,GA,2000,13
+Georgia,GA,2004,15
+Georgia,GA,2008,15
+Georgia,GA,2012,16
+Georgia,GA,2016,16
+Georgia,GA,2020,16
+Georgia,GA,2024,16
+Hawaii,HI,1960,3
+Hawaii,HI,1964,4
+Hawaii,HI,1968,4
+Hawaii,HI,1972,4
+Hawaii,HI,1976,4
+Hawaii,HI,1980,4
+Hawaii,HI,1984,4
+Hawaii,HI,1988,4
+Hawaii,HI,1992,4
+Hawaii,HI,1996,4
+Hawaii,HI,2000,4
+Hawaii,HI,2004,4
+Hawaii,HI,2008,4
+Hawaii,HI,2012,4
+Hawaii,HI,2016,4
+Hawaii,HI,2020,4
+Hawaii,HI,2024,4
+Idaho,ID,1948,4
+Idaho,ID,1952,4
+Idaho,ID,1956,4
+Idaho,ID,1960,4
+Idaho,ID,1964,4
+Idaho,ID,1968,4
+Idaho,ID,1972,4
+Idaho,ID,1976,4
+Idaho,ID,1980,4
+Idaho,ID,1984,4
+Idaho,ID,1988,4
+Idaho,ID,1992,4
+Idaho,ID,1996,4
+Idaho,ID,2000,4
+Idaho,ID,2004,4
+Idaho,ID,2008,4
+Idaho,ID,2012,4
+Idaho,ID,2016,4
+Idaho,ID,2020,4
+Idaho,ID,2024,4
+Illinois,IL,1948,28
+Illinois,IL,1952,27
+Illinois,IL,1956,27
+Illinois,IL,1960,27
+Illinois,IL,1964,26
+Illinois,IL,1968,26
+Illinois,IL,1972,26
+Illinois,IL,1976,26
+Illinois,IL,1980,26
+Illinois,IL,1984,24
+Illinois,IL,1988,24
+Illinois,IL,1992,22
+Illinois,IL,1996,22
+Illinois,IL,2000,22
+Illinois,IL,2004,21
+Illinois,IL,2008,21
+Illinois,IL,2012,20
+Illinois,IL,2016,20
+Illinois,IL,2020,20
+Illinois,IL,2024,19
+Indiana,IN,1948,13
+Indiana,IN,1952,13
+Indiana,IN,1956,13
+Indiana,IN,1960,13
+Indiana,IN,1964,13
+Indiana,IN,1968,13
+Indiana,IN,1972,13
+Indiana,IN,1976,13
+Indiana,IN,1980,13
+Indiana,IN,1984,12
+Indiana,IN,1988,12
+Indiana,IN,1992,12
+Indiana,IN,1996,12
+Indiana,IN,2000,12
+Indiana,IN,2004,11
+Indiana,IN,2008,11
+Indiana,IN,2012,11
+Indiana,IN,2016,11
+Indiana,IN,2020,11
+Indiana,IN,2024,11
+Iowa,IA,1948,10
+Iowa,IA,1952,10
+Iowa,IA,1956,10
+Iowa,IA,1960,10
+Iowa,IA,1964,9
+Iowa,IA,1968,9
+Iowa,IA,1972,8
+Iowa,IA,1976,8
+Iowa,IA,1980,8
+Iowa,IA,1984,8
+Iowa,IA,1988,8
+Iowa,IA,1992,7
+Iowa,IA,1996,7
+Iowa,IA,2000,7
+Iowa,IA,2004,7
+Iowa,IA,2008,7
+Iowa,IA,2012,6
+Iowa,IA,2016,6
+Iowa,IA,2020,6
+Iowa,IA,2024,6
+Kansas,KS,1948,8
+Kansas,KS,1952,8
+Kansas,KS,1956,8
+Kansas,KS,1960,8
+Kansas,KS,1964,7
+Kansas,KS,1968,7
+Kansas,KS,1972,7
+Kansas,KS,1976,7
+Kansas,KS,1980,7
+Kansas,KS,1984,7
+Kansas,KS,1988,7
+Kansas,KS,1992,6
+Kansas,KS,1996,6
+Kansas,KS,2000,6
+Kansas,KS,2004,6
+Kansas,KS,2008,6
+Kansas,KS,2012,6
+Kansas,KS,2016,6
+Kansas,KS,2020,6
+Kansas,KS,2024,6
+Kentucky,KY,1948,11
+Kentucky,KY,1952,10
+Kentucky,KY,1956,10
+Kentucky,KY,1960,10
+Kentucky,KY,1964,9
+Kentucky,KY,1968,9
+Kentucky,KY,1972,9
+Kentucky,KY,1976,9
+Kentucky,KY,1980,9
+Kentucky,KY,1984,9
+Kentucky,KY,1988,9
+Kentucky,KY,1992,8
+Kentucky,KY,1996,8
+Kentucky,KY,2000,8
+Kentucky,KY,2004,8
+Kentucky,KY,2008,8
+Kentucky,KY,2012,8
+Kentucky,KY,2016,8
+Kentucky,KY,2020,8
+Kentucky,KY,2024,8
+Louisiana,LA,1948,10
+Louisiana,LA,1952,10
+Louisiana,LA,1956,10
+Louisiana,LA,1960,10
+Louisiana,LA,1964,10
+Louisiana,LA,1968,10
+Louisiana,LA,1972,10
+Louisiana,LA,1976,10
+Louisiana,LA,1980,10
+Louisiana,LA,1984,10
+Louisiana,LA,1988,10
+Louisiana,LA,1992,9
+Louisiana,LA,1996,9
+Louisiana,LA,2000,9
+Louisiana,LA,2004,9
+Louisiana,LA,2008,9
+Louisiana,LA,2012,8
+Louisiana,LA,2016,8
+Louisiana,LA,2020,8
+Louisiana,LA,2024,8
+Maine,ME,1948,5
+Maine,ME,1952,5
+Maine,ME,1956,5
+Maine,ME,1960,5
+Maine,ME,1964,4
+Maine,ME,1968,4
+Maine,ME,1972,4
+Maine,ME,1976,4
+Maine,ME,1980,4
+Maine,ME,1984,4
+Maine,ME,1988,4
+Maine,ME,1992,4
+Maine,ME,1996,4
+Maine,ME,2000,4
+Maine,ME,2004,4
+Maine,ME,2008,4
+Maine,ME,2012,4
+Maine,ME,2016,4
+Maine,ME,2020,4
+Maine,ME,2024,4
+Maryland,MD,1948,8
+Maryland,MD,1952,9
+Maryland,MD,1956,9
+Maryland,MD,1960,9
+Maryland,MD,1964,10
+Maryland,MD,1968,10
+Maryland,MD,1972,10
+Maryland,MD,1976,10
+Maryland,MD,1980,10
+Maryland,MD,1984,10
+Maryland,MD,1988,10
+Maryland,MD,1992,10
+Maryland,MD,1996,10
+Maryland,MD,2000,10
+Maryland,MD,2004,10
+Maryland,MD,2008,10
+Maryland,MD,2012,10
+Maryland,MD,2016,10
+Maryland,MD,2020,10
+Maryland,MD,2024,10
+Massachusetts,MA,1948,16
+Massachusetts,MA,1952,16
+Massachusetts,MA,1956,16
+Massachusetts,MA,1960,16
+Massachusetts,MA,1964,14
+Massachusetts,MA,1968,14
+Massachusetts,MA,1972,14
+Massachusetts,MA,1976,14
+Massachusetts,MA,1980,14
+Massachusetts,MA,1984,13
+Massachusetts,MA,1988,13
+Massachusetts,MA,1992,12
+Massachusetts,MA,1996,12
+Massachusetts,MA,2000,12
+Massachusetts,MA,2004,12
+Massachusetts,MA,2008,12
+Massachusetts,MA,2012,11
+Massachusetts,MA,2016,11
+Massachusetts,MA,2020,11
+Massachusetts,MA,2024,11
+Michigan,MI,1948,19
+Michigan,MI,1952,20
+Michigan,MI,1956,20
+Michigan,MI,1960,20
+Michigan,MI,1964,21
+Michigan,MI,1968,21
+Michigan,MI,1972,21
+Michigan,MI,1976,21
+Michigan,MI,1980,21
+Michigan,MI,1984,20
+Michigan,MI,1988,20
+Michigan,MI,1992,18
+Michigan,MI,1996,18
+Michigan,MI,2000,18
+Michigan,MI,2004,17
+Michigan,MI,2008,17
+Michigan,MI,2012,16
+Michigan,MI,2016,16
+Michigan,MI,2020,16
+Michigan,MI,2024,15
+Minnesota,MN,1948,11
+Minnesota,MN,1952,11
+Minnesota,MN,1956,11
+Minnesota,MN,1960,11
+Minnesota,MN,1964,10
+Minnesota,MN,1968,10
+Minnesota,MN,1972,10
+Minnesota,MN,1976,10
+Minnesota,MN,1980,10
+Minnesota,MN,1984,10
+Minnesota,MN,1988,10
+Minnesota,MN,1992,10
+Minnesota,MN,1996,10
+Minnesota,MN,2000,10
+Minnesota,MN,2004,10
+Minnesota,MN,2008,10
+Minnesota,MN,2012,10
+Minnesota,MN,2016,10
+Minnesota,MN,2020,10
+Minnesota,MN,2024,10
+Mississippi,MS,1948,9
+Mississippi,MS,1952,8
+Mississippi,MS,1956,8
+Mississippi,MS,1960,8
+Mississippi,MS,1964,7
+Mississippi,MS,1968,7
+Mississippi,MS,1972,7
+Mississippi,MS,1976,7
+Mississippi,MS,1980,7
+Mississippi,MS,1984,7
+Mississippi,MS,1988,7
+Mississippi,MS,1992,7
+Mississippi,MS,1996,7
+Mississippi,MS,2000,7
+Mississippi,MS,2004,6
+Mississippi,MS,2008,6
+Mississippi,MS,2012,6
+Mississippi,MS,2016,6
+Mississippi,MS,2020,6
+Mississippi,MS,2024,6
+Missouri,MO,1948,15
+Missouri,MO,1952,13
+Missouri,MO,1956,13
+Missouri,MO,1960,13
+Missouri,MO,1964,12
+Missouri,MO,1968,12
+Missouri,MO,1972,12
+Missouri,MO,1976,12
+Missouri,MO,1980,12
+Missouri,MO,1984,11
+Missouri,MO,1988,11
+Missouri,MO,1992,11
+Missouri,MO,1996,11
+Missouri,MO,2000,11
+Missouri,MO,2004,11
+Missouri,MO,2008,11
+Missouri,MO,2012,10
+Missouri,MO,2016,10
+Missouri,MO,2020,10
+Missouri,MO,2024,10
+Montana,MT,1948,4
+Montana,MT,1952,4
+Montana,MT,1956,4
+Montana,MT,1960,4
+Montana,MT,1964,4
+Montana,MT,1968,4
+Montana,MT,1972,4
+Montana,MT,1976,4
+Montana,MT,1980,4
+Montana,MT,1984,4
+Montana,MT,1988,4
+Montana,MT,1992,3
+Montana,MT,1996,3
+Montana,MT,2000,3
+Montana,MT,2004,3
+Montana,MT,2008,3
+Montana,MT,2012,3
+Montana,MT,2016,3
+Montana,MT,2020,3
+Montana,MT,2024,4
+Nebraska,NE,1948,6
+Nebraska,NE,1952,6
+Nebraska,NE,1956,6
+Nebraska,NE,1960,6
+Nebraska,NE,1964,5
+Nebraska,NE,1968,5
+Nebraska,NE,1972,5
+Nebraska,NE,1976,5
+Nebraska,NE,1980,5
+Nebraska,NE,1984,5
+Nebraska,NE,1988,5
+Nebraska,NE,1992,5
+Nebraska,NE,1996,5
+Nebraska,NE,2000,5
+Nebraska,NE,2004,5
+Nebraska,NE,2008,5
+Nebraska,NE,2012,5
+Nebraska,NE,2016,5
+Nebraska,NE,2020,5
+Nebraska,NE,2024,5
+Nevada,NV,1948,3
+Nevada,NV,1952,3
+Nevada,NV,1956,3
+Nevada,NV,1960,3
+Nevada,NV,1964,3
+Nevada,NV,1968,3
+Nevada,NV,1972,3
+Nevada,NV,1976,3
+Nevada,NV,1980,3
+Nevada,NV,1984,4
+Nevada,NV,1988,4
+Nevada,NV,1992,4
+Nevada,NV,1996,4
+Nevada,NV,2000,4
+Nevada,NV,2004,5
+Nevada,NV,2008,5
+Nevada,NV,2012,6
+Nevada,NV,2016,6
+Nevada,NV,2020,6
+Nevada,NV,2024,6
+New Hampshire,NH,1948,4
+New Hampshire,NH,1952,4
+New Hampshire,NH,1956,4
+New Hampshire,NH,1960,4
+New Hampshire,NH,1964,4
+New Hampshire,NH,1968,4
+New Hampshire,NH,1972,4
+New Hampshire,NH,1976,4
+New Hampshire,NH,1980,4
+New Hampshire,NH,1984,4
+New Hampshire,NH,1988,4
+New Hampshire,NH,1992,4
+New Hampshire,NH,1996,4
+New Hampshire,NH,2000,4
+New Hampshire,NH,2004,4
+New Hampshire,NH,2008,4
+New Hampshire,NH,2012,4
+New Hampshire,NH,2016,4
+New Hampshire,NH,2020,4
+New Hampshire,NH,2024,4
+New Jersey,NJ,1948,16
+New Jersey,NJ,1952,16
+New Jersey,NJ,1956,16
+New Jersey,NJ,1960,16
+New Jersey,NJ,1964,17
+New Jersey,NJ,1968,17
+New Jersey,NJ,1972,17
+New Jersey,NJ,1976,17
+New Jersey,NJ,1980,17
+New Jersey,NJ,1984,16
+New Jersey,NJ,1988,16
+New Jersey,NJ,1992,15
+New Jersey,NJ,1996,15
+New Jersey,NJ,2000,15
+New Jersey,NJ,2004,15
+New Jersey,NJ,2008,15
+New Jersey,NJ,2012,14
+New Jersey,NJ,2016,14
+New Jersey,NJ,2020,14
+New Jersey,NJ,2024,14
+New Mexico,NM,1948,4
+New Mexico,NM,1952,4
+New Mexico,NM,1956,4
+New Mexico,NM,1960,4
+New Mexico,NM,1964,4
+New Mexico,NM,1968,4
+New Mexico,NM,1972,4
+New Mexico,NM,1976,4
+New Mexico,NM,1980,4
+New Mexico,NM,1984,5
+New Mexico,NM,1988,5
+New Mexico,NM,1992,5
+New Mexico,NM,1996,5
+New Mexico,NM,2000,5
+New Mexico,NM,2004,5
+New Mexico,NM,2008,5
+New Mexico,NM,2012,5
+New Mexico,NM,2016,5
+New Mexico,NM,2020,5
+New Mexico,NM,2024,5
+New York,NY,1948,47
+New York,NY,1952,45
+New York,NY,1956,45
+New York,NY,1960,45
+New York,NY,1964,43
+New York,NY,1968,43
+New York,NY,1972,41
+New York,NY,1976,41
+New York,NY,1980,41
+New York,NY,1984,36
+New York,NY,1988,36
+New York,NY,1992,33
+New York,NY,1996,33
+New York,NY,2000,33
+New York,NY,2004,31
+New York,NY,2008,31
+New York,NY,2012,29
+New York,NY,2016,29
+New York,NY,2020,29
+New York,NY,2024,28
+North Carolina,NC,1948,14
+North Carolina,NC,1952,14
+North Carolina,NC,1956,14
+North Carolina,NC,1960,14
+North Carolina,NC,1964,13
+North Carolina,NC,1968,13
+North Carolina,NC,1972,13
+North Carolina,NC,1976,13
+North Carolina,NC,1980,13
+North Carolina,NC,1984,13
+North Carolina,NC,1988,13
+North Carolina,NC,1992,14
+North Carolina,NC,1996,14
+North Carolina,NC,2000,14
+North Carolina,NC,2004,15
+North Carolina,NC,2008,15
+North Carolina,NC,2012,15
+North Carolina,NC,2016,15
+North Carolina,NC,2020,15
+North Carolina,NC,2024,16
+North Dakota,ND,1948,4
+North Dakota,ND,1952,4
+North Dakota,ND,1956,4
+North Dakota,ND,1960,4
+North Dakota,ND,1964,4
+North Dakota,ND,1968,4
+North Dakota,ND,1972,3
+North Dakota,ND,1976,3
+North Dakota,ND,1980,3
+North Dakota,ND,1984,3
+North Dakota,ND,1988,3
+North Dakota,ND,1992,3
+North Dakota,ND,1996,3
+North Dakota,ND,2000,3
+North Dakota,ND,2004,3
+North Dakota,ND,2008,3
+North Dakota,ND,2012,3
+North Dakota,ND,2016,3
+North Dakota,ND,2020,3
+North Dakota,ND,2024,3
+Ohio,OH,1948,25
+Ohio,OH,1952,25
+Ohio,OH,1956,25
+Ohio,OH,1960,25
+Ohio,OH,1964,26
+Ohio,OH,1968,26
+Ohio,OH,1972,25
+Ohio,OH,1976,25
+Ohio,OH,1980,25
+Ohio,OH,1984,23
+Ohio,OH,1988,23
+Ohio,OH,1992,21
+Ohio,OH,1996,21
+Ohio,OH,2000,21
+Ohio,OH,2004,20
+Ohio,OH,2008,20
+Ohio,OH,2012,18
+Ohio,OH,2016,18
+Ohio,OH,2020,18
+Ohio,OH,2024,17
+Oklahoma,OK,1948,10
+Oklahoma,OK,1952,8
+Oklahoma,OK,1956,8
+Oklahoma,OK,1960,8
+Oklahoma,OK,1964,8
+Oklahoma,OK,1968,8
+Oklahoma,OK,1972,8
+Oklahoma,OK,1976,8
+Oklahoma,OK,1980,8
+Oklahoma,OK,1984,8
+Oklahoma,OK,1988,8
+Oklahoma,OK,1992,8
+Oklahoma,OK,1996,8
+Oklahoma,OK,2000,8
+Oklahoma,OK,2004,7
+Oklahoma,OK,2008,7
+Oklahoma,OK,2012,7
+Oklahoma,OK,2016,7
+Oklahoma,OK,2020,7
+Oklahoma,OK,2024,7
+Oregon,OR,1948,6
+Oregon,OR,1952,6
+Oregon,OR,1956,6
+Oregon,OR,1960,6
+Oregon,OR,1964,6
+Oregon,OR,1968,6
+Oregon,OR,1972,6
+Oregon,OR,1976,6
+Oregon,OR,1980,6
+Oregon,OR,1984,7
+Oregon,OR,1988,7
+Oregon,OR,1992,7
+Oregon,OR,1996,7
+Oregon,OR,2000,7
+Oregon,OR,2004,7
+Oregon,OR,2008,7
+Oregon,OR,2012,7
+Oregon,OR,2016,7
+Oregon,OR,2020,7
+Oregon,OR,2024,8
+Pennsylvania,PA,1948,35
+Pennsylvania,PA,1952,32
+Pennsylvania,PA,1956,32
+Pennsylvania,PA,1960,32
+Pennsylvania,PA,1964,29
+Pennsylvania,PA,1968,29
+Pennsylvania,PA,1972,27
+Pennsylvania,PA,1976,27
+Pennsylvania,PA,1980,27
+Pennsylvania,PA,1984,25
+Pennsylvania,PA,1988,25
+Pennsylvania,PA,1992,23
+Pennsylvania,PA,1996,23
+Pennsylvania,PA,2000,23
+Pennsylvania,PA,2004,21
+Pennsylvania,PA,2008,21
+Pennsylvania,PA,2012,20
+Pennsylvania,PA,2016,20
+Pennsylvania,PA,2020,20
+Pennsylvania,PA,2024,19
+Rhode Island,RI,1948,4
+Rhode Island,RI,1952,4
+Rhode Island,RI,1956,4
+Rhode Island,RI,1960,4
+Rhode Island,RI,1964,4
+Rhode Island,RI,1968,4
+Rhode Island,RI,1972,4
+Rhode Island,RI,1976,4
+Rhode Island,RI,1980,4
+Rhode Island,RI,1984,4
+Rhode Island,RI,1988,4
+Rhode Island,RI,1992,4
+Rhode Island,RI,1996,4
+Rhode Island,RI,2000,4
+Rhode Island,RI,2004,4
+Rhode Island,RI,2008,4
+Rhode Island,RI,2012,4
+Rhode Island,RI,2016,4
+Rhode Island,RI,2020,4
+Rhode Island,RI,2024,4
+South Carolina,SC,1948,8
+South Carolina,SC,1952,8
+South Carolina,SC,1956,8
+South Carolina,SC,1960,8
+South Carolina,SC,1964,8
+South Carolina,SC,1968,8
+South Carolina,SC,1972,8
+South Carolina,SC,1976,8
+South Carolina,SC,1980,8
+South Carolina,SC,1984,8
+South Carolina,SC,1988,8
+South Carolina,SC,1992,8
+South Carolina,SC,1996,8
+South Carolina,SC,2000,8
+South Carolina,SC,2004,8
+South Carolina,SC,2008,8
+South Carolina,SC,2012,9
+South Carolina,SC,2016,9
+South Carolina,SC,2020,9
+South Carolina,SC,2024,9
+South Dakota,SD,1948,4
+South Dakota,SD,1952,4
+South Dakota,SD,1956,4
+South Dakota,SD,1960,4
+South Dakota,SD,1964,4
+South Dakota,SD,1968,4
+South Dakota,SD,1972,4
+South Dakota,SD,1976,4
+South Dakota,SD,1980,4
+South Dakota,SD,1984,3
+South Dakota,SD,1988,3
+South Dakota,SD,1992,3
+South Dakota,SD,1996,3
+South Dakota,SD,2000,3
+South Dakota,SD,2004,3
+South Dakota,SD,2008,3
+South Dakota,SD,2012,3
+South Dakota,SD,2016,3
+South Dakota,SD,2020,3
+South Dakota,SD,2024,3
+Tennessee,TN,1948,12
+Tennessee,TN,1952,11
+Tennessee,TN,1956,11
+Tennessee,TN,1960,11
+Tennessee,TN,1964,11
+Tennessee,TN,1968,11
+Tennessee,TN,1972,10
+Tennessee,TN,1976,10
+Tennessee,TN,1980,10
+Tennessee,TN,1984,11
+Tennessee,TN,1988,11
+Tennessee,TN,1992,11
+Tennessee,TN,1996,11
+Tennessee,TN,2000,11
+Tennessee,TN,2004,11
+Tennessee,TN,2008,11
+Tennessee,TN,2012,11
+Tennessee,TN,2016,11
+Tennessee,TN,2020,11
+Tennessee,TN,2024,11
+Texas,TX,1948,23
+Texas,TX,1952,24
+Texas,TX,1956,24
+Texas,TX,1960,24
+Texas,TX,1964,25
+Texas,TX,1968,25
+Texas,TX,1972,26
+Texas,TX,1976,26
+Texas,TX,1980,26
+Texas,TX,1984,29
+Texas,TX,1988,29
+Texas,TX,1992,32
+Texas,TX,1996,32
+Texas,TX,2000,32
+Texas,TX,2004,34
+Texas,TX,2008,34
+Texas,TX,2012,38
+Texas,TX,2016,38
+Texas,TX,2020,38
+Texas,TX,2024,40
+Utah,UT,1948,4
+Utah,UT,1952,4
+Utah,UT,1956,4
+Utah,UT,1960,4
+Utah,UT,1964,4
+Utah,UT,1968,4
+Utah,UT,1972,4
+Utah,UT,1976,4
+Utah,UT,1980,4
+Utah,UT,1984,5
+Utah,UT,1988,5
+Utah,UT,1992,5
+Utah,UT,1996,5
+Utah,UT,2000,5
+Utah,UT,2004,5
+Utah,UT,2008,5
+Utah,UT,2012,6
+Utah,UT,2016,6
+Utah,UT,2020,6
+Utah,UT,2024,6
+Vermont,VT,1948,3
+Vermont,VT,1952,3
+Vermont,VT,1956,3
+Vermont,VT,1960,3
+Vermont,VT,1964,3
+Vermont,VT,1968,3
+Vermont,VT,1972,3
+Vermont,VT,1976,3
+Vermont,VT,1980,3
+Vermont,VT,1984,3
+Vermont,VT,1988,3
+Vermont,VT,1992,3
+Vermont,VT,1996,3
+Vermont,VT,2000,3
+Vermont,VT,2004,3
+Vermont,VT,2008,3
+Vermont,VT,2012,3
+Vermont,VT,2016,3
+Vermont,VT,2020,3
+Vermont,VT,2024,3
+Virginia,VA,1948,11
+Virginia,VA,1952,12
+Virginia,VA,1956,12
+Virginia,VA,1960,12
+Virginia,VA,1964,12
+Virginia,VA,1968,12
+Virginia,VA,1972,12
+Virginia,VA,1976,12
+Virginia,VA,1980,12
+Virginia,VA,1984,12
+Virginia,VA,1988,12
+Virginia,VA,1992,13
+Virginia,VA,1996,13
+Virginia,VA,2000,13
+Virginia,VA,2004,13
+Virginia,VA,2008,13
+Virginia,VA,2012,13
+Virginia,VA,2016,13
+Virginia,VA,2020,13
+Virginia,VA,2024,13
+Washington,WA,1948,8
+Washington,WA,1952,9
+Washington,WA,1956,9
+Washington,WA,1960,9
+Washington,WA,1964,9
+Washington,WA,1968,9
+Washington,WA,1972,9
+Washington,WA,1976,9
+Washington,WA,1980,9
+Washington,WA,1984,10
+Washington,WA,1988,10
+Washington,WA,1992,11
+Washington,WA,1996,11
+Washington,WA,2000,11
+Washington,WA,2004,11
+Washington,WA,2008,11
+Washington,WA,2012,12
+Washington,WA,2016,12
+Washington,WA,2020,12
+Washington,WA,2024,12
+West Virginia,WV,1948,8
+West Virginia,WV,1952,8
+West Virginia,WV,1956,8
+West Virginia,WV,1960,8
+West Virginia,WV,1964,7
+West Virginia,WV,1968,7
+West Virginia,WV,1972,6
+West Virginia,WV,1976,6
+West Virginia,WV,1980,6
+West Virginia,WV,1984,6
+West Virginia,WV,1988,6
+West Virginia,WV,1992,5
+West Virginia,WV,1996,5
+West Virginia,WV,2000,5
+West Virginia,WV,2004,5
+West Virginia,WV,2008,5
+West Virginia,WV,2012,5
+West Virginia,WV,2016,5
+West Virginia,WV,2020,5
+West Virginia,WV,2024,4
+Wisconsin,WI,1948,12
+Wisconsin,WI,1952,12
+Wisconsin,WI,1956,12
+Wisconsin,WI,1960,12
+Wisconsin,WI,1964,12
+Wisconsin,WI,1968,12
+Wisconsin,WI,1972,11
+Wisconsin,WI,1976,11
+Wisconsin,WI,1980,11
+Wisconsin,WI,1984,11
+Wisconsin,WI,1988,11
+Wisconsin,WI,1992,11
+Wisconsin,WI,1996,11
+Wisconsin,WI,2000,11
+Wisconsin,WI,2004,10
+Wisconsin,WI,2008,10
+Wisconsin,WI,2012,10
+Wisconsin,WI,2016,10
+Wisconsin,WI,2020,10
+Wisconsin,WI,2024,10
+Wyoming,WY,1948,3
+Wyoming,WY,1952,3
+Wyoming,WY,1956,3
+Wyoming,WY,1960,3
+Wyoming,WY,1964,3
+Wyoming,WY,1968,3
+Wyoming,WY,1972,3
+Wyoming,WY,1976,3
+Wyoming,WY,1980,3
+Wyoming,WY,1984,3
+Wyoming,WY,1988,3
+Wyoming,WY,1992,3
+Wyoming,WY,1996,3
+Wyoming,WY,2000,3
+Wyoming,WY,2004,3
+Wyoming,WY,2008,3
+Wyoming,WY,2012,3
+Wyoming,WY,2016,3
+Wyoming,WY,2020,3
+Wyoming,WY,2024,3
