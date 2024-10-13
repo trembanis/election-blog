@@ -1,0 +1,586 @@
+---
+title: "week6-section"
+author: "Ella Trembanis"
+date: "2024-10-09"
+output: html_document
+---
+
+# Set-Up
+
+```{r load libraries, echo=FALSE, include=FALSE, warning=FALSE}
+library(car)
+library(caret)
+library(cowplot)
+library(curl)
+library(CVXR)
+library(foreign)
+library(geofacet)
+library(glmnet)
+library(haven)
+library(janitor)
+library(kableExtra)
+library(maps)
+library(mlr3)
+library(randomForest)
+library(ranger)
+library(RColorBrewer)
+library(rstan)
+library(scales)
+library(sf)
+library(shinystan)
+library(tidyverse)
+library(viridis)
+```
+
+```{r read data, echo=FALSE, include=FALSE, warning=FALSE}
+# Read popular vote datasets. 
+d_popvote <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Week6/data/popvote_1948_2020.csv")
+d_state_popvote <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Week6/data/state_popvote_1948_2020.csv")
+
+# Read elector distribution dataset. 
+d_ec <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Week6/data/corrected_ec_1948_2024.csv")
+
+# Read ads datasets. 
+ad_campaigns <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Week6/data/ad_campaigns_2000-2012.csv")
+ad_creative <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Week6/data/ad_creative_2000-2012.csv")
+ads_2020 <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Week6/data/ads_2020.csv")
+facebook_ads_2020 <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/do not push/data/facebook_ads_2020.csv")
+facebook_ads_biden_2020 <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Week6/data/facebook_ads_biden_2020.csv")
+campaign_spending <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Week6/data/FEC_contributions_by_state_2008_2024.csv")
+
+# Read polling data. 
+d_polls <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Week6/data/national_polls_1968-2024(2).csv")
+d_state_polls <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Week6/data/state_polls_1968-2024(2).csv")
+
+# Read turnout data. 
+d_turnout <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Week6/data/state_turnout_1980_2022(1).csv")
+```
+
+```{r custom theme, echo=FALSE, include=FALSE, warning=FALSE}
+my_theme <- function() {
+  theme(
+  # set panel features
+  panel.border = element_rect(color = "#000033", fill = NA, linetype = 1),
+  panel.background = element_rect(fill = "#FFFFFF"),
+  panel.grid.major.x = element_line(color = "#9999CC", linetype = 2, size = 0.2),
+  panel.grid.minor.x = element_blank(),
+  panel.grid.major.y = element_line(color = "#9999CC", linetype = 2, size = 0.2),
+  panel.grid.minor.y = element_blank(),
+  # set text and axis features
+  text = element_text(color = "#000033", family = "Courier"),
+  title = element_text(color = "#000033", face = "bold", family = "Courier"),
+  axis.ticks = element_line(color = "#000033"),
+  # set legend features
+  legend.position = "bottom",
+  legend.background = element_rect(color = "#000033", fill = NA, linetype = 1)
+  )
+}
+```
+
+```{r simplified custom theme, echo=FALSE, include=FALSE, warning=FALSE}
+my_map_theme <- function() {
+  theme(
+    # set panel features
+    panel.background = element_rect(fill = "#FFFFFF"),
+    # set text features
+    text = element_text(color = "#000033", family = "Courier"),
+    title = element_text(color = "#000033", face = "bold", family = "Courier"),
+    # set legend features
+    legend.position = "bottom",
+    legend.title.position = "top",
+    legend.background = element_rect(color = "#000033", fill = NA, linetype = 1),
+    # set axis features to not display
+    axis.title = element_blank(),
+    axis.text = element_blank(),
+    axis.ticks = element_blank()
+  )
+}
+```
+
+# Descriptive statistics on ads and campaign spending over time. 
+
+```{r tone visual, echo=FALSE, include=TRUE, warning=FALSE}
+# Tone and Political Ads. 
+ad_campaigns |>
+  left_join(ad_creative) |>
+  group_by(cycle, party) |> mutate(tot_n=n()) |> ungroup() |>
+  group_by(cycle, party, ad_tone) |> summarise(pct=n()*100/first(tot_n)) |>
+  filter(!is.na(ad_tone)) |>
+  ggplot(aes(x = cycle, y = pct, fill = ad_tone, group = party)) +
+  geom_bar(stat = "identity") +
+  scale_x_continuous(breaks = seq(2000, 2012, 4)) +
+  ggtitle("Campaign Ads Aired By Tone") +
+  scale_fill_manual(values = c("#E8747C","#9999CC","#000033","#7CB9E8","white"), name = "tone") +
+  xlab("") + ylab("%") +
+  facet_wrap(~ party) + my_theme() +
+  theme(axis.title = element_text(size=20),
+        axis.text = element_text(size=15),
+        strip.text.x = element_text(size = 20))
+# GOP attack ads in 2004 -- "swift boat" ad about Kerry's military record?
+```
+
+```{r purpose, echo=FALSE, include=TRUE, warning=FALSE}
+## The Purpose of Political Ads
+ad_campaigns |>
+  left_join(ad_creative) |>
+  group_by(cycle, party) |> mutate(tot_n=n()) |> ungroup() |>
+  group_by(cycle, party, ad_purpose) |> summarise(pct=n()*100/first(tot_n)) |>
+  filter(!is.na(ad_purpose)) |>
+  bind_rows( ##2016 raw data not public yet! This was entered manually
+    data.frame(cycle = 2016, ad_purpose = "personal", party = "democrat", pct = 67),
+    data.frame(cycle = 2016, ad_purpose = "policy", party = "democrat", pct = 12),
+    data.frame(cycle = 2016, ad_purpose = "both", party = "democrat", pct = 21),
+    data.frame(cycle = 2016, ad_purpose = "personal", party = "republican", pct = 11),
+    data.frame(cycle = 2016, ad_purpose = "policy", party = "republican", pct = 71),
+    data.frame(cycle = 2016, ad_purpose = "both", party = "republican", pct = 18)
+  ) |>
+  ggplot(aes(x = cycle, y = pct, fill = ad_purpose, group = party)) +
+  geom_bar(stat = "identity") +
+  scale_x_continuous(breaks = seq(2000, 2016, 4)) +
+  # ggtitle("Campaign Ads Aired By Purpose") +
+  scale_fill_manual(values = c("#9999CC","#E8747C","#7CB9E8","#000033","white"), name = "purpose") +
+  xlab("") + ylab("%") +
+  facet_wrap(~ party) + my_theme() +
+  theme(axis.title = element_text(size=20),
+        axis.text = element_text(size=15),
+        strip.text.x = element_text(size = 20))
+```
+
+```{r issues, echo=FALSE, include=TRUE, warning=FALSe}
+## The Elections and Their Issues
+top_issues <- ad_campaigns |> 
+  left_join(ad_creative) |>
+  filter(!grepl("None|Other", ad_issue)) |>
+  group_by(cycle, ad_issue) |> summarise(n=n()) |> top_n(5, n)
+
+### making each plot in a grid to have its own x-axis (issue name)
+### is tricky with `facet_wrap`, so we use this package `cowplot`
+### which allows us to take a list of separate plots and grid them together
+plist <- lapply(c(2000,2004,2008,2012), function(c) {
+  top_issues |> filter(cycle == c) |> 
+    ggplot(aes(x = reorder(ad_issue, n), y = n)) +
+    geom_bar(stat = "identity", fill = "#9999CC") + coord_flip() + my_theme() +
+    xlab("") + ylab("number of ads aired") + ggtitle(paste("Top 5 Ad\nIssues in",c))
+})
+
+cowplot::plot_grid(plotlist = plist, nrow = 2, ncol = 2, align = "hv")
+```
+```{r issue and party 2000, echo=FALSE, include=TRUE, warning=FALSE}
+## Campaign Ads Aired By Issue and Party: 2000
+party_issues2000 <- ad_campaigns |>
+  filter(cycle == 2000) |>
+  left_join(ad_creative) |>
+  filter(ad_issue != "None") |>
+  ## this `group_by` is to get our denominator
+  group_by(ad_issue) |> mutate(tot_n=n()) |> ungroup() |>
+  ## this one is get numerator and calculate % by party
+  group_by(ad_issue, party) |> summarise(p_n=n()*100/first(tot_n)) |> ungroup() |>
+  ## finally, this one so we can sort the issue names
+  ## by D% of issue ad-share instead of alphabetically
+  group_by(ad_issue) |> mutate(Dp_n = ifelse(first(party) == "democrat", first(p_n), 0))
+
+ggplot(party_issues2000, aes(x = reorder(ad_issue, Dp_n), y = p_n, fill = party)) + 
+  geom_bar(stat = "identity") +
+  scale_fill_manual(values = c("#7CB9E8", "#E8747C")) +
+  ylab("% of ads on topic from each party") + xlab("issue") + 
+  # ggtitle("Campaign Ads Aired by Topic in 2000") +
+  coord_flip() + 
+  my_theme()
+```
+```{r issue and party 2012, echo=FALSE, include=TRUE, warning=FALSE}
+## Campaign Ads Aired By Issue and Party: 2012
+party_issues2012 <- ad_campaigns |>
+  filter(cycle == 2012) |>
+  left_join(ad_creative) |>
+  filter(ad_issue != "None") |>
+  group_by(cycle, ad_issue) |> mutate(tot_n=n()) |> ungroup() |>
+  group_by(cycle, ad_issue, party) |> summarise(p_n=n()*100/first(tot_n)) |> ungroup() |>
+  group_by(cycle, ad_issue) |> mutate(Dp_n = ifelse(first(party) == "democrat", first(p_n), 0))
+
+ggplot(party_issues2012, aes(x = reorder(ad_issue, Dp_n), y = p_n, fill = party)) + 
+  geom_bar(stat = "identity") +
+  scale_fill_manual(values = c("#7CB9E8", "#E8747C")) +
+  ylab("% of ads on topic from each party") + xlab("issue") +
+  # ggtitle("Campaign Ads Aired by Topic in 2012") +
+  coord_flip() + 
+  my_theme()
+```
+
+```{r timing, echo=FALSE, include=TRUE, warning=FALSE}
+## When to Buy Ads? 
+ad_campaigns |>
+  mutate(year = as.numeric(substr(air_date, 1, 4))) |>
+  mutate(month = as.numeric(substr(air_date, 6, 7))) |>
+  filter(year %in% c(2000, 2004, 2008, 2012), month > 7) |>
+  group_by(cycle, air_date, party) |>
+  summarise(total_cost = sum(total_cost)) |>
+  ggplot(aes(x=air_date, y=total_cost, color=party)) +
+  # scale_x_date(date_labels = "%b, %Y") +
+  scale_y_continuous(labels = dollar_format()) +
+  scale_color_manual(values = c("#7CB9E8", "#E8747C"), name = "") +
+  geom_line() + geom_point(size=0.5) +
+  facet_wrap(cycle ~ ., scales="free") +
+  xlab("") + ylab("ad spend") +
+  my_theme() +
+  theme(axis.title = element_text(size=20),
+        axis.text = element_text(size=11),
+        strip.text.x = element_text(size = 20))
+```
+
+```{r tone 2 electric boogaloo, echo=FALSE, include=TRUE, warning=FALSE}
+## Tone in Political Ads
+ad_campaigns |>
+  left_join(ad_creative) |>
+  filter(ad_tone %in% c("attack", "promote")) |>
+  mutate(year = as.numeric(substr(air_date, 1, 4))) |>
+  mutate(month = as.numeric(substr(air_date, 6, 7))) |>
+  filter(year %in% c(2000, 2004, 2008, 2012), month > 7) |>
+  group_by(cycle, air_date, ad_tone) |>
+  summarise(total_cost = sum(n_stations)) |>
+  group_by(cycle, air_date) |>
+  mutate(total_cost = total_cost/sum(total_cost)) |>
+  ungroup() |>
+  ggplot(aes(x=air_date, y=total_cost, fill=ad_tone, color=ad_tone)) +
+  # scale_x_date(date_labels = "%b") +
+  scale_fill_manual(values = c("#000033", "#9999CC"), name = "ad tone") +
+  scale_color_manual(values = c("#000033", "#9999CC"), name = "ad tone") +
+  geom_bar(stat = "identity") +
+  facet_wrap(cycle ~ ., scales="free") +
+  xlab("") + ylab("% of ads bought on day") +
+  my_theme() +
+  theme(axis.title = element_text(size=20),
+        axis.text = element_text(size=10),
+        strip.text.x = element_text(size = 20))
+```
+```{r state air 2008, echo=FALSE, include=TRUE, warning=FALSE}
+## The State-level Air War in 2008 (Obama vs. McCain)
+name_ads <- ad_campaigns |>
+  mutate(year = as.numeric(substr(air_date, 1, 4))) |>
+  mutate(month = as.numeric(substr(air_date, 6, 7))) |>
+  mutate(state = state.name[match(state, state.abb)]) |>
+  filter(cycle == 2008) |>
+  left_join(d_state_popvote |> filter(year == 2008) |> select(-year), by="state") |>
+  mutate(winner=ifelse(D_pv2p > R_pv2p, "democrat", "republican")) |>
+  group_by(cycle, state, air_date, party, winner) |>
+  summarise(total_cost = sum(total_cost)) |>
+  filter(!is.na(state)) |>
+  # ggplot(aes(x=air_date, y=log(total_cost+1), color=party)) +
+  ggplot(aes(x=party, y=total_cost, fill=party)) +
+  geom_bar(stat="identity") +
+  geom_rect(aes(fill=winner), xmin=-Inf, xmax=Inf, ymin=46.3*10^6, ymax=52*10^6) +
+  facet_geo(~ state, scales="free_x") +
+  scale_fill_manual(values = c("#7CB9E8", "#E8747C")) +
+  scale_y_continuous(labels = unit_format(unit = "M", scale = 1e-6)) +
+  xlab("") + ylab("ad spend") +
+  my_theme() +
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank())
+
+abb_ads <- ad_campaigns |>
+  mutate(year = as.numeric(substr(air_date, 1, 4))) |>
+  mutate(month = as.numeric(substr(air_date, 6, 7))) |>
+  filter(cycle == 2008) |>
+  left_join(d_state_popvote |> filter(year == 2008) |> select(-year), by="state") |>
+  mutate(winner=ifelse(D_pv2p > R_pv2p, "democrat", "republican")) |>
+  group_by(cycle, state, air_date, party, winner) |>
+  summarise(total_cost = sum(total_cost)) |>
+  filter(!is.na(state)) |>
+  # ggplot(aes(x=air_date, y=log(total_cost+1), color=party)) +
+  ggplot(aes(x=party, y=total_cost, fill=party)) +
+  geom_bar(stat="identity") +
+  geom_rect(aes(fill=winner), xmin=-Inf, xmax=Inf, ymin=46.3*10^6, ymax=52*10^6) +
+  facet_geo(~ state, scales="free_x") +
+  scale_fill_manual(values = c("#7CB9E8", "#E8747C")) +
+  scale_y_continuous(labels = unit_format(unit = "M", scale = 1e-6)) +
+  xlab("") + ylab("ad spend") +
+  my_theme() +
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank())
+abb_ads
+```
+
+```{r state spend, echo=FALSE, include=TRUE, warning=FALSE}
+# Spending by State, 2024
+state_spend <- campaign_spending |>
+  filter(election_year == 2024) |>
+  group_by(party, contribution_state) |>
+  summarise(total_cont = sum(contribution_receipt_amount)) |>
+  # ggplot(aes(x=air_date, y=log(total_cost+1), color=party)) +
+  ggplot(aes(x=party, y=total_cont, fill=party)) +
+  geom_bar(stat="identity") +
+  facet_geo(~ contribution_state, scales="free_x") +
+  scale_fill_manual(values = c("#7CB9E8", "#E8747C")) +
+  scale_y_continuous(labels = unit_format(unit = "M", scale = 1e-6)) +
+  xlab("") + ylab("Campaign Spending") +
+  ggtitle("Campaign Spending by State, 2024") +
+  my_theme() +
+  theme(axis.title.x=element_blank(),
+        axis.text.x=element_blank(),
+        axis.ticks.x=element_blank(),
+        axis.text.y=element_blank(),
+        axis.ticks.y=element_blank())
+state_spend
+```
+
+```{r dem spend, echo=FALSE, include=TRUE, warning=FALSE}
+dem_spend <- campaign_spending |>
+  filter(election_year == 2024 & party == "Democrat") |>
+  group_by(contribution_state) |>
+  summarise(dem_cont = sum(contribution_receipt_amount)/1000000) |>
+  slice_max(dem_cont, n = 10) |>
+  ggplot() +
+  geom_col(mapping = aes(y = fct_reorder(contribution_state, dem_cont), x = dem_cont), fill = "#7CB9E8") +
+  xlab("Democratic Spending (in Millions of $)") +
+  ylab("State") +
+  ggtitle("Democratic Campaign Spending by State") +
+  my_theme()
+dem_spend
+```
+
+```{r rep spend, echo=FALSE, include=TRUE, warning=FALSE}
+rep_spend <- campaign_spending |>
+  filter(election_year == 2024 & party == "Republican") |>
+  group_by(contribution_state) |>
+  summarise(dem_cont = sum(contribution_receipt_amount)/1000000) |>
+  slice_max(dem_cont, n = 10) |>
+  ggplot() +
+  geom_col(mapping = aes(y = fct_reorder(contribution_state, dem_cont), x = dem_cont), fill = "#E8747C") +
+  xlab("Republican Spending (in Millions of $)") +
+  ylab("State") +
+  ggtitle("Republican Campaign Spending by State") +
+  my_theme()
+rep_spend
+```
+
+```{r facebook 2020 plot 1, echo=FALSE, include=TRUE, warning=FALSE}
+# Visualizing Facebook ads and Biden Facebook ads in 2020. 
+d_facebook <- facebook_ads_2020 |> 
+  rename(date = from_date, new_ads = num_of_new_ads) |> 
+  group_by(date) |> 
+  summarize(new_spend = sum(new_spend, na.rm = T),
+            new_ads = sum(new_ads, na.rm = T))
+
+d_facebook |> 
+  ggplot(aes(x = date, y = new_ads)) + 
+  geom_line(color = "#000033") +
+  geom_smooth(method = "lm", se = TRUE, color = "#9999CC") +
+  labs(x = "Date", 
+       y = "New Facebook Ads") +
+  my_theme()
+
+# Note: this plot makes no sense. Possible coding error
+```
+
+```{r facebook 2020 plot 2, echo=FALSE, include=TRUE, warning=FALSe}
+d_facebook |> 
+  ggplot(aes(x = date, y = new_spend)) +
+  geom_line(color = "#000033") +
+  scale_y_continuous(labels = dollar_format()) +
+  geom_smooth(method = "lm", se = TRUE, color = "#9999CC") + 
+  labs(x = "Date", 
+       y = "New Facebook Ad Spending") +
+  my_theme()
+```
+```{r facebook 2020 plot 3, echo=FALSE, include=TRUE, warning=FALSE}
+d_facebook_biden <- facebook_ads_biden_2020 |> 
+  rename(date = from_date, new_ads = num_of_new_ads) |> 
+  group_by(date) |> 
+  summarize(new_spend = sum(new_spend, na.rm = T),
+            new_ads = sum(new_ads, na.rm = T))
+
+d_facebook_biden |>
+  ggplot(aes(x = date, y = new_ads)) + 
+  geom_line(color = "#000033") +
+  geom_smooth(method = "lm", se = TRUE, color = "#9999CC") +
+  labs(x = "Date", 
+       y = "New Facebook Ads (Biden Only)") +
+  my_theme()
+```
+
+```{r facebook 2020 plot 4, echo=FALSE, include=TRUE, warning=FALSE}
+d_facebook_biden |>
+  ggplot(aes(x = date, y = new_spend)) +
+  geom_line(color = "#000033") +
+  scale_y_continuous(labels = dollar_format()) +
+  geom_smooth(method = "lm", se = TRUE, color = "#9999CC") + 
+  labs(x = "Date", 
+       y = "New Facebook Ad Spending (Biden Only)")
+  my_theme()
+```
+  
+# Visualizing FEC contributions by state in 2020, 2024, over time. 
+# dataset: campaign_spending
+# TODO
+
+```{r spending by state, echo=FALSE, include=TRUE, warning=FALSE}
+# Estimate state-level regression of vote share on campaign spending. 
+d_campaign_spending <- d_state_popvote |> 
+  mutate(state_abb = state.abb[match(d_state_popvote$state, state.name)]) |> 
+  left_join(campaign_spending |> filter(party == "Democrat"), by = c("year" = "election_year", "state_abb" = "contribution_state")) |> 
+  filter(year >= 2008)
+
+# popular vote one var (campaign $ raised)
+lm(D_pv ~ contribution_receipt_amount, 
+   data = d_campaign_spending) |> summary()
+
+# popular vote one var (campaign $ raised)
+lm(D_pv2p ~ contribution_receipt_amount, 
+   data = d_campaign_spending) |> summary()
+
+# popular vote with state fixed effects (campaign $ raised)
+lm(D_pv ~ contribution_receipt_amount + factor(state), 
+   data = d_campaign_spending) |> summary()
+
+# two-party vote with state fixed effects (campaign $ raised)
+lm(D_pv2p ~ contribution_receipt_amount + factor(state), 
+   data = d_campaign_spending) |> summary()
+```
+
+## generate histograms??
+
+```{r log transform, echo=FALSE, include=TRUE, warning=FALSE}
+# Log transformation of spending to deal with outliers in campaign $ raising
+
+lm(D_pv ~ log(contribution_receipt_amount), 
+   data = d_campaign_spending) |> summary()
+
+lm(D_pv2p ~ log(contribution_receipt_amount), 
+   data = d_campaign_spending) |> summary()
+
+lm(D_pv ~ log(contribution_receipt_amount) + factor(state), 
+   data = d_campaign_spending) |> summary()
+
+lm(D_pv2p ~ log(contribution_receipt_amount) + factor(state), 
+   data = d_campaign_spending) |> summary() # effect is weaker on pv2p; both major parties are competitive
+```
+
+# Bayesianism.
+
+```{r state poll, echo=FALSE, include=TRUE, warning=FALSE}
+# Process state-level polling data.
+d_pollav_state <- d_state_polls |>
+  group_by(year, state, party) |>
+  mutate(mean_pollav = mean(poll_support, na.rm = TRUE)) |>
+  top_n(1, poll_date) |>
+  rename(latest_pollav = poll_support) |>
+  select(-c(weeks_left, days_left, poll_date, candidate, before_convention)) |>
+  pivot_wider(names_from = party, values_from = c(latest_pollav, mean_pollav))
+
+# Merge data.
+d <- d_pollav_state |>
+  left_join(d_state_popvote, by = c("year", "state")) |>
+  left_join(d_popvote |> filter(party == "democrat"), by = "year") |>
+  left_join(d_turnout, by = c("year", "state")) |>
+  filter(year >= 1980) |>
+  ungroup()
+
+# Sequester states for which we have polling data for 2024.
+states.2024 <- unique(d$state[d$year == 2024])
+states.2024 <- states.2024[-which(states.2024 == "Nebraska Cd 2")]
+d <- d |>
+  filter(state %in% states.2024)
+
+# Separate into training and testing for simple poll prediction model. 
+d.train <- d |> filter(year < 2024) |> select(year, state, D_pv2p, latest_pollav_DEM, mean_pollav_DEM, 
+                                              D_pv2p_lag1, D_pv2p_lag2) |> drop_na()
+d.test <- d |> filter(year == 2024) |> select(year, state, D_pv2p, latest_pollav_DEM, mean_pollav_DEM, 
+                                              D_pv2p_lag1, D_pv2p_lag2)
+
+# Add back in lagged vote share for 2024. 
+t <- d |> 
+  filter(year >= 2016) |> 
+  arrange(year) |> 
+  group_by(state) |> 
+  mutate(
+    D_pv2p_lag1 = lag(D_pv2p, 1),
+    R_pv2p_lag1 = lag(R_pv2p, 1), 
+    D_pv2p_lag2 = lag(D_pv2p, 2),
+    R_pv2p_lag2 = lag(R_pv2p, 2)) |> 
+  filter(year == 2024) |> 
+  select(state, year, D_pv2p, R_pv2p, D_pv2p_lag1, R_pv2p_lag1, D_pv2p_lag2, R_pv2p_lag2) 
+
+# Subset testing data to only relevant variables for our simple model. 
+d.test <- d.test |> 
+  select(-c(D_pv2p, D_pv2p_lag1, D_pv2p_lag2)) |> 
+  left_join(t, by = c("state", "year"))
+```
+
+```{r run ols, echo=FALSE, include=TRUE, warning=FALSE}
+# Standard frequentist linear regression. 
+reg.ols <- lm(D_pv2p ~ latest_pollav_DEM + mean_pollav_DEM + D_pv2p_lag1 + D_pv2p_lag2, 
+              data = d.train)
+summary(reg.ols)
+pred.ols.dem <- predict(reg.ols, newdata = d.test)
+```
+
+```{r win ec, echo=FALSE, include=TRUE, warning=FALSE}
+# Create dataset to summarize winners and EC vote distributions. 
+win_pred <- data.frame(state = d.test$state,
+                       year = rep(2024, length(d.test$state)),
+                       simp_pred_dem = pred.ols.dem,
+                       simp_pred_rep = 100 - pred.ols.dem) |> 
+            mutate(winner = ifelse(simp_pred_dem > simp_pred_rep, "Democrat", "Republican")) |>
+            left_join(d_ec, by = c("state", "year"))
+
+win_pred |> 
+  filter(winner == "Democrat") |> 
+  select(state)
+
+win_pred |> 
+  filter(winner == "Republican") |> 
+  select(state)
+
+win_pred |> 
+  group_by(winner) |> 
+  summarize(n = n(), ec = sum(electors))
+```
+
+```{r bayesian reg, echo=FALSE, include=TRUE, warning=FALSE}
+# Bayesian linear regression using STAN. 
+stan.data <- list(N = nrow(d.train), 
+                  D_pv2p = d.train$D_pv2p, 
+                  latest_pollav_DEM = d.train$latest_pollav_DEM, 
+                  mean_pollav_DEM = d.train$mean_pollav_DEM, 
+                  D_pv2p_lag1 = d.train$D_pv2p_lag1, 
+                  D_pv2p_lag2 = d.train$D_pv2p_lag2)
+
+stan.code <- "
+data {
+  int<lower=0> N;
+  vector[N] D_pv2p;
+  vector[N] latest_pollav_DEM;
+  vector[N] mean_pollav_DEM;
+  vector[N] D_pv2p_lag1;
+  vector[N] D_pv2p_lag2;
+} "
+
+stan.code <- paste(stan.code, "
+parameters {
+  real alpha;
+  real beta1;
+  real beta2;
+  real beta3;
+  real beta4;
+  real<lower=0> sigma;
+} ")
+
+stan.code <- paste(stan.code, "
+model {
+  D_pv2p ~ normal(alpha + beta1*latest_pollav_DEM + beta2*mean_pollav_DEM + beta3*D_pv2p_lag1 + beta4*D_pv2p_lag2, sigma);
+} ")
+
+stan.model <- stan_model(model_code = stan.code)
+
+stan.fit <- sampling(stan.model, data = stan.data, chains = 4, iter = 4000, warmup = 1000)
+
+# Compare coefficients from frequentist and Bayesian linear regressions. 
+coef(reg.ols)
+confint(reg.ols)
+print(stan.fit, pars = c("alpha", "beta1", "beta2", "beta3", "beta4", "sigma"))
+```
