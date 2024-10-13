@@ -968,50 +968,6 @@ Wyoming24 <- data.frame(year = 2024,
 tfmc_wy <- lm(state_pv2p ~ ics + mean_support + incumbent + state_pv2p_lag + poll_week_4, data = Wyoming)
 summary(tfmc_wy)
 wy_pred <- predict(tfmc_wy, Wyoming24, interval = "none")
-
-# electoral college prediction
-state_ec_pred <- data.frame(stateab = state.abb,
-                              pred = c(al_pred, ak_pred, az_pred, ar_pred, ca_pred, co_pred, ct_pred, de_pred, fl_pred, ga_pred, hi_pred, id_pred, il_pred, in_pred, ia_pred, ks_pred, ky_pred, la_pred, me_pred, md_pred, ma_pred, mi_pred, mn_pred, ms_pred, mo_pred, mt_pred, ne_pred, nv_pred, nh_pred, nj_pred, nm_pred, ny_pred, nc_pred, nd_pred, oh_pred, ok_pred, or_pred, pa_pred, ri_pred, sc_pred, sd_pred, tn_pred, tx_pred, ut_pred, vt_pred, va_pred, wv_pred, wa_pred, wi_pred, wy_pred))
-
-d_ec24 <- d_ec |>
-  filter(year == 2024)
-
-ec_pred <- state_ec_pred |>
-  left_join(d_ec24, by = join_by(stateab))
-
-ec_pred <- ec_pred |>
-  mutate(
-    winner = if_else(pred > 50, 1, 0), # 1 means the state's ec votes go to Harris
-    harris_ec = winner*electors
-  )
-
-sum(ec_pred$harris_ec) # 322 EC
-
-# map of continental u.s.
-states_map_cont <- states_map |>
-  filter(region != "district of columbia")
-
-state_tfmc_pred <- data.frame(region = unique(states_map_cont$region),
-                              pred = c(al_pred, az_pred, ar_pred, ca_pred, co_pred, ct_pred, de_pred, fl_pred, ga_pred, id_pred, il_pred, in_pred, ia_pred, ks_pred, ky_pred, la_pred, me_pred, md_pred, ma_pred, mi_pred, mn_pred, ms_pred, mo_pred, mt_pred, ne_pred, nv_pred, nh_pred, nj_pred, nm_pred, ny_pred, nc_pred, nd_pred, oh_pred, ok_pred, or_pred, pa_pred, ri_pred, sc_pred, sd_pred, tn_pred, tx_pred, ut_pred, vt_pred, va_pred, wa_pred, wv_pred, wi_pred, wy_pred))
-
-states_map_pred <- states_map |>
-  left_join(state_tfmc_pred, by = "region")
-
-fig5 <- states_map_pred |>
-  mutate(
-    winner = ifelse(pred > 50, "Democrat", "Republican")
-  ) |>
-  ggplot(aes(long, lat, group = group)) +
-  geom_polygon(aes(fill = winner), color = "#000033") +
-  scale_fill_manual(values = c("#3377FF", "#FF6680")) +
-  ggtitle("Fig V. Electoral College Prediction, 2024") +
-  my_map_theme() +
-  theme(strip.text = element_text(size = 12), 
-        aspect.ratio = 0.75)
-```
-
-```{r fig 5 print, echo=FALSE, include=TRUE, warning=FALSE}
-fig5
 ```
 
 ```{r pop vote, echo=FALSE, include=FALSE, warning=FALSE}
@@ -1024,4 +980,231 @@ pop24 <- d_pop_tfmc |> filter(year == 2024) # testing data
 tfmc_pop <- lm(pv2p ~ ics + poll_week_4 + incumbent + pv2p_lag, data = d_pop_tfmc)
 summary(tfmc_pop)
 pop_pred <- predict(tfmc_pop, pop24, interval = "none") # 53.44% Harris 2-party popular vote
+```
+
+```{r simulation, echo=FALSE, include=FALSE, warning=FALSE}
+# Standardize number of columns - training data.
+Alabama <- Alabama |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Alaska <- Alaska |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Arkansas <- Arkansas |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Arizona <- Arizona |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+California <- California |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Colorado <- Colorado |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Connecticut <- Connecticut |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Delaware <- Delaware |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Florida <- Florida |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Georgia <- Georgia |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Hawaii <- Hawaii |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Idaho <- Idaho |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Illinois <- Illinois |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Indiana <- Indiana |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Iowa <- Iowa |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Kansas <- Kansas |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Kentucky <- Kentucky |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Louisiana <- Louisiana |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Maine <- Maine |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Maryland <- Maryland |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Massachusetts <- Massachusetts |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Michigan <- Michigan |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Minnesota <- Minnesota |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Mississippi <- Mississippi |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Missouri <- Missouri |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Montana <- Montana |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Nebraska <- Nebraska |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Nevada <- Nevada |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+`New Hampshire` <- `New Hampshire` |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+`New Jersey` <- `New Jersey` |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+`New Mexico` <- `New Mexico` |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+`New York` <- `New York` |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+`North Carolina` <- `North Carolina` |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+`North Dakota` <- `North Dakota` |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Ohio <- Ohio |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Oklahoma <- Oklahoma |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Oregon <- Oregon |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Pennsylvania <- Pennsylvania |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+`Rhode Island` <- `Rhode Island` |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+`South Carolina` <- `South Carolina` |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+`South Dakota` <- `South Dakota` |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Tennessee <- Tennessee |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Texas <- Texas |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Utah <- Utah |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Vermont <- Vermont |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Virginia <- Virginia |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Washington <- Washington |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+`West Virginia` <- `West Virginia` |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Wisconsin <- Wisconsin |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Wyoming <- Wyoming |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+
+# Subset to training data (pre-2024).
+d_train <- rbind(Alabama, Alaska, Arizona, Arkansas, California, Colorado, Connecticut, Delaware, Florida, Georgia, Hawaii, Idaho, Illinois, Indiana, Iowa, Kansas, Kentucky, Louisiana, Maine, Maryland, Massachusetts, Michigan, Minnesota, Mississippi, Missouri, Montana, Nebraska, Nevada, `New Hampshire`, `New Jersey`, `New Mexico`, `New York`, `North Carolina`, `North Dakota`, Ohio, Oklahoma, Oregon, Pennsylvania, `Rhode Island`, `South Carolina`, `South Dakota`, Tennessee, Texas, Utah, Vermont, Virginia, Washington, `West Virginia`, Wisconsin, Wyoming) |>
+  filter(year <= 2020)
+
+# Standardize number of columns - testing data.
+Alabama24 <- Alabama24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Alaska24 <- Alaska24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Arkansas24 <- Arkansas24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Arizona24 <- Arizona24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+California24 <- California24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Colorado24 <- Colorado24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Connecticut24 <- Connecticut24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Delaware24 <- Delaware24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Florida24 <- Florida24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Georgia24 <- Georgia24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Hawaii24 <- Hawaii24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Idaho24 <- Idaho24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Illinois24 <- Illinois24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Indiana24 <- Indiana24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Iowa24 <- Iowa24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Kansas24 <- Kansas24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Kentucky24 <- Kentucky24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Louisiana24 <- Louisiana24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Maine24 <- Maine24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Maryland24 <- Maryland24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Massachusetts24 <- Massachusetts24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Michigan24 <- Michigan24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Minnesota24 <- Minnesota24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Mississippi24 <- Mississippi24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Missouri24 <- Missouri24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Montana24 <- Montana24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Nebraska24 <- Nebraska24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Nevada24 <- Nevada24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+NH24 <- NH24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+NJ24 <- NJ24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+NM24 <- NM24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+NY24 <- NY24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+NC24 <- NC24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+ND24 <- ND24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Ohio24 <- Ohio24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Oklahoma24 <- Oklahoma24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Oregon24 <- Oregon24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Pennsylvania24 <- Pennsylvania24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+RI24 <- RI24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+SC24 <- SC24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+SD24 <- SD24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Tennessee24 <- Tennessee24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Texas24 <- Texas24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Utah24 <- Utah24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Vermont24 <- Vermont24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Virginia24 <- Virginia24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Washington24 <- Washington24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+WV24 <- WV24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Wisconsin24 <- Wisconsin24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+Wyoming24 <- Wyoming24 |> select(year, state, party, state_pv2p, ics, incumbent, poll_week_4, state_pv2p_lag, mean_support)
+
+# Subset to testing data (2024).
+d_test <- rbind(Alabama24, Alaska24, Arizona24, Arkansas24, California24, Colorado24, Connecticut24, Delaware24, Florida24, Georgia24, Hawaii24, Idaho24, Illinois24, Indiana24, Iowa24, Kansas24, Kentucky24, Louisiana24, Maine24, Maryland24, Massachusetts24, Michigan24, Minnesota24, Mississippi24, Missouri24, Montana24, Nebraska24, Nevada24, NH24, NJ24, NM24, NY24, NC24, ND24, Ohio24, Oklahoma24, Oregon24, Pennsylvania24, RI24, SC24, SD24, Tennessee24, Texas24, Utah24, Vermont24, Virginia24, Washington24, WV24, Wisconsin24, Wyoming24)
+
+# Run model. 
+mod_lm_dem <- lm(state_pv2p ~ ics + incumbent + poll_week_4 + state_pv2p_lag + mean_support, 
+                 data = d_train)
+summary(mod_lm_dem)
+
+# Simple simulation. 
+simp.vars <- c("ics", "incumbent", "poll_week_4", "state_pv2p_lag", "mean_support")
+mod_lm_dem_simp <- lm(state_pv2p ~ ics + incumbent + poll_week_4 + state_pv2p_lag + mean_support,
+                      data = d_train)
+
+# What data do we have for 2024? 
+d_test |> select(all_of(simp.vars)) |> view()
+
+# Subset testing data to only relevant variables for our simple model. 
+d_test_simp <- d_test |>
+  select(state, year, all_of(simp.vars))
+
+# Predict.
+simp_pred_dem <- predict(mod_lm_dem_simp, d_test_simp)
+
+# Create dataset to summarize winners and EC vote distributions. 
+win_pred <- data.frame(state = d_test_simp$state,
+                       year = rep(2024, length(d_test_simp$state)),
+                       simp_pred_dem = simp_pred_dem,
+                       winner = ifelse(simp_pred_dem > 50, "Democrat", "Republican")) |>
+  left_join(d_ec, by = c("state", "year")) |>
+  mutate(
+    region = tolower(state)
+  )
+
+ec24_pred <- states_map |>
+  left_join(win_pred, by = "region")
+
+fig5 <- ec24_pred |>
+  ggplot(aes(long, lat, group = group)) +
+  geom_polygon(aes(fill = winner), color = "#000033") +
+  scale_fill_manual(values = c("#7CB9E8", "#FF6680")) +
+  ggtitle("Fig V. Electoral College Prediction, 2024") +
+  my_map_theme() +
+  theme(strip.text = element_text(size = 12), 
+        aspect.ratio = 0.75)
+```
+
+```{r fig 5 print, echo=FALSE, include=TRUE, warning=FALSE}
+fig5
+```
+
+```{r ec numeric, echo=FALSE, include=FALSE, warning=FALSE}
+win_pred <- win_pred |>
+  mutate(
+    harris_win = ifelse(winner == "Democrat", 1, 0),
+    harris_ec = harris_win*electors
+  )
+
+sum(win_pred$harris_ec) # 267 electoral college votes for Harris
+```
+
+```{r simulation, echo=FALSE, include=FALSE, warning=FALSE}
+m <- 1e4 # Number of simulations.
+pred.mat <- data.frame(state = rep(d_test_simp$state, m),
+                       year = rep(2024, m*length(d_test_simp$state)),
+                       mean_support = rep(d_train$mean_support, m),
+                       simp_pred_dem = rep(simp_pred_dem, m))
+
+j <- 1
+for (i in 1:m) {
+  print(i)
+  mean_support <- sapply(d_test$mean_support, function(mu) {
+    rnorm(1, mean = mu, sd = 0.05) # Simulate turnout from Gaussian centered on national average with 5% SD.
+  })
+
+  d_test_samp <- d_test_simp
+  d_test_samp$mean_support <- mean_support
+
+  simp_pred_dem <- predict(mod_lm_dem_simp, d_test_samp)
+
+  pred.mat$simp_pred_dem[j:(i*19)] <- simp_pred_dem
+  j <- j + 19 # Hack for filling out matrix.
+}
+```
+
+```{r fig 6 code, echo=FALSE, include=FALSE, warning=FALSE}
+pred.mat <- pred.mat |>
+  mutate(winner = ifelse(simp_pred_dem > 50, "Democrat", "Republican"),
+         harris_win = ifelse(simp_pred_dem > 50, 1, 0))
+
+pred.mat |>
+  group_by(state) |>
+  summarize(win_rate = mean(harris_win)) |> view()
+  mutate(
+    region = tolower(state)
+  ) |>
+  right_join(states_map, by = "region") |>
+  ggplot(aes(long, lat, group = group)) +
+  geom_polygon(aes(fill = win_rate), color = "#000033") +
+  scale_fill_gradient2(high = "#7CB9E8", # high (positive) values represent a greater win rate
+                       mid = "#E8747C", # low (negative) values represent a lower Harris 
+                       name = "win rate",
+                       breaks = c(0, .25, .50, .25, 1),
+                       limits = c(0, 1)) +
+  ggtitle("Fig V. Electoral College Prediction, 2024") +
+  my_map_theme() +
+  theme(strip.text = element_text(size = 12), 
+        aspect.ratio = 0.75)
+
+# Now we can calculate confidence intervals for each state.
+pred.mat |>
+  group_by(state) |>
+  summarize(mean_dem = mean(simp_pred_dem),
+            sd_dem = sd(simp_pred_dem),
+            lower_dem = mean_dem - 1.96*sd_dem,
+            upper_dem = mean_dem + 1.96*sd_dem) |>
+  view()
 ```
