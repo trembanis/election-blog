@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en-us">
-  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=4321&amp;path=livereload" data-no-instant defer></script>
+  <head><script src="/election-blog/livereload.js?mindelay=10&amp;v=2&amp;port=4321&amp;path=election-blog/livereload" data-no-instant defer></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Blog Post #2 | Ella&#39;s Election Predictions</title>
-    <link rel="stylesheet" href="/css/style.css" />
-    <link rel="stylesheet" href="/css/fonts.css" />
+    <link rel="stylesheet" href="/election-blog/css/style.css" />
+    <link rel="stylesheet" href="/election-blog/css/fonts.css" />
     
   </head>
 
@@ -13,7 +13,7 @@
     <nav>
     <ul class="menu">
       
-      <li><a href="/">Home</a></li>
+      <li><a href="/election-blog/">Home</a></li>
       
     </ul>
     <hr/>
@@ -31,18 +31,18 @@
 <p>Building on <a href="%E2%80%9Chttps://hollis.harvard.edu/primo-explore/fulldisplay?docid=01HVD_ALMA512397392810003941&amp;vid=HVD2&amp;search_scope=everything&amp;tab=everything&amp;lang=en_US&amp;context=L%E2%80%9D">Achen and Bartels’</a> argument that retrospective voters have a recency bias in favor of recent economic conditions, this week I examine three short-term economic measures as candidates to approximate “the economy”: GDP growth, unemployment, and CPI.</p>
 <h1 id="gross-domestic-product-gdp-growth">Gross Domestic Product (GDP) Growth</h1>
 <p>Figure I (below) summarizes the relationship between GDP growth in the second quarter of an election year and the share of the two-party vote received by the incumbent party in that election. As is, the relationship is obscured by the presence of two outliers: 2020 and 1980.</p>
-<img src="/post/2024/09/15/blog-post-2/index_files/figure-html/fig 1 print-1.png" width="672" />
+<img src="/election-blog/post/2024/09/15/blog-post-2/index_files/figure-html/fig 1 print-1.png" width="672" />
 <p>While 2020 has an incumbent vote share that is consistent with other election years, its extreme drop in Q2 GDP – negative 28% – due to the productivity stall caused by the COVID-19 pandemic dramatically flattens out the slope of the regression line. 1980 may seem tame by comparison, but it still registers a substantial decline in Q2 GDP, a symptom of the late-1970s recession which tanked Jimmy Carter’s reelection bid. It is not ideal to lose two points in a dataset as limited as this, with elections only going back as far as 1948, but since both 1980 and 2020 fall more than 1.5 times the Interquartile Range beneath the first quartile, satisfying a common threshold for outliers, they are excluded from Figure II (below).</p>
-<img src="/post/2024/09/15/blog-post-2/index_files/figure-html/fig 2 print-1.png" width="672" />
+<img src="/election-blog/post/2024/09/15/blog-post-2/index_files/figure-html/fig 2 print-1.png" width="672" />
 <p>With the two outliers removed, the amount of variability in incumbent two-party vote share which can be explained by Q2 GDP growth jumps from about 0.19 to about 0.25. The model suggests that every one-point increase in Q2 GDP growth is associated with an expected increase of nearly 0.86%. Furthermore, unlike the outlier-inclusive model in Figure I, this relationship is found to be significant at a 95% confidence level, meaning we can be 95% confident that the observed 0.86 coefficient did not result from chance alone.</p>
 <h1 id="unemployment">Unemployment</h1>
 <p>GDP growth appears to have a positive relationship with incumbent vote share, but is it really the best metric? Surely voters – if they really are myopic and self-interested – are more reactive to major life events like unemployment than to slippery abstractions like “national economic performance.”</p>
 <p>Figure III (below) challenges these common-sense expectations of voter behavior. There is no clear pattern in the distribution of election years, and the slope of the regression line approximates zero. Unsurprisingly, given this lack of visual consensus, the relationship between Q2 unemployment and incumbent vote share is not significant at the 95% confidence level. Note that 2020 is again an outlier in unemployment due to the pandemic, and is excluded in Figure III.</p>
-<img src="/post/2024/09/15/blog-post-2/index_files/figure-html/fig 3 print-1.png" width="672" />
+<img src="/election-blog/post/2024/09/15/blog-post-2/index_files/figure-html/fig 3 print-1.png" width="672" />
 <h1 id="consumer-price-index-cpi">Consumer Price Index (CPI)</h1>
 <p>Perhaps voters dismiss fluctuations in unemployment as individual-level failures, but what about prices? Inflation has so dominated the national conversation in recent years that it seems plausible that voters’ grocery aisle frustrations could sink incumbents’ chances.</p>
 <p>Figure IV (below) casts this hypothesis into doubt. Though the graph does model the expected negative relationship between the Consumer Price Index – a measure of the cost of a typical bundle of consumer goods – and incumbent vote share, the slope coefficient is not significant, and Q2 CPI accounts for a mere 0.08% of the total variability in incumbent vote share. However, it bears mentioning that more recent election years, including the often-irregular 2020 contest, hew closer to the regression line than do previous years. This could imply that prices are becoming a stronger predictor of voter behavior.</p>
-<img src="/post/2024/09/15/blog-post-2/index_files/figure-html/fig 4 print-1.png" width="672" />
+<img src="/election-blog/post/2024/09/15/blog-post-2/index_files/figure-html/fig 4 print-1.png" width="672" />
 <h1 id="multiple-regression">Multiple Regression</h1>
 <p>Combining all three predictors into one regression model does mechanically increase the R2, which seems to suggest that the model explains more of the variability in incumbent vote share. However, given the high probability of multicollinearity between these economic indicators, the multiple regression model comes at a high risk of overfitting, which is counterproductive since my goal is to predict 2024, an out-of-sample election. Moreover, since this model set-up should overinflate the apparent predictive power of the explanatory variables, it is telling that GDP growth remains the lone significant coefficient.</p>
 <h1 id="models-in-review">Models in Review</h1>
@@ -88,9 +88,9 @@
 <h1 id="a-note-on-incumbency">A Note on Incumbency</h1>
 <p>Will the GDP model’s already-uncertain prediction that Democrats will win 51.36% of the popular vote hold up with an “incumbent” like Harris, who has not been president herself?</p>
 <p>Figure V (below) appears to show that incumbent presidents (shown in teal) experience a steeper positive slope in the GDP model, whereas for incumbent-party candidates (in orange) the relationship is more muted.</p>
-<img src="/post/2024/09/15/blog-post-2/index_files/figure-html/fig 5 print-1.png" width="672" />
+<img src="/election-blog/post/2024/09/15/blog-post-2/index_files/figure-html/fig 5 print-1.png" width="672" />
 <p>Admittedly, the data points are few and far between. Figure VI (below), which models a startling positive correlation between unemployment and incumbent-party candidates’ vote share, illustrates the danger of working with such limited data.</p>
-<img src="/post/2024/09/15/blog-post-2/index_files/figure-html/fig 6 print-1.png" width="672" />
+<img src="/election-blog/post/2024/09/15/blog-post-2/index_files/figure-html/fig 6 print-1.png" width="672" />
 <p>Rather than restrict this already limited dataset even further, my model assumes that Kamala Harris, as the sitting Vice President, will act similarly to a straightforward incumbent.</p>
 <h1 id="references">References</h1>
 <p>Christopher H Achen and Larry M Bartels. Democracy for realists: Why elections do not
