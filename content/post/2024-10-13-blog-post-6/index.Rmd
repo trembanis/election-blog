@@ -233,7 +233,7 @@ fig1 <- ad_campaigns |>
   ggtitle("Fig I. Campaign Spending by Party, 2000-2012") +
   my_theme() +
   theme(axis.title = element_text(size=20),
-        axis.text = element_text(size=11),
+        axis.text = element_text(size=8),
         strip.text.x = element_text(size = 20))
 ```
 
