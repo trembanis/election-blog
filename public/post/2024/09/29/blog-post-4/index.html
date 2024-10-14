@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-us">
-  <head>
+  <head><script src="/election-blog/livereload.js?mindelay=10&amp;v=2&amp;port=4321&amp;path=election-blog/livereload" data-no-instant defer></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Blog Post #4 | Ella&#39;s Election Predictions</title>
@@ -34,9 +34,9 @@
 <p>Or maybe it should be Harris: she’s the sitting Vice President, after all, and she inherited much of Biden’s campaign machinery when he withdrew from consideration. Although…she fell quite a ways short of the nomination in 2020, dropping out early on during primary season, so she hasn’t been thoroughly battle-tested via a national election.</p>
 <p>Ultimately, the facets of “incumbency” are not neatly united in either candidate this year, leaving both to awkwardly stake claims to being the real changemaker on the ballot. Rather than using any single measure of incumbency status, the safest option is probably to break it down into its component parts – to the extent that we can identify them – and systematically distribute each one to the best-suited candidate.</p>
 <p>Take, for instance, the allocation of federal grant money – also known as pork – to certain constituencies. The Biden administration has had access to this benefit of office for the last several years. Since, until recently, Biden was running for re-election himself, it seems likely that his spending strategy would fall roughly in line with the pattern depicted in Figure I (below): spending relatively more than he would had Harris been the 2024 candidate from the start.</p>
-<img src="https://trembanis.github.io/election-blog/post/2024/09/29/blog-post-4/index_files/figure-html/fig 1 print-1.png" width="672" />
+<img src="/election-blog/post/2024/09/29/blog-post-4/index_files/figure-html/fig 1 print-1.png" width="672" />
 <p>** Note that these figures are drawn from historical data from Kriner and Greeves (2008) – they are used here to appeal to broad ideas about elected officials’ behavior, not to make specific claims about individual politicians or recent events. **</p>
-<img src="https://trembanis.github.io/election-blog/post/2024/09/29/blog-post-4/index_files/figure-html/fig 2 print-1.png" width="672" />
+<img src="/election-blog/post/2024/09/29/blog-post-4/index_files/figure-html/fig 2 print-1.png" width="672" />
 <p>Thus, the last-minute switch-out allows Harris to enjoy at least one of the benefits of being a straightforward incumbent. However, the picture is not entirely as simple as it seems. In Figure II (above), we see that incumbents tend to allocate pork in greater quantities to swing states, especially during election years. This means that any strategic spending by Biden is vulnerable to slight changes in the electoral map with Harris as the Democratic nominee; though overall federal grant spending might have declined had Biden never sought re-election, the administration might have been able to spend more strategically had the Harris campaign started earlier.</p>
 <p>As I move into this week’s predictive models, which do not come close to capturing all of these complexities, it is worthwhile to keep these limitations in mind. Determining who gets to be an incumbent, and to what degree, may be the make-or-break question for forecasters during this strange, abbreviated election cycle.</p>
 <h1 id="is-it-time-for-change">Is it Time for Change?</h1>
@@ -62,7 +62,7 @@
 </table>
 <p>The table also indicates that the model, despite having just three components, explains a respectable two-thirds of the observed variation in historical incumbent party vote share.</p>
 <p>I also performed one thousand runs of a cross-validation procedure, randomly selecting half of the election years in my dataset to test the model each time, and found that the mean of the absolute value of the out-of-sample residuals was equal to approximately 2.1. Given that the vote share variable has a range of almost 20 points, this, too, seems like a positive indication of model quality. Figure III (below) displays the distribution of out-of-sample errors; they are approximately normal, which suggests that the model overestimates incumbent party performance about as often as it underestimates.</p>
-<img src="https://trembanis.github.io/election-blog/post/2024/09/29/blog-post-4/index_files/figure-html/fig 3 print-1.png" width="672" />
+<img src="/election-blog/post/2024/09/29/blog-post-4/index_files/figure-html/fig 3 print-1.png" width="672" />
 <h1 id="how-about-even-more-change">How About Even More Change?</h1>
 <p>Time for Change is altogether an impressive model; given the looming threat of overfitting, its simplicity is particularly admirable. In this section, I propose three tweaks to Time for Change, which seek to accommodate some of the quirks of the current election season while retaining the simple construction of the original.</p>
 <p>First, I replaced Q2 GDP growth – a measure of factual economic performance – with subjective impressions of the Q2 economy. This new measure is drawn from the University of Michigan’s Index of Consumer Sentiment, and is meant to account for voters who still feel the pinch of inflation despite recent economic recoveries.</p>
@@ -125,7 +125,7 @@
 </table>
 <h1 id="this-weeks-prediction">This Week’s Prediction</h1>
 <p>The completely revamped Time for More Change model performed the highest on the selected measures of in-sample and out-of-sample fit (adjusted R-squared and the average absolute value of out-of-sample errors, respectively). I also produced a visual representation of the cross-validation errors (below, Figure IV): the distribution again appears to be near-normal.</p>
-<img src="https://trembanis.github.io/election-blog/post/2024/09/29/blog-post-4/index_files/figure-html/fig 4 print-1.png" width="672" />
+<img src="/election-blog/post/2024/09/29/blog-post-4/index_files/figure-html/fig 4 print-1.png" width="672" />
 <p>Since Time for More Change also addresses my main substantive concerns with the Abramowitz model, it is my preferred model for this week. Whether I have given too much weight to Harris’s role in the Biden administration remains to be seen. For now, I will leave you with the Time for More Change prediction of a 50.69% Harris two-party popular vote share.</p>
 <p>Until next time!</p>
 
