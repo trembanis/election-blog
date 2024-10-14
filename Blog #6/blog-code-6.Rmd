@@ -230,7 +230,7 @@ fig1
 
 ```{r fig 2 code, echo=FALSE, include=FALSE, warning=FALSE}
 # Spending by State, 2024
-fig2 <- state_spend <- campaign_spending |>
+fig2 <- campaign_spending |>
   filter(election_year == 2024) |>
   group_by(party, contribution_state) |>
   summarise(total_cont = sum(contribution_receipt_amount)) |>
