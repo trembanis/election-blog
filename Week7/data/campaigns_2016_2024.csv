@@ -1,0 +1,903 @@
+"","date","state","city","candidate","Event.Type","year"
+"1",2016-07-25,"VA","Roanoke","Trump / Pence","Town Hall",2016
+"2",2016-07-25,"NC","Winston-Salem","Trump / Pence","Rally/Speech",2016
+"3",2016-07-27,"FL","Doral","Trump","Speech/Press Conference",2016
+"4",2016-07-27,"PA","Scranton","Trump / Pence","Rally/Speech",2016
+"5",2016-07-27,"WI","Waukesha","Pence","Rally/Speech",2016
+"6",2016-07-27,"OH","Toledo","Trump","Rally/Speech",2016
+"7",2016-07-28,"MI","Grand Rapids","Pence","Rally/Speech",2016
+"8",2016-07-28,"MI","Novi","Pence","Rally/Speech",2016
+"9",2016-07-28,"IA","Cedar Rapids","Trump","Rally/Speech",2016
+"10",2016-07-28,"IA","Davenport","Trump","Rally/Speech",2016
+"11",2016-07-29,"PA","Philadelphia","Clinton / Kaine","Rally/Speech",2016
+"12",2016-07-29,"PA","Harrisburgh","Clinton / Kaine","Rally/Speech",2016
+"13",2016-07-29,"PA","Hatfield","Clinton / Kaine","Rally/Speech",2016
+"14",2016-07-29,"OH","Lima","Pence","Rally/Speech",2016
+"15",2016-07-29,"CO","Colorado Springs","Trump","Rally/Speech",2016
+"16",2016-07-29,"CO","Denver","Trump","Rally/Speech",2016
+"17",2016-07-30,"PA","Johnstown","Clinton / Kaine","Rally/Speech",2016
+"18",2016-07-30,"PA","Pittsburgh","Clinton / Kaine","Rally/Speech",2016
+"19",2016-07-30,"OH","Youngstown","Clinton / Kaine","Rally/Speech",2016
+"20",2016-07-31,"OH","Cleveland","Clinton / Kaine","Rally/Speech",2016
+"21",2016-07-31,"OH","Columbus","Clinton / Kaine","Rally/Speech",2016
+"22",2016-08-01,"NE-2","Omaha","Clinton","Rally/Speech",2016
+"23",2016-08-01,"VA","Richmond","Kaine","Rally/Speech",2016
+"24",2016-08-01,"NV","Carson City","Pence","Rally/Speech",2016
+"25",2016-08-01,"NV","Reno","Pence","Rally/Speech",2016
+"26",2016-08-01,"PA","Harrisburgh","Trump","Rally/Speech",2016
+"27",2016-08-01,"OH","Columbus","Trump","Rally/Speech",2016
+"28",2016-08-02,"FL","Daytona Beach","Kaine","Rally/Speech",2016
+"29",2016-08-02,"VA","Ashburn","Trump","Rally/Speech",2016
+"30",2016-08-02,"AZ","Tuscon","Pence","Rally/Speech",2016
+"31",2016-08-02,"AZ","Phoenix","Pence","Rally/Speech",2016
+"32",2016-08-03,"NC","Greensboro","Kaine","Rally/Speech",2016
+"33",2016-08-03,"NC","High Point","Kaine","Rally/Speech",2016
+"34",2016-08-03,"CO","Commerce City","Clinton","Rally/Speech",2016
+"35",2016-08-03,"CO","Denver","Pence","Rally/Speech",2016
+"36",2016-08-03,"CO","Colorado Springs","Pence","Rally/Speech",2016
+"37",2016-08-03,"FL","Jacksonville","Trump","Rally/Speech",2016
+"38",2016-08-03,"FL","Daytona Beach","Trump","Rally/Speech",2016
+"39",2016-08-04,"NV","Las Vegas","Clinton","Rally/Speech",2016
+"40",2016-08-04,"ME","Portland","Trump","Rally/Speech",2016
+"41",2016-08-04,"VA","Virginia Beach","Pence","Rally/Speech",2016
+"42",2016-08-04,"VA","Norfolk","Pence","Rally/Speech",2016
+"43",2016-08-05,"MI","Grand Rapids","Kaine","Rally/Speech",2016
+"44",2016-08-05,"WI","Milwaukee","Kaine","Rally/Speech",2016
+"45",2016-08-05,"DC","Washington DC","Clinton","Speech",2016
+"46",2016-08-05,"IA","Des Moines","Trump / Pence","Rally/Speech",2016
+"47",2016-08-05,"WI","Green Bay","Trump / Pence","Rally/Speech",2016
+"48",2016-08-06,"NH","Windham","Trump","Rally/Speech",2016
+"49",2016-08-07,"WI","Milwaukee","Kaine","Meet The Press Interview",2016
+"50",2016-08-08,"FL","St. Petersburg","Clinton","Rally/Speech",2016
+"51",2016-08-08,"FL","Kissimmee","Clinton","Rally/Speech",2016
+"52",2016-08-08,"MI","Detroit","Trump / Pence","Speech",2016
+"53",2016-08-09,"FL","Miami","Clinton","Facility Tour",2016
+"54",2016-08-09,"TX","Austin","Kaine","Speech to volunteers",2016
+"55",2016-08-09,"NC","Wilmington","Trump","Rally/Speech",2016
+"56",2016-08-09,"NC","Fayetteville","Trump","Rally/Speech",2016
+"57",2016-08-09,"PA","Lancaster","Pence","Rally/Speech",2016
+"58",2016-08-09,"PA","Pittsburgh","Pence","Rally/Speech",2016
+"59",2016-08-10,"TX","Dallas/Fort Worth","Kaine","Fundraiser",2016
+"60",2016-08-10,"IA","Des Moines","Clinton","Rally/Speech",2016
+"61",2016-08-10,"VA","Abingdon","Trump","Rally/Speech",2016
+"62",2016-08-10,"FL","Fort Lauderdale","Trump","Rally/Speech",2016
+"63",2016-08-10,"OH","Dayton","Pence","Rally/Speech",2016
+"64",2016-08-10,"OH","Cambridge","Pence","Rally/Speech",2016
+"65",2016-08-11,"MI","Detroit","Clinton","Rally/Speech",2016
+"66",2016-08-11,"LA","New Orleans","Kaine","Speech to Progressive National Baptist Convention",2016
+"67",2016-08-11,"FL","Kissimmee","Trump","Rally/Speech",2016
+"68",2016-08-11,"WI","La Crosse","Pence","Rally/Speech",2016
+"69",2016-08-11,"WI","Milwaukee","Pence","Rally/Speech",2016
+"70",2016-08-12,"PA","Erie","Trump","Rally/Speech",2016
+"71",2016-08-12,"PA","Altoona","Trump","Rally/Speech",2016
+"72",2016-08-13,"NH","Manchester","Kaine","Rally/Speech",2016
+"73",2016-08-13,"CT","Fairfield","Trump","Rally/Speech",2016
+"74",2016-08-15,"NC","Asheville","Kaine","Rally/Speech",2016
+"75",2016-08-15,"PA","Scranton","Clinton","Rally/Speech",2016
+"76",2016-08-15,"OH","Youngstown","Trump / Pence","Rally/Speech",2016
+"77",2016-08-16,"PA","Philadelphia","Clinton","Rally/voter registration event",2016
+"78",2016-08-16,"NC","Fayetteville","Kaine","Rally/Speech",2016
+"79",2016-08-16,"WI","West Bend","Trump","Rally/Speech",2016
+"80",2016-08-16,"WI","Milwaukee","Trump","Town Hall (Fox News)",2016
+"81",2016-08-17,"OH","Cleveland","Clinton","Rally/Speech",2016
+"82",2016-08-17,"IA","Cedar Rapids","Kaine","Rally/Speech",2016
+"83",2016-08-17,"NV","Las Vegas","Pence","Rally/Speech",2016
+"84",2016-08-18,"NC","Charlotte","Trump","Rally/Speech",2016
+"85",2016-08-18,"NH","Manchester","Pence","Rally/Speech",2016
+"86",2016-08-19,"MI","Dimondale","Trump","Rally/Speech",2016
+"87",2016-08-20,"VA","Fredericksburg","Trump","Rally/Speech",2016
+"88",2016-08-22,"CA","Los Angeles","Clinton","Jimmy Kimmel Live",2016
+"89",2016-08-22,"NV","Las Vegas","Kaine","Rally/Speech",2016
+"90",2016-08-22,"OH","Akron","Trump","Rally/Speech",2016
+"91",2016-08-22,"IA","Cedar Rapids","Pence","Rally/Speech",2016
+"92",2016-08-23,"CO","Lakewood","Kaine","Small Business Roundtable",2016
+"93",2016-08-23,"TX","Austin","Trump","Rally/Speech",2016
+"94",2016-08-23,"PA","King of Prussia","Pence","Facility Tour",2016
+"95",2016-08-23,"PA","Pipersville","Pence","Rally/Speech",2016
+"96",2016-08-24,"MS","Jackson","Trump","Rally/Speech",2016
+"97",2016-08-24,"FL","Tampa","Trump","Rally/Speech",2016
+"98",2016-08-24,"NC","Charlotte","Pence","Rally/Speech",2016
+"99",2016-08-24,"NC","Wilmington","Pence","Rally/Speech",2016
+"100",2016-08-25,"NV","Reno","Clinton","Rally/Speech",2016
+"101",2016-08-25,"NY","New York","Kaine","Late Show with Stephen Colbert",2016
+"102",2016-08-25,"NH","Manchester","Trump","Rally/Speech",2016
+"103",2016-08-26,"NJ","Secaucus","Clinton","Morning Joe (MSNBC)",2016
+"104",2016-08-26,"FL","Tallahassee","Kaine","Voter Registration Event",2016
+"105",2016-08-27,"FL","Pembroke Pines","Kaine","Rally/Speech",2016
+"106",2016-08-27,"IA","Des Moines ","Trump","Speech at Ernst ""Roast and Ride"" Fundraiser",2016
+"107",2016-08-27,"VA","Purcellville","Pence","Rally/Speech",2016
+"108",2016-08-28,"DC","Washington DC","Pence","State of the Union with Jake Tapper",2016
+"109",2016-08-29,"GA","Perry","Pence","Town hall",2016
+"110",2016-08-29,"GA","Atlanta","Pence","Rally/Speech",2016
+"111",2016-08-30,"PA","Erie","Kaine","Rally/Speech",2016
+"112",2016-08-30,"PA","Lancaster","Kaine","Rally/Speech",2016
+"113",2016-08-30,"WA","Everett","Trump","Rally/Speech",2016
+"114",2016-08-30,"GA","Dalton","Pence","Town hall",2016
+"115",2016-08-30,"NC","Winston-Salem","Pence","Rally/Speech",2016
+"116",2016-08-31,"OH","Cincinnati","Clinton","American Legion National Convention",2016
+"117",2016-08-31,"PA","Bethlehem","Kaine","Rally/Speech",2016
+"118",2016-08-31,"AZ","Phoenix","Trump","Rally/Speech",2016
+"119",2016-08-31,"FL","Sarasota","Pence","Rally/Town hall",2016
+"120",2016-09-01,"NH","Manchester","Kaine","Round-table at Manchester Community College",2016
+"121",2016-09-01,"OH","Cincinnati","Trump","American Legion National Convention",2016
+"122",2016-09-01,"OH","Wilmington","Trump","Rally/Speech",2016
+"123",2016-09-01,"UT","Salt Lake City","Pence","Fundraiser",2016
+"124",2016-09-01,"ID","Boise","Pence","Fundraiser",2016
+"125",2016-09-03,"MI","Detroit","Trump","Speech at Greater Faith Ministries",2016
+"126",2016-09-04,"NY","New York","Kaine","ABC ""This Week"" Interview",2016
+"127",2016-09-05,"OH","Cleveland","Clinton / Kaine","Labor Day Festival/Speeches",2016
+"128",2016-09-05,"IL","Hampton","Clinton","Salute to Labor Picnic/Speech",2016
+"129",2016-09-05,"PA","Pittsburgh","Kaine","Rally/Speech",2016
+"130",2016-09-05,"OH","Cleveland","Trump / Pence","Round-table discussion",2016
+"131",2016-09-05,"OH","Canfield","Trump / Pence","Canfield County Fair / Speech",2016
+"132",2016-09-06,"FL","Tampa","Clinton","Rally/Speech",2016
+"133",2016-09-06,"NC","Wilmington","Kaine","Rally/Speech",2016
+"134",2016-09-06,"VA","Virginia Beach","Trump","Rally/Speech",2016
+"135",2016-09-06,"NC","Greenville","Trump","Rally/Speech",2016
+"136",2016-09-06,"MO","Springfield","Pence","Rally/Speech",2016
+"137",2016-09-06,"MO","Chesterfield","Pence","Rally/Speech",2016
+"138",2016-09-07,"NY","New York","Clinton","NBC Commander in Chief Forum",2016
+"139",2016-09-07,"NY","New York","Trump","NBC Commander in Chief Forum",2016
+"140",2016-09-07,"PA","Philadelphia","Trump","Speech to the Union League",2016
+"141",2016-09-07,"CA","La Jolla","Pence","Fundraiser",2016
+"142",2016-09-07,"CA","Newport Beach","Pence","Fundraiser",2016
+"143",2016-09-08,"NC","Charlotte","Clinton","Rally/Speech",2016
+"144",2016-09-08,"MO","Kansas City","Clinton","Speech to National Baptist Convention",2016
+"145",2016-09-08,"NY","White Plains","Clinton","Press Conference",2016
+"146",2016-09-08,"DC","Washington DC","Kaine","Fundraiser",2016
+"147",2016-09-08,"OH","Cleveland","Trump","Speech at charter school",2016
+"148",2016-09-08,"CA","Simi Valley","Pence","Rally/Speech at Reagan Library",2016
+"149",2016-09-09,"NY","New York","Clinton","Press Conference",2016
+"150",2016-09-09,"DC","Washington DC","Kaine","CBS ""This Morning""",2016
+"151",2016-09-09,"AL","Birmingham","Kaine","Church Tour",2016
+"152",2016-09-09,"VA","Norfolk","Kaine","Rally/Speech at ODU",2016
+"153",2016-09-09,"DC","Washington DC","Trump","Speech to Values Voter Summit",2016
+"154",2016-09-09,"FL","Pensacola","Trump","Rally/Speech",2016
+"155",2016-09-09,"DC","Washington DC","Pence","Speech to Values Voter Summit",2016
+"156",2016-09-10,"DC","Washington DC","Kaine","Keynote at Human Rights Campaign Dinner",2016
+"157",2016-09-10,"VA","Paris","Pence","Speech to Liberty Farm Festival",2016
+"158",2016-09-12,"OH","Dayton","Kaine","Rally/Speech",2016
+"159",2016-09-12,"MD","Baltimore","Trump","Speech to National Guard Association",2016
+"160",2016-09-12,"NC","Asheville","Trump","Rally/Speech",2016
+"161",2016-09-13,"MI","Ann Arbor","Kaine","Rally/Speech",2016
+"162",2016-09-13,"MN","Minneapolis","Kaine","Fundraiser",2016
+"163",2016-09-13,"IA","Des Moines ","Trump","Rally/Speech",2016
+"164",2016-09-13,"PA","Aston","Trump","Speech",2016
+"165",2016-09-13,"DC","Washington DC","Pence","Press Conference",2016
+"166",2016-09-14,"IN","Gary","Kaine","Speech to volunteers",2016
+"167",2016-09-14,"IL","Chicago","Kaine","Fundraiser",2016
+"168",2016-09-14,"MI","Flint","Trump","Speech to Bethel United Methodist Church",2016
+"169",2016-09-14,"OH","Canton","Trump","Rally/Speech",2016
+"170",2016-09-14,"PA","Scranton","Pence","Rally/Speech",2016
+"171",2016-09-15,"NC","Greensboro","Clinton","Rally/Speech",2016
+"172",2016-09-15,"DC","Washington DC","Clinton","Speech, Congressional Hispanic Caucus gala",2016
+"173",2016-09-15,"NH","Portsmouth","Kaine","Panel discussion",2016
+"174",2016-09-15,"NH","Exeter","Kaine","Rally/Speech",2016
+"175",2016-09-15,"ME","Cape Elizabeth","Kaine","Fundraiser",2016
+"176",2016-09-15,"NY","New York","Trump / Pence","Speeches to The Economic Club of NY",2016
+"177",2016-09-15,"NY","New York","Trump","Tonight Show with Jimmy Fallon",2016
+"178",2016-09-15,"NY","New York","Trump","The Dr. Oz Show",2016
+"179",2016-09-15,"NH","Laconia","Trump","Rally/Speech",2016
+"180",2016-09-16,"DC","Washington DC","Clinton","Speech to Black Women's Agenda Symposium",2016
+"181",2016-09-16,"DC","Washington DC","Trump","Press Conference",2016
+"182",2016-09-16,"FL","Miami","Trump","Rally/Speech",2016
+"183",2016-09-17,"DC","Washington DC","Clinton","Speech to Congressional Black Caucus Foundation",2016
+"184",2016-09-17,"TX","Houston","Trump","Speech to Remembrance Project",2016
+"185",2016-09-17,"OK","Norman","Trump","Fundraiser",2016
+"186",2016-09-17,"CO","Colorado Springs","Trump","Rally/Speech",2016
+"187",2016-09-17,"FL","The Villages","Pence","Rally/Speech",2016
+"188",2016-09-18,"FL","Jacksonville","Pence","Speech to First Baptist Church of Jacksonville",2016
+"189",2016-09-19,"PA","Philadelphia","Clinton","Rally/Speech",2016
+"190",2016-09-19,"NY","White Plains","Clinton","Press Conference",2016
+"191",2016-09-19,"NY","New York","Clinton","Tonight Show with Jimmy Fallon",2016
+"192",2016-09-19,"IA","Ames","Kaine","Rally/Speech",2016
+"193",2016-09-19,"CA","Los Angeles","Kaine","Fundraiser",2016
+"194",2016-09-19,"FL","Estero","Trump","Rally/Speech",2016
+"195",2016-09-19,"NY","New York","Trump","The O'Reilly Factor interview",2016
+"196",2016-09-19,"IA","Mason City","Pence","Town Hall",2016
+"197",2016-09-19,"IA","Dubuque","Pence","Rally/Speech",2016
+"198",2016-09-20,"CA","Los Angeles","Kaine","Fundraiser",2016
+"199",2016-09-20,"NC","High Point","Trump","Rally/Speech",2016
+"200",2016-09-20,"NC","Kenansville","Trump","Rally/Speech",2016
+"201",2016-09-20,"VA","Norfolk","Pence","Round-table discussion",2016
+"202",2016-09-20,"VA","Williamsburg","Pence","Rally/Speech",2016
+"203",2016-09-21,"FL","Orlando","Clinton","Rally/Speech",2016
+"204",2016-09-21,"CA","Atherton","Kaine","Fundraiser",2016
+"205",2016-09-21,"OH","Cleveland Heights","Trump","Hannity Town Hall",2016
+"206",2016-09-21,"OH","Cleveland Heights","Trump / Pence","Speech to New Spirit Revival Church",2016
+"207",2016-09-21,"OH","Toledo","Trump / Pence","Rally/Speech",2016
+"208",2016-09-21,"OH","Dayton","Trump","Small Business Roundtable",2016
+"209",2016-09-22,"NV","Reno","Kaine","Rally/Speech",2016
+"210",2016-09-22,"PA","Pittsburgh","Trump","Speech to Shale Insight Conference",2016
+"211",2016-09-22,"PA","Chester Township","Trump","Rally/Speech",2016
+"212",2016-09-22,"CO","Colorado Springs","Pence","Town Hall",2016
+"213",2016-09-22,"AZ","Mesa","Pence","Speech to Living Word Bible Church",2016
+"214",2016-09-23,"TX","Houston","Kaine","Speech to Communications Workers of America Local 6222",2016
+"215",2016-09-23,"TX","Austin","Kaine","Speech to Supporters",2016
+"216",2016-09-23,"OK","Oklahoma City","Kaine","Fundraiser",2016
+"217",2016-09-24,"VA","Providence Forge","Kaine","Chickahominy Indian Tribe Fall Festival",2016
+"218",2016-09-24,"VA","Roanoke","Trump","Rally/Speech",2016
+"219",2016-09-24,"NC","Black Mountain","Pence","Speech to Home School Legal Defense Assoc.",2016
+"220",2016-09-24,"IA","Des Moines ","Pence","Speech to IA Faith and Freedom Coalition",2016
+"221",2016-09-25,"FL","Miami","Kaine","Rally/Speech",2016
+"222",2016-09-26,"NY","Hempstead","Clinton","First Presidential Debate",2016
+"223",2016-09-26,"FL","Lakeland","Kaine","Rally/Speech",2016
+"224",2016-09-26,"FL","Orlando","Kaine","Round-table discussion",2016
+"225",2016-09-26,"FL","Orlando","Kaine","Debate Watch Party",2016
+"226",2016-09-26,"NY","Hempstead","Trump","First Presidential Debate",2016
+"227",2016-09-26,"NH","Milford","Pence","Rally/Speech",2016
+"228",2016-09-27,"NC","Raleigh","Clinton","Rally/Speech",2016
+"229",2016-09-27,"FL","Orlando","Kaine","Speech to supporters",2016
+"230",2016-09-27,"FL","Melbourne","Trump","Rally/Speech",2016
+"231",2016-09-28,"NH","Durham","Clinton","Rally/Speech",2016
+"232",2016-09-28,"VA","Alexandria","Kaine","Speech following John Warner endorsement",2016
+"233",2016-09-28,"IL","Chicago","Trump","Speech to Polish American Congress",2016
+"234",2016-09-28,"IL","Bolingbrook","Trump","Fundraiser",2016
+"235",2016-09-28,"IA","Council Bluffs","Trump","Rally/Speech",2016
+"236",2016-09-28,"WI","Waukesha","Trump","Rally/Speech",2016
+"237",2016-09-28,"OH","Leetonia","Pence","Rally/Speech",2016
+"238",2016-09-28,"NY","New York","Trump","The O'Reilly Factor interview",2016
+"239",2016-09-29,"IA","Des Moines","Clinton","Rally/Speech",2016
+"240",2016-09-29,"NH","Bedford","Trump","Rally/Speech",2016
+"241",2016-09-29,"PA","York","Pence","Rally/Speech",2016
+"242",2016-09-30,"FL","Fort Pierce","Clinton","Rally/Speech",2016
+"243",2016-09-30,"FL","Coral Springs","Clinton","Rally/Speech",2016
+"244",2016-09-30,"FL","Miami Beach","Clinton","Fundraiser",2016
+"245",2016-09-30,"MI","Novi","Trump","Rally/Speech",2016
+"246",2016-09-30,"IN","Fort Wayne","Pence","Rally/Speech",2016
+"247",2016-10-01,"PA","Manheim","Trump","Rally/Speech",2016
+"248",2016-10-02,"NC","Charlotte","Clinton","Speech to Little Rock AME Zion Church",2016
+"249",2016-10-03,"OH","Toledo","Clinton","Rally/Speech",2016
+"250",2016-10-03,"OH","Akron","Clinton","Voter Registration Event",2016
+"251",2016-10-03,"VA","Herndon","Trump","Speech to Retired American Warriors PAC",2016
+"252",2016-10-03,"CO","Pueblo","Trump","Rally/Speech",2016
+"253",2016-10-03,"CO","Loveland","Trump","Rally/Speech",2016
+"254",2016-10-03,"VA","Ashland","Pence","Rally/Speech",2016
+"255",2016-10-04,"PA","Haverford","Clinton","Town Hall",2016
+"256",2016-10-04,"PA","Harrisburg","Clinton","Organizing Event and Press Conference",2016
+"257",2016-10-04,"VA","Farmville","Kaine","Vice Presidential Debate",2016
+"258",2016-10-04,"AZ","Prescott Valley","Trump","Rally/Speech",2016
+"259",2016-10-04,"VA","Farmville","Pence","Vice Presidential Debate",2016
+"260",2016-10-05,"PA","Philadelphia","Kaine","Rally/Speech",2016
+"261",2016-10-05,"NV","Henderson","Trump","Rally/Speech",2016
+"262",2016-10-05,"NV","Reno","Trump","Rally/Speech",2016
+"263",2016-10-05,"VA","Harrisonburg","Pence","Rally/Speech",2016
+"264",2016-10-05,"PA","Grantville","Pence","Rally/Speech",2016
+"265",2016-10-06,"PA","Pittsburgh","Kaine","Rally/Speech",2016
+"266",2016-10-06,"NV","Las Vegas","Kaine","Voter Registration Event",2016
+"267",2016-10-06,"NH","Sandown","Trump","Town Hall",2016
+"268",2016-10-06,"PA","Gettysburg","Pence","Rally/Speech",2016
+"269",2016-10-06,"PA","Johnstown","Pence","Rally/Speech",2016
+"270",2016-10-07,"NV","Henderson","Kaine","Speech at senior living center",2016
+"271",2016-10-07,"OH","Strongsville","Pence","Rally/Speech",2016
+"272",2016-10-07,"OH","Rossford","Pence","Rally/Speech",2016
+"273",2016-10-08,"AZ","Phoenix","Kaine","Fundraiser",2016
+"274",2016-10-08,"CA","Los Angeles","Kaine","Fundraiser",2016
+"275",2016-10-09,"MO","St. Louis","Clinton","Second Presidential Debate",2016
+"276",2016-10-09,"CA","Sacramento","Kaine","Fundraiser",2016
+"277",2016-10-09,"MO","St. Louis","Trump","Second Presidential Debate",2016
+"278",2016-10-10,"MI","Detroit","Clinton","Rally/Speech",2016
+"279",2016-10-10,"OH","Columbus","Clinton","Rally/Speech",2016
+"280",2016-10-10,"CO","Denver","Kaine","Get Out the Vote Concert",2016
+"281",2016-10-10,"PA","Ambridge","Trump","Rally/Speech",2016
+"282",2016-10-10,"PA","Wilkes-Barre","Trump","Rally/Speech",2016
+"283",2016-10-10,"NC","Charlotte","Pence","Town Hall",2016
+"284",2016-10-10,"NC","Fletcher","Pence","Rally/Speech",2016
+"285",2016-10-11,"FL","Miami","Clinton","Rally/Speech",2016
+"286",2016-10-11,"TX","San Antonio","Trump","Fundraiser",2016
+"287",2016-10-11,"TX","Dallas","Trump","Fundraiser",2016
+"288",2016-10-11,"TX","Dallas","Trump","The O'Reilly Factor interview",2016
+"289",2016-10-11,"FL","Panama City","Trump","Rally/Speech",2016
+"290",2016-10-11,"IA","Newton","Pence","Town Hall",2016
+"291",2016-10-11,"IA","Bettendorf","Pence","Speech to Ronald Reagan Dinner",2016
+"292",2016-10-12,"CO","Pueblo","Clinton","Rally/Speech",2016
+"293",2016-10-12,"NV","Las Vegas","Clinton","Rally/Speech",2016
+"294",2016-10-12,"NC","Davidson","Kaine","Rally/Organizing Event",2016
+"295",2016-10-12,"FL","Ocala","Trump","Rally/Speech",2016
+"296",2016-10-12,"FL","Lakeland","Trump","Rally/Speech",2016
+"297",2016-10-12,"VA","Lynchburg","Pence","Speech at Liberty University Convocation",2016
+"298",2016-10-12,"VA","Salem","Pence","Town Hall",2016
+"299",2016-10-12,"VA","Salem","Pence","The O'Reilly Factor interview",2016
+"300",2016-10-12,"NC","Raleigh","Pence","Rally/Speech",2016
+"301",2016-10-13,"CA","San Francisco","Clinton","Fundraiser",2016
+"302",2016-10-13,"NY","New York","Kaine","""The View"" Interview",2016
+"303",2016-10-13,"FL","West Palm Beach","Trump","Rally/Speech",2016
+"304",2016-10-13,"OH","Columbus","Trump","Rally/Speech",2016
+"305",2016-10-13,"OH","Cincinnati","Trump","Rally/Speech",2016
+"306",2016-10-13,"PA","Reading","Pence","Fundraiser",2016
+"307",2016-10-13,"PA","Orefield","Pence","Speech to RepublicanFest",2016
+"308",2016-10-13,"PA","Bethlehem","Pence","Speech to Northampton County Republican Dinner",2016
+"309",2016-10-14,"CA","Burbank","Clinton","The Ellen DeGeneres Show",2016
+"310",2016-10-14,"WA","Seattle","Clinton","Fundraiser",2016
+"311",2016-10-14,"NC","Greensboro","Trump","Rally/Speech",2016
+"312",2016-10-14,"NC","Charlotte","Trump","Rally/Speech",2016
+"313",2016-10-14,"FL","Pensacola","Pence","Rally/Speech",2016
+"314",2016-10-14,"FL","Miami","Pence","Speech to Miami/Dade Republicans",2016
+"315",2016-10-15,"FL","Miami","Kaine","Voter Registration Event",2016
+"316",2016-10-15,"NH","Portsmouth","Trump","Rally/Speech",2016
+"317",2016-10-15,"ME","Bangor","Trump","Rally/Speech",2016
+"318",2016-10-15,"NJ","Edison","Trump","Speech at Republican Hindu Coalition event",2016
+"319",2016-10-15,"FL","Tampa","Pence","Fundraiser",2016
+"320",2016-10-16,"FL","Miami","Kaine","ABC ""This Week"" Interview",2016
+"321",2016-10-16,"FL","Miami","Kaine","CBS ""Face the Natiion"" Interview",2016
+"322",2016-10-16,"FL","Miami","Kaine","""Fox News Sunday"" Interview",2016
+"323",2016-10-16,"FL","Miami","Kaine","Speech to Pnuema Church",2016
+"324",2016-10-16,"FL","Palm Beach County","Kaine","Speech to The Faith Center church",2016
+"325",2016-10-16,"VA","Leesburg","Kaine","Fundraiser",2016
+"326",2016-10-16,"FL","Tampa","Pence","NBC ""Meet the Press"" Interview",2016
+"327",2016-10-16,"FL","Tampa","Pence","CBS ""Face the Natiion"" Interview",2016
+"328",2016-10-16,"FL","Tampa","Pence","""Fox News Sunday"" Interview",2016
+"329",2016-10-17,"MD","Bethesda","Kaine","Fundraiser",2016
+"330",2016-10-17,"WI","Green Bay","Trump","Rally/Speech",2016
+"331",2016-10-17,"OH","Mason","Pence","Rally/Speech",2016
+"332",2016-10-17,"OH","Columbus","Pence","Rally/Speech",2016
+"333",2016-10-17,"MI","Shelby Township","Pence","Fundraiser",2016
+"334",2016-10-18,"MI","Detroit","Kaine","Rally/Organizing Event",2016
+"335",2016-10-18,"CO","Colorado Springs","Trump","Rally/Speech",2016
+"336",2016-10-18,"CO","Grand Junction","Trump","Rally/Speech",2016
+"337",2016-10-18,"NC","Wilmington","Pence","Rally/Speech",2016
+"338",2016-10-18,"NC","Fayetteville","Pence","Rally/Speech",2016
+"339",2016-10-19,"NV","Las Vegas","Clinton","Third Presidential Debate",2016
+"340",2016-10-19,"OH","Upper Arlington","Kaine","Rally/Speech",2016
+"341",2016-10-19,"OH","Springfield","Kaine","Rally/Speech",2016
+"342",2016-10-19,"NC","Asheville","Kaine","Rally/Speech",2016
+"343",2016-10-19,"NV","Las Vegas","Trump","Third Presidential Debate",2016
+"344",2016-10-19,"CO","Durango","Pence","Rally/Speech",2016
+"345",2016-10-20,"NC","Charlotte","Kaine","Rally/Speech",2016
+"346",2016-10-20,"NC","Durham","Kaine","Rally/Speech",2016
+"347",2016-10-20,"OH","Delaware","Trump","Rally/Speech",2016
+"348",2016-10-20,"NV","Reno","Pence","Rally/Speech",2016
+"349",2016-10-20,"NM","Albuquerque","Pence","Rally/Speech",2016
+"350",2016-10-21,"OH","Cleveland","Clinton","Rally/Speech",2016
+"351",2016-10-21,"PA","State College","Kaine","Rally/Speech",2016
+"352",2016-10-21,"NC","Fletcher","Trump","Rally/Speech",2016
+"353",2016-10-21,"PA","Johnstown","Trump","Rally/Speech",2016
+"354",2016-10-21,"PA","Newtown","Trump","Rally/Speech",2016
+"355",2016-10-21,"NH","Nashua","Pence","Rally/Speech",2016
+"356",2016-10-21,"NH","Exeter","Pence","Rally/Town hall",2016
+"357",2016-10-22,"PA","Pittsburgh","Clinton / Kaine","Rally/Speech",2016
+"358",2016-10-22,"PA","Philadelphia","Clinton / Kaine","Rally/Speech",2016
+"359",2016-10-22,"PA","Gettysburg","Trump","Speech",2016
+"360",2016-10-22,"VA","Virginia Beach","Trump","Rally/Speech",2016
+"361",2016-10-22,"OH","Cleveland","Trump / Pence","Rally/Speech",2016
+"362",2016-10-22,"OH","Circleville","Pence","Speech at Crossroads Church",2016
+"363",2016-10-23,"NC","Durham","Clinton","Speech to Union Baptist Church",2016
+"364",2016-10-23,"NC","Raleigh","Clinton","Rally/Speech",2016
+"365",2016-10-23,"NC","Charlotte","Clinton","Rally/Speech",2016
+"366",2016-10-23,"FL","Gainesville","Kaine","Rally/Speech",2016
+"367",2016-10-23,"FL","Orlando","Kaine","Rally/Speech",2016
+"368",2016-10-23,"FL","Gainesville","Kaine","Meet The Press interview",2016
+"369",2016-10-23,"FL","Naples","Trump","Rally/Speech",2016
+"370",2016-10-24,"NH","Manchester","Clinton","Rally/Speech",2016
+"371",2016-10-24,"FL","Miami","Kaine","Rally/Speech",2016
+"372",2016-10-24,"FL","West Palm Beach","Kaine","Rally/Speech",2016
+"373",2016-10-24,"FL","St. Augustine","Trump","Rally/Speech",2016
+"374",2016-10-24,"FL","Tampa","Trump","Rally/Speech",2016
+"375",2016-10-24,"NC","Salisbury","Pence","Rally/Speech",2016
+"376",2016-10-24,"NC","Greensboro","Pence","Rally/Speech",2016
+"377",2016-10-25,"FL","Coconut Creek","Clinton","Rally/Speech",2016
+"378",2016-10-25,"FL","Pinecrest","Clinton","Fundraiser",2016
+"379",2016-10-25,"CT","Middle Haddam","Kaine","Fundraiser",2016
+"380",2016-10-25,"NY","New York","Kaine","Fundraiser",2016
+"381",2016-10-25,"FL","Miami","Trump","Speech at Doral Golf Course",2016
+"382",2016-10-25,"FL","Sanford","Trump","Rally/Speech",2016
+"383",2016-10-25,"FL","Tallahassee","Trump","Rally/Speech",2016
+"384",2016-10-25,"OH","Swanton","Pence","Rally/Speech",2016
+"385",2016-10-25,"OH","Ashland","Pence","Rally/Speech",2016
+"386",2016-10-25,"OH","Marietta","Pence","Rally/Speech",2016
+"387",2016-10-26,"FL","Lake Worth","Clinton","Rally/Speech",2016
+"388",2016-10-26,"FL","Tampa","Clinton","Rally/Speech",2016
+"389",2016-10-26,"PA","Newtown","Kaine","Rally/Speech",2016
+"390",2016-10-26,"PA","Allentown","Kaine","Rally/Speech",2016
+"391",2016-10-26,"DC","Washington DC","Trump","Speech at hotel opening",2016
+"392",2016-10-26,"NC","Charlotte","Trump","Rally/Speech",2016
+"393",2016-10-26,"NC","Kinston","Trump","Rally/Speech",2016
+"394",2016-10-26,"NV","Reno","Pence","Rally/Speech",2016
+"395",2016-10-26,"UT","Salt Lake City","Pence","Rally/Speech",2016
+"396",2016-10-26,"CO","Colorado Springs","Pence","Rally/Speech",2016
+"397",2016-10-27,"NC","Winston-Salem","Clinton","Rally/Speech",2016
+"398",2016-10-27,"OH","Lorain","Kaine","Rally/Speech",2016
+"399",2016-10-27,"OH","Gambier","Kaine","Rally/Speech",2016
+"400",2016-10-27,"OH","Springfield","Trump","Rally/Speech",2016
+"401",2016-10-27,"OH","Toledo","Trump","Rally/Speech",2016
+"402",2016-10-27,"OH","Geneva","Trump","Rally/Speech",2016
+"403",2016-10-27,"NE","Omaha","Pence","Rally/Speech",2016
+"404",2016-10-27,"IA","Fort Dodge","Pence","Rally/Speech",2016
+"405",2016-10-28,"IA","Cedar Rapids","Clinton","Rally/Speech",2016
+"406",2016-10-28,"IA","Des Moines","Clinton","Rally/Speech",2016
+"407",2016-10-28,"FL","Tallahassee","Kaine","Rally/Speech",2016
+"408",2016-10-28,"NH","Manchester","Trump","Rally/Speech",2016
+"409",2016-10-28,"ME","Lisbon","Trump","Rally/Speech",2016
+"410",2016-10-28,"IA","Cedar Rapids","Trump","Rally/Speech",2016
+"411",2016-10-28,"PA","Bensalem","Pence","Rally/Speech",2016
+"412",2016-10-28,"NC","Smithfield","Pence","Speech at The Conservative Rally",2016
+"413",2016-10-29,"FL","Daytona Beach","Clinton","Rally/Speech",2016
+"414",2016-10-29,"FL","Miami","Clinton","Get Out the Vote Concert",2016
+"415",2016-10-29,"CO","Golden","Trump","Rally/Speech",2016
+"416",2016-10-29,"AZ","Phoenix","Trump","Rally/Speech",2016
+"417",2016-10-29,"NC","Jacksonville","Pence","Rally/Speech",2016
+"418",2016-10-30,"FL","Fort Lauderdale","Clinton","Speech to Mount Olive Baptist Church",2016
+"419",2016-10-30,"FL","Wilton Manors","Clinton","Rally/Speech",2016
+"420",2016-10-30,"MI","Taylor","Kaine","Rally/Speech",2016
+"421",2016-10-30,"MI","Warren","Kaine","Speech to MI Regional Council of Carpenters and Millwrights",2016
+"422",2016-10-30,"NV","Las Vegas","Trump","Rally/Speech",2016
+"423",2016-10-30,"CO","Greeley","Trump","Rally/Speech",2016
+"424",2016-10-30,"NM","Albuquerque","Trump","Rally/Speech",2016
+"425",2016-10-30,"NH","Rochester","Pence","Rally/Speech",2016
+"426",2016-10-30,"IN","Jeffersonville","Pence","Rally/Speech",2016
+"427",2016-10-31,"OH","Kent","Clinton","Rally/Speech",2016
+"428",2016-10-31,"OH","Cincinnati","Clinton","Rally/Speech",2016
+"429",2016-10-31,"NC","Jacksonville","Kaine","Rally/Speech",2016
+"430",2016-10-31,"NC","Sanford","Kaine","Rally/Speech",2016
+"431",2016-10-31,"MI","Grand Rapids","Trump","Rally/Speech",2016
+"432",2016-10-31,"MI","Warren","Trump","Rally/Speech",2016
+"433",2016-10-31,"FL","Cocoa","Pence","Rally/Speech",2016
+"434",2016-10-31,"FL","Maitland","Pence","Rally/Speech",2016
+"435",2016-10-31,"FL","Clearwater","Pence","Rally/Speech",2016
+"436",2016-11-01,"FL","Dade City","Clinton","Rally/Speech",2016
+"437",2016-11-01,"FL","Sanford","Clinton","Rally/Speech",2016
+"438",2016-11-01,"FL","Fort Lauderdale","Clinton","Rally/Speech",2016
+"439",2016-11-01,"WI","Appleton","Kaine","Rally/Speech",2016
+"440",2016-11-01,"WI","Madison","Kaine","Rally/Speech",2016
+"441",2016-11-01,"PA","Valley Forge","Trump / Pence","Speeches",2016
+"442",2016-11-01,"WI","Eau Claire","Trump","Rally/Speech",2016
+"443",2016-11-01,"PA","Youngwood","Pence","Rally/Speech",2016
+"444",2016-11-02,"NV","Las Vegas","Clinton","Rally/Speech",2016
+"445",2016-11-02,"AZ","Tempe","Clinton","Rally/Speech",2016
+"446",2016-11-02,"IA","Dubuque","Kaine","Rally/Speech",2016
+"447",2016-11-02,"FL","Miami","Trump","Rally/Speech",2016
+"448",2016-11-02,"FL","Orlando","Trump","Rally/Speech",2016
+"449",2016-11-02,"FL","Pensacola","Trump","Rally/Speech",2016
+"450",2016-11-02,"AZ","Mesa","Pence","Rally/Speech",2016
+"451",2016-11-02,"NM","Las Cruces","Pence","Rally/Speech",2016
+"452",2016-11-02,"CO","Loveland","Pence","Rally/Speech",2016
+"453",2016-11-03,"NC","Winterville","Clinton","Rally/Speech",2016
+"454",2016-11-03,"NC","Raleigh","Clinton","Rally/Speech",2016
+"455",2016-11-03,"AZ","Phoenix","Kaine","Rally/Speech",2016
+"456",2016-11-03,"AZ","Tuscon","Kaine","Rally/Speech",2016
+"457",2016-11-03,"FL","Jacksonville","Trump","Rally/Speech",2016
+"458",2016-11-03,"NC","Concord","Trump","Rally/Speech",2016
+"459",2016-11-03,"NC","Selma","Trump","Rally/Speech",2016
+"460",2016-11-03,"IA","Prole","Pence","Rally/Speech",2016
+"461",2016-11-03,"MI","Portage","Pence","Rally/Speech",2016
+"462",2016-11-03,"PA","Moon Township","Pence","Rally/Speech",2016
+"463",2016-11-04,"PA","Pittsburgh","Clinton","Rally/Speech",2016
+"464",2016-11-04,"MI","Detroit","Clinton","Rally/Speech",2016
+"465",2016-11-04,"OH","Cleveland","Clinton","Rally/Speech",2016
+"466",2016-11-04,"FL","Melbourne","Kaine","Rally/Speech",2016
+"467",2016-11-04,"NH","Atkinson","Trump","Rally/Speech",2016
+"468",2016-11-04,"OH","Wilmington","Trump","Rally/Speech",2016
+"469",2016-11-04,"PA","Hershey","Trump","Rally/Speech",2016
+"470",2016-11-04,"MI","Lansing","Pence","Rally/Speech",2016
+"471",2016-11-04,"NC","Greenville","Pence","Rally/Speech",2016
+"472",2016-11-04,"FL","Miami","Pence","Rally/Speech",2016
+"473",2016-11-05,"FL","Pembroke Pines","Clinton","Rally/Speech",2016
+"474",2016-11-05,"PA","Philadelphia","Clinton","Get Out the Vote Concert",2016
+"475",2016-11-05,"FL","Fort Myers","Kaine","Rally/Speech",2016
+"476",2016-11-05,"FL","St. Petersburg","Kaine","Get Out the Vote Concert",2016
+"477",2016-11-05,"FL","Tampa","Trump","Rally/Speech",2016
+"478",2016-11-05,"NC","Wilmington","Trump","Rally/Speech",2016
+"479",2016-11-05,"NV","Reno","Trump","Rally/Speech",2016
+"480",2016-11-05,"CO","Denver","Trump","Rally/Speech",2016
+"481",2016-11-05,"MI","Holland","Pence","Rally/Speech",2016
+"482",2016-11-05,"WI","Mukwonago","Pence","Rally/Speech",2016
+"483",2016-11-05,"VA","Fairfax","Pence","Rally/Speech",2016
+"484",2016-11-06,"PA","Philadelphia","Clinton","Speech to Mt. Airy Church of God",2016
+"485",2016-11-06,"OH","Cleveland","Clinton","Rally/Speech",2016
+"486",2016-11-06,"NH","Manchester","Clinton","Rally/Speech",2016
+"487",2016-11-06,"WI","Milwaukee","Kaine","Speech to Campaign Workers",2016
+"488",2016-11-06,"WI","Green Bay","Kaine","Rally/Speech",2016
+"489",2016-11-06,"WI","La Crosse","Kaine","Packers Watch Party/Speech",2016
+"490",2016-11-06,"IA","Sioux City","Trump","Rally/Speech",2016
+"491",2016-11-06,"MN","Minneapolis","Trump","Rally/Speech",2016
+"492",2016-11-06,"MI","Sterling Heights","Trump","Rally/Speech",2016
+"493",2016-11-06,"PA","Moon Township","Trump","Rally/Speech",2016
+"494",2016-11-06,"VA","Leesburg","Trump","Rally/Speech",2016
+"495",2016-11-06,"FL","Panama City Beach","Pence","Rally/Speech",2016
+"496",2016-11-06,"NC","Hickory","Pence","Rally/Speech",2016
+"497",2016-11-06,"NH","Windham","Pence","Rally/Speech",2016
+"498",2016-11-07,"PA","Oakland","Clinton","Rally/Speech",2016
+"499",2016-11-07,"MI","Allendale","Clinton","Rally/Speech",2016
+"500",2016-11-07,"PA","Philadelphia","Clinton","Rally/Speech",2016
+"501",2016-11-07,"NC","Raleigh","Clinton","Rally/Speech",2016
+"502",2016-11-07,"NC","Charlotte","Kaine","Rally/Speech",2016
+"503",2016-11-07,"NC","Wilmington","Kaine","Rally/Speech",2016
+"504",2016-11-07,"VA","Fairfax","Kaine","Rally/Speech",2016
+"505",2016-11-07,"VA","Richmond","Kaine","Rally/Speech",2016
+"506",2016-11-07,"FL","Sarasota","Trump","Rally/Speech",2016
+"507",2016-11-07,"NC","Raleigh","Trump","Rally/Speech",2016
+"508",2016-11-07,"PA","Scranton","Trump","Rally/Speech",2016
+"509",2016-11-07,"MN","Duluth","Pence","Rally/Speech",2016
+"510",2016-11-07,"MI","Traverse City","Pence","Rally/Speech",2016
+"511",2016-11-07,"PA","Erie","Pence","Rally/Speech",2016
+"512",2016-11-07,"NH","Manchester","Trump / Pence","Rally/Speech",2016
+"513",2016-11-07,"MI","Grand Rapids","Trump / Pence","Rally/Speech",2016
+"514",2020-08-28,"NH","Londonderry","Trump","Rally/Speech",2020
+"515",2020-08-28,"MN","Duluth","Pence","Rally/Speech",2020
+"516",2020-08-28,"MI","Traverse City","Pence","Rally/Speech",2020
+"517",2020-08-31,"PA","Pittsburgh ","Biden","Speech",2020
+"518",2020-09-01,"WI","Kenosha","Trump","Speech",2020
+"519",2020-09-01,"PA","Exeter","Pence","Rally/Speech",2020
+"520",2020-09-02,"MN","","Harris","Roundtable",2020
+"521",2020-09-03,"WI","Kenosha","Biden","Speech",2020
+"522",2020-09-03,"PA","Latrobe","Trump","Rally/Speech",2020
+"523",2020-09-03,"NC","Raleigh","Pence","Speech",2020
+"524",2020-09-04,"NC","","Trump","Speech",2020
+"525",2020-09-07,"WI","Milwaukee","Harris","Speech",2020
+"526",2020-09-07,"WI","Milwaukee","Harris","Roundtable",2020
+"527",2020-09-07,"PA","Harrisburg","Biden","Speech",2020
+"528",2020-09-07,"PA","","Biden","Roundtable",2020
+"529",2020-09-07,"WI","La Crosse","Pence","Rally/Speech",2020
+"530",2020-09-08,"NC","Winston-Salem","Trump","Rally/Speech",2020
+"531",2020-09-08,"FL","Jupiter","Trump","Speech",2020
+"532",2020-09-09,"MI","Warren","Biden","Speech",2020
+"533",2020-09-09,"PA","Freedom","Pence","Rally/Speech",2020
+"534",2020-09-09,"PA","Export","Pence","Roundtable",2020
+"535",2020-09-10,"FL","Miami","Harris","Roundtable",2020
+"536",2020-09-10,"MI","Freeland","Trump","Rally/Speech",2020
+"537",2020-09-12,"NV","Minden","Trump","Rally/Speech",2020
+"538",2020-09-13,"NV","Las Vegas","Trump","Roundtable",2020
+"539",2020-09-13,"NV","Las Vegas","Trump","Rally/Speech",2020
+"540",2020-09-14,"AZ","Phoenix","Trump","Roundtable",2020
+"541",2020-09-14,"WI","Janesville","Pence","Rally/Speech",2020
+"542",2020-09-14,"MT","Belgrade","Pence","Rally *** see note",2020
+"543",2020-09-15,"FL","Tampa","Biden","Roundtable",2020
+"544",2020-09-15,"FL","Kissimmee","Biden","Speech",2020
+"545",2020-09-15,"NV","Las Vegas","Harris","Roundtable",2020
+"546",2020-09-16,"OH","Zanesville","Pence","Rally/Speech",2020
+"547",2020-09-17,"PA","Scranton","Biden","Town Hall",2020
+"548",2020-09-17,"PA","Philadelphia","Harris","Roundtable",2020
+"549",2020-09-17,"WI","Mosinee","Trump","Rally/Speech",2020
+"550",2020-09-18,"MN","Duluth","Biden","Speech",2020
+"551",2020-09-18,"NC","","Harris","Speech",2020
+"552",2020-09-18,"MN","Bemidji","Trump","Rally/Speech",2020
+"553",2020-09-18,"AZ","Litchfield Park","Pence","Rally/Speech",2020
+"554",2020-09-18,"AZ","Phoenix","Pence","Roundtable",2020
+"555",2020-09-19,"NC","Fayetteville","Trump","Rally/Speech",2020
+"556",2020-09-21,"WI","Manitowoc","Biden","Speech",2020
+"557",2020-09-21,"OH","Swanton","Trump","Rally/Speech",2020
+"558",2020-09-21,"OH","Vandalia","Trump","Speech",2020
+"559",2020-09-22,"MI","Detroit","Harris","Roundtable",2020
+"560",2020-09-22,"MI","Detroit","Harris","Speech",2020
+"561",2020-09-22,"PA","Moon Township","Trump","Rally/Speech",2020
+"562",2020-09-22,"NH","Gilford","Pence","Rally/Speech",2020
+"563",2020-09-23,"NC","Raleigh","Biden","Speech",2020
+"564",2020-09-24,"WI","Eau Claire","Pence","Rally/Speech",2020
+"565",2020-09-24,"MN","Minneapolis","Pence","Roundtable",2020
+"566",2020-09-24,"FL","Jacksonville","Trump","Rally/Speech",2020
+"567",2020-09-24,"NC","Charlotte","Trump","Speech",2020
+"568",2020-09-25,"VA","* Newport News ","Trump","Rally/Speech",2020
+"569",2020-09-25,"GA","Atlanta","Trump","Speech",2020
+"570",2020-09-25,"FL","Doral","Trump","Roundtable",2020
+"571",2020-09-26,"PA","Middletown","Trump","Rally/Speech",2020
+"572",2020-09-28,"NC","","Harris","Speech",2020
+"573",2020-09-28,"NC","Raleigh","Harris","Roundtable",2020
+"574",2020-09-29,"PA","Lititz","Pence","Rally/Speech",2020
+"575",2020-09-30,"OH","Cleveland","Biden","Speech",2020
+"576",2020-09-30,"OH","Alliance","Biden","Speech",2020
+"577",2020-09-30,"PA","Pittsburgh ","Biden","Speech",2020
+"578",2020-09-30,"PA","Greensburg","Biden","Speech",2020
+"579",2020-09-30,"PA","New Alexandria","Biden","Speech",2020
+"580",2020-09-30,"PA","Johnstown","Biden","Speech",2020
+"581",2020-09-30,"MN","Duluth","Trump","Rally/Speech",2020
+"582",2020-10-01,"IA","Council Bluffs","Pence","Rally/Speech",2020
+"583",2020-10-02,"MI","Grand Rapids","Biden","Speech",2020
+"584",2020-10-02,"NV","Las Vegas","Harris","Speech",2020
+"585",2020-10-05,"FL","Miami","Biden","Town Hall",2020
+"586",2020-10-05,"FL","Miami","Biden","Speech",2020
+"587",2020-10-06,"PA","Gettysburg","Biden","Speech",2020
+"588",2020-10-08,"AZ","Phoenix","Biden/Harris","Speech",2020
+"589",2020-10-08,"NV","Boulder City","Pence","Rally/Speech",2020
+"590",2020-10-08,"AZ","Peoria","Pence","Rally/Speech",2020
+"591",2020-10-09,"NV","Las Vegas","Biden","Speech",2020
+"592",2020-10-10,"PA","Erie","Biden","Speech",2020
+"593",2020-10-10,"FL","Orlando","Pence","Rally/Speech",2020
+"594",2020-10-10,"FL","The Villages","Pence","Rally/Speech",2020
+"595",2020-10-10,"NA ","Washington DC","Trump","Speech ** see note",2020
+"596",2020-10-12,"OH","Toledo","Biden","Speech",2020
+"597",2020-10-12,"OH","Cincinnati","Biden","Speech",2020
+"598",2020-10-12,"FL","Sanford","Trump","Rally/Speech",2020
+"599",2020-10-12,"OH","Columbus","Pence","Rally/Speech",2020
+"600",2020-10-13,"FL","Pembroke Pines","Biden","Speech",2020
+"601",2020-10-13,"FL","Miramar","Biden","Speech",2020
+"602",2020-10-13,"WI","Waukesha","Pence","Rally/Speech",2020
+"603",2020-10-13,"PA","Johnstown","Trump","Rally/Speech",2020
+"604",2020-10-14,"IA","Des Moines","Trump","Rally/Speech",2020
+"605",2020-10-14,"MI","Grand Rapids","Pence","Rally/Speech",2020
+"606",2020-10-15,"PA","Philadelphia","Biden","Town Hall",2020
+"607",2020-10-15,"NC","","Harris","Speech",2020
+"608",2020-10-15,"NC","Greenville","Trump","Rally/Speech",2020
+"609",2020-10-15,"FL","Miami","Trump","Town Hall",2020
+"610",2020-10-15,"FL","Miami","Pence","Rally/Speech",2020
+"611",2020-10-15,"FL","Miami","Pence","Speech",2020
+"612",2020-10-16,"MI","Southfield","Biden","Speech",2020
+"613",2020-10-16,"MI","Detroit","Biden","Speech",2020
+"614",2020-10-16,"FL","Ocala","Trump","Rally/Speech",2020
+"615",2020-10-16,"FL","Fort Myers","Trump","Speech",2020
+"616",2020-10-16,"GA","Macon","Trump","Rally/Speech",2020
+"617",2020-10-16,"NC","Selma","Pence","Rally/Speech",2020
+"618",2020-10-17,"NC","Durham","Biden","Speech",2020
+"619",2020-10-17,"PA","Reading","Pence","Rally/Speech",2020
+"620",2020-10-17,"MI","Muskegon","Trump","Speech",2020
+"621",2020-10-17,"WI","Janesville","Trump","Rally/Speech",2020
+"622",2020-10-18,"NV","Carson City","Trump","Rally/Speech",2020
+"623",2020-10-19,"FL","Orlando","Harris","Speech/Rally",2020
+"624",2020-10-19,"FL","Jacksonville","Harris","Speech",2020
+"625",2020-10-19,"AZ","Prescott","Trump","Rally/Speech",2020
+"626",2020-10-19,"AZ","Tucson","Trump","Rally/Speech",2020
+"627",2020-10-19,"ME","Hermon","Pence","Rally/Speech",2020
+"628",2020-10-19,"PA","New Cumberland","Pence","Rally/Speech",2020
+"629",2020-10-20,"WI","Milwaukee","Harris","Speech",2020
+"630",2020-10-20,"PA","Erie","Trump","Rally/Speech",2020
+"631",2020-10-21,"NC","Ashville","Harris","Speech",2020
+"632",2020-10-21,"NC","Charlotte","Harris","Speech",2020
+"633",2020-10-21,"NC","Gastonia","Trump","Rally/Speech",2020
+"634",2020-10-21,"NH","Portsmouth","Pence","Rally/Speech",2020
+"635",2020-10-21,"OH","Cincinatti","Pence","Rally/Speech",2020
+"636",2020-10-22,"MI","Waterford Township","Pence","Rally/Speech",2020
+"637",2020-10-22,"IN","Fort Wayne","Pence","Rally/Speech **** see note",2020
+"638",2020-10-23,"GA","Atlanta","Harris","Speech",2020
+"639",2020-10-23,"FL","The Villages","Trump","Rally/Speech",2020
+"640",2020-10-23,"FL","Pensacola","Trump","Rally/Speech",2020
+"641",2020-10-23,"OH","Swanton","Pence","Rally/Speech",2020
+"642",2020-10-23,"PA","West Mifflin","Pence","Rally/Speech",2020
+"643",2020-10-24,"OH","Cleveland","Harris","Speech",2020
+"644",2020-10-24,"PA","Bucks County","Biden","Speech/Rally",2020
+"645",2020-10-24,"PA","Dallas","Biden","Speech/Rally",2020
+"646",2020-10-24,"FL","Lakeland","Pence","Rally/Speech",2020
+"647",2020-10-24,"FL","Tallahassee","Pence","Rally/Speech",2020
+"648",2020-10-24,"NC","Lumberton","Trump","Rally/Speech",2020
+"649",2020-10-24,"OH","Circleville","Trump","Rally/Speech",2020
+"650",2020-10-24,"WI","Waukesha","Trump","Rally/Speech",2020
+"651",2020-10-25,"MI","Detroit","Harris","Speech",2020
+"652",2020-10-25,"NH","Londonderry","Trump","Rally/Speech",2020
+"653",2020-10-25,"NC","Kinston","Pence","Rally/Speech",2020
+"654",2020-10-25,"ME","Levant","Trump","Speech",2020
+"655",2020-10-26,"PA","Chester","Biden","Speech",2020
+"656",2020-10-26,"PA","Lititz","Trump","Rally/Speech",2020
+"657",2020-10-26,"MN","Hibbing","Pence","Rally/Speech",2020
+"658",2020-10-27,"GA","Warm Springs","Biden","Speech",2020
+"659",2020-10-27,"GA","Atlanta","Biden","Speech/Rally",2020
+"660",2020-10-27,"NV","Reno","Harris","Speech",2020
+"661",2020-10-27,"NV","Las Vegas","Harris","Speech",2020
+"662",2020-10-27,"MI","Lansing","Trump","Rally/Speech",2020
+"663",2020-10-27,"WI","West Salem","Trump","Rally/Speech",2020
+"664",2020-10-27,"NE","Omaha","Trump","Rally/Speech",2020
+"665",2020-10-28,"AZ","Tucson","Harris","Speech",2020
+"666",2020-10-28,"AZ","Phoenix","Harris","Speech",2020
+"667",2020-10-28,"AZ","Bullhead City","Trump","Rally/Speech",2020
+"668",2020-10-28,"AZ","Phoenix","Trump","Rally/Speech",2020
+"669",2020-10-28,"WI","Mosinee","Pence","Rally/Speech",2020
+"670",2020-10-28,"MI","Flint","Pence","Rally/Speech",2020
+"671",2020-10-29,"FL","Coconut Creek","Biden","Speech/Rally",2020
+"672",2020-10-29,"FL","Tampa","Biden","Speech",2020
+"673",2020-10-29,"IA","Des Moines","Pence","Rally/Speech",2020
+"674",2020-10-29,"NV","Reno","Pence","Rally/Speech",2020
+"675",2020-10-29,"NC","Fayetteville","Trump","Rally/Speech",2020
+"676",2020-10-29,"FL","Tampa","Trump","Rally/Speech",2020
+"677",2020-10-30,"WI","Milwaukee","Biden","Speech",2020
+"678",2020-10-30,"IA","Des Moines","Biden","Speech",2020
+"679",2020-10-30,"MN","St Paul","Biden","Speech",2020
+"680",2020-10-30,"TX","Forth Worth ","Harris","Speech",2020
+"681",2020-10-30,"TX","McAllen","Harris","Speech",2020
+"682",2020-10-30,"TX","Houston","Harris","Speech",2020
+"683",2020-10-30,"MI","Waterford Township","Trump","Rally/Speech",2020
+"684",2020-10-30,"WI","Green Bay","Trump","Rally/Speech",2020
+"685",2020-10-30,"MN","Rochester","Trump","Speech",2020
+"686",2020-10-30,"AZ","Flagstaff","Pence","Rally/Speech",2020
+"687",2020-10-30,"AZ","Tucson","Pence","Rally/Speech",2020
+"688",2020-10-31,"MI","Flint","Biden","Speech/Rally",2020
+"689",2020-10-31,"MI","Detroit","Biden","Speech/Rally",2020
+"690",2020-10-31,"FL","Miami","Harris","Speech/Rally",2020
+"691",2020-10-31,"FL","Fort Lauderdale","Harris","Speech",2020
+"692",2020-10-31,"FL","Lake Worth","Harris","Speech",2020
+"693",2020-10-31,"PA","Bucks County","Trump","Rally/Speech",2020
+"694",2020-10-31,"PA","Reading","Trump","Rally/Speech",2020
+"695",2020-10-31,"PA","Butler","Trump","Rally/Speech",2020
+"696",2020-10-31,"PA","Montoursville","Trump","Rally/Speech",2020
+"697",2020-10-31,"NC","Elm City","Pence","Rally/Speech",2020
+"698",2020-10-31,"NC","Elizabeth City","Pence","Rally/Speech",2020
+"699",2020-11-01,"PA","Philadelphia","Biden","Roundtable",2020
+"700",2020-11-01,"PA","Philadelphia","Biden","Speech",2020
+"701",2020-11-01,"GA","Duluth","Harris","Speech",2020
+"702",2020-11-01,"NC","Goldsboro","Harris","Speech",2020
+"703",2020-11-01,"NC","Fayetteville","Harris","Speech",2020
+"704",2020-11-01,"MI","Washington","Trump","Rally/Speech",2020
+"705",2020-11-01,"IA","Dubuque","Trump","Rally/Speech",2020
+"706",2020-11-01,"NC","Hickory","Trump","Rally/Speech",2020
+"707",2020-11-01,"GA","Rome","Trump","Rally/Speech",2020
+"708",2020-11-01,"FL","Opa-locka","Trump","Rally/Speech",2020
+"709",2020-11-02,"PA","Beaver County","Biden","Speech",2020
+"710",2020-11-02,"PA","Pittsburgh ","Biden","Speech/Rally",2020
+"711",2020-11-02,"PA","Pittsburgh ","Biden","Roundtable",2020
+"712",2020-11-02,"PA","Pittston","Harris","Speech",2020
+"713",2020-11-02,"PA","Lower Nazareth Township","Harris","Speech",2020
+"714",2020-11-02,"PA","Philadelphia","Harris","Speech/Rally",2020
+"715",2020-11-02,"OH","Cleveland","Biden","Speech",2020
+"716",2020-11-02,"NC","Fayetteville","Trump","Rally/Speech",2020
+"717",2020-11-02,"PA","Avoca","Trump","Rally/Speech",2020
+"718",2020-11-02,"MI","Traverse City","Trump/Pence","Rally/Speech",2020
+"719",2020-11-02,"WI","Kenosha","Trump","Rally/Speech",2020
+"720",2020-11-02,"MI","Grand Rapids","Trump/Pence","Rally/Speech",2020
+"721",2020-11-02,"PA","Latrobe","Pence","Rally/Speech",2020
+"722",2020-11-02,"PA","Erie","Pence","Rally/Speech",2020
+"723",2020-11-03,"PA","Philadelphia","Biden","Speech",2020
+"724",2020-11-03,"PA","Scranton","Biden","Speech",2020
+"725",2020-11-03,"MI","Detroit","Harris","Speech",2020
+"726",2024-07-23,"WI","West Allis","Harris","Rally",2024
+"727",2024-07-24,"NC","Charlotte","Trump","Rally",2024
+"728",2024-07-24,"TX","Houston","Harris","Speech",2024
+"729",2024-07-25,"IN","Indianapolis","Harris","Speech to Zeta Phi Beta sorority",2024
+"730",2024-07-27,"TN","Nashville","Trump","Speech & Rally",2024
+"731",2024-07-27,"MN","St. Cloud","Trump","Speech & Rally",2024
+"732",2024-07-30,"GA","Atlanta","Harris","Rally",2024
+"733",2024-07-31,"PA","Harrisburg, Philadelphia","Trump","Rally",2024
+"734",2024-08-03,"GA","Atlanta","Harris","Rally",2024
+"735",2024-08-06,"PA","Philadelphia","Harris","Rally",2024
+"736",2024-08-06,"PA","Philadelphia","Walz","Rally",2024
+"737",2024-08-06,"PA","Philadelphia","Vance","Campaign Visit",2024
+"738",2024-08-07,"MI","Romulus","Harris","Rally",2024
+"739",2024-08-07,"WI","Eau Claire","Vance","Speech & Campaign Visit",2024
+"740",2024-08-07,"MI","Shelby Township","Vance","Speech & Campaign Visit",2024
+"741",2024-08-07,"WI","Eau Claire","Harris","Rally",2024
+"742",2024-08-07,"WI","Eau Claire","Walz","Rally",2024
+"743",2024-08-07,"MI","Romulus","Walz","Rally",2024
+"744",2024-08-08,"MI","Wayne","Harris","Campaign Event",2024
+"745",2024-08-08,"MI","Wayne","Walz","Campaign Event",2024
+"746",2024-08-09,"AZ","Glendale","Harris","Rally",2024
+"747",2024-08-09,"MT","Bozeman","Trump","Rally",2024
+"748",2024-08-09,"AZ","Glendale","Walz","Rally",2024
+"749",2024-08-10,"TX","San Antonio, Houston","Vance","Campaign Visit",2024
+"750",2024-08-10,"NV","Las Vegas","Walz","Rally",2024
+"751",2024-08-10,"NV","Las Vegas","Harris","Rally",2024
+"752",2024-08-12,"DC","Howard University","Harris","Campaign Visit",2024
+"753",2024-08-13,"CA","Los Angeles","Walz","Speech",2024
+"754",2024-08-13,"AZ","Glendale","Vance","Campaign Visit",2024
+"755",2024-08-14,"NC","Asheville","Harris","Rally",2024
+"756",2024-08-14,"MI","Byron Center","Walz","Campaign Visit",2024
+"757",2024-08-15,"PA","Lower Burrell","Vance","Campaign Visit",2024
+"758",2024-08-15,"RI","Newport","Walz","Campaign Visit",2024
+"759",2024-08-15,"MD","Largo","Harris","Speech",2024
+"760",2024-08-16,"NC","Raleigh","Harris","Speech",2024
+"761",2024-08-16,"WI","Milwaukee","Vance","Campaign Visit",2024
+"762",2024-08-17,"PA","Wilkes Barre","Harris","Rally",2024
+"763",2024-08-17,"NE","La Vista","Walz","Rally",2024
+"764",2024-08-18,"PA","Pittsburgh, Rochester","Harris","Bus Tour",2024
+"765",2024-08-18,"PA","Pittsburgh, Rochester","Walz","Bus Tour",2024
+"766",2024-08-19,"PA","York","Harris","Democratic National Convention & Speech",2024
+"767",2024-08-19,"PA","Philadelphia","Walz","Democratic National Convention",2024
+"768",2024-08-20,"WI","Kenosha","Vance","Speech",2024
+"769",2024-08-20,"MI","Howell","Trump","Campaign Visit",2024
+"770",2024-08-20,"WI","Milwaukee","Walz","Democratic National Convention & Rally",2024
+"771",2024-08-20,"WI","Milwaukee","Harris","Democratic National Convention & Rally",2024
+"772",2024-08-21,"NC","Asheboro","Vance","Rally",2024
+"773",2024-08-21,"NC","Asheboro","Walz","Democratic National Convention & Speech",2024
+"774",2024-08-21,"NC","Asheboro","Trump","Rally",2024
+"775",2024-08-21,"NC","Asheboro","Harris","Democratic National Convention",2024
+"776",2024-08-22,"AZ","Cochise County","Trump","Campaign Visit",2024
+"777",2024-08-22,"MI","Democratic National Convention","Harris","Convention & Speech",2024
+"778",2024-08-22,"GA","Valdosta","Walz","Democratic National Convention & Campaign Visit",2024
+"779",2024-08-23,"AZ","Glendale","Harris","Rally",2024
+"780",2024-08-24,"NV","Las Vegas","Harris","Campaign Visit",2024
+"781",2024-08-26,"MI","Arlington, Detroit","Harris","Campaign Visit & Speech",2024
+"782",2024-08-27,"MI","Big Rapids","Vance","Campaign Visit",2024
+"783",2024-08-28,"PA","Erie","Vance","Campaign Visit",2024
+"784",2024-08-28,"WI","De Pere","Vance","Campaign Visit",2024
+"785",2024-08-28,"GA","Hinesville","Walz","Bus Tour",2024
+"786",2024-08-28,"GA","Hinesville","Harris","Bus Tour",2024
+"787",2024-08-29,"NC","Raleigh","Walz","Bus Tour & Campaign Visit",2024
+"788",2024-08-29,"GA","Savannah","Walz","Bus Tour & Campaign Visit",2024
+"789",2024-08-29,"WI","La Crosse","Trump","Speech & Town Hall",2024
+"790",2024-08-29,"MI","Potterville","Trump","Speech & Town Hall",2024
+"791",2024-08-29,"GA","Savannah","Harris","Bus Tour",2024
+"792",2024-08-30,"PA","Johnstown","Trump","Rally",2024
+"793",2024-09-01,"MN","Falcon Heights","Walz","Campaign Visit at Minnesota State Fair",2024
+"794",2024-09-02,"WI","Milwaukee","Walz","Campaign Visit",2024
+"795",2024-09-02,"PA","Pittsburgh","Harris","Campaign Event & Speech",2024
+"796",2024-09-02,"MI","Detroit","Harris","Campaign Event & Speech",2024
+"797",2024-09-04,"AZ","Mesa","Vance","Rally",2024
+"798",2024-09-04,"PA","Pequea, Pittsburgh, Moon Township, Dawson","Walz","Campaign Visit",2024
+"799",2024-09-04,"PA","Harrisburg","Trump","Town Hall",2024
+"800",2024-09-04,"NH","North Hampton, Portsmouth","Harris","Rally & Campaign Visit",2024
+"801",2024-09-05,"AZ","Phoenix","Vance","Rally",2024
+"802",2024-09-05,"PA","Erie","Walz","Rally",2024
+"803",2024-09-06,"CA","San Diego","Vance","Campaign Visit",2024
+"804",2024-09-06,"NC","Charlotte","Trump","Speech",2024
+"805",2024-09-07,"WI","Mosinee","Trump","Rally",2024
+"806",2024-09-07,"PA","Pittsburgh","Harris","Campaign Event",2024
+"807",2024-09-07,"DC","Washington","Walz","Speech at Human Rights Campaign Dinner",2024
+"808",2024-09-09,"NV","Reno","Walz","Campaign Visit",2024
+"809",2024-09-10,"PA","Philadelphia","Harris","Debate",2024
+"810",2024-09-10,"PA","Philadelphia","Trump","Debate",2024
+"811",2024-09-10,"AZ","Phoenix","Walz","Campaign Visit",2024
+"812",2024-09-12,"AZ","Tucson","Trump","Rally",2024
+"813",2024-09-12,"MI","Grand Rapids","Walz","Rally",2024
+"814",2024-09-12,"NC","Charlotte, Greensboro","Harris","Rallies",2024
+"815",2024-09-13,"NV","Las Vegas","Trump","Rally",2024
+"816",2024-09-13,"PA","Wilkes-Barre, Johnstown","Harris","Rally & Campaign Visit",2024
+"817",2024-09-13,"WI","Lansing","Walz","Campaign Visits",2024
+"818",2024-09-13,"MI","Grand Rapids","Walz","Campaign Visits",2024
+"819",2024-09-14,"WI","Superior","Walz","Rally",2024
+"820",2024-09-14,"NC","Greenville","Vance","College football campaign visit",2024
+"821",2024-09-14,"DC","Washington","Harris","Speech at CBC Phoenix Awards",2024
+"822",2024-09-16,"GA","Atlanta","Vance","Speech at Georgia Freedom and Faith Dinner",2024
+"823",2024-09-17,"MI","Sparta","Vance","Rallies",2024
+"824",2024-09-17,"WI","Eau Claire","Vance","Rallies",2024
+"825",2024-09-17,"NC","Asheville","Walz","Rally & Campaign Visit",2024
+"826",2024-09-17,"MI","Flint","Trump","Town Hall",2024
+"827",2024-09-17,"GA","Macon","Walz","Rally & Campaign Visit",2024
+"828",2024-09-17,"PA","Philadelphia","Harris","Campaign Visit at Community College of Philadelphia",2024
+"829",2024-09-18,"DC","Washington","Harris","Speech at Congressional Hispanic Caucus Institute's Leadership Conference",2024
+"830",2024-09-18,"NY","Uniondale","Trump","Rally",2024
+"831",2024-09-19,"MI","Oakland County","Harris","Campaign Event: ""Unite for America Rally"" with Oprah Winfrey",2024
+"832",2024-09-19,"DC","Washington","Trump","Speech at Israeli American National Conference",2024
+"833",2024-09-20,"GA","Atlanta","Harris","Speech & Rally",2024
+"834",2024-09-20,"WI","Madison","Harris","Speech & Rally",2024
+"835",2024-09-21,"PA","Leesport","Vance","Rally",2024
+"836",2024-09-21,"PA","Bethlehem","Walz","Rally",2024
+"837",2024-09-21,"PA","Leesport","Trump","Rally",2024
+"838",2024-09-21,"NC","Wilmington","Harris","Rally",2024
+"839",2024-09-23,"NC","Charlotte","Vance","Rally",2024
+"840",2024-09-23,"NY","Brooklyn","Walz","Speech",2024
+"841",2024-09-23,"PA","Smithon","Trump","Campaign Visit",2024
+"842",2024-09-23,"PA","Kittanning, Smithon, Indiana","Harris","Campaign Visit, Roundtable & Rally",2024
+"843",2024-09-24,"GA","Savannah","Trump","Speech",2024
+"844",2024-09-25,"NC","Mint Hill","Trump","Rally",2024
+"845",2024-09-25,"MI","Traverse City","Vance","Speech",2024
+"846",2024-09-25,"PA","Pittsburgh","Harris","Speech",2024
+"847",2024-09-26,"MI","Harbor Springs","Walz","Campaign Visit",2024
+"848",2024-09-27,"MI","Walker, Warren","Trump","Speech & Town Hall",2024
+"849",2024-09-27,"AZ","Douglas","Harris","Campaign Visit",2024
+"850",2024-09-28,"WI","Prairie du Chien, Tuscaloosa","Harris","Speech & Campaign Appearance",2024
+"851",2024-09-28,"AL","Tuscaloosa","Trump","Speech & Campaign Appearance",2024
+"852",2024-09-28,"MI","Ann Arbor","Walz","Campaign Appearance",2024
+"853",2024-09-28,"PA","Newtown, Monroeville","Vance","Rally and Campaign Visit",2024
+"854",2024-09-29,"NV","Las Vegas","Harris","Rally",2024
+"855",2024-09-29,"PA","Erie","Trump","Rally",2024
+"856",2024-09-30,"GA","Valdosta","Trump","Public Appearance & Remarks",2024
+"857",2024-10-01,"WI","Waunakee, Milwaukee","Trump","Speech",2024
+"858",2024-10-01,"NY","New York City","Walz","Debate",2024
+"859",2024-10-01,"NY","New York City","Vance","Debate",2024
+"860",2024-10-02,"MI","Auburn Hills, Marne","Vance","Speech",2024
+"861",2024-10-02,"PA","York","Walz","Campaign Visit",2024
+"862",2024-10-02,"GA","","Harris","Public appearance",2024
+"863",2024-10-03,"WI","Ripon","Harris","Rally",2024
+"864",2024-10-03,"VA","Damascus","Vance","Public appearance",2024
+"865",2024-10-03,"MI","Saginaw","Trump","Rally",2024
+"866",2024-10-04,"GA","Evans","Trump","Public appearance",2024
+"867",2024-10-04,"GA","Linsdale","Vance","Speech",2024
+"868",2024-10-04,"NC","Fayetteville","Trump","Town Hall",2024
+"869",2024-10-04,"MI","Redford, Flint","Harris","Campaign stop and Rally",2024
+"870",2024-10-05,"PA","Butler","Trump","Rally",2024
+"871",2024-10-05,"NC","Charlotte","Harris","Public appearance",2024
+"872",2024-10-06,"WI","Juneau","Trump","Rally",2024
+"873",2024-10-07,"NY","Queens","Trump","Public appearance",2024
+"874",2024-10-08,"NV","Reno","Walz","Campaign Visit",2024
+"875",2024-10-08,"MI","Detroit","Vance","Campaign Visit",2024
+"876",2024-10-09,"AZ","Chandler, Tucson","Walz","Campaign Visit & Rally",2024
+"877",2024-10-09,"PA","Reading, Scranton","Trump","Rally & Speech",2024
+"878",2024-10-09,"AZ","Tucson, Mesa","Vance","Rally & Speech",2024
+"879",2024-10-10,"AZ","Phoenix","Harris","Rally",2024
+"880",2024-10-10,"MI","Detroit","Trump","Speech",2024
+"881",2024-10-10,"NC","Greensboro","Vance","Town Hall",2024
+"882",2024-10-11,"AZ","Scottsdale","Harris","Campaign Event",2024
+"883",2024-10-11,"CO","Aurora","Trump","Rally",2024
+"884",2024-10-11,"NV","Reno","Trump","Rally",2024
+"885",2024-10-11,"MI","Warren","Walz","Speech & Campaign Appearance",2024
+"886",2024-10-11,"MN","Mankato","Walz","Campaign Appearance",2024
+"887",2024-10-11,"GA","Lawrenceville","Vance","Campaign Visit",2024
+"888",2024-10-12,"NC","Raleigh","Harris","Campaign Visit",2024
+"889",2024-10-12,"CA","Coachella","Trump","Rally & Roundtable",2024
+"890",2024-10-12,"MN","Sleepy Eye","Walz","Campaign Appearance",2024
+"891",2024-10-12,"PA","Johnstown, Reading","Vance","Speech & Town Hall",2024
+"892",2024-10-12,"NV","Las Vegas","Trump","Roundtable with Latino voters",2024
+"893",2024-10-13,"NC","Concord","Vance","Campaign Appearance",2024
+"894",2024-10-13,"AZ","Prescott Valley","Trump","Rally",2024
+"895",2024-10-13,"NC","Greenville","Harris","Rally",2024
+"896",2024-10-14,"MN","Minneapolis","Vance","Campaign Visit",2024
+"897",2024-10-14,"WI","Eau Claire, Green Bay","Walz","Campaign Visit",2024
+"898",2024-10-14,"PA","Oaks","Trump","Town Hall",2024
+"899",2024-10-14,"PA","Erie","Harris","Rally",2024
+"900",2024-10-15,"PA","Volant, Butler, Pittsburgh","Walz","Campaign Visit",2024
+"901",2024-10-15,"GA","Atlanta","Trump","Speech",2024
+"902",2024-10-15,"MI","Detroit","Harris","Campaign Visit",2024
