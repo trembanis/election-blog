@@ -38,13 +38,13 @@ Nevertheless, as Figure I (below) demonstrates, candidates have been dipping int
 
 These graphs, which show the opposing candidates largely in lockstep with one another, suggest that the campaigns’ strategy has more to do with keeping their head above water than with changing hearts and minds. Interestingly, the Bush campaign in 2000 and the Obama campaign in 2008 seem to move slightly ahead of their competitors in terms of spending towards the end of the race, which both won in their respective years. However, it is unclear whether that additional spending made a difference in the final result, or if instead the campaigns were responding to external conditions which convinced them – and their respective opponents – that the race was increasingly in their favor.
 
-Spending patterns in 2024 are arguably even more puzzling. Figure II (below) breaks down the major party candidates’ spending by state; while some high-profile battlegrounds, like Pennsylvania, do get a solid share of overall disbursements, reliable voters like California, Texas, Florida, and New York often overshadow them.
+Detailed spending patterns in 2024 are not yet captured in these datasets. Instead, Figure II (below) breaks down the major party candidates’ fundraising by state; while some high-profile battlegrounds, like Pennsylvania, do account for a solid share of overall fundraising, reliable voters like California, Texas, Florida, and New York unsurprisingly overshadow them.
 
 
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/fig 2 print-1.png" width="672" />
 
-Figures III-IV, below, bring the spending habits of each party into clearer focus.
+Figures III-IV, below, bring the fundraising trends for each party into clearer focus.
 
 
 
@@ -54,7 +54,7 @@ Figures III-IV, below, bring the spending habits of each party into clearer focu
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/fig 4 print-1.png" width="672" />
 
-The campaigns do seem to be making an effort to balance one another out in the swing states. I suspect that the surprising amount of spending in highly populous, noncompetitive states may in a number of cases be funneled into battlegrounds regardless; the campaigns might, for instance, send Floridian field office staff to canvass in Georgia or, as we discussed in class, air ads in Massachusetts media markets to target New Hampshire viewers. These figures are a little ambiguous on their own, but they do seem to suggest that presidential campaigns are oriented less to efficiently persuade voters and more to keep their opponents in check.
+Overall, the Harris campaign seems to be outperforming Trump in the fundraising arena, which could perhaps buck the trend of highly balanced presidential campaigns seen in earlier 21st century races. However, both campaigns do have substantial funds, and it remains to be seen how strategically they will deploy their resources. On the other hand, if we take these results as a rough indicator of enthusiasm at the state level, these visualizations could instead be a good sign for the Trump campaign, since more battleground states appear in the Republican top 10. This, though, assumes that enthusiasm among donors -- who are likely politically engaged partisans -- translates into increased support among persuadable swing voters, which may very well not be the case.
 
 # This Week's Prediction
 
@@ -73,6 +73,8 @@ The result (in Figure V, below) is a model which predicts that Harris will hang 
 <img src="{{< blogdown/postref >}}index_files/figure-html/fig 5 print-1.png" width="672" />
 
 With this visual sanity check now completed, I am excited to make more substantive changes to the model in the weeks to come. See you next week!
+
+Correction: An earlier version of this post incorrectly stated that Figures II-IV depict trends in campaign spending. In fact, the variable of interest is campaign fundraising.
 
 # References
 
