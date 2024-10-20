@@ -1,11 +1,16 @@
 ---
-title: "blog-code-7"
-author: "Ella Trembanis"
-date: "2024-10-20"
-output: html_document
+title: 'Blog Post #7'
+author: Ella Trembanis
+date: '2024-10-20'
+output:
+  html_document:
+    df_print: paged
+categories: []
+tags: []
+slug: "blog-post-7"
 ---
 
-# Set-Up
+# The Ground Game
 
 ``` {r load libraries, echo=FALSE, include=FALSE, warning=FALSE}
 library(car)
@@ -220,9 +225,7 @@ combined_tfc_24 <- combined_tfc |>
   filter(year == 2024)
 ```
 
-# The Ground Game
-
-```{r turnout/vote share effects, echo=FALSE, include=TRUE, warning=FALSE}
+```{r turnout/vote share effects, echo=FALSE, include=FALSE, warning=FALSE}
 # Effects of field offices on turnout and vote share. 
 fo_dem <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Week7/data/fieldoffice_2004-2012_dems.csv")
 
@@ -232,11 +235,16 @@ ef_t <- lm(turnout_change ~ dummy_fo_change + battle + dummy_fo_change:battle + 
 # dem vote share
 ef_d <- lm(dempct_change ~ dummy_fo_change + battle + dummy_fo_change:battle + as.factor(state) + as.factor(year), fo_dem)
 
-stargazer(ef_t, ef_d, header=FALSE, type='latex', no.space = TRUE,
+table <- stargazer(ef_t, ef_d, header=FALSE, type='latex', no.space = TRUE,
           column.sep.width = "3pt", font.size = "scriptsize", single.row = TRUE,
           keep = c(1:3, 53:54), keep.stat = c("n", "adj.rsq", "res.dev"),
           title = "Effect of DEM Field Offices on Turnout and DEM Vote Share (2004-2012)")
 ```
+
+```{r table print, echo=FALSE, include=TRUE, warning=FALSE}
+table
+```
+
 
 ```{r fig 1 code, echo=FALSE, include=FALSE, warning=FALSE}
 # Field Strategies of Obama, Romney, Clinton, and Trump in 2016. 
@@ -252,16 +260,23 @@ fo_add |> filter(candidate == "Romney") |> nrow() #283 Romney FO
 clinton_fo <- fo_add |>
   filter(candidate == "Clinton") 
 
-clinton_fo |> ggplot(aes(x = state)) +
-  geom_bar() +
+clinton_plot <- clinton_fo |>
+  filter(state == "WI" | state == "VA" | state == "TX" | state == "TN" | state == "PA" | state == "OH" | state == "NY" | state == "NV" | state == "NJ" | state == "NH" | state == "NC" | state == "MN" | state == "MI" | state == "ME" | state == "IN" | state == "IA" | state == "FL" | state == "CT" | state == "CO" | state == "CA" | state == "AZ") |>
+  ggplot(aes(y = state)) +
+  geom_bar(fill = "#7CB9E8") +
+  ggtitle("Clinton Field Offices") +
   my_theme()
 
 trump_fo <- fo_add |>
   filter(candidate == "Trump")
 
-trump_fo |> ggplot(aes(x = state)) +
-  geom_bar() +
+trump_plot <- trump_fo |>
+  ggplot(aes(y = state)) +
+  geom_bar(fill = "#E8747C") +
+  ggtitle("Trump Field Offices") +
   my_theme()
+
+fig1a <- ggarrange(trump_plot, clinton_plot)
 
 fo_add <- fo_add |>
   mutate(
@@ -270,7 +285,7 @@ fo_add <- fo_add |>
   )
 
 # 2016 field offices in swing states
-clinton_vs_trump <- fo_add |> filter(year == 2016 & swing16 == 1) |> ggplot(aes(y = state)) + geom_bar(aes(fill = candidate), position = "dodge") + scale_fill_manual(values = c("#7CB9E8", "#E8747C")) + xlab("Number of Field Offices") + ggtitle("Clinton vs. Trump, 2016 Swings") + my_theme()
+clinton_vs_trump <- fo_add |> filter(year == 2016 & swing16 == 1) |> ggplot(aes(y = state)) + geom_bar(aes(fill = candidate), position = "dodge") + scale_fill_manual(values = c("#7CB9E8", "#E8747C")) + xlab("Number of Field Offices") + ggtitle("Clinton vs. Trump, Swings") + my_theme()
 
 # clinton vs. obama in 2016 swings
 vs_obama16 <- fo_add |> filter(party == "democrat" & swing16 == 1) |> ggplot(aes(y = state)) + geom_bar(aes(fill = candidate), position = "dodge") + scale_fill_manual(values = c("#000033", "#9999CC")) + xlab("Number of Field Offices") + ggtitle("Democrats, 2016 Swings") + my_theme()
@@ -281,13 +296,16 @@ vs_obama_both <- fo_add |> filter(party == "democrat" & swing_both == 1) |> ggpl
 # trump vs. romney in shared swings
 vs_romney_both <- fo_add |> filter(party == "republican" & swing_both == 1) |> ggplot(aes(y = state)) + geom_bar(aes(fill = candidate), position = "dodge") + scale_fill_manual(values = c("#9999CC", "#000033")) + xlab("Number of Field Offices") + ggtitle("Republicans, Shared Swings") + my_theme()
 
-fig1 <- ggarrange(clinton_vs_trump, vs_obama_both, vs_romney_both)
+fig1b <- ggarrange(clinton_vs_trump, vs_obama_both, vs_romney_both)
 ```
 
-```{r fig 1 print, echo=FALSE, include=TRUE, warning=FALSE}
-fig1
+```{r fig 1a print, echo=FALSE, include=TRUE, warning=FALSE}
+fig1a
 ```
 
+```{r fig 1b print, echo=FALSE, include=TRUE, warning=FALSE}
+fig1b
+```
 
 # This Week's Prediction
 
@@ -1177,21 +1195,17 @@ win_pred <- data.frame(state = d_test_simp$state,
 ec24_pred <- states_map |>
   left_join(win_pred, by = "region")
 
-figx <- ec24_pred |>
+figb <- ec24_pred |>
   ggplot(aes(long, lat, group = group)) +
   geom_polygon(aes(fill = winner), color = "#000033") +
   scale_fill_manual(values = c("#7CB9E8", "#FF6680")) +
-  ggtitle("Fig. X - Electoral College Prediction, 2024") +
+  ggtitle("Fig. B - Electoral College Prediction, 2024") +
   my_map_theme() +
   theme(strip.text = element_text(size = 12), 
         aspect.ratio = 0.75)
 ```
 
-```{r fig x print, echo=FALSE, include=TRUE, warning=FALSE}
-figx
-```
-
-```{r fig y code, echo=FALSE, include=FALSE, warning=FALSE}
+```{r fig a code, echo=FALSE, include=FALSE, warning=FALSE}
 # sequester training data
 pop_pre <- d_pop_tfmc |> filter(year <= 2020)
 
@@ -1210,146 +1224,18 @@ pop_out_samp_errors <- sapply(1:1000, function(i) {
 mean(abs(pop_out_samp_errors)) # 2.65
 
 # histogram of prediction errors (out-of-sample residuals)
-figy <- ggplot() +
+figa <- ggplot() +
   geom_histogram(mapping = aes(x = pop_out_samp_errors), fill = "#9999CC", binwidth = 2) +
   xlab("Out-of-Sample Residuals") +
   ylab("Count") +
-  ggtitle("Fig. III - Out-of-Sample Error (Popular Vote)") +
+  ggtitle("Fig. A - Out-of-Sample Error (Popular Vote)") +
   my_theme()
 ```
 
-```{r fig y print, echo=FALSE, include=TRUE, warning=FALSE}
-figy
+```{r fig a print, echo=FALSE, include=TRUE, warning=FALSE}
+figa
 ```
 
-```{r fig c code, echo=FALSE, include=FALSE, warning=FALSE}
-# sequester training data
-az_pre <- Arizona |> filter(year <= 2020)
-
-# run cross-validation 1k times
-set.seed(19709)
-az_out_samp_errors <- sapply(1:1000, function(i) {
-  years_out_samp <- sample(az_pre$year, 6)
-  mod <- lm(state_pv2p ~ ics + mean_support + incumbent + state_pv2p_lag + poll_week_3,
-            az_pre[!(az_pre$year %in% years_out_samp),])
-  out_samp_pred <- predict(mod, az_pre[az_pre$year %in% years_out_samp,])
-  out_samp_truth <- az_pre$state_pv2p[az_pre$year %in% years_out_samp]
-  mean(out_samp_pred - out_samp_truth)
-})
-
-# histogram of prediction errors (out-of-sample residuals)
-az_errors <- ggplot() +
-  geom_histogram(mapping = aes(x = az_out_samp_errors), fill = "#9999CC", binwidth = 2) +
-  xlab("Residuals") +
-  ylab("Count") +
-  ggtitle("Arizona") +
-  my_theme()
-
-ga_pre <- Georgia |> filter(year <= 2020)
-set.seed(19709)
-ga_out_samp_errors <- sapply(1:1000, function(i) {
-  years_out_samp <- sample(ga_pre$year, 6)
-  mod <- lm(state_pv2p ~ ics + mean_support + incumbent + state_pv2p_lag + poll_week_3,
-            ga_pre[!(ga_pre$year %in% years_out_samp),])
-  out_samp_pred <- predict(mod, ga_pre[ga_pre$year %in% years_out_samp,])
-  out_samp_truth <- ga_pre$state_pv2p[ga_pre$year %in% years_out_samp]
-  mean(out_samp_pred - out_samp_truth)
-})
-ga_errors <- ggplot() +
-  geom_histogram(mapping = aes(x = ga_out_samp_errors), fill = "#9999CC", binwidth = 2) +
-  xlab("Residuals") +
-  ylab("Count") +
-  ggtitle("Georgia") +
-  my_theme()
-
-mi_pre <- Michigan |> filter(year <= 2020)
-set.seed(19709)
-mi_out_samp_errors <- sapply(1:1000, function(i) {
-  years_out_samp <- sample(ga_pre$year, 6)
-  mod <- lm(state_pv2p ~ ics + mean_support + incumbent + state_pv2p_lag + poll_week_3,
-            mi_pre[!(mi_pre$year %in% years_out_samp),])
-  out_samp_pred <- predict(mod, mi_pre[mi_pre$year %in% years_out_samp,])
-  out_samp_truth <- ga_pre$state_pv2p[mi_pre$year %in% years_out_samp]
-  mean(out_samp_pred - out_samp_truth)
-})
-mi_errors <- ggplot() +
-  geom_histogram(mapping = aes(x = mi_out_samp_errors), fill = "#9999CC", binwidth = 2) +
-  xlab("Residuals") +
-  ylab("Count") +
-  ggtitle("Michigan") +
-  my_theme()
-
-nv_pre <- Nevada |> filter(year <= 2020)
-set.seed(19709)
-nv_out_samp_errors <- sapply(1:1000, function(i) {
-  years_out_samp <- sample(nv_pre$year, 6)
-  mod <- lm(state_pv2p ~ ics + mean_support + incumbent + state_pv2p_lag + poll_week_3,
-            nv_pre[!(nv_pre$year %in% years_out_samp),])
-  out_samp_pred <- predict(mod, nv_pre[nv_pre$year %in% years_out_samp,])
-  out_samp_truth <- nv_pre$state_pv2p[nv_pre$year %in% years_out_samp]
-  mean(out_samp_pred - out_samp_truth)
-})
-nv_errors <- ggplot() +
-  geom_histogram(mapping = aes(x = nv_out_samp_errors), fill = "#9999CC", binwidth = 2) +
-  xlab("Residuals") +
-  ylab("Count") +
-  ggtitle("Nevada") +
-  my_theme()
-
-nc_pre <- `North Carolina` |> filter(year <= 2020)
-set.seed(19709)
-nc_out_samp_errors <- sapply(1:1000, function(i) {
-  years_out_samp <- sample(nc_pre$year, 6)
-  mod <- lm(state_pv2p ~ ics + mean_support + incumbent + state_pv2p_lag + poll_week_3,
-            nc_pre[!(nc_pre$year %in% years_out_samp),])
-  out_samp_pred <- predict(mod, nc_pre[nc_pre$year %in% years_out_samp,])
-  out_samp_truth <- nc_pre$state_pv2p[nc_pre$year %in% years_out_samp]
-  mean(out_samp_pred - out_samp_truth)
-})
-nc_errors <- ggplot() +
-  geom_histogram(mapping = aes(x = nc_out_samp_errors), fill = "#9999CC", binwidth = 2) +
-  xlab("Residuals") +
-  ylab("Count") +
-  ggtitle("North Carolina") +
-  my_theme()
-
-pa_pre <- Pennsylvania |> filter(year <= 2020)
-set.seed(19709)
-pa_out_samp_errors <- sapply(1:1000, function(i) {
-  years_out_samp <- sample(pa_pre$year, 6)
-  mod <- lm(state_pv2p ~ ics + mean_support + incumbent + state_pv2p_lag + poll_week_3,
-            pa_pre[!(pa_pre$year %in% years_out_samp),])
-  out_samp_pred <- predict(mod, pa_pre[pa_pre$year %in% years_out_samp,])
-  out_samp_truth <- pa_pre$state_pv2p[pa_pre$year %in% years_out_samp]
-  mean(out_samp_pred - out_samp_truth)
-})
-pa_errors <- ggplot() +
-  geom_histogram(mapping = aes(x = pa_out_samp_errors), fill = "#9999CC", binwidth = 2) +
-  xlab("Residuals") +
-  ylab("Count") +
-  ggtitle("Pennsylvania") +
-  my_theme()
-
-wi_pre <- Wisconsin |> filter(year <= 2020)
-set.seed(19709)
-wi_out_samp_errors <- sapply(1:1000, function(i) {
-  years_out_samp <- sample(wi_pre$year, 6)
-  mod <- lm(state_pv2p ~ ics + mean_support + incumbent + state_pv2p_lag + poll_week_3,
-            wi_pre[!(wi_pre$year %in% years_out_samp),])
-  out_samp_pred <- predict(mod, wi_pre[wi_pre$year %in% years_out_samp,])
-  out_samp_truth <- wi_pre$state_pv2p[wi_pre$year %in% years_out_samp]
-  mean(out_samp_pred - out_samp_truth)
-})
-wi_errors <- ggplot() +
-  geom_histogram(mapping = aes(x = wi_out_samp_errors), fill = "#9999CC", binwidth = 2) +
-  xlab("Residuals") +
-  ylab("Count") +
-  ggtitle("Wisconsin") +
-  my_theme()
-
-figc <- ggarrange(az_errors, ga_errors, mi_errors, nv_errors, nc_errors, pa_errors, wi_errors)
-```
-
-```{r fig c print, echo=FALSE, include=TRUE, warning=FALSe}
-figc
+```{r fig b print, echo=FALSE, include=TRUE, warning=FALSE}
+figb
 ```
