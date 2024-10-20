@@ -47,6 +47,8 @@ library(tidygeocoder)
 library(tigris)
 library(tmap)
 library(tmaptools)
+library(knitr)
+library(broom)
 ```
 
 ```{r custom theme, echo=FALSE, include=FALSE, warning=FALSE}
@@ -231,20 +233,12 @@ fo_dem <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election
 
 # turnout
 ef_t <- lm(turnout_change ~ dummy_fo_change + battle + dummy_fo_change:battle + as.factor(state) + as.factor(year), fo_dem)
+summary(ef_t)
 
 # dem vote share
 ef_d <- lm(dempct_change ~ dummy_fo_change + battle + dummy_fo_change:battle + as.factor(state) + as.factor(year), fo_dem)
-
-table <- stargazer(ef_t, ef_d, header=FALSE, type='latex', no.space = TRUE,
-          column.sep.width = "3pt", font.size = "scriptsize", single.row = TRUE,
-          keep = c(1:3, 53:54), keep.stat = c("n", "adj.rsq", "res.dev"),
-          title = "Effect of DEM Field Offices on Turnout and DEM Vote Share (2004-2012)")
+summary(ef_d)
 ```
-
-```{r table print, echo=FALSE, include=TRUE, warning=FALSE}
-table
-```
-
 
 ```{r fig 1 code, echo=FALSE, include=FALSE, warning=FALSE}
 # Field Strategies of Obama, Romney, Clinton, and Trump in 2016. 
@@ -271,6 +265,7 @@ trump_fo <- fo_add |>
   filter(candidate == "Trump")
 
 trump_plot <- trump_fo |>
+  filter(state != "GA" & state != "IN" & state != "MS") |>
   ggplot(aes(y = state)) +
   geom_bar(fill = "#E8747C") +
   ggtitle("Trump Field Offices") +
