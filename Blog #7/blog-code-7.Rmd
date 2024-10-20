@@ -284,6 +284,37 @@ vs_romney_both <- fo_add |> filter(party == "republican" & swing_both == 1) |> g
 fig1 <- ggarrange(clinton_vs_trump, vs_obama_both, vs_romney_both)
 ```
 
+```{r}
+fo_state <- fo_add |>
+  filter(party == "democrat") |>
+  group_by(state, year) |>
+  summarize(
+    count = n()
+  ) |>
+  rename("abb" = state)
+
+states_matched <- tibble(state = state.name) |>
+  bind_cols(tibble(abb = state.abb))
+
+fo_full <- left_join(fo_dem, states_matched, by = "state") |>
+  left_join(fo_state, by = "abb") |>
+  group_by(abb, year.x)
+
+lm(count ~ dempct, data=fo_full) |> summary()
+
+ggplot(data=fo_full) +
+  geom_point(mapping = aes(y = dempct, x = count), color = "#9999CC") +
+  geom_smooth(mapping = aes(y = dempct, x = count), method = "lm", color = "#9999CC") +
+  my_theme()
+
+lm(count ~ turnout, data=fo_full) |> summary()
+
+ggplot(data=fo_full) +
+  geom_point(mapping = aes(y = turnout, x = count), color = "#9999CC") +
+  geom_smooth(mapping = aes(y = turnout, x = count), method = "lm", color = "#9999CC") +
+  my_theme()
+```
+
 ```{r fig 1 print, echo=FALSE, include=TRUE, warning=FALSE}
 fig1
 ```
