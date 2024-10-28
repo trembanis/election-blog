@@ -1200,7 +1200,7 @@ fig2 <- ec24_rescaled |>
                        name = "margin",
                        breaks = c(-50, -25, 0, 25, 50),
                        limits = c(-20, 20)) +
-  ggtitle("Fig. II - State-Level Two-Party Popular Vote, 2024") +
+  ggtitle("Fig. II - State-Level Vote Margin, 2024") +
   my_map_theme() +
   theme(strip.text = element_text(size = 12), 
         aspect.ratio = 0.75)
