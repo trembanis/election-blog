@@ -947,8 +947,18 @@ d_pop_tfmc[1, "pv2p_lag"] = 0.493511945857
 pop24 <- d_pop_tfmc |> filter(year == 2024) # testing data
 tfmc_pop <- lm(pv2p ~ ics + poll_week_3 + prev_admin + pv2p_lag, data = d_pop_tfmc)
 summary(tfmc_pop) # adjusted r-squared 0.7618
-pop_pred <- predict(tfmc_pop, pop24, interval = "none") # 52.78% Harris 2-party popular vote
+pop_pred <- predict(tfmc_pop, pop24, interval = "prediction", level = 0.8) # 52.78% Harris 2-party popular vote
+
+table <- tibble(Estimate = c("Dem Two-Party Vote Share", "Lower Bound", "Upper Bound"),
+                pv2p = c(52.77931, 48.24221, 57.31641))
+table <- table |> pivot_wider(names_from = Estimate, values_from = pv2p)
+table1 <- knitr::kable(table, digits = 2)
 ```
+
+```{r table 1 print, echo=FALSE, include=TRUE, warning=FALSE}
+table1
+```
+
 
 ```{r simulation, echo=FALSE, include=FALSE, warning=FALSE}
 # Standardize number of columns - training data.
@@ -1079,6 +1089,9 @@ d_test_simp <- d_test |>
 
 # Predict.
 simp_pred_dem <- predict(mod_lm_dem_simp, d_test_simp)
+simp_pred_dem_interval <- predict(mod_lm_dem_simp, d_test_simp, interval = "prediction", level = 0.8)
+simp_pred_dem_interval <- as.data.frame(simp_pred_dem_interval)
+s
 
 # Create dataset to summarize winners and EC vote distributions. 
 win_pred <- data.frame(state = d_test_simp$state,
@@ -1096,6 +1109,8 @@ win_pred <- win_pred |>
     harris_ec = (harris_win*electors)
   )
 sum(win_pred$harris_ec) #223 Harris EC (not counting DC)
+
+win_pred <- win_pred |> cbind(lower = simp_pred_dem_interval$lwr, upper = simp_pred_dem_interval$upr)
 
 ec24_pred <- states_map |>
   left_join(win_pred, by = "region")
@@ -1164,3 +1179,15 @@ fig2 <- ec24_rescaled |>
 ```{r fig 2 print, echo=FALSE, include=TRUE, warning=FALSE}
 fig2
 ```
+```{r table 2 code, echo=FALSE, warning=FALSE, include=FALSE}
+swing_pred <- win_pred |>
+  filter(state == "Arizona" | state == "Georgia" | state == "Michigan" | state == "Pennsylvania" | state == "Nevada" | state == "North Carolina" | state == "Wisconsin") |>
+  select(state, simp_pred_dem, lower, upper, winner) |>
+  rename(`Dem Two-Party Vote Share` = simp_pred_dem, Lower = lower, Upper = upper, State = state, Winner = winner)
+table2 <- knitr::kable(swing_pred, digits = 2)
+```
+
+```{r table 2 print, echo=FALSE, include=TRUE, warning=FALSE}
+table2
+```
+

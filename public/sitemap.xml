@@ -2,13 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:4321/election-blog/post/2024/10/20/blog-post-7/</loc>
-    <lastmod>2024-10-20T00:00:00+00:00</lastmod>
+    <loc>http://localhost:4321/election-blog/post/2024/10/28/blog-post-8/</loc>
+    <lastmod>2024-10-28T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:4321/election-blog/</loc>
-    <lastmod>2024-10-20T00:00:00+00:00</lastmod>
+    <lastmod>2024-10-28T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:4321/election-blog/post/</loc>
+    <lastmod>2024-10-28T00:00:00+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:4321/election-blog/post/2024/10/20/blog-post-7/</loc>
     <lastmod>2024-10-20T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:4321/election-blog/post/2024/10/13/blog-post-6/</loc>
