@@ -1188,7 +1188,7 @@ summary(mod_lm_dem)
 simp.vars <- c("ics", "incumbent", "poll_week_3", "state_pv2p_lag", "mean_support")
 mod_lm_dem_simp <- lm(state_pv2p ~ ics + incumbent + poll_week_3 + state_pv2p_lag + mean_support,
                       data = d_train)
-summary(mod_lm_dem_simp) # adjusted r-squared = 0.7575
+summary(mod_lm_dem_simp) # adjusted r-squared = 0.7575, all vars highly significant
 
 # What data do we have for 2024? 
 d_test |> select(all_of(simp.vars)) |> view()

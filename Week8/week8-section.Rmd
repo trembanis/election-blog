@@ -1,0 +1,146 @@
+---
+title: "week8-section"
+author: "Ella Trembanis"
+date: "2024-10-23"
+output: html_document
+---
+
+# Set-Up
+
+``` {r load libraries, echo=FALSE, include=FALSE, warning=FALSE}
+library(car)
+library(caret)
+library(CVXR)
+library(foreign)
+library(glmnet)
+library(haven)
+library(janitor)
+library(kableExtra)
+library(maps)
+library(mlr3)
+library(randomForest)
+library(ranger)
+library(RColorBrewer)
+library(sf)
+library(tidyverse)
+library(viridis)
+library(cowplot)
+library(curl)
+library(geofacet)
+library(randomForest)
+library(rstan)
+library(scales)
+library(shinystan)
+library(stargazer)
+library(ggpubr)
+library(ggthemes)
+library(haven)
+library(mgcv)
+library(mgcViz)
+library(spData)
+library(tidygeocoder)
+library(tigris)
+library(tmap)
+library(tmaptools)
+library(knitr)
+library(broom)
+```
+
+```{r custom theme, echo=FALSE, include=FALSE, warning=FALSE}
+my_theme <- function() {
+  theme(
+  # set panel features
+  panel.border = element_rect(color = "#000033", fill = NA, linetype = 1),
+  panel.background = element_rect(fill = "#FFFFFF"),
+  panel.grid.major.x = element_line(color = "#9999CC", linetype = 2, size = 0.2),
+  panel.grid.minor.x = element_blank(),
+  panel.grid.major.y = element_line(color = "#9999CC", linetype = 2, size = 0.2),
+  panel.grid.minor.y = element_blank(),
+  # set text and axis features
+  text = element_text(color = "#000033", family = "Courier"),
+  title = element_text(color = "#000033", face = "bold", family = "Courier"),
+  axis.ticks = element_line(color = "#000033"),
+  # set legend features
+  legend.position = "bottom",
+  legend.background = element_rect(color = "#000033", fill = NA, linetype = 1)
+  )
+}
+```
+
+```{r simplified custom theme, echo=FALSE, include=FALSE, warning=FALSE}
+my_map_theme <- function() {
+  theme(
+    # set panel features
+    panel.background = element_rect(fill = "#FFFFFF"),
+    # set text features
+    text = element_text(color = "#000033", family = "Courier"),
+    title = element_text(color = "#000033", face = "bold", family = "Courier"),
+    # set legend features
+    legend.position = "bottom",
+    legend.title.position = "top",
+    legend.background = element_rect(color = "#000033", fill = NA, linetype = 1),
+    # set axis features to not display
+    axis.title = element_blank(),
+    axis.text = element_blank(),
+    axis.ticks = element_blank()
+  )
+}
+```
+
+```{r read data, echo=FALSE, include=FALSE, warning=FALSE}
+# Read popular vote datasets. 
+d_popvote <- read_csv("data/popvote_1948_2020(2).csv")
+d_state_popvote <- read_csv("data/state_popvote_1948_2020(2).csv")
+
+# Read elector distribution dataset. 
+d_ec <- read_csv("data/corrected_ec_1948_2024(2).csv")
+
+# Read polling data. 
+d_polls <- read_csv("data/national_polls_1968-2024(4).csv")
+d_state_polls <- read_csv("data/state_polls_1968-2024(4).csv")
+
+# Process state-level polling data. 
+d_pollav_state <- d_state_polls |> 
+  group_by(year, state, party) |>
+  mutate(mean_pollav = mean(poll_support, na.rm = TRUE)) |>
+  top_n(1, poll_date) |> 
+  rename(latest_pollav = poll_support) |>
+  select(-c(weeks_left, days_left, poll_date, candidate, before_convention)) |>
+  pivot_wider(names_from = party, values_from = c(latest_pollav, mean_pollav))
+
+# Read turnout data. 
+d_turnout <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Week7/data/state_turnout_1980_2022(2).csv")
+
+# Read economic data.
+econ <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Blog #3/data/fred_econ.csv") |> 
+# filter to most recent available quarter of 2024
+  filter(quarter == 2)
+
+# Read consumer sentiment index
+ics <- read_csv("/Users/ellatrembanis/Desktop/Gov 1347/election-blog/election-blog/Week4/data/tbqics.csv") |>
+  filter(quarter == "Q2") |>
+  mutate(
+    quarter = if_else(quarter == "Q2", 2, NA)
+    )
+
+# Merge econ + ics
+econ <- econ |>
+  left_join(ics, by = join_by(year, quarter))
+
+# Join data for time for change model.
+tfc_train <- d_popvote |> 
+  left_join(econ, by = "year") |> 
+  filter(incumbent_party) |>
+  mutate(incumbent = as.numeric(incumbent)) |>
+  filter(year >= 1968)
+
+# map of u.s. with state borders
+states_map <- map_data("state")
+
+# Read shocks week data.
+d_hurricanes <- read_csv("data/hurricanes_1996_2016.csv")
+d_protests <- read_csv("data/protests.csv")
+d_scotus_review <- read_csv("data/supreme_court_congressional_review.csv")
+d_scotus_precedent <- read_csv("data/supreme_court_precedents.csv")
+```
+
