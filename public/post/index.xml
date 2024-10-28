@@ -2,73 +2,73 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Ella&#39;s Election Predictions</title>
-    <link>http://localhost:4321/election-blog/post/</link>
+    <link>https://trembanis.github.io/election-blog/post/</link>
     <description>Recent content in Posts on Ella&#39;s Election Predictions</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Mon, 28 Oct 2024 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:4321/election-blog/post/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://trembanis.github.io/election-blog/post/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Blog Post #8</title>
-      <link>http://localhost:4321/election-blog/post/2024/10/28/blog-post-8/</link>
+      <link>https://trembanis.github.io/election-blog/post/2024/10/28/blog-post-8/</link>
       <pubDate>Mon, 28 Oct 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:4321/election-blog/post/2024/10/28/blog-post-8/</guid>
-      <description> </description>
+      <guid>https://trembanis.github.io/election-blog/post/2024/10/28/blog-post-8/</guid>
+      <description>Welcome to my final regular blog post before Election Day! At T-minus 8 days until November 5th, we are firmly in the eleventh hour of the 2024 race – perfect timing for my predictive model to shake up the electoral map.&#xA;Popular Vote In – hopefully – a promising sign, my popular vote model has begun to stabilize. Since there is a slight lag in 538’s poll aggregation reporting, the regression still uses the national poll average from three weeks before Election Day.</description>
     </item>
     <item>
       <title>Blog Post #7</title>
-      <link>http://localhost:4321/election-blog/post/2024/10/20/blog-post-7/</link>
+      <link>https://trembanis.github.io/election-blog/post/2024/10/20/blog-post-7/</link>
       <pubDate>Sun, 20 Oct 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:4321/election-blog/post/2024/10/20/blog-post-7/</guid>
+      <guid>https://trembanis.github.io/election-blog/post/2024/10/20/blog-post-7/</guid>
       <description>The Ground Game Knocking on doors may seem a little old-fashioned, but the tradition of the ground game is alive and well in modern presidential politics. In fact, the famously cutting-edge Obama campaign is often credited with the return to one-to-one voter outreach.&#xA;What follows is a brief look at recent electoral history. By showing how past candidates have navigated this aspect of campaign infrastructure, I hope to sketch out a very general baseline for how the 2024 candidates might be approaching this race.</description>
     </item>
     <item>
       <title>Blog Post #6</title>
-      <link>http://localhost:4321/election-blog/post/2024/10/13/blog-post-6/</link>
+      <link>https://trembanis.github.io/election-blog/post/2024/10/13/blog-post-6/</link>
       <pubDate>Sun, 13 Oct 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:4321/election-blog/post/2024/10/13/blog-post-6/</guid>
+      <guid>https://trembanis.github.io/election-blog/post/2024/10/13/blog-post-6/</guid>
       <description>Presidential Campaigns: America’s Multimillion Dollar Myth? In a year like this one, presidential campaigns can seem inescapable. The candidates’ likenesses are plastered on television screens and websites. Droves of canvassers go door-to-door, vying for a dwindling supply of undecided voters. Even silly, apolitical internet memes are no longer safe from tech-savvy campaign staffers.&#xA;Campaigning on such a ludicrous scale, mind you, is far from cheap. As of October 13th, 2024, the Federal Election Commission reports that the Harris campaign has disbursed just over 445 million dollars and that the Trump campaign has disbursed almost 180 million dollars.</description>
     </item>
     <item>
       <title>Blog Post #5</title>
-      <link>http://localhost:4321/election-blog/post/2024/10/06/blog-post-4/</link>
+      <link>https://trembanis.github.io/election-blog/post/2024/10/06/blog-post-4/</link>
       <pubDate>Sun, 06 Oct 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:4321/election-blog/post/2024/10/06/blog-post-4/</guid>
+      <guid>https://trembanis.github.io/election-blog/post/2024/10/06/blog-post-4/</guid>
       <description>Demographics &amp;amp; Voter Files However sophisticated their statistical techniques may be, even the greatest election forecasters can be humbled by hard-to-track changes in voter turnout. News reports unsurprisingly focus on the salacious headline story of voter behavior – who undecideds are inclined to vote for – and place less emphasis on the underlying issue of voter turnout. But of course, polls start to lose their sheen if they appear to be a poor proxy for the intentions of those who will ultimately cast their ballots.</description>
     </item>
     <item>
       <title>Blog Post #4</title>
-      <link>http://localhost:4321/election-blog/post/2024/09/29/blog-post-4/</link>
+      <link>https://trembanis.github.io/election-blog/post/2024/09/29/blog-post-4/</link>
       <pubDate>Sun, 29 Sep 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:4321/election-blog/post/2024/09/29/blog-post-4/</guid>
+      <guid>https://trembanis.github.io/election-blog/post/2024/09/29/blog-post-4/</guid>
       <description>The Incumbency Advantage(s) Roughly two-thirds of all presidential elections in the postwar period were won by incumbents. 2024 will not be one such election year, but even without a sitting president on the ticket, the question of incumbency looms larger than ever.&#xA;To call incumbency an advantage is a little misleading; especially for a year like this one, it is useful to think of incumbency as a network of often conjoined – but theoretically separable – conditions.</description>
     </item>
     <item>
       <title>Blog Post #3</title>
-      <link>http://localhost:4321/election-blog/post/2024/09/22/blog-post-3/</link>
+      <link>https://trembanis.github.io/election-blog/post/2024/09/22/blog-post-3/</link>
       <pubDate>Sun, 22 Sep 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:4321/election-blog/post/2024/09/22/blog-post-3/</guid>
+      <guid>https://trembanis.github.io/election-blog/post/2024/09/22/blog-post-3/</guid>
       <description>Polls and Campaign Narratives Felonies! Assassination attempts! Debate match-ups! With less than two months to go, the 2024 presidential race has already had its fair share of front-page moments &amp;ndash; but which will truly stick with voters?&#xA;Figure I (below) plots some newsworthy events from the past several months against the candidates&amp;rsquo; performance in national polls.&#xA;In some cases, the graph lends itself to story-driven interpretations: there is, for instance, President Trump&amp;rsquo;s short-lived bump in approval around the time of his conviction and the dramatic blue spike where Vice President Harris first assumed the role of presumptive candidate in lieu of Biden.</description>
     </item>
     <item>
       <title>Blog Post #2</title>
-      <link>http://localhost:4321/election-blog/post/2024/09/15/blog-post-2/</link>
+      <link>https://trembanis.github.io/election-blog/post/2024/09/15/blog-post-2/</link>
       <pubDate>Sun, 15 Sep 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:4321/election-blog/post/2024/09/15/blog-post-2/</guid>
+      <guid>https://trembanis.github.io/election-blog/post/2024/09/15/blog-post-2/</guid>
       <description>Voters &amp;amp; &amp;ldquo;The Economy&amp;rdquo; The idea that economic conditions can make or break incumbent campaigns is well-embedded popular wisdom by now. But it is not clear what “the economy” means to voters: which metrics they care about and which crises they attribute to the White House.&#xA;Building on Achen and Bartels’ argument that retrospective voters have a recency bias in favor of recent economic conditions, this week I examine three short-term economic measures as candidates to approximate “the economy”: GDP growth, unemployment, and CPI.</description>
     </item>
     <item>
       <title>Blog Post #1</title>
-      <link>http://localhost:4321/election-blog/post/2024/09/08/blog-post-1/</link>
+      <link>https://trembanis.github.io/election-blog/post/2024/09/08/blog-post-1/</link>
       <pubDate>Sun, 08 Sep 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:4321/election-blog/post/2024/09/08/blog-post-1/</guid>
+      <guid>https://trembanis.github.io/election-blog/post/2024/09/08/blog-post-1/</guid>
       <description>Competitiveness on the National Stage As we enter the final, frantic months of the 2024 presidential election with the two major party candidates, former President Donald Trump and Vice President Kamala Harris, “effectively tied” according to Reuters’ analysis of a recent NY Times/Siena poll, circumstances beg the question: how competitive are American presidential elections, anyway? Put another way, if current national polls end up being a fair predictor of the vote share margin come Election Day, will this razor-tight race be out of step with historical elections?</description>
     </item>
     <item>
       <title>Assignment 0</title>
-      <link>http://localhost:4321/election-blog/post/2024/09/03/assignment-0/</link>
+      <link>https://trembanis.github.io/election-blog/post/2024/09/03/assignment-0/</link>
       <pubDate>Tue, 03 Sep 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:4321/election-blog/post/2024/09/03/assignment-0/</guid>
+      <guid>https://trembanis.github.io/election-blog/post/2024/09/03/assignment-0/</guid>
       <description>Overview: In this assignment, we will work with historical national popular vote and state-level popular vote data from presidential elections. We will restructure the two data sets and eventually merge them, before running basic linear models to predict the national popular vote from the vote in certain states.&#xA;Data Details:&#xA;File Name: state_2pv_1948_2020.csv&#xA;These data contain the state-level popular vote from presidential elections from 1948 through 2020.&#xA;Variable Name Variable Description year election year state state candidate candidate party candidate&amp;rsquo;s party candidatevotes votes received by the candidate in the state totalvotes total votes cast in the state vote_share proportion of total votes received by the candidate two_party_votes total votes cast for Republicans and Democrats in the state two_party_vote_share proportion of Democratic and Republican votes received by the candidate File Name: nat_pv_1860_2020.</description>
     </item>
   </channel>
