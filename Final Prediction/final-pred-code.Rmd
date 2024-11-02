@@ -920,6 +920,15 @@ table <- tibble(Estimate = c("Dem Two-Party Vote Share", "Lower Bound", "Upper B
                 pv2p = c(52.77931, 48.24221, 57.31641))
 table <- table |> pivot_wider(names_from = Estimate, values_from = pv2p)
 table1 <- knitr::kable(table, digits = 2)
+
+ics_outliers <- ggplot(d_pop_tfmc, aes(x=ics)) +
+  geom_boxplot(fill = "#9999CC") +
+  xlab("Second Quarter Consumer Sentiment") +
+  ggtitle("Q2 ICS Boxplot") +
+  my_theme() +
+  theme(plot.title = element_text(size = 18),
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank())
 ```
 
 ```{r simulation, echo=FALSE, include=FALSE, warning=FALSE}
