@@ -1131,6 +1131,14 @@ swing_pred <- win_pred |>
 table2 <- knitr::kable(swing_pred, digits = 2)
 ```
 
+```{r polls table code, echo=FALSE, include=FALSE, warning=FALSE}
+poll_comp <- tibble(State = c("Indiana", "Massachusetts", "Nebraska", "Washington"),
+       `Polls Available` = c("41.47%", "65.48%", "40.19%", "59.28%"),
+       `Polls Imputed` = c("44.67%", "59.57%", "45.7%", "55.98%"))
+
+table_poll <- knitr::kable(poll_comp, caption = "Predicted Harris Two-Party Vote Share by 2024 State Poll Availability")
+```
+
 ```{r fig 2 code, echo=FALSE, include=FALSE, warning=FALSE}
 ec24_rescaled <- ec24_pred |>
   mutate(
