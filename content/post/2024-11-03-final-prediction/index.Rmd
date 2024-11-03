@@ -1058,7 +1058,7 @@ table1 <- knitr::kable(table, digits = 2)
 ics_outliers <- ggplot(d_pop_tfmc, aes(x=ics)) +
   geom_boxplot(fill = "#9999CC") +
   xlab("Second Quarter Consumer Sentiment") +
-  ggtitle("Q2 ICS Boxplot") +
+  ggtitle("Fig. I - Q2 ICS Boxplot") +
   my_theme() +
   theme(plot.title = element_text(size = 18),
         axis.text.y = element_blank(),
@@ -1340,7 +1340,7 @@ fig1 <- ec24_pred |>
   ggplot(aes(long, lat, group = group)) +
   geom_polygon(aes(fill = winner), color = "#000033") +
   scale_fill_manual(values = c("#7CB9E8", "#FF6680")) +
-  ggtitle("Fig. I - Electoral College Prediction, 2024") +
+  ggtitle("Fig. VII - Electoral College Prediction, 2024") +
   my_map_theme() +
   theme(strip.text = element_text(size = 12), 
         aspect.ratio = 0.75)
@@ -1386,7 +1386,7 @@ figx <- ec20_pred |>
   ggplot(aes(long, lat, group = group)) +
   geom_polygon(aes(fill = winner), color = "#000033") +
   scale_fill_manual(values = c("#7CB9E8", "#FF6680")) +
-  ggtitle("Fig. X - Electoral College Prediction, 2020") +
+  ggtitle("Fig. III - Electoral College Prediction, 2020") +
   my_map_theme() +
   theme(strip.text = element_text(size = 12), 
         aspect.ratio = 0.75)
@@ -1404,7 +1404,7 @@ figy <- ec20_rescaled |>
                        name = "margin",
                        breaks = c(-50, -25, 0, 25, 50),
                        limits = c(-25, 25)) +
-  ggtitle("Fig. Y - State-Level Vote Margin, 2020") +
+  ggtitle("Fig. IV - State-Level Vote Margin, 2020") +
   my_map_theme() +
   theme(strip.text = element_text(size = 12), 
         aspect.ratio = 0.75)
@@ -1450,7 +1450,7 @@ figza <- ec16_pred |>
   ggplot(aes(long, lat, group = group)) +
   geom_polygon(aes(fill = winner), color = "#000033") +
   scale_fill_manual(values = c("#7CB9E8", "#FF6680")) +
-  ggtitle("Fig. ZA - Electoral College Prediction, 2016") +
+  ggtitle("Fig. V - Electoral College Prediction, 2016") +
   my_map_theme() +
   theme(strip.text = element_text(size = 12), 
         aspect.ratio = 0.75)
@@ -1468,7 +1468,7 @@ figzb <- ec16_rescaled |>
                        name = "margin",
                        breaks = c(-50, -25, 0, 25, 50),
                        limits = c(-25, 25)) +
-  ggtitle("Fig. ZB - State-Level Vote Margin, 2016") +
+  ggtitle("Fig. VI - State-Level Vote Margin, 2016") +
   my_map_theme() +
   theme(strip.text = element_text(size = 12), 
         aspect.ratio = 0.75)
@@ -1497,7 +1497,7 @@ figa <- ggplot() +
   geom_histogram(mapping = aes(x = pop_out_samp_errors), fill = "#9999CC", binwidth = 2) +
   xlab("Out-of-Sample Residuals") +
   ylab("Count") +
-  ggtitle("Fig. A - Out-of-Sample Error (Popular Vote)") +
+  ggtitle("Fig. II - Out-of-Sample Error (Popular Vote)") +
   my_theme()
 ```
 
@@ -1531,7 +1531,7 @@ fig2 <- ec24_rescaled |>
                        name = "margin",
                        breaks = c(-50, -25, 0, 25, 50),
                        limits = c(-25, 25)) +
-  ggtitle("Fig. II - State-Level Vote Margin, 2024") +
+  ggtitle("Fig. VIII - State-Level Vote Margin, 2024") +
   my_map_theme() +
   theme(strip.text = element_text(size = 12), 
         aspect.ratio = 0.75)
