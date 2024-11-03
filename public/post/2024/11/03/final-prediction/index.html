@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head><script src="/election-blog/livereload.js?mindelay=10&amp;v=2&amp;port=4321&amp;path=election-blog/livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Final Prediction | Ella&#39;s Election Predictions</title>
+    <link rel="stylesheet" href="/election-blog/css/style.css" />
+    <link rel="stylesheet" href="/election-blog/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/election-blog/">Home</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+<div class="article-meta">
+<h1><span class="title">Final Prediction</span></h1>
+<h2 class="author">Ella Trembanis</h2>
+<h2 class="date">2024/11/03</h2>
+</div>
+
+<main>
+<h1 id="introduction">Introduction</h1>
+<p>Welcome to my final prediction for the 2024 presidential election!</p>
+<p>With early voting well underway and only a few days left until Election Day, the race remains stubbornly in the toss-up category, according to expert forecasters such as the Cook Political Report and Sabato’s Crystal Ball. My prediction, unfortunately, is no exception to this trend. While I will predict a winner in today’s post, the predictive intervals produced by both my popular vote and electoral college models encompass scenarios in which either candidate could win.</p>
+<h1 id="my-2024-model">My 2024 Model</h1>
+<p>My model uses a simple OLS regression, with the following explanatory variables: a dummy indicator of whether the candidate served in a previous presidential administration, Q2 consumer sentiment, lagged vote share, and a recent polling average. The outcome variable is the two-party vote share for the Democratic candidate.</p>
+<h2 id="previous-administration">Previous Administration</h2>
+<h2 id="index-of-consumer-sentiment">Index of Consumer Sentiment</h2>
+<img src="/election-blog/post/2024/11/03/final-prediction/index_files/figure-html/print ics_outliers-1.png" width="672" />
+<h2 id="lagged-vote-share">Lagged Vote Share</h2>
+<h2 id="poll-average">Poll Average</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">State</th>
+<th style="text-align:left">Dem Two-Party Vote Share (Polls Available)</th>
+<th style="text-align:left">Dem Two-Party Vote Share (Polls Imputed)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Indiana</td>
+<td style="text-align:left">41.47</td>
+<td style="text-align:left">41.76</td>
+</tr>
+<tr>
+<td style="text-align:left">Massachusetts</td>
+<td style="text-align:left">65.48</td>
+<td style="text-align:left">66.95</td>
+</tr>
+<tr>
+<td style="text-align:left">Nebraska</td>
+<td style="text-align:left">40.19</td>
+<td style="text-align:left">40.18</td>
+</tr>
+<tr>
+<td style="text-align:left">Washington</td>
+<td style="text-align:left">59.28</td>
+<td style="text-align:left">59.79</td>
+</tr>
+</tbody>
+</table>
+<h1 id="out-of-sample-tests">Out-of-Sample Tests</h1>
+<img src="/election-blog/post/2024/11/03/final-prediction/index_files/figure-html/print figa-1.png" width="672" />
+<img src="/election-blog/post/2024/11/03/final-prediction/index_files/figure-html/print figx-1.png" width="672" />
+<img src="/election-blog/post/2024/11/03/final-prediction/index_files/figure-html/print figy-1.png" width="672" />
+<img src="/election-blog/post/2024/11/03/final-prediction/index_files/figure-html/print figza-1.png" width="672" />
+<img src="/election-blog/post/2024/11/03/final-prediction/index_files/figure-html/print figzb-1.png" width="672" />
+<h1 id="popular-vote-results">Popular Vote Results</h1>
+<table>
+<thead>
+<tr>
+<th style="text-align:right">Dem Two-Party Vote Share</th>
+<th style="text-align:right">Lower Bound</th>
+<th style="text-align:right">Upper Bound</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">51.26</td>
+<td style="text-align:right">46.52</td>
+<td style="text-align:right">55.99</td>
+</tr>
+</tbody>
+</table>
+<h1 id="electoral-college-results">Electoral College Results</h1>
+<img src="/election-blog/post/2024/11/03/final-prediction/index_files/figure-html/print fig1-1.png" width="672" />
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Region</th>
+<th style="text-align:right">Dem Two-Party Vote Share</th>
+<th style="text-align:left">Winner</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Alaska</td>
+<td style="text-align:right">42.53</td>
+<td style="text-align:left">Republican</td>
+</tr>
+<tr>
+<td style="text-align:left">District Of Columbia</td>
+<td style="text-align:right">94.12</td>
+<td style="text-align:left">Democrat</td>
+</tr>
+<tr>
+<td style="text-align:left">Hawaii</td>
+<td style="text-align:right">71.77</td>
+<td style="text-align:left">Democrat</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">State</th>
+<th style="text-align:right">Dem Two-Party Vote Share</th>
+<th style="text-align:right">Lower</th>
+<th style="text-align:right">Upper</th>
+<th style="text-align:left">Winner</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Arizona</td>
+<td style="text-align:right">47.58</td>
+<td style="text-align:right">41.98</td>
+<td style="text-align:right">53.18</td>
+<td style="text-align:left">Republican</td>
+</tr>
+<tr>
+<td style="text-align:left">Georgia</td>
+<td style="text-align:right">47.64</td>
+<td style="text-align:right">42.04</td>
+<td style="text-align:right">53.23</td>
+<td style="text-align:left">Republican</td>
+</tr>
+<tr>
+<td style="text-align:left">Michigan</td>
+<td style="text-align:right">48.92</td>
+<td style="text-align:right">43.33</td>
+<td style="text-align:right">54.52</td>
+<td style="text-align:left">Republican</td>
+</tr>
+<tr>
+<td style="text-align:left">Nevada</td>
+<td style="text-align:right">47.88</td>
+<td style="text-align:right">42.28</td>
+<td style="text-align:right">53.48</td>
+<td style="text-align:left">Republican</td>
+</tr>
+<tr>
+<td style="text-align:left">North Carolina</td>
+<td style="text-align:right">46.99</td>
+<td style="text-align:right">41.39</td>
+<td style="text-align:right">52.58</td>
+<td style="text-align:left">Republican</td>
+</tr>
+<tr>
+<td style="text-align:left">Pennsylvania</td>
+<td style="text-align:right">48.58</td>
+<td style="text-align:right">42.98</td>
+<td style="text-align:right">54.18</td>
+<td style="text-align:left">Republican</td>
+</tr>
+<tr>
+<td style="text-align:left">Wisconsin</td>
+<td style="text-align:right">48.40</td>
+<td style="text-align:right">42.80</td>
+<td style="text-align:right">54.00</td>
+<td style="text-align:left">Republican</td>
+</tr>
+</tbody>
+</table>
+<img src="/election-blog/post/2024/11/03/final-prediction/index_files/figure-html/print fig2-1.png" width="672" />
+
+</main>
+
+  <footer>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<script src="//cdn.jsdelivr.net/combine/npm/katex/dist/katex.min.js,npm/katex/dist/contrib/auto-render.min.js,npm/@xiee/utils/js/render-katex.js" defer></script>
+
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/center-img.min.js" defer></script>
+
+  
+  <hr/>
+  Ella Trembanis | 2024 | <a href="https://github.com/trembanis">Github</a> | <a href="https://github.com/yihui/hugo-xmin">Blog Theme: Hugo XMin</a>
+  
+  </footer>
+  </body>
+</html>
+
