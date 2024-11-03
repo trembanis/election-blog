@@ -276,7 +276,7 @@ d_state_tfmc <- d_state_tfmc |>
 # create lag & poll error variables
 d_state_tfmc <- d_state_tfmc |>
   mutate(
-    state_poll_error = mean_support - state_pv2p
+    state_poll_error = state_pv2p - poll_week_1
   )
 
 # create tfmc dataframe for every state
@@ -1002,6 +1002,30 @@ summary(tfmc_wy)
 wy_pred <- predict(tfmc_wy, Wyoming24, interval = "none")
 Wyoming20 <- Wyoming |> filter(year == 2020)
 Wyoming16 <- Wyoming |> filter(year == 2016)
+
+# Districts
+DC_polls <- d_state_polls_simplified |> filter(state == "District of Columbia" & party == "DEM") |> mutate(state = if_else(state == "District of Columbia", "District Of Columbia", NA))
+DC <- d_state_tfmc |> filter(state == "District Of Columbia") |>
+  select(-mean_support, -state_poll_error)
+DC <- DC |> left_join(DC_polls, by = join_by(year, state, party))
+DC <- DC |> mutate(state_poll_error = state_pv2p - poll_week_1)
+DC <- DC |> mutate(state_pv2p_lag = lag(state_pv2p, n=1))
+DC[1, "state_pv2p_lag"] = d_state_popvote$D_pv2p[d_state_popvote$year == 1968 & d_state_popvote$state == "District Of Columbia"]
+DC24 <- data.frame(year = 2024,
+                        state = "District Of Columbia",
+                        party = "DEM",
+                        state_pv2p = NA,
+                        ics = unique(d_state_tfmc$ics[d_state_tfmc$year == 2024]),
+                        prev_admin = TRUE,
+                        poll_week_1 = unique(d_state_tfmc$poll_week_1[d_state_tfmc$year == 2024]),
+                        state_pv2p_lag = DC$state_pv2p[DC$year == 2020],
+                        poll_error = DC$state_poll_error[DC$year == 2020],
+                        mean_support = DC$poll_week_1[DC$year == 2024] + DC$state_poll_error[DC$year == 2020])
+tfmc_dc <- lm(state_pv2p ~ ics + mean_support + prev_admin + state_pv2p_lag + poll_week_1, data = DC)
+summary(tfmc_dc)
+dc_pred <- predict(tfmc_dc, DC24, interval = "none")
+DC20 <- DC |> filter(year == 2020)
+DC16 <- DC |> filter(year == 2016)
 ```
 
 ```{r pop vote, echo=FALSE, include=FALSE, warning=FALSE}
@@ -1478,7 +1502,7 @@ table2 <- knitr::kable(swing_pred, digits = 2)
 ```{r polls table code, echo=FALSE, include=FALSE, warning=FALSE}
 poll_comp <- tibble(State = c("Indiana", "Massachusetts", "Nebraska", "Washington"),
        `Polls Available` = c("41.47%", "65.48%", "40.19%", "59.28%"),
-       `Polls Imputed` = c("44.67%", "59.57%", "45.7%", "55.98%"))
+       `Polls Imputed` = c("41.76%", "66.95%", "40.18%", "59.79%"))
 
 table_poll <- knitr::kable(poll_comp, caption = "Predicted Harris Two-Party Vote Share by 2024 State Poll Availability")
 ```
@@ -1496,7 +1520,7 @@ fig2 <- ec24_rescaled |>
                        mid = "white", # competitive margins approach zero and display as white / light-colored
                        name = "margin",
                        breaks = c(-50, -25, 0, 25, 50),
-                       limits = c(-20, 20)) +
+                       limits = c(-25, 25)) +
   ggtitle("Fig. II - State-Level Vote Margin, 2024") +
   my_map_theme() +
   theme(strip.text = element_text(size = 12), 

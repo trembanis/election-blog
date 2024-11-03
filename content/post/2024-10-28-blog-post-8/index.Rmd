@@ -287,7 +287,7 @@ d_state_tfmc <- d_state_tfmc |>
 # create lag & poll error variables
 d_state_tfmc <- d_state_tfmc |>
   mutate(
-    state_poll_error = mean_support - state_pv2p
+    state_poll_error = state_pv2p - poll_week_3
   )
 
 # create tfmc dataframe for every state
@@ -1199,7 +1199,7 @@ fig2 <- ec24_rescaled |>
                        mid = "white", # competitive margins approach zero and display as white / light-colored
                        name = "margin",
                        breaks = c(-50, -25, 0, 25, 50),
-                       limits = c(-20, 20)) +
+                       limits = c(-25, 25)) +
   ggtitle("Fig. II - State-Level Vote Margin, 2024") +
   my_map_theme() +
   theme(strip.text = element_text(size = 12), 
