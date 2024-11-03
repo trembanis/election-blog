@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-us">
-  <head><script src="/election-blog/livereload.js?mindelay=10&amp;v=2&amp;port=4321&amp;path=election-blog/livereload" data-no-instant defer></script>
+  <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Blog Post #5 | Ella&#39;s Election Predictions</title>
@@ -81,9 +81,9 @@
 </code></pre>
 <p>That party registration seems to play such a small role is particularly counterintuitive since Delaware is a reliably blue state, in which Republican voters might conceivably be less motivated to vote in non-competitive federal races. Further research is needed to draw any detailed conclusions, but perhaps bipartisan interest in more competitive down-ballot races is driving this distribution.</p>
 <p>Figures I-III, below, summarize voter turnout rates across the variables determined to be most significant by the regression model: age, education level, and home ownership. In this regard, Delaware seems to be in lock-step with the conventional wisdom that older, wealthier, and more highly-educated individuals are more likely to vote. Not only do these groups often have an easier time shouldering the opportunity costs of voting, but they may also have distinctive policy interests that motivate them to participate. For instance, retirees may find it easier to take time out of their days to go to the polls, and they may also be impassioned about defending Social Security.</p>
-<img src="/election-blog/post/2024/10/06/blog-post-4/index_files/figure-html/fig 1 print-1.png" width="672" />
-<img src="/election-blog/post/2024/10/06/blog-post-4/index_files/figure-html/fig 2 print-1.png" width="672" />
-<img src="/election-blog/post/2024/10/06/blog-post-4/index_files/figure-html/fig 3 print-1.png" width="672" />
+<img src="https://trembanis.github.io/election-blog/post/2024/10/06/blog-post-4/index_files/figure-html/fig 1 print-1.png" width="672" />
+<img src="https://trembanis.github.io/election-blog/post/2024/10/06/blog-post-4/index_files/figure-html/fig 2 print-1.png" width="672" />
+<img src="https://trembanis.github.io/election-blog/post/2024/10/06/blog-post-4/index_files/figure-html/fig 3 print-1.png" width="672" />
 <h1 id="this-weeks-prediction">This Week&rsquo;s Prediction</h1>
 <p>This week’s model is an elaboration on the Time for More Change approach I proposed in last week’s blog. Time for More Change borrows its basic framework from Abramowitz’s Time for Change model, with a few tweaks made to account for the specific conditions of the 2024 race, namely, swapping out Biden’s June approval for Harris’s support in recent poll averages, incorporating the Index of Consumer Sentiment to acknowledge feelings – not just facts – about the state of the economy, and using a binary variable to indicate participation in the previous administration.</p>
 <p>Time for More Change predicts a Harris two-party popular vote share of 50.69%, with an upper bound of 54.22% and a lower bound of 47.15% at the 80% confidence level. This reflects the popular consensus that 2024 will be an exceptionally close contest, although even a very poor model could have stumbled into a prediction around the 50% mark.</p>
@@ -91,7 +91,7 @@
 <p>The most pressing issue I faced in constructing the electoral college extension of Time for More Change – besides some disastrous human error that had me temporarily predicting a blue Texas and a red Massachusetts – was accounting for the vast majority of the states which lack current polling data. I used Biden’s 2020 vote share by state and the most recent national polling average to fill in the gaps in these cases, but it is by no means a perfect proxy for polls. Fortunately, all of the major swing states for 2024 have state-level polling.</p>
 <p>Time For Change predicts that Harris will receive 287 electoral college votes, which would give her the presidency. While this estimate in itself is not out of the realm of possibility (give or take a few votes from Maine and Nebraska’s congressional districts, since their proportional systems are not yet incorporated in this model), it does produce a slightly sketchy map.</p>
 <p>In Figure IV, below, the model has Oregon and Virginia swinging toward the Republicans and Ohio, West Virginia, North Dakota, and South Carolina breaking for Harris. It is difficult to evaluate the model’s prediction of the swing states – even though we have more recent polling in those cases, they are genuinely up for grabs, so possible errors in their predicted electoral college vote are not as obvious as the improbable North Dakota guess.</p>
-<img src="/election-blog/post/2024/10/06/blog-post-4/index_files/figure-html/fig 4 print-1.png" width="672" />
+<img src="https://trembanis.github.io/election-blog/post/2024/10/06/blog-post-4/index_files/figure-html/fig 4 print-1.png" width="672" />
 <p>There is plenty more to be done with this model – its forecasting uncertainty is poorly defined, it is essentially blind to campaign factors and vulnerable to unrepresentative polls, and the Time for Change approach’s focus on incumbent party vote share means that it says very little about Trump’s viability as a candidate.</p>
 <p>See you next week!</p>
 
