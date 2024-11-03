@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-us">
-  <head><script src="/election-blog/livereload.js?mindelay=10&amp;v=2&amp;port=4321&amp;path=election-blog/livereload" data-no-instant defer></script>
+  <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Final Prediction | Ella&#39;s Election Predictions</title>
@@ -31,9 +31,70 @@
 <p>With early voting well underway and only a few days left until Election Day, the race remains stubbornly in the toss-up category, according to expert forecasters such as the Cook Political Report and Sabato’s Crystal Ball. My prediction, unfortunately, is no exception to this trend. While I will predict a winner in today’s post, the predictive intervals produced by both my popular vote and electoral college models encompass scenarios in which either candidate could win.</p>
 <h1 id="my-2024-model">My 2024 Model</h1>
 <p>My model uses a simple OLS regression, with the following explanatory variables: a dummy indicator of whether the candidate served in a previous presidential administration, Q2 consumer sentiment, lagged vote share, and a recent polling average. The outcome variable is the two-party vote share for the Democratic candidate.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left"></th>
+<th style="text-align:left">Popular Vote Model</th>
+<th style="text-align:left">Electoral College Model</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Intercept</td>
+<td style="text-align:left">15.806</td>
+<td style="text-align:left">8.105</td>
+</tr>
+<tr>
+<td style="text-align:left">Index of Consumer Sentiment (C)</td>
+<td style="text-align:left">0.008</td>
+<td style="text-align:left">-0.035</td>
+</tr>
+<tr>
+<td style="text-align:left">National Poll Average, 1 Week Left (P)</td>
+<td style="text-align:left">0.674</td>
+<td style="text-align:left">-0.033</td>
+</tr>
+<tr>
+<td style="text-align:left">Candidate Was In Previous Administration (A)</td>
+<td style="text-align:left">-1.358</td>
+<td style="text-align:left">-4.307</td>
+</tr>
+<tr>
+<td style="text-align:left">Previous Year National Two-Party Vote Share (L)</td>
+<td style="text-align:left">0.074</td>
+<td style="text-align:left">not included</td>
+</tr>
+<tr>
+<td style="text-align:left">Previous Year State Two-Party Vote Share (V)</td>
+<td style="text-align:left">not included</td>
+<td style="text-align:left">0.6</td>
+</tr>
+<tr>
+<td style="text-align:left">State Poll Average or Imputed Support, All-Time (S)</td>
+<td style="text-align:left">not included</td>
+<td style="text-align:left">0.425</td>
+</tr>
+<tr>
+<td style="text-align:left">Number of Observations</td>
+<td style="text-align:left">13</td>
+<td style="text-align:left">559</td>
+</tr>
+<tr>
+<td style="text-align:left">R-squared</td>
+<td style="text-align:left">0.806</td>
+<td style="text-align:left">0.779</td>
+</tr>
+<tr>
+<td style="text-align:left">Adjusted R-squared</td>
+<td style="text-align:left">0.709</td>
+<td style="text-align:left">0.777</td>
+</tr>
+</tbody>
+</table>
 <h2 id="previous-administration">Previous Administration</h2>
 <h2 id="index-of-consumer-sentiment">Index of Consumer Sentiment</h2>
-<img src="/election-blog/post/2024/11/03/final-prediction/index_files/figure-html/print ics_outliers-1.png" width="672" />
+<img src="https://trembanis.github.io/election-blog/post/2024/11/03/final-prediction/index_files/figure-html/print ics_outliers-1.png" width="672" />
 <h2 id="lagged-vote-share">Lagged Vote Share</h2>
 <h2 id="poll-average">Poll Average</h2>
 <table>
@@ -68,11 +129,11 @@
 </tbody>
 </table>
 <h1 id="out-of-sample-tests">Out-of-Sample Tests</h1>
-<img src="/election-blog/post/2024/11/03/final-prediction/index_files/figure-html/print figa-1.png" width="672" />
-<img src="/election-blog/post/2024/11/03/final-prediction/index_files/figure-html/print figx-1.png" width="672" />
-<img src="/election-blog/post/2024/11/03/final-prediction/index_files/figure-html/print figy-1.png" width="672" />
-<img src="/election-blog/post/2024/11/03/final-prediction/index_files/figure-html/print figza-1.png" width="672" />
-<img src="/election-blog/post/2024/11/03/final-prediction/index_files/figure-html/print figzb-1.png" width="672" />
+<img src="https://trembanis.github.io/election-blog/post/2024/11/03/final-prediction/index_files/figure-html/print figa-1.png" width="672" />
+<img src="https://trembanis.github.io/election-blog/post/2024/11/03/final-prediction/index_files/figure-html/print figx-1.png" width="672" />
+<img src="https://trembanis.github.io/election-blog/post/2024/11/03/final-prediction/index_files/figure-html/print figy-1.png" width="672" />
+<img src="https://trembanis.github.io/election-blog/post/2024/11/03/final-prediction/index_files/figure-html/print figza-1.png" width="672" />
+<img src="https://trembanis.github.io/election-blog/post/2024/11/03/final-prediction/index_files/figure-html/print figzb-1.png" width="672" />
 <h1 id="popular-vote-results">Popular Vote Results</h1>
 <table>
 <thead>
@@ -91,7 +152,7 @@
 </tbody>
 </table>
 <h1 id="electoral-college-results">Electoral College Results</h1>
-<img src="/election-blog/post/2024/11/03/final-prediction/index_files/figure-html/print fig1-1.png" width="672" />
+<img src="https://trembanis.github.io/election-blog/post/2024/11/03/final-prediction/index_files/figure-html/print fig1-1.png" width="672" />
 <table>
 <thead>
 <tr>
@@ -180,7 +241,7 @@
 </tr>
 </tbody>
 </table>
-<img src="/election-blog/post/2024/11/03/final-prediction/index_files/figure-html/print fig2-1.png" width="672" />
+<img src="https://trembanis.github.io/election-blog/post/2024/11/03/final-prediction/index_files/figure-html/print fig2-1.png" width="672" />
 
 </main>
 

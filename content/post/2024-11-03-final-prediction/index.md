@@ -46,6 +46,23 @@ With early voting well underway and only a few days left until Election Day, the
 
 My model uses a simple OLS regression, with the following explanatory variables: a dummy indicator of whether the candidate served in a previous presidential administration, Q2 consumer sentiment, lagged vote share, and a recent polling average. The outcome variable is the two-party vote share for the Democratic candidate.
 
+
+
+
+|                                                    |Popular Vote Model |Electoral College Model |
+|:---------------------------------------------------|:------------------|:-----------------------|
+|Intercept                                           |15.806             |8.105                   |
+|Index of Consumer Sentiment (C)                     |0.008              |-0.035                  |
+|National Poll Average, 1 Week Left (P)              |0.674              |-0.033                  |
+|Candidate Was In Previous Administration (A)        |-1.358             |-4.307                  |
+|Previous Year National Two-Party Vote Share (L)     |0.074              |not included            |
+|Previous Year State Two-Party Vote Share (V)        |not included       |0.6                     |
+|State Poll Average or Imputed Support, All-Time (S) |not included       |0.425                   |
+|Number of Observations                              |13                 |559                     |
+|R-squared                                           |0.806              |0.779                   |
+|Adjusted R-squared                                  |0.709              |0.777                   |
+
+
 ## Previous Administration
 
 
@@ -53,7 +70,6 @@ My model uses a simple OLS regression, with the following explanatory variables:
 ## Index of Consumer Sentiment
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/print ics_outliers-1.png" width="672" />
-
 
 ## Lagged Vote Share
 
