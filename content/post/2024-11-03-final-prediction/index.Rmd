@@ -1490,7 +1490,7 @@ pop_out_samp_errors <- sapply(1:1000, function(i) {
 })
 
 # mean of out-of-sample residuals
-mean(abs(pop_out_samp_errors)) # 2.35
+mean(abs(pop_out_samp_errors)) # 2.615
 
 # histogram of prediction errors (out-of-sample residuals)
 figa <- ggplot() +
@@ -1599,7 +1599,7 @@ As seems to be the trend for most of these variables, the national lagged vote s
 
 ## Poll Average
 
-With polling, we come to the first major distinction between national- and state-level models. The most recent national polling average from FiveThirtyEight’s aggregation – currently set at one week before Election Day, though the polls themselves may have been administered earlier – is featured in both models. I decided to limit national polls to the most recent weekly average in recognition of [Gelman and King’s](https://doi.org/10.1017/S0007123400006682) claim that polls become more reliable closer to Election Day, as voters converge on their underlying preferences. However, I also chose to take an all-time average of state-level polls for my electoral college. While ideally I would like to have plentiful recent polls from all states, state-level polls are fewer in number than national polls, and I therefore opted not to restrict my sample further by removing old polls. Hopefully, this two-pronged approach gives my electoral college model the best of both worlds: the recent national average should act as a temperature check for Harris’s overall trajectory across the country and the long-term state average should offer an insight into state-level preferences that is more resistant to short-term fluctuations.
+With polling, we come to the first major distinction between national- and state-level models. The most recent national polling average from FiveThirtyEight’s aggregation – currently set at one week before Election Day, though the polls themselves may have been administered earlier – is featured in both models. I decided to limit national polls to the most recent weekly average in recognition of [Gelman and King](https://doi.org/10.1017/S0007123400006682)'s claim that polls become more reliable closer to Election Day, as voters converge on their underlying preferences. However, I also chose to take an all-time average of state-level polls for my electoral college. While ideally I would like to have plentiful recent polls from all states, state-level polls are fewer in number than national polls, and I therefore opted not to restrict my sample further by removing old polls. Hopefully, this two-pronged approach gives my electoral college model the best of both worlds: the recent national average should act as a temperature check for Harris’s overall trajectory across the country and the long-term state average should offer an insight into state-level preferences that is more resistant to short-term fluctuations.
 
 Unfortunately, in some cases, state-level polling is not yet available. For these states, I imputed a poll average by applying their deviation from the national popular vote in 2020 to the current national average. In this past week, polling data became available for four states that I had previously imputed, so I took the opportunity to compare the results of my imputation to the actual polls.
 
@@ -1613,26 +1613,41 @@ In the popular vote model, the national poll average (P) just barely misses the 
 
 # Out-of-Sample Tests
 
+To further assess the model, I conducted a cross-validation procedure on the popular vote model and re-ran the electoral college model to “predict” the 2016 and 2020 election cycles.
+
+Figure II, below, summarizes the out-of-sample residuals from the cross-validation exercise. The distribution is roughly normal, as expected, and the mean of the residuals is about 2.615. In the context of a bitterly close election, of course, 2.615 points is nothing to sniff at. However, given the range in observed vote share found in the historical data is around 16.6 points, and that this degree of out-of-sample error is in line with the predictive models I have produced in previous weeks, I have continued with this model.
+
 ```{r print figa, echo=FALSE, include=TRUE, warning=FALSE}
 figa
 ```
+
+Next, I created an electoral college “predictions” for 2020. Figure III, below, illustrates which states my model would expect Biden to win and lose in 2020.
 
 ```{r print figx, echo=FALSE, include=TRUE, warning=FALSE}
 figx
 ```
 
+There are, as I am sure you have noticed, several things wrong with this map. Not only does it predict a blowout victory for Biden with 409 electoral votes, but it does so by handing him improbable wins in states like Texas and Florida. On the other hand, Figure IV, which displays Biden’s predicted margins in each state, makes these ludicrous upfront results seem a bit more sensible.
+
 ```{r print figy, echo=FALSE, include=TRUE, warning=FALSE}
 figy
 ```
+
+The margins map, above, at least gives margin a very narrow margin of victory in Texas and Florida. Rather than throwing all of the states randomly out of whack, the model seems to have preserved the basic relative values of the states, but shifted the whole prediction slightly leftward. This is particularly interesting since, as we will soon see, my 2024 prediction from the same model appears to have the opposite skew.
+
+As a final check, I used my model to “predict” the 2016 election, with similarly bizarre results. While Figure V, below, shows that my model did predict a Trump victory, it shortchanged Clinton in Colorado, New Mexico, and Virginia, despite handing her wins in the Blue Wall states.
 
 ```{r print figza, echo=FALSE, include=TRUE, warning=FALSE}
 figza
 ```
 
+Once again, Figure VI indicates that these mistakes come from states with very narrow predictive margins.
+
 ```{r print figzb, echo=FALSE, include=TRUE, warning=FALSE}
 figzb
 ```
 
+Ultimately, my model is only as good as the data that it receives. These alternate-reality maps of 2016 and 2020 are a reminder that my model rests on the – possibly fragile – hope that the same pollsters who veered in the wrong direction, say by [underestimating Trump in 2016](https://www.pewresearch.org/short-reads/2016/11/09/why-2016-election-polls-missed-their-mark/), will not make a similar systematic error in 2024.
 
 # Popular Vote Results
 
