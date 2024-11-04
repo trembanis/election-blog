@@ -199,3 +199,12 @@ Thank you for joining me for this tour of my 2024 predictive model. I will leave
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/print fig2-1.png" width="672" />
 
+# References
+
+Cook Political Report. (2024, November 1). 2024 CPR President race ratings. https://www.cookpolitical.com/ratings/presidential-race-ratings
+
+Gelman, A. & King, G. (1993, October). British Journal of Political Science, Vol. 23 (4), 409-451. https://doi.org/10.1017/S0007123400006682
+
+Mercer, A., Deane, C. & McGeeney, K. (2016, November 9). Why 2016 election polls missed their mark. https://www.pewresearch.org/short-reads/2016/11/09/why-2016-election-polls-missed-their-mark/
+
+Sabato's Crystal Ball. (2024, September 25). 2024 Electoral College ratings. The Center for Politics at the University of Virginia. https://centerforpolitics.org/crystalball/2024-president/
