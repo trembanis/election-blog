@@ -144,10 +144,16 @@ Ultimately, my model is only as good as the data that it receives. These alterna
 
 # Popular Vote Results
 
+Without further ado, it is time to unveil my predictions for the 2024 presidential election!
+
+First, my popular vote prediction is summarized in the table below. I am predicting a 51.26% Harris two-party vote share. At the 80% confidence level, my predictive interval crosses the 50% mark, so my model cannot identify a clear winner.
+
 
 | Dem Two-Party Vote Share| Lower Bound| Upper Bound|
 |------------------------:|-----------:|-----------:|
 |                    51.26|       46.52|       55.99|
+
+I should also note that Harris’s predicted margin of victory under this model has declined in past weeks, as recent national polls favoring Trump have poured in.
 
 # Electoral College Results
 
