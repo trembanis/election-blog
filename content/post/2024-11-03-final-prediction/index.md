@@ -80,13 +80,15 @@ I have already written at length about the problem of incumbency in this year’
 
 I have chosen to use a “previous administration” dummy because I think it comes closest to describing Harris as a non-incumbent who is nevertheless closely linked to the sitting president. A binary indicator for incumbent party membership could also be used here, but it risks underplaying the extent to which voters will evaluate Harris as Biden’s second-in-command. Statistical tests are of little use in this instance, since Biden’s last-minute removal from the race is anomalous. Whether you lend any credibility to this model, then, depends on how you take this judgment call.
 
-
+Both coefficients – for the popular vote and electoral college models – are negative when the previous administration variable is 1. According to the models, then, being a member of a previous presidential administration is associated with decreased vote share. However, this relationship is only significant in the electoral college model, where members of previous administrations are expected to receive about 4.3 fewer points compared to other candidates.
 
 ## Index of Consumer Sentiment
 
 My economic indicator of choice is another slight twist on the Time For Change formula. Instead of GDP, I opted for a measure of consumer sentiment, or respondents’ professed impressions of the state of the economy, with the hope of more directly assessing the judgments underlying economic retrospective voting. The choice of this indicator assumes a model of voter behavior in which voters do weigh their personal impressions of the economy but are not substantially subconsciously influenced by fluctuations in GDP that may be influencing economic conditions behind the scenes.
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/print ics_outliers-1.png" width="672" />
+
+The same story we observed for the previous administration variable repeats itself with consumer sentiment. In the popular vote model, the coefficient is substantively low and insignificant. In the electoral college model, it is significant at the 0.05 level and has a small negative estimate of -0.0035. Counterintuitively, this coefficient implies that Democratic vote share drops as Americans’ outlook on the economy improves. If this trend does hold true in reality, it could result from an increased desire for welfare and stimulus programs (associated with the Democratic party) during times of economic hardship and a desire for more limited government intervention (associated with the Republican party) when the economy seems strong.
 
 ## Lagged Vote Share
 
