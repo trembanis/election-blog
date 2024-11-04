@@ -33,9 +33,9 @@
 <p>My model uses a simple OLS regression, with the following explanatory variables: a dummy indicator of whether the candidate served in a previous presidential administration, Q2 consumer sentiment, lagged vote share, and a recent polling average. The outcome variable is the two-party vote share for the Democratic candidate.</p>
 <p>My model is inspired by Abramowitz’s Time For Change model, though I changed the specific indicators (incumbency to previous administration, GDP to ICS, and June approval ratings to recent polls) and added lagged vote share.</p>
 <p>Here is the formula for the popular vote regression:</p>
-<p><code>\(Y = \beta_0 + \beta_1A + \beta_2C + \beta_3L + \beta_4P + \epsilon\)</code></p>
+<p>Y = (beta 0) + (beta 1) x A + (beta 2) x C + (beta 3) x L + (beta 4) x P + epsilon</p>
 <p>…And here is the formula for the electoral college regression:</p>
-<p><code>\(Y = \beta_0 + \beta_1A + \beta_2C + \beta_3V + \beta_4P + \beta_5S + \epsilon\)</code></p>
+<p>Y = (beta 0) + (beta 1) x A + (beta 2) x C + (beta 3) x V + (beta 4) x P + (beta 5) x S + epsilon</p>
 <p>I will address each of the variables and their coefficients in the following sections, but first I should briefly discuss adjusted R-squared, a measure of the model’s overall performance. Adjusted R-squared describes the percent of the variation in Democratic two-party vote share that can be explained by the independent variables. For the popular vote, this is about 71%, while the electoral college model, probably since it is more finely tuned to state-level conditions, explains about 78%. While there are ways to inflate R-squared and adjusted R-squared, I think this 71%-78% range, even though it does not account for all possible factors, is respectable for the purposes of this prediction. After all, a sky-high R-squared might seem desirable, but it could indicate overfitting, or hyper-sensitivity to trends in the historical data, which could impair the predictive power of the model.</p>
 <table>
 <thead>
