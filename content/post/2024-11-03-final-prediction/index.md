@@ -168,6 +168,8 @@ Finally, and most importantly, here is my electoral college prediction: my model
 |District Of Columbia |                    94.12|Democrat   |
 |Hawaii               |                    71.77|Democrat   |
 
+The table below zooms in on the seven swing states of this election cycle. While all of the predictions are centered below 50, with Trump predicted to win, every single interval crosses the decisive 50% mark at the 80% confidence level.
+
 
 |State          | Dem Two-Party Vote Share| Lower| Upper|Winner     |
 |:--------------|------------------------:|-----:|-----:|:----------|
@@ -178,6 +180,8 @@ Finally, and most importantly, here is my electoral college prediction: my model
 |North Carolina |                    46.99| 41.39| 52.58|Republican |
 |Pennsylvania   |                    48.58| 42.98| 54.18|Republican |
 |Wisconsin      |                    48.40| 42.80| 54.00|Republican |
+
+Thank you for joining me for this tour of my 2024 predictive model. I will leave you with Figure VIII, a map of the predicted margins for each of the continental states. From where I sit now, on Monday, November 4th, 2024, it seems like a reasonable guess. Only time will tell if four years from now this map will look as bizarre as my 2020 and 2016 “predictions.”
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/print fig2-1.png" width="672" />
 
