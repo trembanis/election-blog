@@ -100,7 +100,7 @@ In a previous post, I justified using ICS because I found that using that variab
 
 Figure I, below, makes one argument for ICS: unlike GDP, it does not include any outliers in the dataset I used. On the one hand, this makes it easier to justify including otherwise anomalous years, like 2020. On the other hand, the fact that GDP growth drops to a whopping -28 in Q2 of 2020 suggests that there might be very good reasons for dropping unrepresentative years. Both measures are in some respect imperfect, but I decided to move forward with ICS.
 
-<img src="{{< blogdown/postref >}}index_files/figure-html/print ics_outliers-1.png" width="672" />
+<img src="{{< blogdown/postref >}}index_files/figure-html/print gdp_outliers-1.png" width="672" />
 
 The same story we observed for the previous administration variable repeats itself with consumer sentiment. In the popular vote model, the coefficient is substantively low and insignificant. In the electoral college model, it is significant at the 0.05 level and has a small negative estimate of -0.0035. Counterintuitively, this coefficient implies that Democratic vote share drops as Americans’ outlook on the economy improves. If this trend does hold true in reality, it could result from an increased desire for welfare and stimulus programs (associated with the Democratic party) during times of economic hardship and a desire for more limited government intervention (associated with the Republican party) when the economy seems strong.
 
