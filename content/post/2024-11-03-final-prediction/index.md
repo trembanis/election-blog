@@ -86,6 +86,20 @@ Both coefficients – for the popular vote and electoral college models – are 
 
 My economic indicator of choice is another slight twist on the Time For Change formula. Instead of GDP, I opted for a measure of consumer sentiment, or respondents’ professed impressions of the state of the economy, with the hope of more directly assessing the judgments underlying economic retrospective voting. The choice of this indicator assumes a model of voter behavior in which voters do weigh their personal impressions of the economy but are not substantially subconsciously influenced by fluctuations in GDP that may be influencing economic conditions behind the scenes.
 
+In a previous post, I justified using ICS because I found that using that variable over GDP growth moderately improved both in- and out-of-sample fit. As the table below indicates, this is no longer true. After re-running the comparison on my updated model, I found that GDP growth slightly outperforms ICS in out-of-sample fit, but slightly underperforms in adjusted R-squared, where all other variables are kept constant. Nevertheless, both versions of the model predict similar two-party vote shares for Harris in the popular vote.
+
+
+|                                                  |GDP    |ICS    |
+|:-------------------------------------------------|:------|:------|
+|Coefficient                                       |0.2676 |-0.033 |
+|Significant at 0.05 Level?                        |NO     |NO     |
+|Outliers?                                         |YES    |NO     |
+|Adjusted R-squared                                |0.763  |0.709  |
+|Mean of Absolute Value of Out-of-Sample Residuals |2.451  |2.615  |
+|Predicted Dem Two-Party Vote Share                |52.15  |51.26  |
+
+Figure I, below, makes one argument for ICS: unlike GDP, it does not include any outliers in the dataset I used. On the one hand, this makes it easier to justify including otherwise anomalous years, like 2020. On the other hand, the fact that GDP growth drops to a whopping -28 in Q2 of 2020 suggests that there might be very good reasons for dropping unrepresentative years. Both measures are in some respect imperfect, but I decided to move forward with ICS.
+
 <img src="{{< blogdown/postref >}}index_files/figure-html/print ics_outliers-1.png" width="672" />
 
 The same story we observed for the previous administration variable repeats itself with consumer sentiment. In the popular vote model, the coefficient is substantively low and insignificant. In the electoral college model, it is significant at the 0.05 level and has a small negative estimate of -0.0035. Counterintuitively, this coefficient implies that Democratic vote share drops as Americans’ outlook on the economy improves. If this trend does hold true in reality, it could result from an increased desire for welfare and stimulus programs (associated with the Democratic party) during times of economic hardship and a desire for more limited government intervention (associated with the Republican party) when the economy seems strong.
@@ -118,7 +132,7 @@ In the popular vote model, the national poll average (P) just barely misses the 
 
 To further assess the model, I conducted a cross-validation procedure on the popular vote model and re-ran the electoral college model to “predict” the 2016 and 2020 election cycles.
 
-Figure II, below, summarizes the out-of-sample residuals from the cross-validation exercise. The distribution is roughly normal, as expected, and the mean of the residuals is about 2.615. In the context of a bitterly close election, of course, 2.615 points is nothing to sniff at. However, given the range in observed vote share found in the historical data is around 16.6 points, and that this degree of out-of-sample error is in line with the predictive models I have produced in previous weeks, I have continued with this model.
+Figure II, below, summarizes the out-of-sample residuals from the cross-validation exercise. The distribution is roughly normal, as expected, and the mean of the absolute value of the out-of-sample residuals is about 2.615. In the context of a bitterly close election, of course, 2.615 points is nothing to sniff at. However, given the range in observed vote share found in the historical data is around 16.6 points, and that this degree of out-of-sample error is in line with the predictive models I have produced in previous weeks, I have continued with this model.
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/print figa-1.png" width="672" />
 

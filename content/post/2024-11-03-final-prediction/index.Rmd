@@ -1063,6 +1063,28 @@ ics_outliers <- ggplot(d_pop_tfmc, aes(x=ics)) +
   theme(plot.title = element_text(size = 18),
         axis.text.y = element_blank(),
         axis.ticks.y = element_blank())
+
+# comparison with gdp
+gdp_pop <- lm(pv2p ~ GDP_growth_quarterly + poll_week_1 + prev_admin + pv2p_lag, data = d_pop_tfmc)
+summary(gdp_pop)
+gdp_pred <- predict(gdp_pop, pop24, interval = "prediction", level = 0.8) # 52.1467% Harris 2-party popular vote
+
+gdp_outliers <- ggplot(d_pop_tfmc, aes(x=GDP_growth_quarterly)) +
+  geom_boxplot(fill = "#9999CC") +
+  xlab("Second Quarter GDP Growth") +
+  ggtitle("Fig I. - Q2 GDP Boxplot") +
+  my_theme() + 
+  theme(plot.title = element_text(size = 18),
+        axis.text.y = element_blank(),
+        axis.ticks.y = element_blank())
+
+gdp_comp <- data.frame(Statistic = c("Coefficient", "Significant at 0.05 Level?", "Outliers?", "Adjusted R-squared", "Mean of Absolute Value of Out-of-Sample Residuals", "Predicted Dem Two-Party Vote Share"),
+                        `GDP Growth` = c(0.2676, "NO", "YES", 0.763, 2.451, 52.15),
+                        `ICS` = c(-0.033, "NO", "NO", 0.709, 2.615, 51.26))
+
+gdp_cols <- c(" ", "GDP", "ICS")
+
+gdp_table <- knitr::kable(gdp_comp, col.names = gdp_cols)
 ```
 
 ```{r simulation, echo=FALSE, include=FALSE, warning=FALSE}
@@ -1499,6 +1521,18 @@ figa <- ggplot() +
   ylab("Count") +
   ggtitle("Fig. II - Out-of-Sample Error (Popular Vote)") +
   my_theme()
+
+# comparison with gdp
+set.seed(19709)
+gdp_out_samp_errors <- sapply(1:1000, function(i) {
+  years_out_samp <- sample(pop_pre$year, 6)
+  mod <- lm(pv2p ~ GDP_growth_quarterly + prev_admin + poll_week_1 + pv2p_lag,
+            pop_pre[!(pop_pre$year %in% years_out_samp),])
+  gdp_out_samp_pred <- predict(mod, pop_pre[pop_pre$year %in% years_out_samp,])
+  gdp_out_samp_truth <- pop_pre$pv2p[pop_pre$year %in% years_out_samp]
+  mean(gdp_out_samp_pred - gdp_out_samp_truth)
+})
+mean(abs(gdp_out_samp_errors)) # 2.451
 ```
 
 ```{r table 2 code, echo=FALSE, warning=FALSE, include=FALSE}
@@ -1585,6 +1619,14 @@ Both coefficients – for the popular vote and electoral college models – are 
 
 My economic indicator of choice is another slight twist on the Time For Change formula. Instead of GDP, I opted for a measure of consumer sentiment, or respondents’ professed impressions of the state of the economy, with the hope of more directly assessing the judgments underlying economic retrospective voting. The choice of this indicator assumes a model of voter behavior in which voters do weigh their personal impressions of the economy but are not substantially subconsciously influenced by fluctuations in GDP that may be influencing economic conditions behind the scenes.
 
+In a previous post, I justified using ICS because I found that using that variable over GDP growth moderately improved both in- and out-of-sample fit. As the table below indicates, this is no longer true. After re-running the comparison on my updated model, I found that GDP growth slightly outperforms ICS in out-of-sample fit, but slightly underperforms in adjusted R-squared, where all other variables are kept constant. Nevertheless, both versions of the model predict similar two-party vote shares for Harris in the popular vote.
+
+```{r print gdp_table, echo=FALSE, include=TRUE, warning=FALSE}
+gdp_table
+```
+
+Figure I, below, makes one argument for ICS: unlike GDP, it does not include any outliers in the dataset I used. On the one hand, this makes it easier to justify including otherwise anomalous years, like 2020. On the other hand, the fact that GDP growth drops to a whopping -28 in Q2 of 2020 suggests that there might be very good reasons for dropping unrepresentative years. Both measures are in some respect imperfect, but I decided to move forward with ICS.
+
 ```{r print ics_outliers, echo=FALSE, include=TRUE, warning=FALSE}
 ics_outliers
 ```
@@ -1615,7 +1657,7 @@ In the popular vote model, the national poll average (P) just barely misses the 
 
 To further assess the model, I conducted a cross-validation procedure on the popular vote model and re-ran the electoral college model to “predict” the 2016 and 2020 election cycles.
 
-Figure II, below, summarizes the out-of-sample residuals from the cross-validation exercise. The distribution is roughly normal, as expected, and the mean of the residuals is about 2.615. In the context of a bitterly close election, of course, 2.615 points is nothing to sniff at. However, given the range in observed vote share found in the historical data is around 16.6 points, and that this degree of out-of-sample error is in line with the predictive models I have produced in previous weeks, I have continued with this model.
+Figure II, below, summarizes the out-of-sample residuals from the cross-validation exercise. The distribution is roughly normal, as expected, and the mean of the absolute value of the out-of-sample residuals is about 2.615. In the context of a bitterly close election, of course, 2.615 points is nothing to sniff at. However, given the range in observed vote share found in the historical data is around 16.6 points, and that this degree of out-of-sample error is in line with the predictive models I have produced in previous weeks, I have continued with this model.
 
 ```{r print figa, echo=FALSE, include=TRUE, warning=FALSE}
 figa
