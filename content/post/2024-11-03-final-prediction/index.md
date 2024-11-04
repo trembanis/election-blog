@@ -157,6 +157,8 @@ I should also note that Harris’s predicted margin of victory under this model 
 
 # Electoral College Results
 
+Finally, and most importantly, here is my electoral college prediction: my model predicts that Harris will receive 226 electoral college votes and Trump will take the presidency. The map in Figure VII is supplemented by the table below, which gives predictions for the unpictured states of Alaska and Hawaii, as well as the District of Columbia. In the absence of robust historical polling data, I did not create separate predictions for the congressional districts of Nebraska and Maine. Since my model predicts a comfortable victory for Trump in the electoral college, these additional data points, though interesting, would not change the big picture of my prediction.
+
 <img src="{{< blogdown/postref >}}index_files/figure-html/print fig1-1.png" width="672" />
 
 
