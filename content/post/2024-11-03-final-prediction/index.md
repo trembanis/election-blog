@@ -40,11 +40,23 @@ slug: "final-prediction"
 
 Welcome to my final prediction for the 2024 presidential election!
 
-With early voting well underway and only a few days left until Election Day, the race remains stubbornly in the toss-up category, according to expert forecasters such as the Cook Political Report and Sabato’s Crystal Ball. My prediction, unfortunately, is no exception to this trend. While I will predict a winner in today’s post, the predictive intervals produced by both my popular vote and electoral college models encompass scenarios in which either candidate could win.
+With early voting well underway and only a few days left until Election Day, the race remains stubbornly in the toss-up category, according to expert forecasters such as the [Cook Political Report](https://www.cookpolitical.com/ratings/presidential-race-ratings) and [Sabato’s Crystal Ball](https://centerforpolitics.org/crystalball/2024-president/). My prediction, unfortunately, is no exception to this trend. While I will predict a winner in today’s post, the predictive intervals produced by both my popular vote and electoral college models encompass scenarios in which either candidate could win.
 
 # My 2024 Model
 
 My model uses a simple OLS regression, with the following explanatory variables: a dummy indicator of whether the candidate served in a previous presidential administration, Q2 consumer sentiment, lagged vote share, and a recent polling average. The outcome variable is the two-party vote share for the Democratic candidate.
+
+My model is inspired by Abramowitz’s Time For Change model, though I changed the specific indicators (incumbency to previous administration, GDP to ICS, and June approval ratings to recent polls) and added lagged vote share.
+
+Here is the formula for the popular vote regression:
+
+`\(Y = \beta_0 + \beta_1A + \beta_2C + \beta_3L + \beta_4P + \epsilon\)`
+
+…And here is the formula for the electoral college regression:
+
+`\(Y = \beta_0 + \beta_1A + \beta_2C + \beta_3V + \beta_4P + \beta_5S + \epsilon\)`
+
+I will address each of the variables and their coefficients in the following sections, but first I should briefly discuss adjusted R-squared, a measure of the model’s overall performance. Adjusted R-squared describes the percent of the variation in Democratic two-party vote share that can be explained by the independent variables. For the popular vote, this is about 71%, while the electoral college model, probably since it is more finely tuned to state-level conditions, explains about 78%. While there are ways to inflate R-squared and adjusted R-squared, I think this 71%-78% range, even though it does not account for all possible factors, is respectable for the purposes of this prediction. After all, a sky-high R-squared might seem desirable, but it could indicate overfitting, or hyper-sensitivity to trends in the historical data, which could impair the predictive power of the model.
 
 
 
@@ -62,20 +74,28 @@ My model uses a simple OLS regression, with the following explanatory variables:
 |R-squared                                           |0.806              |0.779                   |
 |Adjusted R-squared                                  |0.709              |0.777                   |
 
-
 ## Previous Administration
 
+I have already written at length about the problem of incumbency in this year’s race, but this, at least, bears repeating: the boons and burdens of incumbency are split between Trump and Harris. He has impeccable name recognition, has been the leader of his party for eight years, and hopes to capitalize off of nostalgia for his first term in office. She inherited Biden’s extensive campaign machinery and must defend the current administration’s record, including on unflattering issues like inflation, immigration, and war in the Middle East. Since my model only predicts Democratic vote share, Trump’s incumbency status is left an open question. Harris, however, must be directly addressed.
+
+I have chosen to use a “previous administration” dummy because I think it comes closest to describing Harris as a non-incumbent who is nevertheless closely linked to the sitting president. A binary indicator for incumbent party membership could also be used here, but it risks underplaying the extent to which voters will evaluate Harris as Biden’s second-in-command. Statistical tests are of little use in this instance, since Biden’s last-minute removal from the race is anomalous. Whether you lend any credibility to this model, then, depends on how you take this judgment call.
 
 
 ## Index of Consumer Sentiment
+
+My economic indicator of choice is another slight twist on the Time For Change formula. Instead of GDP, I opted for a measure of consumer sentiment, or respondents’ professed impressions of the state of the economy, with the hope of more directly assessing the judgments underlying economic retrospective voting. The choice of this indicator assumes a model of voter behavior in which voters do weigh their personal impressions of the economy but are not substantially subconsciously influenced by fluctuations in GDP that may be influencing economic conditions behind the scenes.
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/print ics_outliers-1.png" width="672" />
 
 ## Lagged Vote Share
 
-
+Continuity over time is the very basic principle behind the inclusion of a lagged vote share variable. Vavreck’s signature argument that the United States is experiencing a process of calcification (from our GOV 1347 class discussion), whereby partisans are becoming entrenched in their views and more homogeneous among themselves, would suggest that previous cycle vote share will only become a better predictor of voter behavior as the electorate calcifies.
 
 ## Poll Average
+
+With polling, we come to the first major distinction between national- and state-level models. The most recent national polling average from FiveThirtyEight’s aggregation – currently set at one week before Election Day, though the polls themselves may have been administered earlier – is featured in both models. I decided to limit national polls to the most recent weekly average in recognition of [Gelman and King’s](https://doi.org/10.1017/S0007123400006682) claim that polls become more reliable closer to Election Day, as voters converge on their underlying preferences. However, I also chose to take an all-time average of state-level polls for my electoral college. While ideally I would like to have plentiful recent polls from all states, state-level polls are fewer in number than national polls, and I therefore opted not to restrict my sample further by removing old polls. Hopefully, this two-pronged approach gives my electoral college model the best of both worlds: the recent national average should act as a temperature check for Harris’s overall trajectory across the country and the long-term state average should offer an insight into state-level preferences that is more resistant to short-term fluctuations.
+
+Unfortunately, in some cases, state-level polling is not yet available. For these states, I imputed a poll average by applying their deviation from the national popular vote in 2020 to the current national average. In this past week, polling data became available for four states that I had previously imputed, so I took the opportunity to compare the results of my imputation to the actual polls.
 
 
 |State         |Dem Two-Party Vote Share (Polls Available) |Dem Two-Party Vote Share (Polls Imputed) |
@@ -85,6 +105,7 @@ My model uses a simple OLS regression, with the following explanatory variables:
 |Nebraska      |40.19                                      |40.18                                    |
 |Washington    |59.28                                      |59.79                                    |
 
+As the above table indicates, my imputation procedure generated very similar predictions to what my model is now predicting given new polling data. While none of these states are highly contested – and, for that matter, none of remaining imputed states are battlegrounds – it is reassuring that the biggest shift was just 1.47 points in Massachusetts.
 
 # Out-of-Sample Tests
 
