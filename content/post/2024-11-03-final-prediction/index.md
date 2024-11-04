@@ -81,6 +81,7 @@ I have already written at length about the problem of incumbency in this year’
 I have chosen to use a “previous administration” dummy because I think it comes closest to describing Harris as a non-incumbent who is nevertheless closely linked to the sitting president. A binary indicator for incumbent party membership could also be used here, but it risks underplaying the extent to which voters will evaluate Harris as Biden’s second-in-command. Statistical tests are of little use in this instance, since Biden’s last-minute removal from the race is anomalous. Whether you lend any credibility to this model, then, depends on how you take this judgment call.
 
 
+
 ## Index of Consumer Sentiment
 
 My economic indicator of choice is another slight twist on the Time For Change formula. Instead of GDP, I opted for a measure of consumer sentiment, or respondents’ professed impressions of the state of the economy, with the hope of more directly assessing the judgments underlying economic retrospective voting. The choice of this indicator assumes a model of voter behavior in which voters do weigh their personal impressions of the economy but are not substantially subconsciously influenced by fluctuations in GDP that may be influencing economic conditions behind the scenes.
@@ -90,6 +91,8 @@ My economic indicator of choice is another slight twist on the Time For Change f
 ## Lagged Vote Share
 
 Continuity over time is the very basic principle behind the inclusion of a lagged vote share variable. Vavreck’s signature argument that the United States is experiencing a process of calcification (from our GOV 1347 class discussion), whereby partisans are becoming entrenched in their views and more homogeneous among themselves, would suggest that previous cycle vote share will only become a better predictor of voter behavior as the electorate calcifies.
+
+As seems to be the trend for most of these variables, the national lagged vote share variable is insignificant and substantively small, while the state-level lagged vote share is highly significant and has an estimate of 0.6, meaning every additional point for the Democratic party in the preceding election is expected to correspond to 0.6 additional points in the next race. This would be moderately good news for the Harris campaign, since it suggests that she would inherit a slight head start in those battlegrounds which Biden won in 2020.
 
 ## Poll Average
 
@@ -106,6 +109,8 @@ Unfortunately, in some cases, state-level polling is not yet available. For thes
 |Washington    |59.28                                      |59.79                                    |
 
 As the above table indicates, my imputation procedure generated very similar predictions to what my model is now predicting given new polling data. While none of these states are highly contested – and, for that matter, none of remaining imputed states are battlegrounds – it is reassuring that the biggest shift was just 1.47 points in Massachusetts.
+
+In the popular vote model, the national poll average (P) just barely misses the threshold for significance at the 0.05 level. Its coefficient, 0.674, suggests that a one-point increase in Democratic support in the national poll average corresponds with a 0.674 increase in Democratic vote share. In the electoral college model, the national average has a small negative coefficient that is not significant. Interestingly, the coefficient is negative, which, if true, would imply that Democratic vote share in the states slightly declines as support in the national polls rises. However, the state-level average is highly significant and has a coefficient of 0.425, which could be a substantial pay-off in state-level vote share.
 
 # Out-of-Sample Tests
 
