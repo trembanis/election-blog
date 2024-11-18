@@ -1616,7 +1616,7 @@ swing_results <- results |>
   filter(state == "Arizona" | state == "Georgia" | state == "Michigan" | state == "Nevada" | state == "North Carolina" | state == "Pennsylvania" | state == "Wisconsin")
 
 non_results <- results |>
-  filter(state != "Arizona" | state != "Georgia" | state != "Michigan" | state != "Nevada" | state != "North Carolina" | state != "Pennsylvania" | state != "Wisconsin")
+  filter(state != "Arizona" & state != "Georgia" & state != "Michigan" & state != "Nevada" & state != "North Carolina" & state != "Pennsylvania" & state != "Wisconsin")
 
 had_polls_results <- results |>
   filter(state == "Arizona" | state == "Georgia" | state == "Michigan" | state == "Nevada" | state == "North Carolina" | state == "Pennsylvania" | state == "Wisconsin" | state == "California" | state == "Florida" | state == "Indiana" | state == "Maryland" | state == "Massachusetts" | state == "Minnesota" | state == "Missouri" | state == "Montana" | state == "Nebraska" | state == "New Hampshire" | state == "New Mexico" | state == "New York" | state == "Ohio" | state == "Texas" | state == "Virginia" | state == "Washington")
@@ -1671,16 +1671,16 @@ sqrt(mean((had_polls_results$real_dem - had_polls_results$simp_pred_dem)^2)) # 1
 mean(abs(had_polls_results$real_dem - had_polls_results$simp_pred_dem)) # 1.260512
 
 # Non-Swing Bias
-mean(non_results$real_dem - non_results$simp_pred_dem) # -1.055848
+mean(non_results$real_dem - non_results$simp_pred_dem) # -1.33323
 
 # Non-Swing MSE
-mean((non_results$real_dem - non_results$simp_pred_dem)^2) # 2.939459
+mean((non_results$real_dem - non_results$simp_pred_dem)^2) # 3.295234
 
 # Non-Swing RMSE
-sqrt(mean((non_results$real_dem - non_results$simp_pred_dem)^2)) # 1.714485
+sqrt(mean((non_results$real_dem - non_results$simp_pred_dem)^2)) # 1.815278
 
 # Non-Swing MAE
-mean(abs(non_results$real_dem - non_results$simp_pred_dem)) # 1.393134
+mean(abs(non_results$real_dem - non_results$simp_pred_dem)) # 1.494515
 
 # Pop Vote
 
@@ -1713,6 +1713,7 @@ pop_acc_plot
 ```{r ec errors table, echo=FALSE, include=FALSE, warning=FALSE}
 errors24 <- tibble(` ` = c("Bias", "Mean Squared Error", "Root Mean Squared Error", "Mean Absolute Error"),
        `All States` = c(-1.055848, 2.939459, 1.714485, 1.393134),
+       `Polls Imputed` = c(-1.33323, 3.295234, 1.815278, 1.494515),
        `Polls Available` = c(-0.7325027, 2.240376, 1.496788, 1.260512),
        `Battlegrounds` = c(0.6480733, 0.7539844, 0.863228, 0.7703664))
 
@@ -1858,6 +1859,8 @@ The most biased states were New Jersey (-4.7 points) and Illinois (-3.5 points).
 ```{r print fig_er, echo=FALSE, include=TRUE, warning=FALSE}
 fig_er
 ```
+
+The following table breaks these results down by two salient characteristics: poll availability and battleground status.
 
 ```{r print errors24_table, echo=FALSE, include=TRUE, warning=FALSE}
 errors24_table

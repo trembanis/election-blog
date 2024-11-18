@@ -118,13 +118,15 @@ The most biased states were New Jersey (-4.7 points) and Illinois (-3.5 points).
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/print fig_er-1.png" width="672" />
 
+The following table breaks these results down by two salient characteristics: poll availability and battleground status.
 
-|                        | All States| Polls Available| Battlegrounds|
-|:-----------------------|----------:|---------------:|-------------:|
-|Bias                    |      -1.06|           -0.73|          0.65|
-|Mean Squared Error      |       2.94|            2.24|          0.75|
-|Root Mean Squared Error |       1.71|            1.50|          0.86|
-|Mean Absolute Error     |       1.39|            1.26|          0.77|
+
+|                        | All States| Polls Imputed| Polls Available| Battlegrounds|
+|:-----------------------|----------:|-------------:|---------------:|-------------:|
+|Bias                    |      -1.06|         -1.33|           -0.73|          0.65|
+|Mean Squared Error      |       2.94|          3.30|            2.24|          0.75|
+|Root Mean Squared Error |       1.71|          1.82|            1.50|          0.86|
+|Mean Absolute Error     |       1.39|          1.49|            1.26|          0.77|
 
 # Failures, Successes, & Hypotheses
 
