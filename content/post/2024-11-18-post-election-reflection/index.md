@@ -128,6 +128,14 @@ The following table breaks these results down by two salient characteristics: po
 |Root Mean Squared Error |       1.71|          1.82|            1.50|          0.86|
 |Mean Absolute Error     |       1.39|          1.49|            1.26|          0.77|
 
+The first takeaway from this table is that, on average, my model overestimated Harris’s performance. This in itself is interesting, since I ultimately predicted a comfortable Trump win in the electoral college, and the second and third columns help shed some light on this discrepancy.
+
+As I mentioned earlier, I had to rely on an imputation procedure for the 27 states (and one district) that did not have accessible polling data for 2024. These states (New Jersey and Illinois included) seemed to have received predictions that were more biased in favor of Harris than the nation as a whole.
+
+Where polls were available, they seem to have yielded better, though still slightly left-skewing, predictions. This is yet another mystery to tuck in your back pocket for later: national polls seem to have, if anything, overinflated Harris’s vote share in my popular model, but state-level polls nudged my electoral college predictions to the right.
+
+Still, the table has one more surprise in store: the battleground states. All seven swing states had polling data available, but their predictions were even less favorable to Harris than in non-competitive polled states. In fact, my battleground predictions slightly underestimated Harris’s actual performance. Here, perhaps, is evidence of the Harris campaign apparatus at work.
+
 # Failures, Successes, & Hypotheses
 
 In the following several sections, I will discuss some possible blindspots in my models. Though I will not resolve these issues in full today, I will outline a few strategies that could be implemented given enough time and sufficiently robust data.
