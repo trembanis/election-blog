@@ -102,6 +102,8 @@ As a reminder, the following table summarizes the basic characteristics of my tw
 
 # Failures, Successes, & Hypotheses
 
+In the following several sections, I will discuss some possible blindspots in my models. Though I will not resolve these issues in full today, I will outline a few strategies for improving the models that could be implemented given enough time and high quality data.
+
 ## Global Context
 
 ## Inclusivity of “Previous Administration”
