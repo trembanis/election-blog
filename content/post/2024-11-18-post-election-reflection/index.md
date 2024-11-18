@@ -90,7 +90,7 @@ Admittedly, the data points are few and far between, but based on this visualiza
 Next, I tweaked the regression formula, one element at a time, with the hope of weeding out any problematic variables. The results of this investigation can be found in the table below.
 
 
-|Regression                                       | Adjusted R-squared| 2024 Bias (Actual - Predicted)| Mean Squared Error| Root Mean Squared Error|
+|                                                 | Adjusted R-squared| 2024 Bias (Actual - Predicted)| Mean Squared Error| Root Mean Squared Error|
 |:------------------------------------------------|------------------:|------------------------------:|------------------:|-----------------------:|
 |All Variables                                    |               0.69|                          -1.96|               4.78|                    2.19|
 |No Polling Average                               |               0.60|                          -0.04|               7.03|                    2.65|
@@ -110,15 +110,21 @@ So far, we have identified two possible weakness areas: polls and consumer senti
 
 # Assessing My Electoral College Model
 
+Predicting a winner in each state is one thing – the real challenge is predicting state-level vote share, and my model had its fair share of mistakes in that respect.
+
+Figure III, below, displays each state’s prediction error. Blue states had predictions that overestimated Harris’s eventual vote share, while red states underestimated her.
+
+The most biased states were New Jersey (-4.7 points) and Illinois (-3.5 points). By contrast, the state most biased in favor of Trump, North Carolina, was much closer to that state’s observed vote share (+1.3 points).
+
 <img src="{{< blogdown/postref >}}index_files/figure-html/print fig_er-1.png" width="672" />
 
 
-|Metric                  | All States| Battlegrounds|
-|:-----------------------|----------:|-------------:|
-|Bias                    |      -1.06|          0.65|
-|Mean Squared Error      |       2.94|          0.75|
-|Root Mean Squared Error |       1.71|          0.86|
-|Mean Absolute Error     |       1.39|          0.77|
+|                        | All States| Polls Available| Battlegrounds|
+|:-----------------------|----------:|---------------:|-------------:|
+|Bias                    |      -1.06|           -0.73|          0.65|
+|Mean Squared Error      |       2.94|            2.24|          0.75|
+|Root Mean Squared Error |       1.71|            1.50|          0.86|
+|Mean Absolute Error     |       1.39|            1.26|          0.77|
 
 # Failures, Successes, & Hypotheses
 

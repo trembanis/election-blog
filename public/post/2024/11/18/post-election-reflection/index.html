@@ -93,7 +93,7 @@
 <table>
 <thead>
 <tr>
-<th style="text-align:left">Regression</th>
+<th style="text-align:left"></th>
 <th style="text-align:right">Adjusted R-squared</th>
 <th style="text-align:right">2024 Bias (Actual - Predicted)</th>
 <th style="text-align:right">Mean Squared Error</th>
@@ -157,12 +157,16 @@
 <p>The other standout from this table is the “no polling average” model, which yielded a 2024 national popular vote prediction that was just 0.04 points over Harris’s two-party vote share (though the actual number may shift slightly in the coming days and weeks as the last votes are tallied). This improvement, however, comes at the cost of a lower adjusted r-squared and the highest MSE and RMSE of all seven models – this is perfectly fine if the model’s only purpose is to predict the 2024 results, but it could compromise its ability to generate plausible predictions for future elections.</p>
 <p>So far, we have identified two possible weakness areas: polls and consumer sentiment. I will revisit both and offer substantive hypotheses in the final section of this post. For now, we should check in on the electoral college model.</p>
 <h1 id="assessing-my-electoral-college-model">Assessing My Electoral College Model</h1>
+<p>Predicting a winner in each state is one thing – the real challenge is predicting state-level vote share, and my model had its fair share of mistakes in that respect.</p>
+<p>Figure III, below, displays each state’s prediction error. Blue states had predictions that overestimated Harris’s eventual vote share, while red states underestimated her.</p>
+<p>The most biased states were New Jersey (-4.7 points) and Illinois (-3.5 points). By contrast, the state most biased in favor of Trump, North Carolina, was much closer to that state’s observed vote share (+1.3 points).</p>
 <img src="/election-blog/post/2024/11/18/post-election-reflection/index_files/figure-html/print fig_er-1.png" width="672" />
 <table>
 <thead>
 <tr>
-<th style="text-align:left">Metric</th>
+<th style="text-align:left"></th>
 <th style="text-align:right">All States</th>
+<th style="text-align:right">Polls Available</th>
 <th style="text-align:right">Battlegrounds</th>
 </tr>
 </thead>
@@ -170,21 +174,25 @@
 <tr>
 <td style="text-align:left">Bias</td>
 <td style="text-align:right">-1.06</td>
+<td style="text-align:right">-0.73</td>
 <td style="text-align:right">0.65</td>
 </tr>
 <tr>
 <td style="text-align:left">Mean Squared Error</td>
 <td style="text-align:right">2.94</td>
+<td style="text-align:right">2.24</td>
 <td style="text-align:right">0.75</td>
 </tr>
 <tr>
 <td style="text-align:left">Root Mean Squared Error</td>
 <td style="text-align:right">1.71</td>
+<td style="text-align:right">1.50</td>
 <td style="text-align:right">0.86</td>
 </tr>
 <tr>
 <td style="text-align:left">Mean Absolute Error</td>
 <td style="text-align:right">1.39</td>
+<td style="text-align:right">1.26</td>
 <td style="text-align:right">0.77</td>
 </tr>
 </tbody>
