@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head><script src="/election-blog/livereload.js?mindelay=10&amp;v=2&amp;port=4321&amp;path=election-blog/livereload" data-no-instant defer></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Post-Election Reflection | Ella&#39;s Election Predictions</title>
+    <link rel="stylesheet" href="/election-blog/css/style.css" />
+    <link rel="stylesheet" href="/election-blog/css/fonts.css" />
+    
+  </head>
+
+  <body>
+    <nav>
+    <ul class="menu">
+      
+      <li><a href="/election-blog/">Home</a></li>
+      
+    </ul>
+    <hr/>
+    </nav>
+
+<div class="article-meta">
+<h1><span class="title">Post-Election Reflection</span></h1>
+<h2 class="author">Ella Trembanis</h2>
+<h2 class="date">2024/11/18</h2>
+</div>
+
+<main>
+<p>Welcome back! Now that the dust has (more or less) settled, I am back on the blog to reflect on my model’s performance on Election Day.</p>
+<h1 id="a-tale-of-two-models">A Tale of Two Models</h1>
+<p>As a reminder, the following table summarizes the basic characteristics of my two models. Note that the R-squared and adjusted R-squared statistics are taken from the pre-election data pool – these will be updated later on in this post.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left"></th>
+<th style="text-align:left">Popular Vote Model</th>
+<th style="text-align:left">Electoral College Model</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Intercept</td>
+<td style="text-align:left">15.806</td>
+<td style="text-align:left">8.105</td>
+</tr>
+<tr>
+<td style="text-align:left">Index of Consumer Sentiment (C)</td>
+<td style="text-align:left">0.008</td>
+<td style="text-align:left">-0.035</td>
+</tr>
+<tr>
+<td style="text-align:left">National Poll Average, 1 Week Left (P)</td>
+<td style="text-align:left">0.674</td>
+<td style="text-align:left">-0.033</td>
+</tr>
+<tr>
+<td style="text-align:left">Candidate Was In Previous Administration (A)</td>
+<td style="text-align:left">-1.358</td>
+<td style="text-align:left">-4.307</td>
+</tr>
+<tr>
+<td style="text-align:left">Previous Year National Two-Party Vote Share (L)</td>
+<td style="text-align:left">0.074</td>
+<td style="text-align:left">not included</td>
+</tr>
+<tr>
+<td style="text-align:left">Previous Year State Two-Party Vote Share (V)</td>
+<td style="text-align:left">not included</td>
+<td style="text-align:left">0.6</td>
+</tr>
+<tr>
+<td style="text-align:left">State Poll Average or Imputed Support, All-Time (S)</td>
+<td style="text-align:left">not included</td>
+<td style="text-align:left">0.425</td>
+</tr>
+<tr>
+<td style="text-align:left">Number of Observations</td>
+<td style="text-align:left">13</td>
+<td style="text-align:left">559</td>
+</tr>
+<tr>
+<td style="text-align:left">R-squared</td>
+<td style="text-align:left">0.806</td>
+<td style="text-align:left">0.779</td>
+</tr>
+<tr>
+<td style="text-align:left">Adjusted R-squared</td>
+<td style="text-align:left">0.709</td>
+<td style="text-align:left">0.777</td>
+</tr>
+</tbody>
+</table>
+<img src="/election-blog/post/2024/11/18/post-election-reflection/index_files/figure-html/print fig1-1.png" width="672" />
+<h1 id="assessing-my-popular-vote-model">Assessing My Popular Vote Model</h1>
+<img src="/election-blog/post/2024/11/18/post-election-reflection/index_files/figure-html/print pop_acc_plot-1.png" width="672" />
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Regression</th>
+<th style="text-align:right">Adjusted R-squared</th>
+<th style="text-align:right">2024 Bias (Actual - Predicted)</th>
+<th style="text-align:right">Mean Squared Error</th>
+<th style="text-align:right">Root Mean Squared Error</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">All Variables</td>
+<td style="text-align:right">0.69</td>
+<td style="text-align:right">-1.96</td>
+<td style="text-align:right">4.78</td>
+<td style="text-align:right">2.19</td>
+</tr>
+<tr>
+<td style="text-align:left">No Polling Average</td>
+<td style="text-align:right">0.60</td>
+<td style="text-align:right">-0.04</td>
+<td style="text-align:right">7.03</td>
+<td style="text-align:right">2.65</td>
+</tr>
+<tr>
+<td style="text-align:left">No Index of Consumer Sentiment</td>
+<td style="text-align:right">0.72</td>
+<td style="text-align:right">-2.05</td>
+<td style="text-align:right">4.83</td>
+<td style="text-align:right">2.20</td>
+</tr>
+<tr>
+<td style="text-align:left">No Previous Administration Dummy</td>
+<td style="text-align:right">0.69</td>
+<td style="text-align:right">-3.34</td>
+<td style="text-align:right">5.47</td>
+<td style="text-align:right">2.34</td>
+</tr>
+<tr>
+<td style="text-align:left">No Lagged Vote Share</td>
+<td style="text-align:right">0.69</td>
+<td style="text-align:right">-2.76</td>
+<td style="text-align:right">5.30</td>
+<td style="text-align:right">2.30</td>
+</tr>
+<tr>
+<td style="text-align:left">Swap GDP Growth for ICS</td>
+<td style="text-align:right">0.73</td>
+<td style="text-align:right">-2.51</td>
+<td style="text-align:right">4.25</td>
+<td style="text-align:right">4.25</td>
+</tr>
+</tbody>
+</table>
+<h1 id="assessing-my-electoral-college-model">Assessing My Electoral College Model</h1>
+<img src="/election-blog/post/2024/11/18/post-election-reflection/index_files/figure-html/print fig_er-1.png" width="672" />
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Metric</th>
+<th style="text-align:right">All States</th>
+<th style="text-align:right">Battlegrounds</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">Bias</td>
+<td style="text-align:right">-1.06</td>
+<td style="text-align:right">0.65</td>
+</tr>
+<tr>
+<td style="text-align:left">Mean Squared Error</td>
+<td style="text-align:right">2.94</td>
+<td style="text-align:right">0.75</td>
+</tr>
+<tr>
+<td style="text-align:left">Root Mean Squared Error</td>
+<td style="text-align:right">1.71</td>
+<td style="text-align:right">0.86</td>
+</tr>
+<tr>
+<td style="text-align:left">Mean Absolute Error</td>
+<td style="text-align:right">1.39</td>
+<td style="text-align:right">0.77</td>
+</tr>
+</tbody>
+</table>
+<h1 id="failures-successes--hypotheses">Failures, Successes, &amp; Hypotheses</h1>
+<h2 id="global-context">Global Context</h2>
+<h2 id="inclusivity-of-previous-administration">Inclusivity of “Previous Administration”</h2>
+<h2 id="name-recognition">Name Recognition</h2>
+<h2 id="ambiguity-of-ics">Ambiguity of ICS</h2>
+<h2 id="sample-size">Sample Size</h2>
+<h2 id="a-polling-paradox">A Polling Paradox</h2>
+<h1 id="thats-all-folks">That’s All, Folks!</h1>
+<p>Thank you for joining me this week! This is, unfortunately, the end of the road for these particular predictive models, but I look forward to returning in a few weeks’ time with my final post, which will discuss the election through the lens of Nebraska politics. See you then!</p>
+
+</main>
+
+  <footer>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<script src="//cdn.jsdelivr.net/combine/npm/katex/dist/katex.min.js,npm/katex/dist/contrib/auto-render.min.js,npm/@xiee/utils/js/render-katex.js" defer></script>
+
+<script src="//cdn.jsdelivr.net/npm/@xiee/utils/js/center-img.min.js" defer></script>
+
+  
+  <hr/>
+  Ella Trembanis | 2024 | <a href="https://github.com/trembanis">Github</a> | <a href="https://github.com/yihui/hugo-xmin">Blog Theme: Hugo XMin</a>
+  
+  </footer>
+  </body>
+</html>
+

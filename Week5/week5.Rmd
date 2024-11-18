@@ -1,0 +1,332 @@
+---
+title: "week5-section"
+author: "Ella Trembanis"
+date: "2024-10-02"
+output: html_document
+---
+
+# Set-up
+
+```{r load libraries}
+library(car)
+library(caret)
+library(CVXR)
+library(foreign)
+library(glmnet)
+library(haven)
+library(janitor)
+library(kableExtra)
+library(maps)
+library(mlr3)
+library(randomForest)
+library(ranger)
+library(RColorBrewer)
+library(sf)
+library(tidyverse)
+library(viridis)
+```
+
+
+``` {r read data}
+# Read popular vote datasets. 
+d_popvote <- read_csv("data/popvote_1948_2020.csv")
+d_state_popvote <- read_csv("data/state_popvote_1948_2020.csv")
+
+# Read elector distribution dataset. 
+d_ec <- read_csv("data/corrected_ec_1948_2024.csv")
+
+# Read and merge demographics data. 
+d_demos <- read_csv("data/demographics.csv")[,-1]
+
+# Read primary turnout data. 
+d_turnout <- read_csv("data/turnout_1789_2020.csv")
+d_state_turnout <- read_csv("data/state_turnout_1980_2022.csv")
+d_state_turnout <- d_state_turnout |> 
+  mutate(vep_turnout = as.numeric(str_remove(vep_turnout, "%"))/100) |> 
+  select(year, state, vep_turnout)
+
+# Read polling data. 
+d_polls <- read_csv("data/national_polls_1968-2024.csv")
+d_state_polls <- read_csv("data/state_polls_1968-2024.csv")
+
+# Process state-level polling data. 
+d_pollav_state <- d_state_polls |> 
+  group_by(year, state, party) |>
+  mutate(mean_pollav = mean(poll_support, na.rm = TRUE)) |>
+  top_n(1, poll_date) |> 
+  rename(latest_pollav = poll_support) |>
+  select(-c(weeks_left, days_left, poll_date, candidate, before_convention)) |>
+  pivot_wider(names_from = party, values_from = c(latest_pollav, mean_pollav))
+                             
+# Read processed ANES data. 
+anes <- read_dta("data/anes_timeseries_cdf_stata_20220916.dta") # Total ANES Cumulative Data File. 
+```
+
+# Replication of Kim and Zelinsky
+
+``` {r kim & zelinsky}
+# mutate
+anes <- anes |> 
+  mutate(year = VCF0004,
+         pres_vote = case_when(VCF0704a == 1 ~ 1, 
+                               VCF0704a == 2 ~ 2, 
+                               .default = NA), 
+         # Demographics
+         age = VCF0101, 
+         gender = VCF0104, # 1 = Male; 2 = Female; 3 = Other
+         race = VCF0105b, # 1 = White non-Hispanic; 2 = Black non-Hispanic, 3 == Hispanic; 4 = Other or multiple races, non-Hispanic; 9 = missing/DK
+         educ = VCF0110, # 0 = DK; 1 = Less than high school; 2. High school; 3 = Some college; 4 = College+ 
+         income = VCF0114, # 1 = 0-16 percentile; 2 = 17-33 percentile; 3 = 34-67; 4 = 68 to 95; 5 = 96 to 100. 
+         religion = VCF0128, # 0 = DK; 1 = Protestant; 2 = Catholic; 3 = Jewish; 4 = Other
+         attend_church = case_when(
+           VCF0004 < 1972 ~ as.double(as.character(VCF0131)),
+           TRUE ~ as.double(as.character(VCF0130))
+         ), # 1 = every week - regularly; 2 = almost every week - often; 3 = once or twice a month; 4 = a few times a year - seldom; 5 = never ; 6 = no religious preference
+         southern = VCF0113,
+         region = VCF0113, 
+         work_status = VCF0118,
+         homeowner = VCF0146, 
+         married = VCF0147,
+        
+         # 7-point PID
+         pid7 = VCF0301, # 0 = DK; 1 = Strong Democrat; 2 = Weak Democrat; 3 = Independent - Democrat; 4 = Independent - Independent; 5 = Independent - Republican; 6 = Weak Republican; 7 = Strong Republican
+         
+         # 3-point PID
+         pid3 = VCF0303, # 0 = DK; 1 = Democrats; 2 = Independents; 3 = Republicans. 
+         
+         # 3-point ideology. 
+         ideo = VCF0804 # 0, 9 = DK; 1 = Liberal; 2 = Moderate; 3 = Conservative
+         ) |> 
+  select(year, pres_vote, age, gender, race, educ, income, religion, attend_church, southern, 
+         region, work_status, homeowner, married, pid7, pid3, ideo)
+```
+
+``` {r predict}
+# How well do demographics predict vote choice? 
+anes_year <- anes[anes$year == 2016,] |> 
+  select(-c(year, pid7, pid3, ideo)) |>
+  mutate(pres_vote = factor(pres_vote, levels = c(1, 2), labels = c("Democrat", "Republican"))) |> 
+  filter(!is.na(pres_vote)) |>
+  clean_names()
+
+n_features <- length(setdiff(names(anes_year), "pres_vote"))
+
+set.seed(02138)
+train.ind <- createDataPartition(anes_year$pres_vote, p = 0.8, list = FALSE)
+
+anes_train <- anes_year[train.ind,]
+anes_test <- anes_year[-train.ind,]
+
+# LOGISTIC REGRESSION: 
+logit_fit <- glm(pres_vote ~ ., 
+                 family = "binomial", 
+                 data = anes_train)
+
+# In-sample goodness-of-fit. 
+summary(logit_fit)
+
+# In-sample accuracy.
+logit.is <- factor(ifelse(predict(logit_fit, type = "response") > 0.5, 2, 1), 
+                   levels = c(1, 2), labels = c("Democrat", "Republican"))
+(cm.rf.logit.is <- confusionMatrix(logit.is, anes_train$pres_vote))
+
+# Out-of-sample accuracy. 
+logit_pred <- factor(ifelse(predict(logit_fit, anes_test, type = "response") > 0.5, 2, 1), 
+                     levels = c(1, 2), labels = c("Democrat", "Republican"))
+(cm.rf.logit.oos <- confusionMatrix(logit_pred, anes_test$pres_vote))
+
+# RANDOM FOREST: 
+rf_fit <- ranger(pres_vote ~ ., 
+                 mtry = floor(n_features/3), 
+                 respect.unordered.factors = "order", 
+                 seed <- 02138,
+                 classification = TRUE,
+                 data = anes_train)
+
+# In-sample accuracy.
+(cm.rf.is <- confusionMatrix(rf_fit$predictions, anes_train$pres_vote))
+
+# Out-of-sample accuracy. 
+rf_pred <- predict(rf_fit, data = anes_test)
+(cm.rf.oos <- confusionMatrix(rf_pred$predictions, anes_test$pres_vote))
+
+# Can also write loop to compute values by year and replicate plots from Kim & Zilinsky's (2023) paper.
+```
+
+####----------------------------------------------------------#
+#### Voterfile loading/descriptives/analysis. 
+####----------------------------------------------------------#
+
+# Read and merge 1% voterfile data into one dataset. 
+voterfile.sample.files <- list.files("state_1pc_samples_aug24")
+
+# Florida example. 
+vf_fl <- read_csv("state_1pc_samples_aug24/FL_sample.csv")
+
+# Histograms, quantiles, prop tables, maps, etc. 
+# TODO: 
+
+# What state do you want to explore/analyze for 2024?
+# TODO: 
+
+####----------------------------------------------------------#
+#### Simulation examples. 
+####----------------------------------------------------------#
+
+# Merge data.
+d <- d_pollav_state |> 
+  left_join(d_state_popvote, by = c("year", "state")) |>  
+  left_join(d_popvote |> filter(party == "democrat"), by = "year") |> 
+  left_join(d_demos, by = c("year", "state")) |> 
+  left_join(d_state_turnout, by = c("year", "state")) |> 
+  filter(year >= 1980) |> 
+  ungroup()
+
+# Sequester states for which we have polling data for 2024. 
+states.2024 <- unique(d$state[d$year == 2024])
+states.2024 <- states.2024[-which(states.2024 == "Nebraska Cd 2")]
+
+# Subset and split data.
+d <- d |> 
+  filter(state %in% states.2024)
+
+d_train <- d |> 
+  filter(year < 2024)
+d_test <- d |> 
+  filter(year == 2024)
+
+# Example pooled model with turnout and demographics. 
+mod_lm_dem <- lm(D_pv2p ~ D_pv2p_lag1 + D_pv2p_lag2 + latest_pollav_DEM + mean_pollav_DEM + vep_turnout + total_pop + white + black + american_indian + 
+                 asian_pacific_islander + other_race + two_or_more_races + hispanic_white +
+                 less_than_college + bachelors + graduate + incumbent + incumbent_party, 
+                 data = d_train)
+summary(mod_lm_dem)
+mod_lm_rep <- lm(R_pv2p ~ R_pv2p_lag1 + R_pv2p_lag2 + latest_pollav_REP + mean_pollav_REP + vep_turnout + total_pop + white + black + american_indian + 
+                 asian_pacific_islander + other_race + two_or_more_races + hispanic_white +
+                   less_than_college + bachelors + graduate,
+                 data = d_train)
+summary(mod_lm_rep)
+
+# Most demographic variables and turnout are not significant for Democrats, but they are for Republicans.
+# Problem: we do not have demographic data for 2024. 
+# What can we do? 
+# A few options: 
+# (1.) Estimate state-level demographics from voterfile and plug in for 2024. 
+# (2.) Interpolate Census demographics using a spline or some type of model. 
+# (3.) Simulate plausible values for variables based on historical averages or more advanced model. 
+
+# Simple simulation example: 
+simp.vars <- c("D_pv2p_lag1", "D_pv2p_lag2", "latest_pollav_DEM", "mean_pollav_DEM",
+               "R_pv2p_lag1", "R_pv2p_lag2", "latest_pollav_REP", "mean_pollav_REP",
+               "vep_turnout")
+mod_lm_dem_simp <- lm(D_pv2p ~ D_pv2p_lag1 + D_pv2p_lag2 + latest_pollav_DEM + mean_pollav_DEM + vep_turnout,
+                      data = d_train)
+mod_lm_rep_simp <- lm(R_pv2p ~ R_pv2p_lag1 + R_pv2p_lag2 + latest_pollav_REP + mean_pollav_REP + vep_turnout,
+                      data = d_train)
+
+# What data do we have for 2024? 
+d_test |> select(all_of(simp.vars)) |> view()
+
+# Add back in lagged vote share for 2024. 
+t <- d |> 
+  filter(year >= 2016) |> 
+  arrange(year) |> 
+  group_by(state) |> 
+  mutate(
+    D_pv2p_lag1 = lag(D_pv2p, 1),
+    R_pv2p_lag1 = lag(R_pv2p, 1), 
+    D_pv2p_lag2 = lag(D_pv2p, 2),
+    R_pv2p_lag2 = lag(R_pv2p, 2)) |> 
+  filter(year == 2024) |> 
+  select(state, year, D_pv2p, R_pv2p, D_pv2p_lag1, R_pv2p_lag1, D_pv2p_lag2, R_pv2p_lag2) 
+
+# Subset testing data to only relevant variables for our simple model. 
+d_test_simp <- d_test |> 
+  select(-c(R_pv2p, R_pv2p_lag1, R_pv2p_lag2, 
+            D_pv2p, D_pv2p_lag1, D_pv2p_lag2)) |> 
+  left_join(t, by = c("state", "year")) |> 
+  select(state, year, all_of(simp.vars))
+
+# Get average state-level turnout accross 2020, 2016, 2012.  
+d_turnout_avg <- d_train |> 
+  filter(year %in% c(2020, 2016, 2012)) |> 
+  filter(state %in% unique(d_test_simp$state)) |> 
+  group_by(state) |> 
+  summarize(vep_turnout = mean(vep_turnout, na.rm = TRUE))
+
+# Make predictions with simple average turnout. 
+d_test_simp <- d_test_simp |> 
+  left_join(d_turnout_avg, by = "state") |> 
+  select(-vep_turnout.x) |> 
+  rename(vep_turnout = vep_turnout.y)
+
+simp_pred_dem <- predict(mod_lm_dem_simp, d_test_simp)
+simp_pred_rep <- predict(mod_lm_rep_simp, d_test_simp)
+
+# Create dataset to summarize winners and EC vote distributions. 
+win_pred <- data.frame(state = d_test_simp$state,
+                       year = rep(2024, length(d_test_simp$state)),
+                       simp_pred_dem = simp_pred_dem,
+                       simp_pred_rep = simp_pred_rep,
+                       winner = ifelse(simp_pred_dem > simp_pred_rep, "Democrat", "Republican")) |>
+  left_join(d_ec, by = c("state", "year"))
+
+win_pred |> 
+  filter(winner == "Democrat") |> 
+  select(state)
+
+win_pred |> 
+  filter(winner == "Republican") |> 
+  select(state)
+
+win_pred |> 
+  group_by(winner) |> 
+  summarize(n = n(), ec = sum(electors))
+
+# Now let's simulate this with varying levels of turnout and get both confidence intervals on our predictions
+# and approximate win percentages for each state. 
+m <- 1e4 # Number of simulations.
+pred.mat <- data.frame(state = rep(d_test_simp$state, m),
+                       year = rep(2024, m*length(d_test_simp$state)),
+                       vep_turnout = rep(d_turnout_avg$vep_turnout, m),
+                       simp_pred_dem = rep(simp_pred_dem, m),
+                       simp_pred_rep = rep(simp_pred_rep, m))
+
+j <- 1
+for (i in 1:m) {
+  print(i)
+  vep_turnout <- sapply(d_turnout_avg$vep_turnout, function(mu) {
+    rnorm(1, mean = mu, sd = 0.05) # Simulate turnout from Gaussian centered on state average with 5% SD.
+  })
+
+  d_test_samp <- d_test_simp
+  d_test_samp$vep_turnout <- vep_turnout
+
+  simp_pred_dem <- predict(mod_lm_dem_simp, d_test_samp)
+  simp_pred_rep <- predict(mod_lm_rep_simp, d_test_samp)
+
+  pred.mat$simp_pred_dem[j:(i*19)] <- simp_pred_dem
+  pred.mat$simp_pred_rep[j:(i*19)] <- simp_pred_rep
+  j <- j + 19 # Hack for filling out matrix.
+}
+
+pred.mat <- pred.mat |>
+  mutate(winner = ifelse(simp_pred_dem > simp_pred_rep, "Democrat", "Republican"))
+
+pred.mat |>
+  group_by(state, winner) |>
+  summarize(win_rate = n()/m) |>
+  view()
+
+# Now we can calculate confidence intervals for each state.
+pred.mat |>
+  group_by(state) |>
+  summarize(mean_dem = mean(simp_pred_dem),
+            mean_rep = mean(simp_pred_rep),
+            sd_dem = sd(simp_pred_dem),
+            sd_rep = sd(simp_pred_rep),
+            lower_dem = mean_dem - 1.96*sd_dem,
+            upper_dem = mean_dem + 1.96*sd_dem,
+            lower_rep = mean_rep - 1.96*sd_rep,
+            upper_rep = mean_rep + 1.96*sd_rep) |>
+  view()

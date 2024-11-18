@@ -6,8 +6,15 @@
     <description>Recent content in Home on Ella&#39;s Election Predictions</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 03 Nov 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 18 Nov 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:4321/election-blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Post-Election Reflection</title>
+      <link>http://localhost:4321/election-blog/post/2024/11/18/post-election-reflection/</link>
+      <pubDate>Mon, 18 Nov 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:4321/election-blog/post/2024/11/18/post-election-reflection/</guid>
+      <description>Welcome back! Now that the dust has (more or less) settled, I am back on the blog to reflect on my model’s performance on Election Day.&#xA;A Tale of Two Models As a reminder, the following table summarizes the basic characteristics of my two models. Note that the R-squared and adjusted R-squared statistics are taken from the pre-election data pool – these will be updated later on in this post.</description>
+    </item>
     <item>
       <title>Final Prediction</title>
       <link>http://localhost:4321/election-blog/post/2024/11/03/final-prediction/</link>
