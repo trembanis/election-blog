@@ -55,7 +55,7 @@ Welcome back! Now that the dust has (more or less) settled, I am back on the blo
 
 # A Tale of Two Models
 
-As a reminder, the following table summarizes the basic characteristics of my two models. Note that the R-squared and adjusted R-squared statistics are taken from the pre-election data pool – these will be updated later on in this post.
+As a reminder, the following table summarizes the basic characteristics of my two models.
 
 
 |                                                    |Popular Vote Model |Electoral College Model |
