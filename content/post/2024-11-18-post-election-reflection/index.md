@@ -78,14 +78,15 @@ As a reminder, the following table summarizes the basic characteristics of my tw
 <img src="{{< blogdown/postref >}}index_files/figure-html/print pop_acc_plot-1.png" width="672" />
 
 
-|Regression                       | Adjusted R-squared| 2024 Bias (Actual - Predicted)| Mean Squared Error| Root Mean Squared Error|
-|:--------------------------------|------------------:|------------------------------:|------------------:|-----------------------:|
-|All Variables                    |               0.69|                          -1.96|               4.78|                    2.19|
-|No Polling Average               |               0.60|                          -0.04|               7.03|                    2.65|
-|No Index of Consumer Sentiment   |               0.72|                          -2.05|               4.83|                    2.20|
-|No Previous Administration Dummy |               0.69|                          -3.34|               5.47|                    2.34|
-|No Lagged Vote Share             |               0.69|                          -2.76|               5.30|                    2.30|
-|Swap GDP Growth for ICS          |               0.73|                          -2.51|               4.25|                    4.25|
+|Regression                                       | Adjusted R-squared| 2024 Bias (Actual - Predicted)| Mean Squared Error| Root Mean Squared Error|
+|:------------------------------------------------|------------------:|------------------------------:|------------------:|-----------------------:|
+|All Variables                                    |               0.69|                          -1.96|               4.78|                    2.19|
+|No Polling Average                               |               0.60|                          -0.04|               7.03|                    2.65|
+|No Index of Consumer Sentiment                   |               0.72|                          -2.05|               4.83|                    2.20|
+|No Previous Administration Dummy                 |               0.69|                          -3.34|               5.47|                    2.34|
+|No Lagged Vote Share                             |               0.69|                          -2.76|               5.30|                    2.30|
+|Swap GDP Growth for ICS                          |               0.73|                          -2.51|               4.25|                    2.06|
+|Swap Incumbent Party for Previous Administration |               0.65|                          -3.40|               5.47|                    2.34|
 
 # Assessing My Electoral College Model
 

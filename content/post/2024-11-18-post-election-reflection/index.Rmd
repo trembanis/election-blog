@@ -1767,14 +1767,20 @@ summary(tfmc_with_gdp) # adjusted r-squared 0.7282
 with_gdp_pred <- predict(tfmc_with_gdp, pop24, interval = "prediction", level = 0.8) # 50.8103% Harris 2-party vote share
 mean(tfmc_with_gdp$residuals^2) # 4.247583 MSE
 sqrt(mean(tfmc_with_gdp$residuals^2)) # 2.060966 RMSE
+
+tfmc_with_inc <- lm(pv2p ~ ics + poll_week_1 + incumbent_party + pv2p_lag, data = pop_results)
+summary(tfmc_with_inc) # adjusted r-squared 0.6502
+with_inc_pred <- predict(tfmc_with_inc, pop24, interval = "prediction", level = 0.8) # 51.69907% Harris 2-party vote share
+mean(tfmc_with_inc$residuals^2) # 5.467344 MSE
+sqrt(mean(tfmc_with_inc$residuals^2)) # 2.338235 RMSE
 ```
 
 ```{r r-squared pop table, echo=FALSE, include=FALSE, warning=FALSE}
-rsquared <- tibble(Regression = c("All Variables", "No Polling Average", "No Index of Consumer Sentiment", "No Previous Administration Dummy", "No Lagged Vote Share", "Swap GDP Growth for ICS"),
-        `Adjusted R-squared` = c(0.6939, 0.5955, 0.7221, 0.685, 0.6949, 0.7282),
-        `2024 Bias (Actual - Predicted)` = c(-1.96415, -0.04213, -2.05357, -3.34127, -2.76374, -2.5103),
-        `Mean Squared Error` = c(4.784051, 7.02571, 4.825533, 5.469884, 5.299329, 4.247583),
-        `Root Mean Squared Error` = c(2.187247, 2.650606, 2.19671, 2.338778, 2.302027, 4.247583))
+rsquared <- tibble(Regression = c("All Variables", "No Polling Average", "No Index of Consumer Sentiment", "No Previous Administration Dummy", "No Lagged Vote Share", "Swap GDP Growth for ICS", "Swap Incumbent Party for Previous Administration"),
+        `Adjusted R-squared` = c(0.6939, 0.5955, 0.7221, 0.685, 0.6949, 0.7282, 0.6502),
+        `2024 Bias (Actual - Predicted)` = c(-1.96415, -0.04213, -2.05357, -3.34127, -2.76374, -2.5103, -3.39907),
+        `Mean Squared Error` = c(4.784051, 7.02571, 4.825533, 5.469884, 5.299329, 4.247583, 5.467344),
+        `Root Mean Squared Error` = c(2.187247, 2.650606, 2.19671, 2.338778, 2.302027, 2.060966, 2.338235))
 
 rsquared_table <- knitr::kable(rsquared, digits = 2)
 ```
