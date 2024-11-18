@@ -1590,9 +1590,9 @@ fig2 <- ec24_rescaled |>
 ```
 
 ```{r reg_table code, echo=FALSE, include=FALSE, warning=FALSE}
-regression <- data.frame(Statistic = c("Intercept", "Index of Consumer Sentiment (C)", "National Poll Average, 1 Week Left (P)", "Candidate Was In Previous Administration (A)", "Previous Year National Two-Party Vote Share (L)", "Previous Year State Two-Party Vote Share (V)", "State Poll Average or Imputed Support, All-Time (S)"),
-                        `Popular Vote` = c(15.806, 0.008, 0.674, -1.358, 0.074, "not included", "not included"),
-                        `Electoral College` = c(8.105, -0.035, -0.033, -4.307, "not included", 0.600, 0.425))
+regression <- data.frame(Statistic = c("Intercept", "Index of Consumer Sentiment (C)", "National Poll Average, 1 Week Left (P)", "Candidate Was In Previous Administration (A)", "Previous Year National Two-Party Vote Share (L)", "Previous Year State Two-Party Vote Share (V)", "State Poll Average or Imputed Support, All-Time (S)", "Prediction for Harris 2024"),
+                        `Popular Vote` = c(15.806, 0.008, 0.674, -1.358, 0.074, "not included", "not included", "51.26% Two-Party Vote Share"),
+                        `Electoral College` = c(8.105, -0.035, -0.033, -4.307, "not included", 0.600, 0.425, "226 Votes"))
 
 renamed_cols <- c(" ", "Popular Vote Model", "Electoral College Model")
 

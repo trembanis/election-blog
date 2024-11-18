@@ -58,15 +58,16 @@ Welcome back! Now that the dust has (more or less) settled, I am back on the blo
 As a reminder, the following table summarizes the basic characteristics of my two models.
 
 
-|                                                    |Popular Vote Model |Electoral College Model |
-|:---------------------------------------------------|:------------------|:-----------------------|
-|Intercept                                           |15.806             |8.105                   |
-|Index of Consumer Sentiment (C)                     |0.008              |-0.035                  |
-|National Poll Average, 1 Week Left (P)              |0.674              |-0.033                  |
-|Candidate Was In Previous Administration (A)        |-1.358             |-4.307                  |
-|Previous Year National Two-Party Vote Share (L)     |0.074              |not included            |
-|Previous Year State Two-Party Vote Share (V)        |not included       |0.6                     |
-|State Poll Average or Imputed Support, All-Time (S) |not included       |0.425                   |
+|                                                    |Popular Vote Model          |Electoral College Model |
+|:---------------------------------------------------|:---------------------------|:-----------------------|
+|Intercept                                           |15.806                      |8.105                   |
+|Index of Consumer Sentiment (C)                     |0.008                       |-0.035                  |
+|National Poll Average, 1 Week Left (P)              |0.674                       |-0.033                  |
+|Candidate Was In Previous Administration (A)        |-1.358                      |-4.307                  |
+|Previous Year National Two-Party Vote Share (L)     |0.074                       |not included            |
+|Previous Year State Two-Party Vote Share (V)        |not included                |0.6                     |
+|State Poll Average or Imputed Support, All-Time (S) |not included                |0.425                   |
+|Prediction for Harris 2024                          |51.26% Two-Party Vote Share |226 Votes               |
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/print fig1-1.png" width="672" />
 
