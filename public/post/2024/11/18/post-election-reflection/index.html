@@ -152,6 +152,10 @@
 </tr>
 </tbody>
 </table>
+<p>Generally speaking, the adjusted r-squared improvements were minimal. In most cases, dropping or swapping a variable produced a model that explained only about as much, if not less, of the variation in Democratic two-party vote share.</p>
+<p>The exceptions to this are the model that dropped ICS and the model that substituted GDP growth in its place. In both cases, I should note, the percentage of variation explained increased by a modest 3 to 4 points, the MSE (mean squared error) and RMSE (root mean squared error) barely moved, and the resulting prediction overestimated Harris more severely than the original model. While I am not convinced that consumer sentiment is the driving factor behind my model’s failure in 2024 specifically, there seems to be reason to be cautious of consumer sentiment’s long-term predictive power, at least when it is serving as the sole economic indicator.</p>
+<p>The other standout from this table is the “no polling average” model, which yielded a 2024 national popular vote prediction that was just 0.04 points over Harris’s two-party vote share (though the actual number may shift slightly in the coming days and weeks as the last votes are tallied). This improvement, however, comes at the cost of a lower adjusted r-squared and the highest MSE and RMSE of all seven models – this is perfectly fine if the model’s only purpose is to predict the 2024 results, but it could compromise its ability to generate plausible predictions for future elections.</p>
+<p>So far, we have identified two possible weakness areas: polls and consumer sentiment. I will revisit both and offer substantive hypotheses in the final section of this post. For now, we should check in on the electoral college model.</p>
 <h1 id="assessing-my-electoral-college-model">Assessing My Electoral College Model</h1>
 <img src="/election-blog/post/2024/11/18/post-election-reflection/index_files/figure-html/print fig_er-1.png" width="672" />
 <table>
