@@ -79,7 +79,13 @@ Intriguingly, my electoral college model hit the mark (see Figure I below, which
 
 # Assessing My Popular Vote Model
 
+Let’s start with what went wrong: the popular vote model.
+
+When we zoom out to look at the model’s predictions over multiple election years, the model’s accuracy begins to look more respectable. Figure II shows that the historical elections are well distributed along the fitted line, with 2024 falling roughly in the middle of the pack in terms of accuracy.
+
 <img src="{{< blogdown/postref >}}index_files/figure-html/print pop_acc_plot-1.png" width="672" />
+
+Admittedly, the data points are few and far between, but based on this visualization, the model does not seem to be getting substantially better – or worse – over time. The model does slightly overestimate Democratic vote share in 2020 and 2024, but I am hesitant to take those two observations as proof of a systematic tendency to underestimate Trump, especially since the model is inclined to overestimate Clinton’s vote share in 2016.
 
 
 |Regression                                       | Adjusted R-squared| 2024 Bias (Actual - Predicted)| Mean Squared Error| Root Mean Squared Error|

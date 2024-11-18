@@ -1687,8 +1687,8 @@ to_plot <- data.frame(actual = pop_results$pv2p, predicted = predict(tfmc_pop_re
 pop_acc_plot <- ggplot(data = to_plot, mapping = aes(x=predicted, y=actual, label = year)) +
   geom_label(aes(family = "Courier")) +
   geom_smooth(method = "lm", formula = y ~ x, color = "#9999CC", se = FALSE) +
-  labs(x = "Actual Vote Share",
-       y = "Predicted Vote Share",
+  labs(x = "Predicted Vote Share",
+       y = "Actual Vote Share",
        title = "Fig. II - Accuracy Over Time (Popular Vote)") +
   my_theme()
 pop_acc_plot
@@ -1807,9 +1807,15 @@ fig1
 
 # Assessing My Popular Vote Model
 
+Let’s start with what went wrong: the popular vote model.
+
+When we zoom out to look at the model’s predictions over multiple election years, the model’s accuracy begins to look more respectable. Figure II shows that the historical elections are well distributed along the fitted line, with 2024 falling roughly in the middle of the pack in terms of accuracy.
+
 ```{r print pop_acc_plot, echo=FALSE, include=TRUE, warning=FALSE}
 pop_acc_plot
 ```
+
+Admittedly, the data points are few and far between, but based on this visualization, the model does not seem to be getting substantially better – or worse – over time. The model does slightly overestimate Democratic vote share in 2020 and 2024, but I am hesitant to take those two observations as proof of a systematic tendency to underestimate Trump, especially since the model is inclined to overestimate Clinton’s vote share in 2016.
 
 ```{r print rsquared_table, echo=FALSE, include=TRUE, warning=FALSE}
 rsquared_table
