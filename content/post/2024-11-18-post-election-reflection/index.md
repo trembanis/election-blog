@@ -67,9 +67,6 @@ As a reminder, the following table summarizes the basic characteristics of my tw
 |Previous Year National Two-Party Vote Share (L)     |0.074              |not included            |
 |Previous Year State Two-Party Vote Share (V)        |not included       |0.6                     |
 |State Poll Average or Imputed Support, All-Time (S) |not included       |0.425                   |
-|Number of Observations                              |13                 |559                     |
-|R-squared                                           |0.806              |0.779                   |
-|Adjusted R-squared                                  |0.709              |0.777                   |
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/print fig1-1.png" width="672" />
 
@@ -110,7 +107,7 @@ In the following several sections, I will discuss some possible blindspots in my
 
 ## Name Recognition
 
-## Ambiguity of ICS
+## Ambiguity of Consumer Sentiment
 
 ## Sample Size
 
