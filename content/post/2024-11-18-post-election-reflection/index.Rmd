@@ -1882,6 +1882,12 @@ In the following several sections, I will discuss some possible blindspots in my
 
 ## Inclusivity of “Previous Administration”
 
+I opted to use a binary indicator of membership in a previous presidential administration, because I hypothesized that voters would link Harris to the Biden Administration to a greater extent than they would another same-party heir. Ideally, I would have liked to have a dummy variable for sitting vice presidents, but the election dataset is already very limited, and I was hesitant to whittle it down even further by focusing on an even narrower subset. It would only take one anomalous vice-president-turned-presidential-nominee to throw the coefficient out of whack and jeopardize the model. 
+
+Nevertheless, the previous administration variable has its own flaws. Namely, it is probably over-inclusive: former presidents, vice presidents, and cabinet secretaries may all technically qualify, but they have varying levels of visibility and specialization, which could drastically impact voters’ perceptions of them as candidates. My model is essentially blind to these distinctions – a serious shortcoming in a race that has often been dominated by discussions of how Harris did, or did not, distinguish herself from Biden.
+
+If I were to pursue this question further, I would turn to text analysis. One approach would be to simply tally references to the incumbent administration’s members, policies, or slogans, but this could fail to catch important differences in tone: a candidate quite hostile to the administration could be misleadingly classified as strongly associated with the incumbent, even if they referenced the administration in a critical way. Instead, maybe I could apply a two-step process, by first extracting references to key individuals and policies from the candidate’s speeches, interviews, or social media posts, then creating a corpus consisting only of those references, and finally conducting a simple positive/negative sentiment analysis on those excerpts. This approach, however, would be computationally expensive, and it could impose further restrictions on my sample, since text samples from historical elections are likely to be harder to come by.
+
 ## Name Recognition
 
 ## Ambiguity of Consumer Sentiment
