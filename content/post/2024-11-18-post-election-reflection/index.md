@@ -152,9 +152,11 @@ If I were to pursue this question further, I would turn to text analysis. One ap
 
 ## Name Recognition
 
-## Ambiguity of Consumer Sentiment
+The name recognition problem is an extension of the aforementioned ambiguity around Harris’s incumbency status. I hypothesize that the previous administration dummy lumps Harris in with candidates with greater name recognition in their respective election years, and thus contributes to overestimating her performance in the noncompetitive states. If Harris was able to narrow the name recognition gap through sustained campaign activity in the battleground states, but made no comparable effort in noncompetitive states, disengaged voters might have been attracted to Trump’s unquestionably well-known name at the polls. This could help explain my model’s overestimation of Harris’s vote share outside of the swing states.
 
-## Sample Size
+Specific survey questions might address this concern, except I am skeptical that voters who are so disengaged that they may not be familiar with Harris would be responsive to such polls. If I were to attempt to test my hypothesis, I would instead use a matching procedure to pair geographically and demographically similar counties in battleground and non-battleground states, and then interpret the difference in matched county-level vote share as the average treatment effect of campaign activity.
+
+## Ambiguity of Consumer Sentiment
 
 ## A Polling Paradox
 
