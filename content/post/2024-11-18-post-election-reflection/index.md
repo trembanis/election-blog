@@ -172,7 +172,7 @@ I have left the most pressing question for last: why did polls improve my electo
 
 The answer, I think, lies in the type of polls involved.
 
-My popular vote model exclusively uses 538's national polling average from the week before Election Day, under the assumption, borrowed from Gelman and King, that voters will converge on their intended candidate in the final stretch of the campaign. However, it could also be the case that, in the run-up to Election Day, pollsters under pressure to land on the "correct" estimate exhibit more herding behavior, and that post-hoc re-weighting and/or reluctance to release outlier results creates a systematic bias in the last-minute average. If that was the case this year, a slight initial skew in favor of Harris -- whether it resulted from pure chance or left-leaning pollsters putting their thumbs on the scale -- could have played a role in the failure of my model.
+My popular vote model exclusively uses 538's national polling average from the week before Election Day, under the assumption, taken from [Gelman and King]("https://doi.org/10.1017/S0007123400006682"), that voters will converge on their intended candidate in the final stretch of the campaign. However, it could also be the case that, in the run-up to Election Day, pollsters under pressure to land on the "correct" estimate exhibit more herding behavior, and that post-hoc re-weighting and/or reluctance to release outlier results creates a systematic bias in the last-minute average. If that was the case this year, a slight initial skew in favor of Harris -- whether it resulted from pure chance or left-leaning pollsters putting their thumbs on the scale -- could have played a role in the failure of my model.
 
 To test this, I would first compare the prediction generated with 538's weighted average to RealClearPolitics' simple average, to see if 538's pollster ratings exacerbated the potential herding problem, and I would also examine historical data, broken down by pollster, to see how variance between pollsters develops immediately before Election Day. I might also want to look at trends in pollsters' output over time -- it seems unlikely that pollsters would disclose that they decided not to publish a faulty poll, but a drop in publicized data before Election Day could perhaps provide a hint at these behind-the-scenes practices.
 
@@ -181,3 +181,9 @@ Despite these reservations, the decent performance of both of my models leads me
 # That’s All, Folks!
 
 Thank you for joining me this week! This is, unfortunately, the end of the road for these particular predictive models, but I look forward to returning in a few weeks’ time with my final post, which will discuss the election through the lens of Nebraska politics. See you then!
+
+# References
+
+Burn-Murdoch, J. (2024, November 7). Democrats join 2024’s graveyard of incumbents. https://www.ft.com/content/e8ac09ea-c300-4249-af7d-109003afb893
+
+Gelman, A. & King, G. (1993, October). British Journal of Political Science, Vol. 23 (4), 409-451. https://doi.org/10.1017/S0007123400006682
