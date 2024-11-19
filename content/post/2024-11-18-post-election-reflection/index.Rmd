@@ -1890,6 +1890,16 @@ In the following several sections, I will discuss some possible blindspots in my
 
 ## A Polling Paradox
 
+I have left the most pressing question for last: why did polls improve my electoral college predictions and mislead my popular vote model in the very same election cycle?
+
+The answer, I think, lies in the type of polls involved.
+
+My popular vote model exclusively uses 538's national polling average from the week before Election Day, under the assumption, borrowed from Gelman and King, that voters will converge on their intended candidate in the final stretch of the campaign. However, it could also be the case that, in the run-up to Election Day, pollsters under pressure to land on the "correct" estimate exhibit more herding behavior, and that post-hoc re-weighting and/or reluctance to release outlier results creates a systematic bias in the last-minute average. If that was the case this year, a slight initial skew in favor of Harris -- whether it resulted from pure chance or left-leaning pollsters putting their thumbs on the scale -- could have played a role in the failure of my model.
+
+To test this, I would first compare the prediction generated with 538's weighted average to RealClearPolitics' simple average, to see if 538's pollster ratings exacerbated the potential herding problem, and I would also examine historical data, broken down by pollster, to see how variance between pollsters develops immediately before Election Day. I might also want to look at trends in pollsters' output over time -- it seems unlikely that pollsters would disclose that they decided not to publish a faulty poll, but a drop in publicized data before Election Day could perhaps provide a hint at these behind-the-scenes practices.
+
+Despite these reservations, the decent performance of both of my models leads me to think that the last-minute national polling average is not without its benefits. In the case of the electoral college model, combining the weekly national average with an all-time state-level polling average, which should in theory be more resistant to short-term shocks, seems to have done a better job of predicting voter behavior. This, too, makes a certain amount of sense. It can be convenient to describe voters in unambiguous terms -- myopic, retrospective, disengaged, etc. -- but in practice, there is no way of neatly separating long-term preferences from last-minute jolts. Many voters will wrestle with both at the ballot box, and both have their role to play in the models.
+
 # That’s All, Folks!
 
 Thank you for joining me this week! This is, unfortunately, the end of the road for these particular predictive models, but I look forward to returning in a few weeks’ time with my final post, which will discuss the election through the lens of Nebraska politics. See you then!
