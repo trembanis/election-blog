@@ -158,6 +158,10 @@ Specific survey questions might address this concern, except I am skeptical that
 
 ## Ambiguity of Consumer Sentiment
 
+I chose to use consumer sentiment as my economic indicator in no small part because of its ambiguity. My thought process was that the Index, with its sweeping questions about past economic performance, future expectations, and perceived purchasing power, would allow respondents to fill in their own subjective tests of economic health – the same considerations, in theory, that they would reach for on Election Day. This, of course, is too rosy a view of the actual Index. Its approach of combining five equally weighted questions about different facets of the economy serves a purpose, to be sure, but it does not take into account whether voters hold presidents more or less accountable for certain conditions. 
+
+If I were able to design my own survey with the goal of predicting election outcomes, I would want to separate out the questions, and run models with each to see whether, say, expectations of a coming recession or confidence in making major household purchases is a better predictor. Additionally, the Index asks respondents to reflect on their financial status, or expected status, in the year before and after the survey date. In an ideal world, I would like to test several different intervals – a year, a quarter, a presidential term, etc. – to more precisely identify the time frame retrospective voters are most inclined to consider. In this particular year, it would be interesting to see whether voters feel that they were better off financially during the first Trump administration.
+
 ## A Polling Paradox
 
 I have left the most pressing question for last: why did polls improve my electoral college predictions and mislead my popular vote model in the very same election cycle?
