@@ -6,8 +6,15 @@
     <description>Recent content in Posts on Ella&#39;s Election Predictions</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 03 Nov 2024 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 18 Nov 2024 00:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:4321/election-blog/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Post-Election Reflection</title>
+      <link>http://localhost:4321/election-blog/post/2024/11/18/post-election-reflection/</link>
+      <pubDate>Mon, 18 Nov 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:4321/election-blog/post/2024/11/18/post-election-reflection/</guid>
+      <description>Welcome back! Now that the dust has (more or less) settled, I am back on the blog to reflect on my model’s performance on Election Day.&#xA;A Tale of Two Models As a reminder, the following table summarizes the basic characteristics of my two models.&#xA;Popular Vote Model Electoral College Model Intercept 15.806 8.105 Index of Consumer Sentiment (C) 0.008 -0.035 National Poll Average, 1 Week Left (P) 0.674 -0.033 Candidate Was In Previous Administration (A) -1.</description>
+    </item>
     <item>
       <title>Final Prediction</title>
       <link>http://localhost:4321/election-blog/post/2024/11/03/final-prediction/</link>
