@@ -183,8 +183,7 @@ ne_map <- counties_2024 |>
              size = 0.3) +
   scale_color_manual(values = c("DEM" = "#7CB9E8", "REP" = "#FF6680")) +
   my_map_theme() +
-  labs(title = "Presidential Voting Shifts by County in Nebraska",
-       subtitle = "Democratic vs. Republican Gains")
+  labs(title = "Presidential Voting Shifts by County (2020-2024)")
 ```
 
 # Campaigning in the Cornhusker State
