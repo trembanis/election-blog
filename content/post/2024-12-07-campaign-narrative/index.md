@@ -24,7 +24,7 @@ slug: "campaign-narrative"
 
 
 
-## Campaigning in the Cornhusker State
+# Campaigning in the Cornhusker State
 
 
 
@@ -38,19 +38,26 @@ slug: "campaign-narrative"
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/print ne map-1.png" width="672" />
 
-## Nebraska: An Overview
+# Nebraska: An Overview
+
+## Demographics, Geography, & Electoral History
+
+## Red State, "Blue Dot"
+
+## Down-Ballot Candidates & Ballot Initiatives
+
+
+# 2024 Campaign Activity
 
 
 
-## 2024 Campaign Activity
+# Conclusions
 
 
 
-## Conclusions
+# References
 
-
-
-## References
+Ballotpedia. (n.d.) Nebraska elections, 2024. Accessed December 7, 2024. https://ballotpedia.org/Nebraska_elections,_2024
 
 Deuel County, Nebraska. (2024, November 6). Summary Results Report. https://countyelectionresults.nebraska.gov/election_files/Deuel/2024_General_official_results.pdf
 
