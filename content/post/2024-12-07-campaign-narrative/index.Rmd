@@ -160,6 +160,7 @@ ne_results <- tibble(`Unit of Analysis` = c("Statewide", "CD-1", "CD-2", "CD-3")
                      "Harris Two-Party Vote Share (2024)" = c(39.4, 43.4, 52.3, 22.8),
                      "My Prediction" = c("40.2", "NA", "NA", "NA"),
                      "538's Prediction" = c(41.3, 41.6, 53.5, 22.6),
+                     "CPR Rating" = c("Solid R", "Solid R", "Likely D", "Solid R"),
                      "Biden Two-Party Vote Share (2020)" = c(39.2,43.3, 52.2, 23.1))
 
 ne_table <- knitr::kable(ne_results)

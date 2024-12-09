@@ -29,12 +29,12 @@ slug: "campaign-narrative"
 
 
 
-|Unit of Analysis | Harris Two-Party Vote Share (2024)|My Prediction | 538's Prediction| Biden Two-Party Vote Share (2020)|
-|:----------------|----------------------------------:|:-------------|----------------:|---------------------------------:|
-|Statewide        |                               39.4|40.2          |             41.3|                              39.2|
-|CD-1             |                               43.4|NA            |             41.6|                              43.3|
-|CD-2             |                               52.3|NA            |             53.5|                              52.2|
-|CD-3             |                               22.8|NA            |             22.6|                              23.1|
+|Unit of Analysis | Harris Two-Party Vote Share (2024)|My Prediction | 538's Prediction|CPR Rating | Biden Two-Party Vote Share (2020)|
+|:----------------|----------------------------------:|:-------------|----------------:|:----------|---------------------------------:|
+|Statewide        |                               39.4|40.2          |             41.3|Solid R    |                              39.2|
+|CD-1             |                               43.4|NA            |             41.6|Solid R    |                              43.3|
+|CD-2             |                               52.3|NA            |             53.5|Likely D   |                              52.2|
+|CD-3             |                               22.8|NA            |             22.6|Solid R    |                              23.1|
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/print ne map-1.png" width="672" />
 
