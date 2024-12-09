@@ -61,6 +61,8 @@ Ballotpedia. (n.d.) Nebraska elections, 2024. Accessed December 7, 2024. https:/
 
 CNN Politics. (n.d.) Nebraska President Results. Accessed December 9, 2024. https://www.cnn.com/election/2020/results/state/nebraska/president
 
+Cook Political Report. (2024, November 4). 2024 CPR Electoral College Ratings. https://www.cookpolitical.com/ratings/presidential-race-ratings
+
 Deuel County, Nebraska. (2024, November 6). Summary Results Report. https://countyelectionresults.nebraska.gov/election_files/Deuel/2024_General_official_results.pdf
 
 Federal Election Commission. (n.d.) Campaign finance data. Accessed December 9, 2024. https://www.fec.gov/data/
