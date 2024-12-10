@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en-us">
-  <head>
+  <head><script src="/election-blog/livereload.js?mindelay=10&amp;v=2&amp;port=4321&amp;path=election-blog/livereload" data-no-instant defer></script>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Final Prediction | Ella&#39;s Election Predictions</title>
@@ -147,7 +147,7 @@
 </tbody>
 </table>
 <p>Figure I, below, makes one argument for ICS: unlike GDP, it does not include any outliers in the dataset I used. On the one hand, this makes it easier to justify including otherwise anomalous years, like 2020. On the other hand, the fact that GDP growth drops to a whopping -28 in Q2 of 2020 suggests that there might be very good reasons for dropping unrepresentative years. Both measures are in some respect imperfect, but I decided to move forward with ICS.</p>
-<img src="https://trembanis.github.io/election-blog/post/2024/11/03/final-prediction/index_files/figure-html/print gdp_outliers-1.png" width="672" />
+<img src="/election-blog/post/2024/11/03/final-prediction/index_files/figure-html/print gdp_outliers-1.png" width="672" />
 <p>The same story we observed for the previous administration variable repeats itself with consumer sentiment. In the popular vote model, the coefficient is substantively low and insignificant. In the electoral college model, it is significant at the 0.05 level and has a small negative estimate of -0.0035. Counterintuitively, this coefficient implies that Democratic vote share drops as Americans’ outlook on the economy improves. If this trend does hold true in reality, it could result from an increased desire for welfare and stimulus programs (associated with the Democratic party) during times of economic hardship and a desire for more limited government intervention (associated with the Republican party) when the economy seems strong.</p>
 <h2 id="lagged-vote-share">Lagged Vote Share</h2>
 <p>Continuity over time is the very basic principle behind the inclusion of a lagged vote share variable. Vavreck’s signature argument that the United States is experiencing a process of calcification (from our GOV 1347 class discussion), whereby partisans are becoming entrenched in their views and more homogeneous among themselves, would suggest that previous cycle vote share will only become a better predictor of voter behavior as the electorate calcifies.</p>
@@ -191,16 +191,16 @@
 <h1 id="out-of-sample-tests">Out-of-Sample Tests</h1>
 <p>To further assess the model, I conducted a cross-validation procedure on the popular vote model and re-ran the electoral college model to “predict” the 2016 and 2020 election cycles.</p>
 <p>Figure II, below, summarizes the out-of-sample residuals from the cross-validation exercise. The distribution is roughly normal, as expected, and the mean of the absolute value of the out-of-sample residuals is about 2.615. In the context of a bitterly close election, of course, 2.615 points is nothing to sniff at. However, given the range in observed vote share found in the historical data is around 16.6 points, and that this degree of out-of-sample error is in line with the predictive models I have produced in previous weeks, I have continued with this model.</p>
-<img src="https://trembanis.github.io/election-blog/post/2024/11/03/final-prediction/index_files/figure-html/print figa-1.png" width="672" />
+<img src="/election-blog/post/2024/11/03/final-prediction/index_files/figure-html/print figa-1.png" width="672" />
 <p>Next, I created an electoral college “predictions” for 2020. Figure III, below, illustrates which states my model would expect Biden to win and lose in 2020.</p>
-<img src="https://trembanis.github.io/election-blog/post/2024/11/03/final-prediction/index_files/figure-html/print figx-1.png" width="672" />
+<img src="/election-blog/post/2024/11/03/final-prediction/index_files/figure-html/print figx-1.png" width="672" />
 <p>There are, as I am sure you have noticed, several things wrong with this map. Not only does it predict a blowout victory for Biden with 409 electoral votes, but it does so by handing him improbable wins in states like Texas and Florida. On the other hand, Figure IV, which displays Biden’s predicted margins in each state, makes these ludicrous upfront results seem a bit more sensible.</p>
-<img src="https://trembanis.github.io/election-blog/post/2024/11/03/final-prediction/index_files/figure-html/print figy-1.png" width="672" />
+<img src="/election-blog/post/2024/11/03/final-prediction/index_files/figure-html/print figy-1.png" width="672" />
 <p>The margins map, above, at least gives margin a very narrow margin of victory in Texas and Florida. Rather than throwing all of the states randomly out of whack, the model seems to have preserved the basic relative values of the states, but shifted the whole prediction slightly leftward. This is particularly interesting since, as we will soon see, my 2024 prediction from the same model appears to have the opposite skew.</p>
 <p>As a final check, I used my model to “predict” the 2016 election, with similarly bizarre results. While Figure V, below, shows that my model did predict a Trump victory, it shortchanged Clinton in Colorado, New Mexico, and Virginia, despite handing her wins in the Blue Wall states.</p>
-<img src="https://trembanis.github.io/election-blog/post/2024/11/03/final-prediction/index_files/figure-html/print figza-1.png" width="672" />
+<img src="/election-blog/post/2024/11/03/final-prediction/index_files/figure-html/print figza-1.png" width="672" />
 <p>Once again, Figure VI indicates that these mistakes come from states with very narrow predictive margins.</p>
-<img src="https://trembanis.github.io/election-blog/post/2024/11/03/final-prediction/index_files/figure-html/print figzb-1.png" width="672" />
+<img src="/election-blog/post/2024/11/03/final-prediction/index_files/figure-html/print figzb-1.png" width="672" />
 <p>Ultimately, my model is only as good as the data that it receives. These alternate-reality maps of 2016 and 2020 are a reminder that my model rests on the – possibly fragile – hope that the same pollsters who veered in the wrong direction, say by <a href="https://www.pewresearch.org/short-reads/2016/11/09/why-2016-election-polls-missed-their-mark/">underestimating Trump in 2016</a>, will not make a similar systematic error in 2024.</p>
 <h1 id="popular-vote-results">Popular Vote Results</h1>
 <p>Without further ado, it is time to unveil my predictions for the 2024 presidential election!</p>
@@ -224,7 +224,7 @@
 <p>I should also note that Harris’s predicted margin of victory under this model has declined in past weeks, as recent national polls favoring Trump have poured in.</p>
 <h1 id="electoral-college-results">Electoral College Results</h1>
 <p>Finally, and most importantly, here is my electoral college prediction: my model predicts that Harris will receive 226 electoral college votes and Trump will take the presidency. The map in Figure VII is supplemented by the table below, which gives predictions for the unpictured states of Alaska and Hawaii, as well as the District of Columbia. In the absence of robust historical polling data, I did not create separate predictions for the congressional districts of Nebraska and Maine. Since my model predicts a comfortable victory for Trump in the electoral college, these additional data points, though interesting, would not change the big picture of my prediction.</p>
-<img src="https://trembanis.github.io/election-blog/post/2024/11/03/final-prediction/index_files/figure-html/print fig1-1.png" width="672" />
+<img src="/election-blog/post/2024/11/03/final-prediction/index_files/figure-html/print fig1-1.png" width="672" />
 <table>
 <thead>
 <tr>
@@ -315,7 +315,7 @@
 </tbody>
 </table>
 <p>Thank you for joining me for this tour of my 2024 predictive model. I will leave you with Figure VIII, a map of the predicted margins for each of the continental states. From where I sit now, on Monday, November 4th, 2024, it seems like a reasonable guess. Only time will tell if four years from now this map will look as bizarre as my 2020 and 2016 “predictions.”</p>
-<img src="https://trembanis.github.io/election-blog/post/2024/11/03/final-prediction/index_files/figure-html/print fig2-1.png" width="672" />
+<img src="/election-blog/post/2024/11/03/final-prediction/index_files/figure-html/print fig2-1.png" width="672" />
 <h1 id="references">References</h1>
 <p>Cook Political Report. (2024, November 1). 2024 CPR President race ratings. <a href="https://www.cookpolitical.com/ratings/presidential-race-ratings">https://www.cookpolitical.com/ratings/presidential-race-ratings</a></p>
 <p>Gelman, A. &amp; King, G. (1993, October). British Journal of Political Science, Vol. 23 (4), 409-451. <a href="https://doi.org/10.1017/S0007123400006682">https://doi.org/10.1017/S0007123400006682</a></p>
