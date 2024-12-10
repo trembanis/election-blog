@@ -42,7 +42,13 @@ slug: "campaign-narrative"
 
 ## Demographics, Geography, & Electoral History
 
-## Red State, "Blue Dot"
+## Red State, Purple Dot
+
+No doubt the most famous feature of Nebraska’s electoral system is its method of splitting its five electoral votes. Unlike most states, which award all of their votes to whichever candidate receives a plurality in the state-level popular vote, Nebraska awards just two votes to the statewide winner and one vote to the winner of each of its three congressional districts.
+
+Compared to winner-take-all, this configuration is a boon for Democrats; in 2008 and 2020, Nebraska’s second congressional district awarded one vote to the Democratic candidate. However, the idea that NE-2 is a reliable “blue dot” in the ruby-red state is at least a little overstated. This is a district, after all, that voted for a Republican presidential candidate as recently as [2016](https://nebraskaexaminer.com/2024/08/10/nebraskas-2nd-district-steps-back-into-presidential-spotlight-after-crazy-month/) – a district that, to this day, is represented in the House by a moderate Republican. Even in [Omaha](https://www.politico.com/news/magazine/2024/10/14/nebraska-2nd-district-battleground-00183400), the city nominally driving NE-2’s “blue dot” status, the mayor is a Republican and registered Republicans outnumber registered Democrats. As the national electorate calcifies, and “red” and “blue” states become steadily more predictable, the so-called “blue dot” has more in common with the kind of Midwestern battleground that [Hopkins](https://doi.org/10.1017/9781108123594.006) described in the wake of the 2016 election: purple, elastic, and torn between urban and rural constituents.
+
+Earlier this fall, Nebraska Republicans, with Trump’s blessing, [launched](https://nebraskaexaminer.com/2024/08/10/nebraskas-2nd-district-steps-back-into-presidential-spotlight-after-crazy-month/) a campaign to re-institute winner-take-all. The push [fell short](https://nebraskaexaminer.com/2024/09/23/state-sen-mike-mcdonnell-deflates-gop-hopes-for-nebraska-winner-take-all-in-2024/) in the state legislature thanks to a pivotal “no” vote from Republican Mike McDonnell, a former Omaha Democrat. McDonnell, however, did not set aside the possibility of changing Nebraska’s electoral vote allocation method in time for the next presidential election.
 
 ## Elsewhere on the Ballot
 
@@ -50,7 +56,7 @@ Of course, the presidential campaign did not happen in isolation. Nebraska voter
 
 Republican Senator Deb Fischer was [re-elected](https://ballotpedia.org/United_States_Senate_election_in_Nebraska,_2024) over Independent challenger Dan Osborn. Osborn’s middle-of-the-road campaign, which emphasized his nonpartisanship and his working-class roots, made a reasonably competitive race out of what might otherwise have been a slam-dunk for Fischer. There are difficulties in drawing analogies between this race and the presidential contest, since both candidates [attempted](https://www.washingtonexaminer.com/news/campaigns/congressional/3214917/dan-osborn-nebraska-senate-race-independent/) to align themselves with Trump – though only Fischer received his coveted endorsement.
 
-Nebraskans also weighed in on a range of ballot initiatives, and the results are a fascinating mixed bag. Balking the post-Dobbs [trend](https://time.com/7173410/abortion-ballot-results-2024-election/) of enthusiasm for reproductive rights on the ballot, Nebraskans [struck down](https://ballotpedia.org/Nebraska_elections,_2024) a measure to enshrine abortion rights in the state constitution and supported a ban for abortions after the first trimester of pregnancy. Interestingly, the margin was substantially lower for the former initiative (3 points versus 10 points) and fewer voters responded to the latter question. Perhaps it was easier to mobilize voters around the relatively clear terms of the ban – which specifies the trimester of concern as well as exceptions for rape, incest, and the health of the mother – compared to the somewhat more vague language of “fetal viability” used in the proposed constitutional amendment.
+Nebraskans also weighed in on a range of ballot initiatives, and the results are a fascinating mixed bag. Balking the post-Dobbs [trend](https://time.com/7173410/abortion-ballot-results-2024-election/) of enthusiasm for reproductive rights on the ballot, Nebraskans [struck down](https://ballotpedia.org/Nebraska_elections,_2024) a measure to enshrine a right to abortion in the state constitution and supported a ban for abortions after the first trimester of pregnancy. Interestingly, the margin was substantially lower for the former initiative (3 points versus 10 points) and fewer voters responded to the latter question. Perhaps it was easier to mobilize voters around the relatively clear terms of the ban – which specifies the trimester of concern as well as exceptions for rape, incest, and the health of the mother – compared to the somewhat more vague language of “fetal viability” used in the proposed constitutional amendment.
 
 Nevertheless, voters also opted to require paid sick leave, to legalize medical marijuana (and establish a regulatory body to oversee its usage), and to overturn a law which would provide vouchers to qualified private school students.
 
@@ -87,6 +93,8 @@ FiveThirtyEight. (2024, November 5). Who Is Favored To Win Nebraska's 3rd Distri
 Gilsinan, K. (2024, October 14). The Battleground Where Harris Is Drubbing Trump. Politico. https://www.politico.com/news/magazine/2024/10/14/nebraska-2nd-district-battleground-00183400
 
 Hoff, M. (2024, September 12). All eyes are on Nebraska's 'blue dot,' which could determine who wins the White House. USA Today. https://www.usatoday.com/story/news/politics/elections/2024/09/12/2024-presidential-race-nebraska-blue-dot/75018361007/
+
+Hopkins, D. (2017). Red Fighting Blue. Cambridge University Press. https://doi.org/10.1017/9781108123594.006
 
 Kimball County, Nebraska. (2024, November 6). Kimball County General Election Results. https://irp.cdn-website.com/82f946ac/files/uploaded/General_Election_Results-Pres_2024-c4b5ed95.pdf
 
