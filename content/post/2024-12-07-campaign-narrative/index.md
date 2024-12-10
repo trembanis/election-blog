@@ -82,12 +82,15 @@ Finally, voters in the state’s all-important second Congressional District [ch
 
 # 2024 Campaign Activity
 
-From the beginning, it was clear that NE-2 was a second-rate priority for both the Trump and Harris campaigns. True, there were the inevitable [flutterings](https://www.usatoday.com/story/news/politics/elections/2024/09/12/2024-presidential-race-nebraska-blue-dot/75018361007/) about how the polls were just so close that it might come down to NE-2's single vote and national Republicans mustered some strength in their winner-take-all bid, but that energy quickly fizzled.
+From the beginning, it was clear that NE-2 was a second-rate priority for both the Trump and Harris campaigns. True, there were the inevitable [flutterings](https://www.usatoday.com/story/news/politics/elections/2024/09/12/2024-presidential-race-nebraska-blue-dot/75018361007/) about how the polls were just so close that it might come down to NE-2's single vote, and national Republicans mustered some strength in their winner-take-all bid, but that energy quickly fizzled.
 
 # Conclusions
 
-## Redistricting: Why Did 538 Underestimate Harris in NE-1?
+## Redistricting: Why Did 538 Overestimate Harris in NE-2?
 
+My first theory has less to do with voter or candidate behavior, but since it has the potential to explain the discrepancy between 538’s NE-1 and NE-2 prediction errors, I think it is worth mentioning here.
+
+After the release of the 2020 Census, Nebraska’s Republican-run government [redrew](https://ballotpedia.org/Redistricting_in_Nebraska_after_the_2020_census) the boundaries of its three congressional districts. The changes were for the most part subtle, but they involved extending NE-2 further west, into the state’s more rural counties. This change presents a unique challenge for forecasters, whose task mostly involves predicting outcomes in states with long-fixed borders. While 2024 polling in NE-2 should in theory incorporate these newly eligible voters’ intentions (though of course this could be complicated if rural voters prove harder to contact than their urban and suburban counterparts), any historical trends that the model relies on will not be from exactly the same place. Moreover, the suddenness of redistricting makes this a different problem than gradual migration patterns, which all states and districts will have experienced to some extent since 2020. If 538 did not adequately control for this development – and, as far as I can tell, they [do not mention it](https://abcnews.go.com/538/538s-2024-presidential-election-forecast-works/story?id=113068753) – their embedded assumptions about NE-2 voters’ behavior could be outdated. For instance, rural voters, given their proximity to the agricultural industry, might be responsive to different economic indicators than Omahans. If that is the case, it could be that new NE-2 voters diluted the relationships that 538’s model was built on, causing the model to overpredict support for Harris in the district.
 
 
 ## Vavreck's Campaign Typology: Why Did 538 Overestimate Harris in NE-2?
