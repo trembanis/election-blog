@@ -30,7 +30,15 @@ Welcome to the very final installment of my 2024 election blog!
 
 Today, I will be zeroing in on Nebraska and dissecting the campaign activity in the state in the hopes of figuring out why forecasters (including myself!) might have missed the true outcome.
 
-First, I should establish how the predictions stacked up against reality. Since my model was reliant on historical polling data, and I could not source sufficient observations for Nebraska’s congressional districts, I only generated a statewide prediction. To compensate for this missingness, I have also included predictions from [538](https://projects.fivethirtyeight.com/2024-election-forecast/) and ratings from the [Cook Political Report](https://www.cookpolitical.com/ratings/presidential-race-ratings).
+For starters, the map below depicts the county-level swing from 2020. Almost all of Nebraska's counties experienced an increase in Republican vote share relative to the 2020 cycle.
+
+The few exceptions -- [Kimball](https://irp.cdn-website.com/82f946ac/files/uploaded/General_Election_Results-Pres_2024-c4b5ed95.pdf), [Boyd](https://countyelectionresults.nebraska.gov/election_files/Boyd/2024_General_official_results.pdf), [Brown](https://electionresults.nebraska.gov/resultsCTY.aspx?type=PC&rid=12465&osn=93&map=CTY), [Sheridan](https://electionresults.nebraska.gov/resultsCTY.aspx?type=PC&rid=12465&osn=93&map=CTY) and [Deuel](https://countyelectionresults.nebraska.gov/election_files/Deuel/2024_General_official_results.pdf) -- are all ruby red, sparsely populated rural counties in Nebraska's third district. Their slight leftward swings could just be random noise that their electorates are simply too small to drown out.
+
+On the other hand, the red swing is present but modest in Omaha's Douglas County and the surrounding areas which make up Nebraska's second and first congressional districts. This is, of course, despite the fact that Harris did win NE-2's one electoral vote. While it is impossible to know exactly what the magnitude of the swing might have been if either of the campaigns pursued different strategies in NE-2, it is a question worth keeping in mind -- especially since, as we shall see, both Trump and Harris had their eyes on Nebraska's famous "blue dot."
+
+<img src="{{< blogdown/postref >}}index_files/figure-html/print ne map-1.png" width="672" />
+
+Before we get any further, though, I should establish how the predictions stacked up against this reality. Since my model was reliant on historical polling data, and I could not source sufficient observations for Nebraska’s congressional districts, I only generated a statewide prediction. To compensate for this missingness, I have also included predictions from [538](https://projects.fivethirtyeight.com/2024-election-forecast/) and ratings from the [Cook Political Report](https://www.cookpolitical.com/ratings/presidential-race-ratings).
 
 
 |Unit of Analysis | Harris Two-Party Vote Share (2024)|My Prediction | 538's Prediction|CPR Rating | Biden Two-Party Vote Share (2020)|
@@ -40,11 +48,9 @@ First, I should establish how the predictions stacked up against reality. Since 
 |CD-2             |                               52.3|NA            |             53.5|Likely D   |                              52.2|
 |CD-3             |                               22.8|NA            |             22.6|Solid R    |                              23.1|
 
-Ultimately, all of the top-line outcomes were predicted correctly: Trump won statewide and in the first and third congressional districts, and Harris won the second congressional district. My statewide prediction was slightly closer to the outcome than 538’s, perhaps due to overfitting in their more high-dimensional model. In any case, both my model and the 538 model slightly overestimated Harris’s statewide vote share.
+Ultimately, all of the top-line outcomes were predicted correctly: Trump won statewide and in the first and third congressional districts, and Harris won the second congressional district. My statewide prediction was slightly closer to the outcome than 538’s, perhaps due to overfitting in their higher-dimensional model. In any case, both my model and the 538 model slightly overestimated Harris’s statewide vote share.
 
 If we break the 538 predictions down by congressional district, we get what appear to be three quite different stories: the model was almost dead-on in NE-3, overestimated Harris by 1.2 points in NE-2, and underestimated her by 1.8 points in NE-1.
-
-<img src="{{< blogdown/postref >}}index_files/figure-html/print ne map-1.png" width="672" />
 
 # Nebraska: An Overview
 
@@ -76,9 +82,19 @@ Finally, voters in the state’s all-important second Congressional District [ch
 
 # 2024 Campaign Activity
 
-
+From the beginning, it was clear that NE-2 was a second-rate priority for both the Trump and Harris campaigns. True, there were the inevitable [flutterings](https://www.usatoday.com/story/news/politics/elections/2024/09/12/2024-presidential-race-nebraska-blue-dot/75018361007/) about how the polls were just so close that it might come down to NE-2's single vote and national Republicans mustered some strength in their winner-take-all bid, but that energy quickly fizzled.
 
 # Conclusions
+
+## Redistricting: Why Did 538 Underestimate Harris in NE-1?
+
+
+
+## Vavreck's Campaign Typology: Why Did 538 Overestimate Harris in NE-2?
+
+
+
+## Economic Retrospection: Why Did 538 Overestimate Harris Statewide?
 
 
 
@@ -89,6 +105,10 @@ Thank you for joining me this semester!
 270toWin. (n.d.) Nebraska. Accessed December 9, 2024. https://www.270towin.com/states/Nebraska
 
 Ballotpedia. (n.d.) Nebraska elections, 2024. Accessed December 7, 2024. https://ballotpedia.org/Nebraska_elections,_2024
+
+Ballotpedia. (n.d.) Redistricting in Nebraska after the 2020 census. Accessed December 9, 2024. https://ballotpedia.org/Redistricting_in_Nebraska_after_the_2020_census
+
+Boyd County, Nebraska. (2024, November 6). Summary Results Report. https://countyelectionresults.nebraska.gov/election_files/Boyd/2024_General_official_results.pdf
 
 CNN Politics. (n.d.) Nebraska President Results. Accessed December 9, 2024. https://www.cnn.com/election/2020/results/state/nebraska/president
 
@@ -123,6 +143,8 @@ Mondeaux, C. (2024, November 4). Why a Dan Osborn victory in Nebraska Senate rac
 Murray, I. (2024, October 20). 'Blue Dot' in Nebraska draws boldface political names. ABC News. https://abcnews.go.com/Politics/blue-dot-nebraska-draws-boldface-political-names/story?id=114967525
 
 Napier, A. (2024, October 24). Election 2024: Here are the issues Nebraska voters care the most about. Washington Examiner. https://www.washingtonexaminer.com/news/campaigns/presidential/3195453/2024-election-nebraska-voters-issues-abortion-social-security/
+
+Nebraska Secretary of State. (2024, November 26). Election Results. https://electionresults.nebraska.gov/resultsCTY.aspx?type=PC&rid=12465&osn=93&map=CTY
 
 Nir, D. (2022, November 14). Daily Kos Elections' 2020 presidential results by congressional district. Daily Kos. https://www.dailykos.com/stories/2012/11/19/1163009/-Daily-Kos-Elections-presidential-results-by-congressional-district-for-the-2012-2008-elections
 
