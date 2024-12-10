@@ -100,6 +100,9 @@ If 538 did not adequately control for this development – and, as far as I can 
 
 The redistricting explanation does not, however, rule out the possibility that the Harris campaign underperformed in Nebraska. In this section, I will argue that, although Harris did run a loosely-defined insurgent campaign in Nebraska, as recommended by [Vavreck (2009)](https://muse.jhu.edu/book/36264) for a candidate in her position, she may have chosen a non-ideal issue.
 
+In both [public appearances](https://nebraskaexaminer.com/briefs/tim-walz-coming-back-to-nebraskas-2nd-district-for-harris-on-oct-19/) and [private meetings](https://nebraskaexaminer.com/2024/08/10/nebraskas-2nd-district-steps-back-into-presidential-spotlight-after-crazy-month/), Harris’s Nebraska surrogates emphasized reproductive rights, making abortion the frontrunner insurgent issue of her campaign in the “blue dot.” This satisfies Vavreck’s requirement that successful insurgents talk mostly about some issue other than the economy, but fares worse on her corollary conditions.
+
+Namely, while abortion is regarded as a strong issue for Democrats nationwide, pro-choice ballot initiatives failed in Nebraska in 2024 and Representative Don Bacon, a pro-life Republican, won a Congressional seat in all-important NE-2. In other words, the public opinion on abortion may not be as lopsided in Nebraska as a strong insurgent issue should be, per Vavreck. Vavreck’s typology also states that the clarifying candidate should be hemmed in by an unpopular stance that the insurgent candidate can exploit. While Harris could point to Trump’s nomination of three conservative Supreme Court justices who joined in the decision which overturned Roe, Trump is famously hard to pin down on abortion, so it was no easy task for the Harris campaign to clearly communicate the stakes of a second Trump administration for reproductive rights.
 
 
 ## Pork Barrel Spending
