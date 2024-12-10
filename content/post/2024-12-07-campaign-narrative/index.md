@@ -26,7 +26,11 @@ slug: "campaign-narrative"
 
 # Campaigning in the Cornhusker State
 
+Welcome to the very final installment of my 2024 election blog!
 
+Today, I will be zeroing in on Nebraska and dissecting the campaign activity in the state in the hopes of figuring out why forecasters (including myself!) might have missed the true outcome.
+
+First, I should establish how the predictions stacked up against reality. Since my model was reliant on historical polling data, and I could not source sufficient observations for Nebraska’s congressional districts, I only generated a statewide prediction. To compensate for this missingness, I have also included predictions from [538](https://projects.fivethirtyeight.com/2024-election-forecast/) and ratings from the [Cook Political Report](https://www.cookpolitical.com/ratings/presidential-race-ratings).
 
 
 |Unit of Analysis | Harris Two-Party Vote Share (2024)|My Prediction | 538's Prediction|CPR Rating | Biden Two-Party Vote Share (2020)|
@@ -73,6 +77,8 @@ Finally, voters in the state’s all-important second Congressional District [ch
 # Conclusions
 
 
+
+Thank you for joining me this semester!
 
 # References
 
