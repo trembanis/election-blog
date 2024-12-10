@@ -204,6 +204,10 @@ ne_map
 
 ## Demographics, Geography, & Electoral History
 
+Nebraska is a [Republican bastion](https://www.270towin.com/states/Nebraska) in the heart of the Great Plains. A Democratic presidential candidate has not won statewide in Nebraska since Lyndon B. Johnson in 1964 and the state has consistently elected Republican governors since 1998.
+
+Nebraska does tick some boxes in the “Republican stereotypes” column: it is highly rural, [ranking 43rd](https://www.census.gov/quickfacts/geo/chart/NE/PST045223) in the nation for population density, and has a large proportion of non-Hispanic whites ([approximately 76%](https://www.census.gov/quickfacts/fact/table/NE/PST045223)). Nonetheless, the state is firmly [in the middle of the pack](https://www.census.gov/quickfacts/geo/chart/NE/PST045223) on other demographic indicators, including household income, educational attainment, and computer/broadband access.
+
 ## Red State, Purple Dot
 
 No doubt the most famous feature of Nebraska’s electoral system is its method of splitting its five electoral votes. Unlike most states, which award all of their votes to whichever candidate receives a plurality in the state-level popular vote, Nebraska awards just two votes to the statewide winner and one vote to the winner of each of its three congressional districts.
@@ -216,7 +220,7 @@ Earlier this fall, Nebraska Republicans, with Trump’s blessing, [launched](htt
 
 Of course, the presidential campaign did not happen in isolation. Nebraska voters faced other important down-ballot choices on Election Day, and the state generally affirmed its preference for Republican officeholders and conservative policies.
 
-Republican Senator Deb Fischer was [re-elected](https://ballotpedia.org/United_States_Senate_election_in_Nebraska,_2024) over Independent challenger Dan Osborn. Osborn’s middle-of-the-road campaign, which emphasized his nonpartisanship and his working-class roots, made a reasonably competitive race out of what might otherwise have been a slam-dunk for Fischer. There are difficulties in drawing analogies between this race and the presidential contest, since both candidates [attempted](https://www.washingtonexaminer.com/news/campaigns/congressional/3214917/dan-osborn-nebraska-senate-race-independent/) to align themselves with Trump – though only Fischer received his coveted endorsement.
+Republican Senator Deb Fischer was [re-elected](https://ballotpedia.org/United_States_Senate_election_in_Nebraska,_2024) over Independent challenger Dan Osborn. Osborn’s middle-of-the-road campaign, which emphasized his nonpartisanship and his working-class roots, made a reasonably competitive race out of what might otherwise have been a slam dunk for Fischer. There are difficulties in drawing analogies between this race and the presidential contest, since both candidates [attempted](https://www.washingtonexaminer.com/news/campaigns/congressional/3214917/dan-osborn-nebraska-senate-race-independent/) to align themselves with Trump – though only Fischer received his coveted endorsement.
 
 Nebraskans also weighed in on a range of ballot initiatives, and the results are a fascinating mixed bag. Balking the post-Dobbs [trend](https://time.com/7173410/abortion-ballot-results-2024-election/) of enthusiasm for reproductive rights on the ballot, Nebraskans [struck down](https://ballotpedia.org/Nebraska_elections,_2024) a measure to enshrine a right to abortion in the state constitution and supported a ban for abortions after the first trimester of pregnancy. Interestingly, the margin was substantially lower for the former initiative (3 points versus 10 points) and fewer voters responded to the latter question. Perhaps it was easier to mobilize voters around the relatively clear terms of the ban – which specifies the trimester of concern as well as exceptions for rape, incest, and the health of the mother – compared to the somewhat more vague language of “fetal viability” used in the proposed constitutional amendment.
 
@@ -233,6 +237,8 @@ Finally, voters in the state’s all-important second Congressional District [ch
 
 
 # References
+
+270toWin. (n.d.) Nebraska. Accessed December 9, 2024. https://www.270towin.com/states/Nebraska
 
 Ballotpedia. (n.d.) Nebraska elections, 2024. Accessed December 7, 2024. https://ballotpedia.org/Nebraska_elections,_2024
 
@@ -279,3 +285,5 @@ Sanderford, A. (2024, August 10). Nebraska's 2nd District steps back into presid
 Sanderford, A. (2024, September 23). State Sen. Mike McDonnell deflates GOP hopes for Nebraska winner-take-all in 2024. Nebraska Examiner. https://nebraskaexaminer.com/2024/09/23/state-sen-mike-mcdonnell-deflates-gop-hopes-for-nebraska-winner-take-all-in-2024/
 
 Schleifer, T. (2024, September 17). Presidential Campaigns and Allies Plan $500 Million in TV and Radio Ads. The New York Times. https://www.nytimes.com/2024/09/17/us/elections/presidential-campaign-advertising-spending.html
+
+United States Census Bureau. (n.d.) Quick Facts: Nebraska. Accessed December 9, 2024. https://www.census.gov/quickfacts/fact/table/NE/PST045223
