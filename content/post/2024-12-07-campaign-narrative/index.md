@@ -46,6 +46,15 @@ slug: "campaign-narrative"
 
 ## Elsewhere on the Ballot
 
+Of course, the presidential campaign did not happen in isolation. Nebraska voters faced other important down-ballot choices on Election Day, and the state generally affirmed its preference for Republican officeholders and conservative policies.
+
+Republican Senator Deb Fischer was [re-elected](https://ballotpedia.org/United_States_Senate_election_in_Nebraska,_2024) over Independent challenger Dan Osborn. Osborn’s middle-of-the-road campaign, which emphasized his nonpartisanship and his working-class roots, made a reasonably competitive race out of what might otherwise have been a slam-dunk for Fischer. There are difficulties in drawing analogies between this race and the presidential contest, since both candidates [attempted](https://www.washingtonexaminer.com/news/campaigns/congressional/3214917/dan-osborn-nebraska-senate-race-independent/) to align themselves with Trump – though only Fischer received his coveted endorsement.
+
+Nebraskans also weighed in on a range of ballot initiatives, and the results are a fascinating mixed bag. Balking the post-Dobbs [trend](https://time.com/7173410/abortion-ballot-results-2024-election/) of enthusiasm for reproductive rights on the ballot, Nebraskans [struck down](https://ballotpedia.org/Nebraska_elections,_2024) a measure to enshrine abortion rights in the state constitution and supported a ban for abortions after the first trimester of pregnancy. Interestingly, the margin was substantially lower for the former initiative (3 points versus 10 points) and fewer voters responded to the latter question. Perhaps it was easier to mobilize voters around the relatively clear terms of the ban – which specifies the trimester of concern as well as exceptions for rape, incest, and the health of the mother – compared to the somewhat more vague language of “fetal viability” used in the proposed constitutional amendment.
+
+Nevertheless, voters also opted to require paid sick leave, to legalize medical marijuana (and establish a regulatory body to oversee its usage), and to overturn a law which would provide vouchers to qualified private school students.
+
+Finally, voters in the state’s all-important second Congressional District [chose](https://ballotpedia.org/Nebraska%27s_2nd_Congressional_District_election,_2024) to return Republican incumbent Don Bacon to the House of Representatives. As a testament to the purple-ness of the district, however, Bacon’s opponent, Democrat Tony Vargas, lost by a slim 1.8-point margin.
 
 # 2024 Campaign Activity
 
@@ -81,7 +90,15 @@ Hoff, M. (2024, September 12). All eyes are on Nebraska's 'blue dot,' which coul
 
 Kimball County, Nebraska. (2024, November 6). Kimball County General Election Results. https://irp.cdn-website.com/82f946ac/files/uploaded/General_Election_Results-Pres_2024-c4b5ed95.pdf
 
+Lee, C. (2024, November 6). How the 10 States' Abortion Ballot Initiatives Fared in the 2024 Election. TIME Magazine. https://time.com/7173410/abortion-ballot-results-2024-election/
+
+McLoon, A. (2024, November 4). Election Week: The presidential ground game in Omaha. KETV NewsWatch 7. https://www.ketv.com/article/election-week-the-presidential-ground-game-in-omaha/62798017
+
+Mondeaux, C. (2024, November 4). Why a Dan Osborn victory in Nebraska Senate race may not be a win for any party. Washington Examiner. https://www.washingtonexaminer.com/news/campaigns/congressional/3214917/dan-osborn-nebraska-senate-race-independent/
+
 Murray, I. (2024, October 20). 'Blue Dot' in Nebraska draws boldface political names. ABC News. https://abcnews.go.com/Politics/blue-dot-nebraska-draws-boldface-political-names/story?id=114967525
+
+Napier, A. (2024, October 24). Election 2024: Here are the issues Nebraska voters care the most about. Washington Examiner. https://www.washingtonexaminer.com/news/campaigns/presidential/3195453/2024-election-nebraska-voters-issues-abortion-social-security/
 
 Nir, D. (2022, November 14). Daily Kos Elections' 2020 presidential results by congressional district. Daily Kos. https://www.dailykos.com/stories/2012/11/19/1163009/-Daily-Kos-Elections-presidential-results-by-congressional-district-for-the-2012-2008-elections
 
