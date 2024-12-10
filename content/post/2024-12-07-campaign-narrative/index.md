@@ -84,7 +84,9 @@ Finally, voters in the state’s all-important second Congressional District [ch
 
 From the beginning, it was clear that NE-2 was a second-rate priority for both the Trump and Harris campaigns. True, there were the inevitable [flutterings](https://www.usatoday.com/story/news/politics/elections/2024/09/12/2024-presidential-race-nebraska-blue-dot/75018361007/) about how the polls were just so close that it might come down to NE-2's single vote and national Republicans mustered some strength in their winner-take-all bid, but that energy quickly fizzled.
 
-Although Nebraska spending estimates for the Trump campaign [have not yet been released](https://www.fec.gov/data/spending-bythenumbers/) by the Federal Election Commission, Harris [allegedly outspent](https://www.ketv.com/article/election-week-the-presidential-ground-game-in-omaha/62798017) Trump in NE-2, [employed more staff members](https://www.ketv.com/article/election-week-the-presidential-ground-game-in-omaha/62798017), and [ran the lion’s share of presidential campaign ads](https://mediaproject.wesleyan.edu/releases-103124/) in the Omaha DMA. Neither candidate held their own rallies in the Cornhusker state, opting instead to [send surrogates](https://abcnews.go.com/Politics/blue-dot-nebraska-draws-boldface-political-names/story?id=114967525), including Tim and Gwen Walz, Doug Emhoff, Robert F. Kennedy Jr., and Tulsi Gabbard. Both campaigns had active door-knocking and phone-banking campaigns, with Trump Force 47 – Nebraska’s joint office for the RNC and the Trump campaign – apparently pouring most of its efforts into [mobilizing](https://www.politico.com/news/magazine/2024/10/14/nebraska-2nd-district-battleground-00183400) extremely low-turnout voters.
+Although Nebraska spending estimates for the Trump campaign [have not yet been released](https://www.fec.gov/data/spending-bythenumbers/) by the Federal Election Commission, Harris [allegedly outspent](https://www.ketv.com/article/election-week-the-presidential-ground-game-in-omaha/62798017) Trump in NE-2, [employed more staff members](https://www.ketv.com/article/election-week-the-presidential-ground-game-in-omaha/62798017), and [ran the lion’s share of presidential campaign ads](https://mediaproject.wesleyan.edu/releases-103124/) in the Omaha DMA. Neither candidate held their own rallies in the Cornhusker state, opting instead to [send surrogates](https://abcnews.go.com/Politics/blue-dot-nebraska-draws-boldface-political-names/story?id=114967525), including Tim and Gwen Walz, Doug Emhoff, Robert F. Kennedy Jr., and Tulsi Gabbard. Both campaigns had active door-knocking and phone-banking campaigns, with Trump Force 47 – Nebraska’s joint office for the RNC and the Trump campaign – apparently pouring most of its efforts into [mobilizing](https://www.politico.com/news/magazine/2024/10/14/nebraska-2nd-district-battleground-00183400) extremely low-turnout voters. [Enos and Fowler](https://doi.org/10.1017/psrm.2016.21) (2016) argue that ground game activities can in fact mobilize voters who would not otherwise turn out, but this payoff may be tempered by the inefficiency -- discussed by [Darr and Levendusky](https://doi.org/10.1177/1532673X13500520) (2014) -- of contacting rural, low-propensity Republican voters.
+
+Since the Harris campaign was substantially more active in NE-2, and her vote share is the outcome of interest in my model, the suggestions that follow about campaign choices will mostly relate to her candidacy.
 
 # Conclusions
 
@@ -110,6 +112,16 @@ The Washington Examiner [conducted a Google trends analysis](https://www.washing
 
 Bacon – the NE-2 representative who endorsed Trump in 2024 but rejected his efforts to overrule the vote in 2020 – [suggested](https://www.politico.com/news/magazine/2024/10/14/nebraska-2nd-district-battleground-00183400) that Trump was ahead with his nonpartisan constituents on policy but behind on “trust.” National Democrats, eager to win Bacon’s seat for themselves, were unsurprisingly uninterested in building a coalition with even the moderates of Nebraska’s GOP (except, of course, when they needed Republican state legislators to shoot down winner-take-all). Perhaps this reticence contributed to shaving down Harris’s margin in NE-2, where campaign messaging focused less on abortion and more on commonsense, democratic governance – an area where Trump is almost certainly committed to unpopular positions – could have lured Trump-weary Bacon voters.
 
+## Pork Barrel Spending
+
+Finally, let’s leave Omaha and take a quick detour to Fillmore County in good old NE-3 to discuss a missed opportunity for the Harris campaign to benefit from pork barrel spending.
+
+Fillmore County is rural county that is represented in Congress by Adrian Smith, a self-described "[staunch conservative](https://adriansmith.house.gov/about)." Fillmore [voted](https://electionresults.nebraska.gov/resultsCTY.aspx?type=PC&rid=12465&osn=93&map=CTY) overwhelmingly for Trump in 2024; Harris received just 22.2% of the two-party vote. All of that is to say, it would be farfetched to suggest that the Biden Administration had electoral gains in mind when it allocated a $5.4 million dollar grant to repair rail infrastructure in Fillmore. Yet if we set the administration’s intentions aside, Fillmore presents an interesting case study for the pork barrel theory articulated by [Kriner and Reeves](https://doi.org/10.1017/S0003055412000159) (2012).
+
+Kriner and Reeves argue that pork is most effective at increasing support for the incumbent party when the county benefiting is represented in Congress by a copartisan of the president, when the funding is given to a swing state, and when it is clearly communicated to voters that the incumbent party was responsible for the grant. None of these conditions appear to have been satisfied in the case of Fillmore’s grant: Smith is not a Democrat, Nebraska — NE-2 aside — is not a battleground, and an [article](https://nebraskaexaminer.com/briefs/federal-5-4m-grant-to-help-rehab-rail-line-in-nebraskas-fillmore-county/) in the Nebraska Examiner announcing the funding spends about as much time referencing Nebraska’s Republican Senators as it does the Biden Administration. It should come as little surprise, then, that Fillmore swung to the right in approximately equal measure to its neighbors in 2024 (see county-by-county swing map, above).
+
+To make a robust causal argument about the impact of federal funding on the vote in Fillmore would require a thoughtful matching procedure and should might be better analyzed at the precinct level. By mentioning this case, I mean only to raise the possibility that a lack of clarity about the Biden Administration’s involvement in federal grants could have contributed to Harris’s slight underperformance statewide relative to 538’s prediction.
+
 # Thank You
 
 Thank you for joining me this semester and on this detour into Nebraskan politics!
@@ -128,7 +140,11 @@ CNN Politics. (n.d.) Nebraska President Results. Accessed December 9, 2024. http
 
 Cook Political Report. (2024, November 4). 2024 CPR Electoral College Ratings. https://www.cookpolitical.com/ratings/presidential-race-ratings
 
+Darr, J. & Levendusky, M. (2014). Relying on the Ground Game: The Placement and Effect of Campaign Field Offices. American Politics Research, 42 (3), 529-548. https://doi.org/10.1177/1532673X13500520
+
 Deuel County, Nebraska. (2024, November 6). Summary Results Report. https://countyelectionresults.nebraska.gov/election_files/Deuel/2024_General_official_results.pdf
+
+Enos, R. & Fowler, A. (2018). Aggregate Effects of Large-Scale Campaigns on Voter Turnout. Political Science Research and Methods, 6 (4), 733-751. https://doi.org/10.1017/psrm.2016.21
 
 Federal Election Commission. (n.d.) Campaign finance data. Accessed December 9, 2024. https://www.fec.gov/data/
 
@@ -142,6 +158,8 @@ FiveThirtyEight. (2024, November 5). Who Is Favored To Win Nebraska's 3rd Distri
 
 Gilsinan, K. (2024, October 14). The Battleground Where Harris Is Drubbing Trump. Politico. https://www.politico.com/news/magazine/2024/10/14/nebraska-2nd-district-battleground-00183400
 
+Gonzalez, C. (2024, October 29). Federal $5.4M grant to help rehab rail line in Nebraska's Fillmore County. Nebraska Examiner. https://nebraskaexaminer.com/briefs/federal-5-4m-grant-to-help-rehab-rail-line-in-nebraskas-fillmore-county/
+
 Hoff, M. (2024, September 12). All eyes are on Nebraska's 'blue dot,' which could determine who wins the White House. USA Today. https://www.usatoday.com/story/news/politics/elections/2024/09/12/2024-presidential-race-nebraska-blue-dot/75018361007/
 
 Hopkins, D. (2017). Red Fighting Blue. Cambridge University Press. https://doi.org/10.1017/9781108123594.006
@@ -149,6 +167,8 @@ Hopkins, D. (2017). Red Fighting Blue. Cambridge University Press. https://doi.o
 Kimball County, Nebraska. (2024, November 6). Kimball County General Election Results. https://irp.cdn-website.com/82f946ac/files/uploaded/General_Election_Results-Pres_2024-c4b5ed95.pdf
 
 Koons, C. (2024, December 5). Latest 2024 farm income forecast shows overall decrease from 2023. Nebraska Examiner. https://nebraskaexaminer.com/2024/12/05/latest-2024-farm-income-forecast-shows-overall-decrease-from-2023/
+
+Kriner, D. & Reeves, A. (2012). The Influence of Federal Spending on Presidential Elections. The American Political Science Review, 106(2), 348-366. https://doi.org/10.1017/S0003055412000159
 
 Lee, C. (2024, November 6). How the 10 States' Abortion Ballot Initiatives Fared in the 2024 Election. TIME Magazine. https://time.com/7173410/abortion-ballot-results-2024-election/
 
