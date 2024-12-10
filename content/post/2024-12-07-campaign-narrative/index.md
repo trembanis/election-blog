@@ -40,6 +40,10 @@ First, I should establish how the predictions stacked up against reality. Since 
 |CD-2             |                               52.3|NA            |             53.5|Likely D   |                              52.2|
 |CD-3             |                               22.8|NA            |             22.6|Solid R    |                              23.1|
 
+Ultimately, all of the top-line outcomes were predicted correctly: Trump won statewide and in the first and third congressional districts, and Harris won the second congressional district. My statewide prediction was slightly closer to the outcome than 538’s, perhaps due to overfitting in their more high-dimensional model. In any case, both my model and the 538 model slightly overestimated Harris’s statewide vote share.
+
+If we break the 538 predictions down by congressional district, we get what appear to be three quite different stories: the model was almost dead-on in NE-3, overestimated Harris by 1.2 points in NE-2, and underestimated her by 1.8 points in NE-1.
+
 <img src="{{< blogdown/postref >}}index_files/figure-html/print ne map-1.png" width="672" />
 
 # Nebraska: An Overview
